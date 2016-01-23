@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <include 
+	    android:id="@+id/actionbar_mine"
+	    layout="@layout/actionbar_mine"
+	    />
+    <LinearLayout 
+        android:layout_below="@+id/actionbar_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/whitesmoke"
+        >
+        <!-- User Photo -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            >
+            <LinearLayout 
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/activity_element_margin"
+                >
+                <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/mine_user_photo"
+                android:background="@drawable/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                    android:layout_marginLeft="@dimen/activity_element_margin"
+                />
+                <TextView
+                    android:id="@+id/txt_mine_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_element_margin"
+                    android:textSize="@dimen/sys_font_size_h1"
+                    />
+            </LinearLayout>
+
+            	
+        </RelativeLayout>
+        <!-- End User Photo -->
+        
+        <!-- User Profile -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginTop="16dp"
+            >
+            <TableRow
+                android:id="@+id/btn_mine_my_favourite"
+                style="@style/table_row_mine"
+                android:layout_height="100dp">
+                <ImageView
+                    style="@style/image_view_mine"
+                    android:background="@drawable/m_like"
+                    />
+                <TextView
+                    style="@style/text_view_mine"
+                    android:text="@string/txt_mine_my_favourite"
+                    />
+            </TableRow>
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"/>
+            <TableRow
+                android:id="@+id/btn_mine_clear_cache"
+                style="@style/table_row_mine">
+                <ImageView
+                    style="@style/image_view_mine"
+                    android:background="@drawable/m_setting"
+                    />
+                <TextView
+                    style="@style/text_view_mine"
+                    android:text="@string/txt_mine_clear_cache" />
+            </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"/>
+            <TableRow
+                android:id="@+id/btn_mine_about_weidou"
+                style="@style/table_row_mine">
+                <ImageView
+                    style="@style/image_view_mine"
+                    android:background="@drawable/m_weidou"
+                    />
+                <TextView
+                    style="@style/text_view_mine"
+                    android:text="@string/txt_mine_about_weidou"
+                    />
+            </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD"/>
+            <TableRow
+                android:id="@+id/btn_mine_logoff"
+                style="@style/table_row_mine">
+                <ImageButton
+                    style="@style/image_view_mine"
+                    android:background="@drawable/m_logout"
+                    />
+                <TextView
+                    style="@style/text_view_mine"
+                    android:text="@string/txt_mine_logoff" />
+            </TableRow>
+
+            <!--<View-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="1dp"-->
+               <!--android:background="#DDDDDD"/>-->
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:gravity="center_vertical">-->
+
+            <!--</RelativeLayout>-->
+            <!--<View -->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="1dp"-->
+               <!--android:background="#DDDDDD"/>-->
+            <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="40dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:gravity="center_vertical">&ndash;&gt;-->
+                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/label_mine_address"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;/>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash; &ndash;&gt;-->
+                <!--&lt;!&ndash;<EditText&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/txt_mine_nickname"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="16dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_marginLeft="8dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_toLeftOf="@+id/img_mine_nickname"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_toRightOf="@+id/label_mine_nickname"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:hint="@string/txt_mine_nickname"&ndash;&gt;-->
+                     <!--&lt;!&ndash;/> &ndash;&gt;&ndash;&gt;-->
+                     <!--&lt;!&ndash; &ndash;&gt;-->
+                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/txt_mine_address"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_toLeftOf="@+id/img_mine_address"&ndash;&gt;-->
+                    <!--&lt;!&ndash;/>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<ImageButton&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/img_mine_address"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="12dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="12dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_marginLeft="8dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:background="@drawable/ic_next"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_alignParentRight="true" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
+			<!--&lt;!&ndash;<View &ndash;&gt;-->
+               <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+               <!--&lt;!&ndash;android:layout_height="1dp"&ndash;&gt;-->
+               <!--&lt;!&ndash;android:background="#DDDDDD"/>&ndash;&gt;-->
+			<!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:gravity="center_vertical">-->
+                <!--<TextView-->
+                    <!--android:id="@+id/label_mine_sign"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/label_mine_sign" />-->
+                <!--<ImageButton-->
+                    <!--android:id="@+id/btn_modify_mine_sign"-->
+                    <!--android:layout_width="12dp"-->
+                    <!--android:layout_height="12dp"-->
+                    <!--android:layout_marginLeft="8dp"-->
+                    <!--android:background="@drawable/ic_next"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:onClick="onMakeModify"/>-->
+            <!--</RelativeLayout>-->
+        </TableLayout>
+        <!-- End User Profile -->
+    </LinearLayout>
+
+</RelativeLayout>

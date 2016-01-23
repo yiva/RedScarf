@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="220dp"
+	    android:background="@color/customappred"
+	    android:orientation="vertical"
+	    android:layout_gravity="bottom"
+	    android:padding="8dp" >
+	<Button
+        android:id="@+id/btn_cancel_update"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_white"
+        android:text="@string/txt_take_photos"
+        android:textColor="@color/customappred"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_white"
+        android:text="@string/txt_find_album"
+        android:textColor="@color/customappred"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/btn_find_album"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_cancel"
+        android:text="@string/txt_cancel"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</LinearLayout>

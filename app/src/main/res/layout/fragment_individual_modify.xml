@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.redscarf.weidou.activity.fragment.IndividualModifyFragment"
+    android:background="@color/white"
+    android:paddingRight="@dimen/activity_horizontal_padding"
+    android:paddingLeft="@dimen/activity_horizontal_padding">
+
+    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/edit_modify"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:minLines="6"
+        android:inputType="textMultiLine"
+        android:gravity="left|top"/>
+
+</RelativeLayout>

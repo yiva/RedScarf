@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="63.0dp"
+    android:background="@color/customappred"
+    android:layout_gravity="center_vertical" >
+
+    <ImageButton
+        android:id="@+id/actionbar_food_detail_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12.0dp"
+        android:background="@drawable/ic_back"
+        android:onClick="onBackClick" />
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_food"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        />
+
+    <ImageButton
+        android:id="@+id/actionbar_food_detail_share"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/actionbar_food_detail_favorite"
+        android:layout_toLeftOf="@+id/actionbar_food_detail_favorite"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/ic_share" />
+    <ImageButton
+        android:id="@+id/actionbar_food_detail_favorite"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/ic_favorite"
+        android:contentDescription="@string/app_name"/>
+
+</RelativeLayout>

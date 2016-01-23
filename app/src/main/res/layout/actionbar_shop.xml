@@ -1,0 +1,44 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="63.0dp"
+    android:id="@+id/actionbar_shop"
+    android:background="@color/customappred"
+    android:layout_gravity="center_vertical">
+    <ImageButton
+        android:id="@+id/btnShopMenu"
+        android:layout_marginLeft="12.0dp"
+        android:layout_marginTop="12.0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_setting"
+        android:contentDescription="@string/app_name"
+        android:onClick="onClick"
+        />
+
+    <TextView
+        android:id="@+id/imgShopTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:text="@string/title_shopping"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:contentDescription="@string/app_name" />
+    
+    <ImageButton
+        android:id="@+id/btnShopSearch"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12.0dp"
+        android:layout_marginTop="12.0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_search"
+        android:contentDescription="@string/app_name"
+        android:onClick="onClick"
+        />
+    
+</RelativeLayout>

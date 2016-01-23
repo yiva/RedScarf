@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_food_recommend"
+        android:title="@string/tabs_actionbar_shop_recommend"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/menu_food_nearme"
+        android:title="@string/tabs_actionbar_shop_near"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/food_review_best"
+        android:title="@string/tabs_actionbar_shop_top"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/food_find_hot"
+        android:title="@string/tabs_actionbar_shop_search"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+</menu>

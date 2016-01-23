@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_margin="8dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    >
+    
+    <com.android.volley.toolbox.NetworkImageView 
+        android:id="@+id/img_fans_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_grey"
+        android:scaleType="centerCrop"/>
+    <TextView 
+        android:id="@+id/txt_fans_name"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="end">
+        <Button 
+        android:id="@+id/btn_fans"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:background="@drawable/attention_red"
+        android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+</LinearLayout>

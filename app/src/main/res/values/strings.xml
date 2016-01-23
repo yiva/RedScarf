@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">围兜</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_main">Red Scarf</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Search STH</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="advertisement">Advertisement</string>
+    <string name="image_btn_food"></string>
+    <string name="image_btn_shop"></string>
+    <string name="image_btn_discount"></string>
+    
+    <string name="btn_text_buy_right_now">立即购买</string>
+    
+    <string name="index_discount">折扣</string>
+    <string name="index_beauty">美妆</string>
+    <string name="index_fashion">时尚</string>
+    <string name="index_luxury">奢侈品</string>
+    <string name="index_elect">电子</string>
+    <string name="index_share">分享到:</string>
+    <string name="index_band">品牌</string>
+    <string name="txt_friends">朋友圏</string>
+    <string name="txt_wchat">微信</string>
+    <string name="txt_weibo">微博</string>
+    <string name="txt_qq">QQ</string>
+    <string name="txt_cancel">取消</string>
+    <string name="txt_tab_hot">最热</string>
+    <string name="txt_tab_attention">关注</string>
+    <string name="txt_tab_food">美食</string>
+    <string name="txt_tab_shop">购物</string>
+    <string name="txt_tab_attention_plus">+关注</string>
+    <string name="txt_tab_fans">粉丝</string>
+    <string name="txt_tab_share">分享</string>
+    
+    <string name="title_shopping">购物</string>
+    <string name="title_food">美食</string>
+    <string name="title_index">首页</string>
+    <string name="title_discount">折扣</string>
+    <string name="title_mine">我的</string>
+    <string name="title_mine_activity">个人资料</string>
+    <string name="title_map">位置</string>
+    <string name="title_error">报错</string>
+    <string name="title_share">餐厅分享</string>
+    
+    <string name="title_activity_shop_tabs_recommend">ShopTabsRecommend</string>
+    <string name="title_activity_shop_tabs_near">ShopTabsNear</string>
+    <string name="title_activity_shop_tabs_top">ShopTabsTop</string>
+    <string name="title_activity_shop_tabs_search">ShopTabsSearch</string>
+    
+    <string name="tabs_actionbar_shop_recommend">委员推荐</string>
+    <string name="tabs_actionbar_shop_near">离我最近</string>
+    <string name="tabs_actionbar_shop_top">最高评价</string>
+    <string name="tabs_actionbar_shop_search">最热查询</string>
+    
+    <string name="demotext_foodlist_title">Burger and Lobster- Soho</string>
+    <string name="demotext_foodlist_reviews">12 Reviews</string>
+    <string name="demotext_foodlist_content">36 38 Dean Street Soho London</string>
+    <string name="demotext_foodlist_location">W1D 4PS</string>
+    <string name="demotext_foodlist_type">西餐</string>
+    <string name="demotext_food_detail_distance">14m</string>
+    <string name="demotext_food_detail_info">餐厅信息</string>
+    <string name="demotext_food_detail_phone">电话</string>
+    <string name="demotext_food_detail_opentime">营业时间</string>
+    <string name="demotext_food_detail_website">网址</string>
+    <string name="demotext_food_detail_more">更多信息</string>
+    <string name="demotext_food_detail_photo">餐厅照片</string>
+    <string name="demotext_food_detail_upload_photo">上传照片</string>
+    <string name="demotext_food_detail_user_content">网友评价</string>
+    <string name="demotext_food_detail_user_name">英国红领巾</string>
+    <string name="demotext_food_detail_review_time">14 days ago</string>
+    <string name="demotext_food_detail_review_content">石库门是一家高档中餐厅，主要提供港式点心和创新中餐。现在伦敦有两家分店，分别位于……</string>
+    <string name="demotext_food_detail_bottom_camera">拍照</string>
+    <string name="demotext_food_detail_bottom_review">点评</string>
+    <string name="demotext_food_detail_bottom_bug">报错</string>
+    
+    <string name="title_user_review">网友点评</string>
+    <string name="demotext_user_review_bottom_camera">拍照</string>
+    <string name="demotext_user_review_bottom_review">点评</string>
+    <string name="demotext_user_review_bottom_get_score">评分</string>
+    <string name="demotext_user_review_bottom_bug">报错</string>
+    <string name="demotext_user_review_user_name">英国红领巾</string>
+    <string name="demotext_user_reviews_review_time">14 days ago</string>
+    <string name="demotext_user_review_review_content">石库门是一家高档中餐厅，主要提供港式点心和创新中餐。现在伦敦有两家分店，分别位于Ealing和Shepherd\'s Bush。与传统的粤菜不同，它融入了马来西亚和泰国菜的风格，更加的国际化……</string>
+    <string name="demotext_user_review_photo_nums">共10张</string>
+    
+    <string name="demotext_title_shop_recommend">委员推荐</string>
+    <string name="demotext_shop_goods_name">Selfridges</string>
+    <string name="demotext_shop_goods_content">坐落在伦敦牛街上的Selfridges创始于1909年，是伦敦最著名、历史最悠久的百货公司之一且连续三年被评为全球最好的百货商店。位于曼彻斯特和伯明翰的Selfridges分店也同样汇聚了数量众多的流行</string>
+	<string name="demotext_shop_detail_recommend">委员推荐</string>
+	<string name="demotext_shop_detail_hot">最热品牌</string>
+	<string name="demotext_shop_detail_content">英国有一个每一天都在\“秘密\”打折的网站，产品种类极为丰富，从时尚、美妆、首饰到电子、生活家居和玩具……</string>
+	<string name="demotext_shop_detail_title">Secret Sales</string>
+	<string name="demotext_shop_detail_discount">折扣信息：全场20% off</string>
+	
+	<string name="demotext_goods_detail_title">Secret Sales</string>
+	<string name="demotext_goods_detail_website_label">Expires</string>
+	<string name="demotext_goods_detail_website_content">www.secretsales.com</string>
+	<string name="demotext_goods_detail_business_label">商家信息</string>
+	<string name="demotext_goods_detail_business_content">英国有一个每一天都在\“秘密\”打折的网站，产品种类极为丰富，从时尚、美妆、首饰到电子、生活家居和玩具……的打折信息都不一样，每天早上7点推出限时购买，每件产品上都会显示倒计时，而优惠最高能达到便宜70%，英国在线购物达人“上瘾”并且每日查看最新折扣，这个网站叫做Secret Sales，有着很多英国High Street及奢侈品牌的优惠产品，让你每天都能体验“圣诞大甩卖”的购物感觉！喜欢买好东西，但又想省钱，别错过Secret Sales。</string>
+	<string name="demotext_goods_detail_discount_label">折扣信息</string>
+	<string name="demotext_goods_detail_reviews_label">评价……</string>
+	
+	<string name="demotext_btn_discount_recommend">委员推荐</string>
+	<string name="demotext_btn_discount_hot">最热品牌</string>
+	<string name="demotext_discount_goods_label">Secret Sales</string>
+	<string name="demotext_discount_goods_exclusive">Exclusive</string>
+	<string name="demotext_discount_goods_off_order">25% off Orders over ￡80</string>
+	<string name="demotext_discount_goods_time">Expires 25th January</string>
+	<string name="demotext_discount_goods_buy_right_now">立即购买</string>
+	
+	<string name="text_mine_change_user_photo">修改头像</string>
+	<string name="label_mine_nickname">昵称</string>
+	<string name="txt_mine_nickname">英国红领巾</string>
+	<string name="label_mine_gender">性别</string>
+	<string name="txt_mine_gender">女</string>
+	<string name="label_mine_address">常住地</string>
+	<string name="txt_mine_address">伦敦</string>
+	<string name="label_mine_sign">个性签名</string>
+    <string name="txt_mine_my_favourite">我的收藏</string>
+    <string name="txt_mine_clear_cache">清空缓存</string>
+    <string name="txt_mine_about_weidou">关于围兜</string>
+    <string name="txt_mine_logoff">登出</string>
+	
+	<string name="txt_error_submit">发送</string>
+	<string name="txt_error_label">哎呀好像哪里不对，告诉委媛吧:</string>
+	<string name="txt_error_hint">请输入错误信息或修改意见（500字以内）</string>
+	<string name="txt_error_email_label">Email</string>
+	
+	<string name="txt_share_find_history">查看原分享</string>
+	
+	<string name="txt_share_publish">发布分享</string>
+	<string name="txt_publish">发布</string>
+	<string name="txt_share_submit_hint">分享你的心得......</string>
+	<string name="txt_share_submit_location">所在位置</string>
+	<string name="txt_share_submit_tag">标签</string>
+	<string name="txt_share_submit_description">拜托加上标签，帮助委媛一起整合信息！</string>
+	<string name="txt_share_submit_share_to">分享至:</string>
+	
+	<string name="title_send_review">发评论</string>
+	<string name="txt_send_review_publish">发布</string>
+	<string name="txt_send_review_hint">写评论......</string>
+	
+	<string name="txt_fans_attention">+关注</string>
+	
+	<string name="txt_take_photos">拍照</string>
+	<string name="txt_find_album">从手机相册选择</string>
+    <string name="txt_select">筛选</string>
+    <!--登录页-->
+    <string name="txt_login_other">使用第三方账号登录或注册：</string>
+    <string name="txt_login_email">或用邮箱登录：</string>
+    <string name="txt_login_weibo">微博账号</string>
+    <string name="txt_login_weixin">微信账号</string>
+    <string name="txt_login_qq">QQ账号</string>
+    <string name="txt_login_hint_email">用户名</string>
+    <string name="txt_login_hint_pwd">密码</string>
+    <string name="txt_login_submit">登录</string>
+    <string name="txt_login_nonce">我想先看看再说</string>
+
+    <!--注册页-->
+    <string name="txt_register_other">注册：</string>
+    <string name="txt_register_hint_email">邮件地址</string>
+    <string name="txt_register_hint_pwd">密码</string>
+    <string name="txt_register_hint_username">用户名</string>
+    <string name="txt_register_hint_confirm_pwd">确认密码</string>
+
+    <string name="txt_register_submit">注册</string>
+
+    <string name="txt_individual_modify_submit">完成</string>
+
+</resources>

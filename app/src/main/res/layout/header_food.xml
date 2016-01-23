@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:background="@color/white"/>
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/adv"/>
+    <!--<GridView-->
+        <!--android:id="@+id/grid_food_header"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:numColumns="2"-->
+        <!--android:gravity="center"-->
+        <!--/>-->
+    <TextView
+        android:id="@+id/txt_header_food_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@color/customappred"
+        android:paddingTop="@dimen/activity_element_margin"
+        android:paddingBottom="@dimen/activity_element_margin"
+        />
+</LinearLayout>

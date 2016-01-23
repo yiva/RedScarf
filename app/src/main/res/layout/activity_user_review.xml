@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <include 
+	    android:id="@+id/actionbar_user_review"
+	    layout="@layout/actionbar_user_review"
+	    />
+    <fragment
+        android:name="com.redscarf.weidou.activity.fragment.UserReviewFragment"
+        android:id="@+id/fragment_user_review"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_tabs_user_review"
+        android:layout_below="@+id/actionbar_user_review" />
+    
+    <!-- Begin 底部按钮 -->
+     <LinearLayout
+        android:id="@+id/bottom_tabs_user_review"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="#d8412e"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp">
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            >
+            <ImageButton 
+            android:id="@+id/btn_bottom_user_review_photo" 
+            android:layout_width="30dp" 
+            android:layout_height="30dp" 
+            android:background="@drawable/ic_white_camera" 
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name" 
+            android:onClick="onClick"/>
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/btn_bottom_user_review_photo"
+                android:layout_centerVertical="true"
+                android:text="@string/demotext_user_review_bottom_camera"
+                android:textColor="#FFFFFF"/>
+        </RelativeLayout>
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            >
+            <ImageButton
+            android:id="@+id/btn_bottom_user_review_review"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="fill"
+            android:background="@drawable/ic_white_content"
+            android:contentDescription="@string/app_name"
+            android:layout_centerVertical="true"
+            android:onClick="onClick" />
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/btn_bottom_user_review_review"
+                android:text="@string/demotext_user_review_bottom_review"
+                android:textColor="#FFFFFF"/>
+        </RelativeLayout>
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            >
+            <ImageButton
+            android:id="@+id/btn_bottom_user_review_bug"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="fill"
+            android:background="@drawable/ic_white_bug"
+            android:contentDescription="@string/app_name"
+            android:layout_centerVertical="true"
+            android:onClick="onClick" />
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/btn_bottom_user_review_bug"
+                android:text="@string/demotext_food_detail_bottom_bug"
+                android:textColor="#FFFFFF"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- End 底部按钮 -->
+</RelativeLayout>

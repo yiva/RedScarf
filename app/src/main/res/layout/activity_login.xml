@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal|"
+    android:background="@color/customappred"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="16dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/btn_login_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_cyclic_back"
+            android:layout_gravity="left"/>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/ic_launcher"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+<!--
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_login_other"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_login_weibo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_white"
+            android:text="@string/txt_login_weibo"
+            android:textColor="@color/customappred"
+            android:textSize="20sp" />
+        <Button
+            android:id="@+id/btn_login_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_white"
+            android:text="@string/txt_login_weixin"
+            android:textColor="@color/customappred"
+            android:textSize="20sp" />
+        <Button
+            android:id="@+id/btn_login_qq"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_white"
+            android:text="@string/txt_login_qq"
+            android:textColor="@color/customappred"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_login_email"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"/>
+        -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/btn_white"
+            android:hint="@string/txt_login_hint_email"
+            android:textColorHint="@color/customappred"
+            android:textSize="15sp"
+            android:inputType="textEmailAddress"
+            />
+        <EditText
+            android:id="@+id/edit_login_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/btn_white"
+            android:hint="@string/txt_login_hint_pwd"
+            android:textColorHint="@color/customappred"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            />
+
+        <Button
+            android:id="@+id/btn_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_cancel"
+            android:text="@string/txt_login_submit"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login_nonce"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_white"
+        android:text="@string/txt_login_nonce"
+        android:textColor="@color/customappred"
+        android:textSize="20sp" />
+</LinearLayout>
