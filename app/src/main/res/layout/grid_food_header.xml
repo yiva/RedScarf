@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:paddingBottom="12dp"
+    android:paddingBottom="22dp"
     android:id="@+id/layout_grid_food_header"
     android:descendantFocusability="blocksDescendants"
     >

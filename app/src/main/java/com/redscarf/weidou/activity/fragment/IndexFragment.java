@@ -227,48 +227,48 @@ public class IndexFragment extends BaseFragment implements OnTouchListener {
     /*
      * 事件实现
      */
-    private class onIndexBtnClick implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                // 点击头像
-                case R.id.img_index_user_logo:
-                    Toast.makeText(getActivity(), "Hello world", Toast.LENGTH_SHORT)
-                            .show();
-                    break;
-                // 点击用户名
-                case R.id.txt_username_index:
-                    View view = getActivity().findViewById(R.id.adv_frame);
-                    view.setVisibility(View.GONE);
-                    IndividualShareFragment individualShare = new IndividualShareFragment();
-
-                    FragmentTransaction transaction = getFragmentManager()
-                            .beginTransaction();
-
-                    transaction.replace(R.id.basicfragment, individualShare,
-                            "IndividualShare");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    break;
-                // 关注
-                case R.id.txt_attention_index:
-                    TextView txt_attention = (TextView) rootView
-                            .findViewById(R.id.txt_attention_index);
-                    if (txt_attention.getText() == ""
-                            || txt_attention.getText() == null) {
-                        txt_attention.setBackgroundResource(0);
-                        txt_attention.setText("已关注");
-                    } else {
-                        txt_attention.setText(null);
-                        txt_attention.setBackgroundResource(R.drawable.attention_red);
-                    }
-                default:
-                    break;
-            }
-        }
-
-    }
+//    private class onIndexBtnClick implements OnClickListener {
+//
+//        @Override
+//        public void onClick(View v) {
+//            switch (v.getId()) {
+//                // 点击头像
+//                case R.id.img_index_user_logo:
+//                    Toast.makeText(getActivity(), "Hello world", Toast.LENGTH_SHORT)
+//                            .show();
+//                    break;
+//                // 点击用户名
+//                case R.id.txt_username_index:
+//                    View view = getActivity().findViewById(R.id.adv_frame);
+//                    view.setVisibility(View.GONE);
+//                    IndividualShareFragment individualShare = new IndividualShareFragment();
+//
+//                    FragmentTransaction transaction = getFragmentManager()
+//                            .beginTransaction();
+//
+//                    transaction.replace(R.id.basicfragment, individualShare,
+//                            "IndividualShare");
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                    break;
+//                // 关注
+//                case R.id.txt_attention_index:
+//                    TextView txt_attention = (TextView) rootView
+//                            .findViewById(R.id.txt_attention_index);
+//                    if (txt_attention.getText() == ""
+//                            || txt_attention.getText() == null) {
+//                        txt_attention.setBackgroundResource(0);
+//                        txt_attention.setText("已关注");
+//                    } else {
+//                        txt_attention.setText(null);
+//                        txt_attention.setBackgroundResource(R.drawable.attention_red);
+//                    }
+//                default:
+//                    break;
+//            }
+//        }
+//
+//    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

@@ -138,17 +138,17 @@
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:text="@string/demotext_goods_detail_discount_label"/>
-                    <EditText
-                        android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-					   	android:hint="@string/demotext_goods_detail_reviews_label"
-					   	android:inputType="textMultiLine"
-					   	android:gravity="left|top"
-					   	android:background="@color/white"
-					   	android:minLines="6"
-					   	android:focusable="false"
-					   	android:textSize="14sp"></EditText>
+                    <!--<EditText-->
+                        <!--android:layout_marginTop="8dp"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+					   	<!--android:hint="@string/demotext_goods_detail_reviews_label"-->
+					   	<!--android:inputType="textMultiLine"-->
+					   	<!--android:gravity="left|top"-->
+					   	<!--android:background="@color/white"-->
+					   	<!--android:minLines="6"-->
+					   	<!--android:focusable="false"-->
+					   	<!--android:textSize="14sp"></EditText>-->
                     <RelativeLayout 
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
@@ -176,83 +176,83 @@
     </LinearLayout>
     <!-- End 主体 -->
     <!-- Begin 底部按钮 -->
-     <LinearLayout
-        android:id="@+id/bottom_tabs_goods_detail"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="@color/customappred"
-        android:layout_alignParentBottom="true"
-        android:padding="5dp">
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageButton 
-            android:id="@+id/btn_bottom_goods_detail_photo" 
-            android:layout_width="30dp" 
-            android:layout_height="30dp" 
-            android:background="@drawable/ic_white_camera" 
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name" 
-            android:onClick="onClick"/>
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/btn_bottom_goods_detail_photo"
-                android:layout_centerVertical="true"
-                android:text="@string/demotext_user_review_bottom_camera"
-                android:textColor="#FFFFFF"/>
-        </RelativeLayout>
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageButton
-            android:id="@+id/btn_bottom_goods_detail_review"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="fill"
-            android:background="@drawable/ic_white_content"
-            android:contentDescription="@string/app_name"
-            android:layout_centerVertical="true"
-            android:onClick="onClick" />
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/btn_bottom_goods_detail_review"
-                android:text="@string/demotext_user_review_bottom_review"
-                android:textColor="#FFFFFF"/>
-        </RelativeLayout>
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageButton
-            android:id="@+id/btn_bottom_goods_detail_bug"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="fill"
-            android:background="@drawable/ic_white_bug"
-            android:contentDescription="@string/app_name"
-            android:layout_centerVertical="true"
-            android:onClick="onClick" />
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/btn_bottom_goods_detail_bug"
-                android:text="@string/demotext_food_detail_bottom_bug"
-                android:textColor="#FFFFFF"/>
-        </RelativeLayout>
-    </LinearLayout>
+     <!--<LinearLayout-->
+        <!--android:id="@+id/bottom_tabs_goods_detail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/customappred"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:padding="5dp">-->
+        <!--<RelativeLayout -->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageButton -->
+            <!--android:id="@+id/btn_bottom_goods_detail_photo" -->
+            <!--android:layout_width="30dp" -->
+            <!--android:layout_height="30dp" -->
+            <!--android:background="@drawable/ic_white_camera" -->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:contentDescription="@string/app_name" -->
+            <!--android:onClick="onClick"/>-->
+            <!--<TextView -->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_photo"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="@string/demotext_user_review_bottom_camera"-->
+                <!--android:textColor="#FFFFFF"/>-->
+        <!--</RelativeLayout>-->
+        <!--<RelativeLayout -->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageButton-->
+            <!--android:id="@+id/btn_bottom_goods_detail_review"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:background="@drawable/ic_white_content"-->
+            <!--android:contentDescription="@string/app_name"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:onClick="onClick" />-->
+            <!--<TextView -->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_review"-->
+                <!--android:text="@string/demotext_user_review_bottom_review"-->
+                <!--android:textColor="#FFFFFF"/>-->
+        <!--</RelativeLayout>-->
+        <!--<RelativeLayout -->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageButton-->
+            <!--android:id="@+id/btn_bottom_goods_detail_bug"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:background="@drawable/ic_white_bug"-->
+            <!--android:contentDescription="@string/app_name"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:onClick="onClick" />-->
+            <!--<TextView -->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_bug"-->
+                <!--android:text="@string/demotext_food_detail_bottom_bug"-->
+                <!--android:textColor="#FFFFFF"/>-->
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
     <!-- End 底部按钮 -->
 
 </RelativeLayout>

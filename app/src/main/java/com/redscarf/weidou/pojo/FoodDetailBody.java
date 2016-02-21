@@ -3,6 +3,8 @@ package com.redscarf.weidou.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by yeahwang on 2016/1/4.
  */

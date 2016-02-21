@@ -3,55 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    
+
     >
-    
-    <ListView 
+    <LinearLayout
+        android:id="@+id/actionbar_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <include
+            layout="@layout/actionbar_discount"
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/customappred"
+        android:orientation="horizontal"
+        android:layout_above="@+id/list_shop"
+        android:layout_below="@+id/actionbar_buy"
+        android:gravity="center_vertical"
+        android:descendantFocusability="blocksDescendants"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_brand_hlist_label"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/activity_element_margin"
+            android:textSize="@dimen/sys_font_size_bolder"/>
+        <!--<GridView-->
+            <!--android:id="@+id/hlist_brand"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingTop="5dp"-->
+            <!-->-->
+
+        <!--</GridView>-->
+        <com.redscarf.weidou.customwidget.HorizontalListView
+            android:id="@+id/hlist_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:paddingTop="8dp"
+            >
+        </com.redscarf.weidou.customwidget.HorizontalListView>
+    </LinearLayout>
+
+    <ListView
            android:id="@+id/list_shop"
            android:layout_width="match_parent"
     	   android:layout_height="match_parent"
            android:divider="@null"
            ></ListView>
-    <LinearLayout 
-        android:id="@+id/actionbar_buy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-         <include 
-    	layout="@layout/actionbar_discount"
-    	/>
+
     </LinearLayout>
-    <!--<LinearLayout-->
-        <!--android:id="@+id/top_tab_buy"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:background="@color/wathetblue"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_below="@+id/actionbar_buy"-->
-        <!-->-->
-       <!--<TextView-->
-        <!--android:id="@+id/index_discount"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/index_discount"-->
-        <!--android:textColor="#FFFFFF"-->
-        <!--android:textSize="15sp"-->
-        <!--android:contentDescription="@string/app_name"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@color/customappred"-->
-        <!--android:onClick="onHeadTab" />-->
-       <!--<TextView-->
-        <!--android:id="@+id/index_beauty"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/index_band"-->
-        <!--android:textColor="#FFFFFF"-->
-        <!--android:textSize="15sp"-->
-        <!--android:contentDescription="@string/app_name"-->
-        <!--android:layout_weight="1"-->
-        <!--android:onClick="onHeadTab" />-->
-    <!--</LinearLayout>-->
-		
 </RelativeLayout>

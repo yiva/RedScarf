@@ -3,6 +3,8 @@ package com.redscarf.weidou.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.redscarf.weidou.util.MyConstants;
+
 /**
  * Created by yeahwa on 2015/11/18.
  */
@@ -103,7 +105,7 @@ public class BrandBody implements Parcelable{
     }
 
     public String getPost_medium() {
-        return post_medium;
+        return MyConstants.URL+"wp-content/uploads"+post_medium;
     }
 
     public void setPost_medium(String post_medium) {

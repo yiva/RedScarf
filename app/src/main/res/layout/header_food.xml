@@ -18,16 +18,16 @@
         <!--android:numColumns="2"-->
         <!--android:gravity="center"-->
         <!--/>-->
-    <TextView
-        android:id="@+id/txt_header_food_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:background="@color/customappred"
-        android:paddingTop="@dimen/activity_element_margin"
-        android:paddingBottom="@dimen/activity_element_margin"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/txt_header_food_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textSize="16sp"-->
+        <!--android:gravity="center"-->
+        <!--android:background="@color/customappred"-->
+        <!--android:paddingTop="@dimen/activity_element_margin"-->
+        <!--android:paddingBottom="@dimen/activity_element_margin"-->
+        <!--/>-->
 </LinearLayout>

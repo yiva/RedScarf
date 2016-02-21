@@ -1,6 +1,8 @@
 package com.redscarf.weidou.activity.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +21,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -193,5 +196,25 @@ public class BaseFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //		url_map = new HashMap<>();
 		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	protected class OnJumpToPageClick implements View.OnClickListener{
+		private String title;
+		private String url;
+		private Context context;
+		public OnJumpToPageClick(Context mContext, String t, String u){
+			this.title = t;
+			this.url = u;
+			this.context = mContext;
+		}
+		@Override
+		public void onClick(View v) {
+			Bundle datas = new Bundle();
+			datas.putString("url", url);
+			datas.putString("title", title);
+			Intent i_web = new Intent(context, WebActivity.class);
+			i_web.putExtras(datas);
+			startActivity(i_web);
+		}
 	}
 }

@@ -27,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 /**
@@ -51,6 +52,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     private static String FOOD_EXCAHNGE_TAG = FOOD_CONTAINER;
 
     private PopupWindow sharePopupWindow;
+    private RadioGroup bottom_tab;
 
     HashMap<String, Fragment> mapFragment = new HashMap<String, Fragment>();
     private FragmentTransaction transaction;
@@ -62,6 +64,8 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.activity_basic);
+        bottom_tab = (RadioGroup) findViewById(R.id.bottomtabs);
+
         transaction = basicFragment.beginTransaction();
 
         mapFragment.put(SEARCH_COMTAINER, new SearchFragment());
@@ -71,12 +75,8 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         mapFragment.put(FOOD_LIST_CONTAINER, new FoodFragment());
 
         transaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG), SHOP_EXCAHNGE_TAG);
-//        transaction.show(basicFragment.findFragmentByTag(SHOP_EXCAHNGE_TAG));
-//        transaction.hide(basicFragment.findFragmentByTag(FOOD_EXCAHNGE_TAG));
-//        transaction.hide(basicFragment.findFragmentByTag(SEARCH_COMTAINER));
-
-//        transaction.addToBackStack(SHOP_EXCAHNGE_TAG);
         transaction.commit();
+        onSelectFragment();
 
 //		showSharePopupWindow();
     }
@@ -119,26 +119,14 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
 
     private void hideFragments(){
         List<Fragment> frs = basicFragment.getFragments();
-        FragmentTransaction hideTrans = basicFragment.beginTransaction();
+        transaction = basicFragment.beginTransaction();
         for (Fragment fr : frs) {
-            hideTrans.hide(fr);
+            transaction.hide(fr);
         }
-        hideTrans.commit();
+        transaction.commit();
     }
 
 
-    @SuppressWarnings("deprecation")
-    private void changeBottomButton() {
-        findViewById(R.id.img_bottom_search).setBackgroundDrawable(
-                this.getResources().getDrawable(
-                        R.drawable.ic_search));
-        findViewById(R.id.img_bottom_food).setBackgroundDrawable(
-                this.getResources().getDrawable(
-                        R.drawable.all_canting));
-        findViewById(R.id.img_bottom_buy).setBackgroundDrawable(
-                this.getResources().getDrawable(
-                        R.drawable.bottom_bar_shop_white));
-    }
 
 //	@Override
 //	public void onSearch(View v) {
@@ -167,26 +155,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         }
     }
 
-    /*
-     * 中间+按钮操作
-     */
-    public void onAdd(View v) {
-//		switch (v.getId()) {
-////			case R.id.btn_bottom_share:
-////				Toast.makeText(BasicViewActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
-//////				Intent i = new Intent(BasicViewActivity.this, SendReviewActivity.class);
-//////				startActivity(i);
-//////			if (sharePopupWindow.isShowing()) {
-//////				sharePopupWindow.dismiss();
-//////			} else {
-//////				sharePopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-//////			}
-////				break;
-//
-//			default:
-//				break;
-//		}
-    }
 
     /*
      *
@@ -195,14 +163,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-//		switch (key) {
-//		case value:
-//			
-//			break;
-//
-//		default:
-//			break;
-//		}
         return false;
     }
 
@@ -241,47 +201,50 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     /*
      * 底部四个按钮的点击操作
      */
-    @SuppressWarnings("deprecation")
-    public void onSelectFragment(View v) {
-        changeBottomButton();
-        this.hideFragments();
-        FragmentTransaction replaceTransaction = basicFragment
-                .beginTransaction();
+    public void onSelectFragment() {
+        bottom_tab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-        switch (v.getId()) {
-            case R.id.btn_bottom_search:
-                if (mapFragment.get(SEARCH_COMTAINER).isAdded()){
-                    replaceTransaction.show(mapFragment.get(SEARCH_COMTAINER));
-                }else{
-                    replaceTransaction.add(R.id.basicfragment, mapFragment.get(SEARCH_COMTAINER),SEARCH_COMTAINER);
+                switch (checkedId) {
+                    case R.id.btn_bottom_search:
+                        hideFragments();
+                        transaction = basicFragment.beginTransaction();
+                        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
+                            transaction.show(mapFragment.get(SEARCH_COMTAINER)).commit();
+                        }else{
+                            transaction.add(R.id.basicfragment, mapFragment.get(SEARCH_COMTAINER),SEARCH_COMTAINER).commit();
+                        }
+                        break;
+                    case R.id.btn_bottom_food:
+                        hideFragments();
+                        transaction = basicFragment.beginTransaction();
+                        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
+                            transaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG)).commit();
+                        }else{
+                            transaction.add(R.id.basicfragment, mapFragment.get(FOOD_EXCAHNGE_TAG),FOOD_EXCAHNGE_TAG).commit();
+                        }
+                        break;
+                    case R.id.btn_bottom_buy:
+                        hideFragments();
+                        transaction = basicFragment.beginTransaction();
+                        if (mapFragment.get(SHOP_EXCAHNGE_TAG).isAdded()){
+                            transaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG)).commit();
+                        }else{
+                            transaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG).commit();
+                        }
+                        break;
+                    case R.id.btn_bottom_mine:
+                        Intent in_mine = new Intent(BasicViewActivity.this, MineActivity.class);
+                        startActivity(in_mine);
+                        break;
+                    default:
+                        break;
                 }
-                findViewById(R.id.img_bottom_search).setBackgroundResource(R.drawable.ic_search_black);
-                break;
-            case R.id.btn_bottom_food:
-                if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
-                    replaceTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG));
-                }else{
-                    replaceTransaction.add(R.id.basicfragment, mapFragment.get(FOOD_EXCAHNGE_TAG),FOOD_EXCAHNGE_TAG);
-                }
-                findViewById(R.id.img_bottom_food).setBackgroundResource(R.drawable.all_canting_black);
-//                replaceTransaction.show(basicFragment.findFragmentByTag(FOOD_EXCAHNGE_TAG));
-//                replaceTransaction.replace(R.id.basicfragment,
-//                        mapFragment.get(FOOD_EXCAHNGE_TAG), FOOD_EXCAHNGE_TAG);
-                break;
-            case R.id.btn_bottom_buy:
-                if (mapFragment.get(SHOP_EXCAHNGE_TAG).isAdded()){
-                    replaceTransaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG));
-                }else{
-                    replaceTransaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG);
-                }
-                findViewById(R.id.img_bottom_buy).setBackgroundResource(R.drawable.bottom_bar_shop_black);
-//                replaceTransaction.show(basicFragment.findFragmentByTag(SHOP_EXCAHNGE_TAG));
-//                replaceTransaction.commit();
-                break;
-            default:
-                break;
-        }
-        replaceTransaction.commit();
+
+            }
+        });
+
 
     }
 

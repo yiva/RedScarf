@@ -60,7 +60,7 @@ public class GoodsDetailActivity extends BaseActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_goods_detail);
+
 		this.setActionBarLayout(R.layout.actionbar_goods_detail);
 //		this.queue = Volley.newRequestQueue(this);
 //		mVolleyQueue = Volley.newRequestQueue(this);

@@ -2,6 +2,8 @@ package com.redscarf.weidou.activity;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -158,6 +160,51 @@ public class BaseActivity extends FragmentActivity{
 		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		stringRequest.setTag(clazz.getSimpleName());
 		VolleyUtil.getRequestQueue().add(stringRequest);
+	}
+
+	protected void doRequestURL(int method, String url,final Class clazz,final Handler handler,final int MSG) {
+		showProgressDialog("", MyConstants.LOADING);
+		Uri.Builder builder = Uri.parse(url).buildUpon();
+		stringRequest = new StringRequest(method, builder.toString(), new Response.Listener<String>() {
+			@Override
+			public void onResponse(String s) {
+				Log.i(clazz.getSimpleName(), "success");
+				Bundle data = new Bundle();
+				data.putString("response", s);
+				Message message = Message.obtain(handler, MSG);
+				message.setData(data);
+				handler.sendMessage(message);
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError volleyError) {
+				Log.e(clazz.getSimpleName(), "error", volleyError);
+			}
+		});
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setTag(clazz.getSimpleName());
+		VolleyUtil.getRequestQueue().add(stringRequest);
+	}
+
+	protected class OnJumpToPageClick implements View.OnClickListener{
+
+		private String url;
+		private String title;
+		private Context context;
+		public OnJumpToPageClick(Context mContext, String t, String u){
+			this.context = mContext;
+			this.title = t;
+			this.url = u;
+		}
+		@Override
+		public void onClick(View v) {
+			Bundle datas = new Bundle();
+			datas.putString("url", url);
+			datas.putString("title", title);
+			Intent i_web = new Intent(context, WebActivity.class);
+			i_web.putExtras(datas);
+			startActivity(i_web);
+		}
 	}
 
 }

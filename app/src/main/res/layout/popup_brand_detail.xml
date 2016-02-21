@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="220dp"
+	    android:background="@color/whitesmoke"
+	    android:orientation="vertical"
+	    android:layout_gravity="top"
+        android:layout_marginTop="103dp"
+	    android:padding="8dp" >
+	<ListView
+        android:id="@+id/list_brand_detail"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+    </ListView>
+</LinearLayout>

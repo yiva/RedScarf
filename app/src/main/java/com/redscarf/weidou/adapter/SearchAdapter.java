@@ -6,25 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.redscarf.weidou.activity.R;
-import com.redscarf.weidou.pojo.RedScarfBody;
-import com.redscarf.weidou.util.BitmapCache;
+import com.redscarf.weidou.pojo.SearchBody;
 
 import java.util.List;
 
 /**
- * Created by yeahwang on 2015/11/13.
+ * Created by yeahwang on 2016/2/16.
  */
-public class TagListAdapter extends BaseRedScarfAdapter<String> {
+public class SearchAdapter extends BaseRedScarfAdapter<SearchBody> {
 
-    private final static String TAG = TagListAdapter.class.getSimpleName();
-
-    protected ImageLoader logoLoader;
-
-    public TagListAdapter(Context context, List<String> listData) {
+    public SearchAdapter(Context context, List<SearchBody> listData) {
         super(context, listData);
-        this.logoLoader = new ImageLoader(queue, new BitmapCache());
     }
 
     @Override
@@ -32,18 +25,19 @@ public class TagListAdapter extends BaseRedScarfAdapter<String> {
         final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(
-                    R.layout.listview_tag, parent, false);
+                    R.layout.listview_search, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.tag = (TextView) convertView.findViewById(R.id.tags);
+            viewHolder.search_content = (TextView) convertView.findViewById(R.id.search_content);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tag.setText("#"+getItem(position));
+        viewHolder.search_content.setText("#"+getItem(position).getTerms());
         return convertView;
     }
 
-    private static class ViewHolder{
-        TextView tag;
+    private static class ViewHolder {
+        int position;
+        TextView search_content;
     }
 }

@@ -88,8 +88,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
 //        GridView foodHeaderGrid = (GridView) header.findViewById(R.id.grid_food_header);
 //        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), makeFoodHeaderGridArrays()));
 //        CalGridViewHeight.setGridViewHeightBasedOnChildren(foodHeaderGrid);
-        TextView txt_header = (TextView) header.findViewById(R.id.txt_header_food_title);
-        txt_header.setText("美食");
+//        TextView txt_header = (TextView) header.findViewById(R.id.txt_header_food_title);
+//        txt_header.setText("美食");
         lv_food.addHeaderView(header, null, false);
 
         return rootView;

@@ -2,6 +2,7 @@ package com.redscarf.weidou.activity;
 
 
 import com.redscarf.weidou.activity.R;
+import com.redscarf.weidou.customwidget.ProgressWebView;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -20,9 +21,9 @@ public class WebActivity extends BaseActivity{
 
 		//get datas
 		datas = this.getIntent().getExtras();
-		WebView webview = (WebView) findViewById(R.id.wv_goods_website);
+		ProgressWebView webview = (ProgressWebView) findViewById(R.id.web_view);
 		TextView title = (TextView) findViewById(R.id.txt_title_web);
-		title.setText(datas.getString("title"));
+		title.setText(String.valueOf(datas.getString("title")));
 
 		webview.requestFocusFromTouch();
 		// 设置WebView属性，能够执行Javascript脚本

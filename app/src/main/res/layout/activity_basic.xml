@@ -10,7 +10,99 @@
         </FrameLayout>
     <!-- Begin 底部按钮 -->
 
-    <LinearLayout
+    <!--<LinearLayout-->
+        <!--android:id="@+id/bottomtabs"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/customappred"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:padding="5dp">-->
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/btn_bottom_buy"-->
+            <!--android:onClick="onSelectFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageView-->
+                <!--android:id="@+id/img_bottom_buy"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="28dp"-->
+                <!--android:background="@drawable/bottom_bar_shop_black"-->
+                <!--android:contentDescription="@string/app_name"-->
+                <!--android:layout_centerVertical="true" />-->
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/btn_bottom_food"-->
+            <!--android:onClick="onSelectFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageView-->
+            <!--android:id="@+id/img_bottom_food"-->
+            <!--android:layout_width="35dp"-->
+            <!--android:layout_height="28dp"-->
+            <!--android:background="@drawable/all_canting"-->
+            <!--android:contentDescription="@string/app_name"-->
+            <!--android:layout_centerVertical="true"/>-->
+        <!--</RelativeLayout>-->
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/btn_bottom_search"-->
+            <!--android:onClick="onSelectFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageView-->
+                <!--android:id="@+id/img_bottom_search"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:background="@drawable/ic_search"-->
+                <!--android:contentDescription="@string/app_name"/>-->
+        <!--</RelativeLayout>-->
+        <!--&lt;!&ndash;<RelativeLayout &ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/btn_bottom_share" &ndash;&gt;-->
+            <!--&lt;!&ndash;android:onClick="onAdd"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;>&ndash;&gt;-->
+            <!--&lt;!&ndash;<ImageView &ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="@drawable/add"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="40dp" &ndash;&gt;-->
+            	<!--&lt;!&ndash;android:layout_height="40dp" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/btn_bottom_mine"-->
+            <!--android:onClick="onToMineActivity"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal"-->
+            <!-->-->
+            <!--<ImageView-->
+            <!--android:id="@+id/img_bottom_mine"-->
+            <!--android:layout_width="35dp"-->
+            <!--android:layout_height="28dp"-->
+            <!--android:background="@drawable/bottom_bar_mine_white"-->
+            <!--android:contentDescription="@string/app_name"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--/>-->
+        <!--</RelativeLayout>-->
+
+    <!--</LinearLayout>-->
+    <RadioGroup
         android:id="@+id/bottomtabs"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -19,132 +111,37 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:padding="5dp">
-        <RelativeLayout
+        android:gravity="center"
+        >
+        <RadioButton
+            style="@style/index_tab"
             android:id="@+id/btn_bottom_buy"
-            android:onClick="onSelectFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageView
-                android:id="@+id/img_bottom_buy"
-                android:layout_width="35dp"
-                android:layout_height="28dp"
-                android:background="@drawable/bottom_bar_shop_black"
-                android:contentDescription="@string/app_name"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
+            android:background="@drawable/bottom_shop_selector"
+            android:contentDescription="@string/app_name"
+            android:checked="true"
+            android:layout_weight="1"/>
 
-        <RelativeLayout
+        <RadioButton
+            style="@style/index_tab"
             android:id="@+id/btn_bottom_food"
-            android:onClick="onSelectFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageView
-            android:id="@+id/img_bottom_food"
-            android:layout_width="35dp"
-            android:layout_height="28dp"
-            android:background="@drawable/all_canting"
+            android:background="@drawable/bottom_food_selector"
             android:contentDescription="@string/app_name"
-            android:layout_centerVertical="true"/>
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_weight="1"/>
+        <RadioButton
+            style="@style/index_tab"
             android:id="@+id/btn_bottom_search"
-            android:onClick="onSelectFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageView
-                android:id="@+id/img_bottom_search"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_search"
-                android:contentDescription="@string/app_name"/>
-        </RelativeLayout>
-        <!--<RelativeLayout -->
-            <!--android:id="@+id/btn_bottom_share" -->
-            <!--android:onClick="onAdd"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!-->-->
-            <!--<ImageView -->
-                <!--android:background="@drawable/add"-->
-                <!--android:layout_width="40dp" -->
-            	<!--android:layout_height="40dp" />-->
-            <!--</RelativeLayout>-->
-
-        <RelativeLayout
-            android:id="@+id/btn_bottom_mine"
-            android:onClick="onToMineActivity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            >
-            <ImageView
-            android:id="@+id/img_bottom_mine"
-            android:layout_width="35dp"
-            android:layout_height="28dp"
-            android:background="@drawable/bottom_bar_mine_white"
+            android:background="@drawable/bottom_search_selector"
             android:contentDescription="@string/app_name"
-            android:layout_centerVertical="true"
-            />
-        </RelativeLayout>
-
-    </LinearLayout>
-    <!--<RadioGroup-->
-    <!--android:id="@+id/bottomtabs"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:background="@color/customappred"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center"-->
-    <!-->-->
-
-    <!--<RadioButton-->
-    <!--style="@style/index_tab"-->
-    <!--android:id="@+id/img_bottom_buy"-->
-    <!--android:background="@drawable/bottom_shop_selector"-->
-    <!--android:contentDescription="@string/app_name"-->
-    <!--android:checked="true"-->
-    <!--android:layout_weight="1"/>-->
-
-    <!--<RadioButton-->
-    <!--style="@style/index_tab"-->
-    <!--android:id="@+id/img_bottom_food"-->
-    <!--android:background="@drawable/bottom_food_selector"-->
-    <!--android:contentDescription="@string/app_name"-->
-    <!--android:layout_weight="1"/>-->
-    <!--<RadioButton-->
-    <!--style="@style/index_tab"-->
-    <!--android:id="@+id/img_bottom_search"-->
-    <!--android:background="@drawable/bottom_search_selector"-->
-    <!--android:contentDescription="@string/app_name"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="35dp"-->
-    <!--/>-->
-    <!--<RadioButton-->
-    <!--style="@style/index_tab"-->
-    <!--android:id="@+id/img_bottom_mine"-->
-    <!--android:background="@drawable/bottom_mine_selector"-->
-    <!--android:contentDescription="@string/app_name"-->
-    <!--android:layout_weight="1"-->
-    <!--/>-->
-
-
-    <!--</RadioGroup>-->
+            android:layout_weight="1"
+            android:layout_height="35dp"
+        />
+        <RadioButton
+            style="@style/index_tab"
+            android:id="@+id/btn_bottom_mine"
+            android:background="@drawable/bottom_mine_selector"
+            android:contentDescription="@string/app_name"
+            android:layout_weight="1"
+        />
+    </RadioGroup>
     <!-- End 底部按钮 -->
 </RelativeLayout>

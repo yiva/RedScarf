@@ -57,6 +57,12 @@
     <style name="text_style">
         <item name="android:lineSpacingMultiplier">1.0</item>
     </style>
+    <style name="text_style_content_normal">
+        <item name="android:textSize">@dimen/sys_font_size_normal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
     <!--MineActivity-->
     <style name="table_row_mine" >
@@ -75,4 +81,43 @@
         <item name="android:layout_width">20dp</item>
         <item name="android:layout_height">20dp</item>
     </style>
+    <style name="hr_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/whitesmoke</item>
+    </style>
+    <!-- Button Style -->
+    <style name="button_primary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/btn_white</item>
+        <item name="android:textColor">@color/customappred</item>
+        <item name="android:textSize">@dimen/sys_font_size_h2</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="button_cancel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/btn_cancel</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sys_font_size_h2</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="button_danger">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/btn_submit</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sys_font_size_h2</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="button_normal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/btn_blue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sys_font_size_h2</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- End Button Style -->
 </resources>
