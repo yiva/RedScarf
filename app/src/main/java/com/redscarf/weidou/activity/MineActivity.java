@@ -101,9 +101,8 @@ public class MineActivity extends BaseActivity {
 //		mVolleyQueue = Volley.newRequestQueue(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         registerButton();
-        doRequestURL(RequestURLFactory.getRequestURL(RequestType.MINE_PROFILE,
-//                        new String[]{"6"}),
-				new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
+        doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
+                        new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
                 MineActivity.class, handler, MSG_MINE);
     }
 
@@ -175,7 +174,9 @@ public class MineActivity extends BaseActivity {
     }
 
     private void uploadImg(String nonce) {
-        doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType.CREATE_POST, new String[]{nonce, "1","1","1","1","1",bos.toString()}), MineActivity.class, handler, MSG_UPLOAD);
+        doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType
+                        .CREATE_POST, new String[]{nonce, "1", "1", "1", "1", "1", bos.toString()}),
+                MineActivity.class, handler, MSG_UPLOAD, 1);
         try {
             fStream.close();
             bos.flush();

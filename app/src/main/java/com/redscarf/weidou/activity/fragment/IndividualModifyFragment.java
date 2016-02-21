@@ -92,8 +92,8 @@ public class IndividualModifyFragment extends BaseFragment {
             url_map.put("cookie", MyPreferences.getAppPerenceAttribute("user_cookie"));
             url_map.put("meta_key", datas.getString("meta_key"));
             url_map.put("meta_value", edit_modify.getText().toString());
-            doRequestURL(RequestURLFactory.getRequestURL(RequestType.MODIFY_INDIVIDUAL,
-                    new String[]{datas.getString("meta_key"), edit_modify.getText().toString()}),
+            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MODIFY_INDIVIDUAL,
+                            new String[]{datas.getString("meta_key"), edit_modify.getText().toString()}),
                     IndividualModifyFragment.class, handler, MSG_INDEX);
         }
     }

@@ -1,7 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.redscarf.weidou.activity.R;
-import com.redscarf.weidou.activity.ShopListActivity;
 import com.redscarf.weidou.adapter.ShopGridAdapter;
 import com.redscarf.weidou.pojo.GridBody;
 
@@ -89,7 +87,7 @@ public class ShopCategoryFragment extends BaseFragment {
         String[] title = {"全部购物", "时尚配饰", "护肤美妆",
                 "保健塑身", "食品酒水", "家居电子",
                 "餐厅票务", "酒店交通"};
-        Integer[] postIds = {5, 8, 7, 284, 10, 285, 286, 9};
+        Integer[] postIds = {5, 481, 480, 478, 483, 479, 484, 482};
         List<GridBody> headerBody = new ArrayList<>();
         for (int i = 0; i < 8; ++i) {
             headerBody.add(new GridBody(colors[i], title[i], photo[i],postIds[i]));

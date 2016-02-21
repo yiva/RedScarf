@@ -162,8 +162,19 @@ public class BaseActivity extends FragmentActivity{
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
 
-	protected void doRequestURL(int method, String url,final Class clazz,final Handler handler,final int MSG) {
-		showProgressDialog("", MyConstants.LOADING);
+	/**
+	 * @param method
+	 * @param url
+	 * @param clazz
+	 * @param handler
+	 * @param MSG
+	 * @param progressType 1:showProgressDialog
+	 */
+	protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
+								final int MSG, int progressType) {
+		if (progressType == 1) {
+			showProgressDialog("", MyConstants.LOADING);
+		}
 		Uri.Builder builder = Uri.parse(url).buildUpon();
 		stringRequest = new StringRequest(method, builder.toString(), new Response.Listener<String>() {
 			@Override
