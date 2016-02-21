@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/com/redscarf/weidou/activity/BuildConfig.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/BaseActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/BasicViewActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/ErrorActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/MapActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/SendReviewActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/WhoseShareActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/fragment/FoodFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/adapter/RedScarfBodyAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/listener/OnSearchCustom.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/network/DataResponseListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/network/ResponseListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/network/UploadApi.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/pojo/Member.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/pojo/RedScarfBody.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/util/ActionBarUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/util/JSONHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/util/MimeUtils.java" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
