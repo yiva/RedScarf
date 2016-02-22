@@ -141,6 +141,9 @@ public class GoodsDetailActivity extends BaseActivity {
         favourite = (ImageButton) findViewById(R.id.actionbar_food_detail_favorite);
 
         title.setText(body.getTitle());
+        if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
+            favourite.setBackgroundResource(R.drawable.ic_favourite_red);
+        }
         NetworkImageView goodsImage = (NetworkImageView) findViewById(R.id.goods_detail_image);
 //		BaseRedScarfAdapter.formatRedScarfBody(body);
         String imageUrl = body.getPost_medium();
@@ -153,6 +156,8 @@ public class GoodsDetailActivity extends BaseActivity {
         }
         content.setText(Html.fromHtml(body.getContent()));
         subtitle.setText(body.getPhone());
+        //favourite button
+
         favourite.setOnClickListener(new OnChangeFavourite());
     }
 
