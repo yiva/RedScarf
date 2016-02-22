@@ -50,9 +50,8 @@ public class BrandDetailActivity extends BaseActivity {
     private ImageButton favourite;
 
     private Bundle datas;
-    private final int MSG_INDEX = 1; //msg.what goods
-    private final int MSG_IS_FAVOURITE = 2;//make favourite
-    private final int MSG_IS_NOT_FAVOURITE = 3;//unmake favourite
+     //msg.what goods
+
     private String response;
     private BrandDetailBody brand_body;
     protected ImageLoader imageLoader;
@@ -102,6 +101,8 @@ public class BrandDetailActivity extends BaseActivity {
                         ExceptionUtil.printAndRecord(TAG, e);
                         Toast.makeText(BrandDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -157,6 +158,9 @@ public class BrandDetailActivity extends BaseActivity {
         favourite.setOnClickListener(new OnChangeFavourite());
     }
 
+    /**
+     * 收藏功能
+     */
     private class OnChangeFavourite implements View.OnClickListener {
         @Override
         public void onClick(View v) {

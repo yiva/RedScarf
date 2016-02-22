@@ -198,14 +198,13 @@ public class BuyFragment extends BaseFragment
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             GoodsBody bodyItem = bodys.get(position);
-            Intent in_shop_detail = new Intent(getActivity(), GoodsDetailActivity.class);
 
-//			ArrayList<String> items = BuyListAdapter.denoteCategorys(bodyItem.getCategories());
             Bundle data = new Bundle();
             data.putString("key", bodyItem.getId());
             data.putString("title", bodyItem.getTitle());
-            in_shop_detail.putExtras(data);
 
+            Intent in_shop_detail = new Intent(getActivity(), GoodsDetailActivity.class);
+            in_shop_detail.putExtras(data);
             startActivity(in_shop_detail);
         }
 
