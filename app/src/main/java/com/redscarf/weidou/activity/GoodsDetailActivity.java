@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,14 +12,16 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
-import com.redscarf.weidou.pojo.BrandBody;
-import com.redscarf.weidou.pojo.BrandDetailBody;
+import com.redscarf.weidou.pojo.DiscountBody;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +33,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import cn.finalteam.toolsfinal.StringUtils;
 
 public class GoodsDetailActivity extends BaseActivity {
 
@@ -45,8 +50,11 @@ public class GoodsDetailActivity extends BaseActivity {
     private TextView expires;
     private ImageButton favourite;
     private ImageButton share;
+    private Button copy_code;
+    private Button buy;
+    private Button brand_info;
 
-    private BrandBody body;
+    private DiscountBody body;
     private String response;
 
     private Handler handler = new Handler() {
@@ -56,9 +64,9 @@ public class GoodsDetailActivity extends BaseActivity {
             response = indexObj.getString("response");
             switch (msg.what) {
                 case MSG_INDEX:
-                    ArrayList<BrandBody> arrRed = null;
+                    ArrayList<DiscountBody> arrRed = null;
                     try {
-                        arrRed = RedScarfBodyAdapter.fromJSON(response, BrandBody.class);
+                        arrRed = RedScarfBodyAdapter.fromJSON(response, DiscountBody.class);
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
@@ -119,26 +127,23 @@ public class GoodsDetailActivity extends BaseActivity {
         url_map = new HashMap<String, String>();
         url_map.put("json", "get_brandpost");
         url_map.put("post_id", datas.getString("key"));
-        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
-                new String[]{datas.getString("key")}), GoodsDetailActivity.class, handler,
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
+                        new String[]{datas.getString("key")}), GoodsDetailActivity.class, handler,
                 MSG_INDEX, 1);
 
-        goodsListener();
     }
 
-    private void goodsListener() {
-        Button buy_submit = (Button) findViewById(R.id.btn_buy_submit_goods_detail);
-
-        buy_submit.setOnClickListener(new onBuySubmitClick());
-    }
 
     private void initView() {
         title = (TextView) findViewById(R.id.txt_goods_detail_title);
-        content = (TextView) findViewById(R.id.txt_goods_detail_business_content);
+        content = (TextView) findViewById(R.id.txt_goods_detail_content);
         subtitle = (TextView) findViewById(R.id.txt_goods_detail_subtitle);
         exclusive = (TextView) findViewById(R.id.txt_exclusive_good_detail);
         expires = (TextView) findViewById(R.id.txt_expires_goods_detail);
-        favourite = (ImageButton) findViewById(R.id.actionbar_food_detail_favorite);
+        favourite = (ImageButton) findViewById(R.id.actionbar_good_detail_favorite);
+        copy_code = (Button) findViewById(R.id.btn_good_detail_sale_code);
+        buy = (Button) findViewById(R.id.btn_good_detail_buy_now);
+        brand_info = (Button) findViewById(R.id.btn_good_detail_info_more);
 
         title.setText(body.getTitle());
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
@@ -155,10 +160,16 @@ public class GoodsDetailActivity extends BaseActivity {
             goodsImage.setImageUrl(imageUrl, imageLoader);
         }
         content.setText(Html.fromHtml(body.getContent()));
-        subtitle.setText(body.getPhone());
-        //favourite button
+        subtitle.setText(body.getSubtitle());
+        expires.setText(body.getExpires());
+        copy_code.setText("折扣码: "+body.getOthers());
+        //button listener
 
         favourite.setOnClickListener(new OnChangeFavourite());
+        buy.setOnClickListener(new OnJumpToPageClick(GoodsDetailActivity.this, body.getTitle(),
+                body.getWebsite()));
+        brand_info.setOnClickListener(new OnJumpToBrandClick());
+        copy_code.setOnClickListener(new OnCopySalesCodeClick());
     }
 
     private class onBuySubmitClick implements OnClickListener {
@@ -197,6 +208,45 @@ public class GoodsDetailActivity extends BaseActivity {
                 default:
                     break;
             }
+        }
+    }
+
+    private class OnJumpToBrandClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            try {
+                JSONArray jas = new JSONArray(body.getBrand());
+                String brand = jas.getString(0);
+                Bundle data = new Bundle();
+                data.putString("id", brand);
+                Intent i_brand_detail = new Intent(GoodsDetailActivity.this, BrandDetailActivity.class);
+                i_brand_detail.putExtras(data);
+                startActivity(i_brand_detail);
+            } catch (JSONException e) {
+                Toast.makeText(GoodsDetailActivity.this,"网络故障！",Toast.LENGTH_SHORT).show();
+                ExceptionUtil.printAndRecord(TAG, e);
+            }
+
+        }
+    }
+
+    /**
+     * 复制折扣码
+     */
+    private class OnCopySalesCodeClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            // Gets a handle to the clipboard service.
+            ClipboardManager clipboard = (ClipboardManager)getSystemService(Context
+                    .CLIPBOARD_SERVICE);
+            // Creates a new text clip to put on the clipboard
+            ClipData clip = ClipData.newPlainText("sales_code",body.getOthers());
+            // Set the clipboard's primary clip.
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(GoodsDetailActivity.this,"复制成功",Toast.LENGTH_SHORT).show();
         }
     }
 
