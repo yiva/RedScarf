@@ -67,7 +67,7 @@ public class SplashActivity extends BaseActivity{
 			builder.appendQueryParameter("cookie", MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
 			Log.i(TAG, builder.toString());
 			jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
-					builder.toString(), null, new Response.Listener<JSONObject>() {
+					builder.toString(), new Response.Listener<JSONObject>() {
 				@Override
 				public void onResponse(JSONObject response) {
 					Log.i(TAG, "success");

@@ -37,7 +37,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.google.android.gms:play-services:7.8.0'
-    compile files('libs/volley.jar')
+    //compile files('libs/volley.jar')
     compile files('libs/classes.jar')
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'
     //动态gif
@@ -46,4 +46,5 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     //asymmetricgridview可跨行列gridview
     compile 'com.felipecsl.asymmetricgridview:library:2.0.1'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
 }
