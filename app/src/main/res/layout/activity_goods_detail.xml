@@ -11,7 +11,6 @@
         android:layout_below="@+id/actionbar_goods_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_tabs_goods_detail"
         android:orientation="vertical"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
@@ -22,15 +21,17 @@
         	android:fillViewport="true"
         	android:scrollbars="vertical">
         		<!-- Begin 购物信息 -->
-        		<LinearLayout 
+        		<GridLayout
 	                android:layout_width="match_parent"
 	        		android:layout_height="wrap_content"
-	        		android:orientation="vertical">
-	        		<LinearLayout 
+                    android:paddingRight="@dimen/layout_padding2"
+                    android:paddingLeft="@dimen/layout_padding2"
+                    android:columnCount="1">
+	        		<LinearLayout
 	        		    android:layout_width="match_parent"
 	        		    android:layout_height="wrap_content"
 	        		    android:orientation="horizontal">
-	        		    <TextView 
+	        		    <TextView
         	                android:id="@+id/txt_exclusive_good_detail"
         	                android:layout_width="wrap_content"
         	                android:layout_height="wrap_content"
@@ -49,130 +50,96 @@
 	                    android:textSize="15sp"
 	                    />
 	        		</LinearLayout>
-		        		<TextView
-		                    android:id="@+id/txt_goods_detail_subtitle"
-		                    android:padding="8dp"
-		                    android:layout_width="match_parent"
-		                    android:layout_height="wrap_content"
-		                    android:textStyle="bold"
-		                    android:textSize="15sp"
-		                    />
-                	<RelativeLayout 
+                    <TextView
+                        android:id="@+id/txt_goods_detail_subtitle"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        />
+                	<RelativeLayout
 	                    android:layout_width="match_parent"
 	                    android:layout_height="250dp"
 	                    android:layout_gravity="center"
 	                    android:padding="20dp">
-	                    <com.android.volley.toolbox.NetworkImageView 
+	                    <com.android.volley.toolbox.NetworkImageView
 	                        android:id="@+id/goods_detail_image"
 	                        android:layout_width="match_parent"
 	                        android:layout_height="match_parent"
 	                        android:scaleType="centerCrop"/>
 	                </RelativeLayout>
-	                
-                <View 
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gainsboro"
-                    android:layout_marginTop="8dp"/>
-                <LinearLayout 
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/demotext_goods_detail_website_label"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                    <TextView 
-                        android:id="@+id/txt_expires_goods_detail"
-                        android:layout_marginLeft="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-                <View 
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gainsboro"
-                    android:layout_marginTop="8dp"/>
-                <LinearLayout 
-                    android:padding="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="8dp"
-                    >
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/demotext_goods_detail_business_label"
-                        android:textSize="15sp"
-                        android:textStyle="bold"/>
-                    <TextView 
-                        android:id="@+id/txt_goods_detail_business_content"
+
+                    <View
+                        style="@style/hr_line"
+                        android:background="@color/gainsboro"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        >
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/watch_red"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_brand_detail_dead_time"
+                            android:textSize="@dimen/sys_font_size_normal"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/layout_margin3"
+                            />
+                        <TextView
+                            android:id="@+id/txt_expires_goods_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sys_font_size_normal"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/layout_margin3"
+                            />
+                    </LinearLayout>
+                <View
+                    style="@style/hr_line"
+                    android:background="@color/gainsboro"/>
+                    <TextView
+                        android:id="@+id/txt_goods_detail_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minLines="3"
                         android:textSize="14sp"/>
-                </LinearLayout>
-                <LinearLayout 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/gainsboro"
-                    android:padding="8dp"
-                    >
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:text="@string/demotext_goods_detail_discount_label"/>
-                    <!--<EditText-->
-                        <!--android:layout_marginTop="8dp"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-					   	<!--android:hint="@string/demotext_goods_detail_reviews_label"-->
-					   	<!--android:inputType="textMultiLine"-->
-					   	<!--android:gravity="left|top"-->
-					   	<!--android:background="@color/white"-->
-					   	<!--android:minLines="6"-->
-					   	<!--android:focusable="false"-->
-					   	<!--android:textSize="14sp"></EditText>-->
-                    <RelativeLayout 
-                        android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <Button
-					        android:id="@+id/btn_buy_submit_goods_detail"
-					        android:layout_width="match_parent"
-					        android:layout_height="40dp"
-					        android:layout_marginBottom="20dp"
-					        android:layout_marginLeft="20dp"
-					        android:layout_marginRight="20dp"
-					        android:layout_marginTop="20dp"
-					        android:background="@drawable/btn_cancel"
-					        android:text="@string/btn_text_buy_right_now"
-					        android:textColor="@color/white"
-					        android:textSize="20sp" />
-                    </RelativeLayout>
-                    
-                </LinearLayout>
-             </LinearLayout>
+                    <TextView
+                        style="@style/text_style_content_normal"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/txt_brand_detail_copy_code"
+                        />
+                    <Button
+                        android:id="@+id/btn_good_detail_sale_code"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        style="@style/button_cancel"
+                        />
+                    <Button
+                        android:id="@+id/btn_good_detail_buy_now"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        style="@style/button_danger"
+                        android:text="@string/btn_text_buy_right_now"
+                        />
+                    <Button
+                        android:id="@+id/btn_good_detail_info_more"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        android:layout_marginBottom="@dimen/layout_margin1"
+                        style="@style/button_normal"
+                        android:text="@string/txt_brand_detail_info_more"
+                        />
+             </GridLayout>
              <!-- End 购物信息 -->
         </ScrollView>
-        
+
     </LinearLayout>
     <!-- End 主体 -->
     <!-- Begin 底部按钮 -->
