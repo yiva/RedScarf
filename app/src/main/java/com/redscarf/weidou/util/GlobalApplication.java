@@ -2,6 +2,7 @@ package com.redscarf.weidou.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -26,5 +27,6 @@ public class GlobalApplication extends Application{
 		//初始化 volley
 		VolleyUtil.initialize(context);
 	}
+	
 
 }

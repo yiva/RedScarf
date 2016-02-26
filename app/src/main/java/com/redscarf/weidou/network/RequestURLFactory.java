@@ -83,9 +83,6 @@ public class RequestURLFactory {
             case BRAND_POST:
                 res = baseUrl + "?json=get_brandpost&post_id=" + attributes[0];
                 break;
-            case DISCOUNT_POST:
-                res = baseUrl + "?json=get_discountpost&post_id=" + attributes[0];
-                break;
             case SEND_COMMENT:
                 res = baseUrl + "user/post_comment/?cookie="+MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)
                         +"&post_id="+attributes[0]+"&content="+attributes[1]+"&comment_status="+attributes[2];

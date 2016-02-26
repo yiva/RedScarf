@@ -21,8 +21,7 @@ public enum RequestType {
     ,SEND_COMMENT   //发送评论
     ,CREATE_POST    //上传分享
     ,NONCE_VALUE    //获取临时key
-    ,MAKE_FAVOURITE //收藏
-    ,UNMAKE_FAVOURTIE   //取消收藏
-    ,DISCOUNT_POST  //商品页面
+    , MAKE_FAVOURITE //收藏
+    , UNMAKE_FAVOURTIE   //取消收藏
 
 }

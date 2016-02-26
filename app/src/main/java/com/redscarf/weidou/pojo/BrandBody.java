@@ -19,18 +19,10 @@ public class BrandBody implements Parcelable{
     private String post_medium;
     private String share;
     private String attachments;
-    private String is_favorate;
-    private String url;
-    private String deliver_info;
-    private String deliver_china;
-    private String subtype;
-    private String post_thumbnail;
 
     public BrandBody(){
 
     }
-
-
     protected BrandBody(Parcel in) {
         id = in.readString();
         title = in.readString();
@@ -42,12 +34,6 @@ public class BrandBody implements Parcelable{
         post_medium = in.readString();
         share = in.readString();
         attachments = in.readString();
-        is_favorate = in.readString();
-        url = in.readString();
-        deliver_info = in.readString();
-        deliver_china = in.readString();
-        subtype = in.readString();
-        post_thumbnail = in.readString();
     }
 
     public static final Creator<BrandBody> CREATOR = new Creator<BrandBody>() {
@@ -61,54 +47,6 @@ public class BrandBody implements Parcelable{
             return new BrandBody[size];
         }
     };
-
-    public String getIs_favorate() {
-        return is_favorate;
-    }
-
-    public void setIs_favorate(String is_favorate) {
-        this.is_favorate = is_favorate;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDeliver_info() {
-        return deliver_info;
-    }
-
-    public void setDeliver_info(String deliver_info) {
-        this.deliver_info = deliver_info;
-    }
-
-    public String getDeliver_china() {
-        return deliver_china;
-    }
-
-    public void setDeliver_china(String deliver_china) {
-        this.deliver_china = deliver_china;
-    }
-
-    public String getSubtype() {
-        return subtype;
-    }
-
-    public void setSubtype(String subtype) {
-        this.subtype = subtype;
-    }
-
-    public String getPost_thumbnail() {
-        return post_thumbnail;
-    }
-
-    public void setPost_thumbnail(String post_thumbnail) {
-        this.post_thumbnail = post_thumbnail;
-    }
 
     public String getId() {
         return id;
@@ -207,12 +145,6 @@ public class BrandBody implements Parcelable{
         dest.writeString(post_medium);
         dest.writeString(share);
         dest.writeString(attachments);
-        dest.writeString(is_favorate);
-        dest.writeString(url);
-        dest.writeString(deliver_info);
-        dest.writeString(deliver_china);
-        dest.writeString(subtype);
-        dest.writeString(post_thumbnail);
     }
 }
 

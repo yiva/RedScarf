@@ -14,12 +14,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.redscarf.weidou.network.RequestType;
-import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -34,10 +31,6 @@ import java.util.Map;
  *
  */
 public class BaseActivity extends FragmentActivity{
-
-	protected final int MSG_INDEX = 1;
-	protected final int MSG_IS_FAVOURITE = 2;//make favourite
-	protected final int MSG_IS_NOT_FAVOURITE = 3;//unmake favourite
 
 	private ProgressDialog progressDialog;
 	private StringRequest stringRequest;
@@ -224,35 +217,5 @@ public class BaseActivity extends FragmentActivity{
 			startActivity(i_web);
 		}
 	}
-
-//	protected class OnChangeFavourite implements View.OnClickListener {
-//		private Handler handler;
-//		private Class clazz;
-//		private String is_favourite;
-//		private String uid;
-//		public OnChangeFavourite(String id,String type, Class c,Handler h){
-//			this.handler = h;
-//			this.clazz = c;
-//			this.is_favourite = type;
-//			this.uid = id;
-//		}
-//		@Override
-//		public void onClick(View v) {
-//			switch (is_favourite) {
-//				case "0"://make favourite
-//					doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
-//									new String[]{uid}), BrandDetailActivity.class, handler,
-//							2, 0);
-//					break;
-//				case "1"://unmake favourite
-//					doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
-//									(RequestType.UNMAKE_FAVOURTIE, new String[]{uid}),
-//							BrandDetailActivity.class, handler, 3, 0);
-//					break;
-//				default:
-//					break;
-//			}
-//		}
-//	}
 
 }
