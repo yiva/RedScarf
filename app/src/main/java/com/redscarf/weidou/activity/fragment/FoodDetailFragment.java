@@ -1,7 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 import org.json.JSONArray;
@@ -106,7 +105,8 @@ public class FoodDetailFragment extends BaseFragment {
     /*
      * 界面初始化
      */
-    private void initView() {
+    @Override
+    public void initView() {
 
         TextView title_text = (TextView) rootView.findViewById(R.id.txt_food_detail_title);
         TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);

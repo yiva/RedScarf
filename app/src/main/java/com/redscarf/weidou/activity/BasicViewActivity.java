@@ -1,25 +1,18 @@
 package com.redscarf.weidou.activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.fragment.BuyFragment;
 import com.redscarf.weidou.activity.fragment.FoodCategoryFragment;
 import com.redscarf.weidou.activity.fragment.FoodFragment;
-import com.redscarf.weidou.activity.fragment.IndexFragment;
 import com.redscarf.weidou.activity.fragment.SearchFragment;
 import com.redscarf.weidou.activity.fragment.ShopCategoryFragment;
-import com.redscarf.weidou.listener.OnSearchCustom;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;

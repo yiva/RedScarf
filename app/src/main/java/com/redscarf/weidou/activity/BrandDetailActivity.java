@@ -1,7 +1,5 @@
 package com.redscarf.weidou.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,19 +16,14 @@ import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
-import com.redscarf.weidou.pojo.BrandBody;
 import com.redscarf.weidou.pojo.BrandDetailBody;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
-import cn.finalteam.toolsfinal.StringUtils;
 
 /**
  * Created by yeahwang on 2016/2/17.

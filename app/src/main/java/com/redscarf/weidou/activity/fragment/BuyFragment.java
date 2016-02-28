@@ -29,10 +29,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -43,8 +41,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-
-import cn.finalteam.toolsfinal.StringUtils;
 
 /**
  * 购物fragment
@@ -124,7 +120,7 @@ public class BuyFragment extends BaseFragment
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
-        registerButton();
+        initView();
 
 
         return rootView;
@@ -158,7 +154,8 @@ public class BuyFragment extends BaseFragment
         }
     }
 
-    private void registerButton() {
+    @Override
+    public void initView() {
         ImageButton back = (ImageButton) rootView.findViewById(R.id.btn_shop_list_back);
         back.setOnClickListener(new OnbackClick());
     }

@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.redscarf.weidou.activity.WebActivity;
+import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -33,13 +34,23 @@ import java.util.Map;
  * fragment父类
  *
  */
-public class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment implements BasePageLinstener{
 
 	private ProgressDialog progressDialog;
 
 	private StringRequest stringRequest;
 
 	protected HashMap<String,String> url_map;
+
+	protected View rootView;
+
+	public static final int STATE_NONE = 0;
+	public static final int STATE_REFRESH = 1;
+	public static final int STATE_LOADMORE = 2;
+	public static final int STATE_NOMORE = 3;
+	public static final int STATE_PRESSNONE = 4;// 正在下拉但还没有到刷新的状态
+	public static int mState = STATE_NONE;
+
 	/**
 	 * 提示加载
 	 */
@@ -197,6 +208,7 @@ public class BaseFragment extends Fragment{
 //		url_map = new HashMap<>();
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
+
 
 	protected class OnJumpToPageClick implements View.OnClickListener{
 		private String title;

@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.util.MyConstants;
@@ -73,7 +74,7 @@ public class BaseActivity extends FragmentActivity{
 		finish();
 	}
 
-	protected class OnBackClickListener implements View.OnClickListener{
+	protected class OnBackClickListener implements View.OnClickListener {
 
 		@Override
 		public void onClick(View v) {

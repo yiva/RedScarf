@@ -1,10 +1,7 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 

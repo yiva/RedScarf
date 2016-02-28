@@ -82,7 +82,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         rootView = inflater.inflate(R.layout.fragment_food, container,
                 false);
 
-        registerButton();
+        initView();
         //头部设计
         View header = inflater.inflate(R.layout.header_food, null);
 //        GridView foodHeaderGrid = (GridView) header.findViewById(R.id.grid_food_header);
@@ -124,7 +124,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         }
     }
 
-    private void registerButton() {
+    @Override
+    public void initView() {
         lv_food = (ListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnTouchListener(this);
@@ -143,8 +144,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
 //        selecter = new PopupWindow(selectorView, measureContentWidth(arrayAdapter), ViewGroup.LayoutParams.WRAP_CONTENT, true);
 //        selecter.setBackgroundDrawable(new BitmapDrawable());
 //		getActivity().findViewById(R.id.btnShopSearch).setOnClickListener(new onSearchClickListener());
-
-
     }
 
     private class OnBackClick implements OnClickListener{

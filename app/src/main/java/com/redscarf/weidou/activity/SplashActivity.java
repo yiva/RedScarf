@@ -28,7 +28,7 @@ import org.json.JSONObject;
  * @author yeahwa
  *
  */
-public class SplashActivity extends BaseActivity{
+public class SplashActivity extends BaseActivity {
 
 	private static final String TAG = SplashActivity.class.getSimpleName();
 

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SendReviewActivity extends BaseActivity{
+public class SendReviewActivity extends BaseActivity {
 
 	private final String TAG = FoodDetailFragment.class.getSimpleName();
 

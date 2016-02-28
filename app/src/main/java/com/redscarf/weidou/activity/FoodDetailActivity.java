@@ -1,12 +1,7 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
-
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 public class FoodDetailActivity extends BaseActivity {
 
@@ -15,13 +10,14 @@ public class FoodDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_food_detail);
+		this.setContentView(R.layout.activity_food_detail);
 //		this.setActionBarLayout(R.layout.actionbar_food_detail);
 		this.registerButton();
 	}
 
 	public void registerButton(){
-		findViewById(R.id.actionbar_food_detail_back).setOnClickListener(new OnBackClickListener());
+		this.findViewById(R.id.actionbar_food_detail_back).setOnClickListener(new
+				OnBackClickListener());
 	}
 
 //	@Override

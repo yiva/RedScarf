@@ -1,12 +1,7 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
-
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class SearchActivity extends BaseActivity {
 

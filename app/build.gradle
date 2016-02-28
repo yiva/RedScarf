@@ -10,13 +10,13 @@ android {
 //        }
 //    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion '23.0.0'
     defaultConfig {
         applicationId "com.redscarf.weidou.activity"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 14
-        versionName "0.5.7"
+        versionCode 15
+        versionName "0.5.8"
     }
     buildTypes {
         release {
@@ -32,12 +32,14 @@ repositories{
     }
 }
 
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.google.android.gms:play-services:7.8.0'
-    //compile files('libs/volley.jar')
+//    compile files('libs/volley.jar')
     compile files('libs/classes.jar')
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'
     //动态gif

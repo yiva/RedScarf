@@ -49,6 +49,11 @@ public class FoodCategoryFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void initView() {
+
+    }
+
     public interface OnChangeFoodListFragmentListener {
         void foodCategoryClick(int postid);
     }

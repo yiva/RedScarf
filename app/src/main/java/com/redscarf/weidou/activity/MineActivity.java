@@ -1,7 +1,6 @@
 package com.redscarf.weidou.activity;
 
 
-import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;

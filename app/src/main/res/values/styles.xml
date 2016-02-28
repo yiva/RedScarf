@@ -85,8 +85,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/whitesmoke</item>
-        <item name="android:layout_marginTop">@dimen/layout_padding3</item>
-        <item name="android:layout_marginBottom">@dimen/layout_padding3</item>
+        <item name="android:layout_marginTop">@dimen/layout_margin3</item>
+        <item name="android:layout_marginBottom">@dimen/layout_margin3</item>
+        <item name="android:paddingTop">@dimen/layout_padding3</item>
+        <item name="android:paddingBottom">@dimen/layout_padding3</item>
     </style>
     <!-- Button Style -->
     <style name="button_primary">

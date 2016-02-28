@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity {
             jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
                     RequestURLFactory.sysRequestURL(RequestType.LOGIN_AGAIN,
                             new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)}),
-                     new Response.Listener<JSONObject>() {
+                   new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i(TAG, "success");

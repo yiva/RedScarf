@@ -12,6 +12,7 @@ public enum RequestType {
     ,TAGLIST        //tag posts
     ,AUTHORLIST     //author post
     ,SEARCHLIST     //搜索页面
+    ,HOTSEARCHLIST  //搜索缺省页面
     ,MODIFY_INDIVIDUAL  //个人信息修改
     ,FOOD_POST      //美食详细页面
     ,BRAND_POST     //折扣详细页面

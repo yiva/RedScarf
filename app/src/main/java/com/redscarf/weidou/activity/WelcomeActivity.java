@@ -3,7 +3,6 @@ package com.redscarf.weidou.activity;
 import pl.droidsonroids.gif.GifImageView;
 
 import com.redscarf.weidou.util.MyConstants;
-import com.redscarf.weidou.util.MyPreferences;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.os.Handler;
  * @author yeahwang
  *
  */
-public class WelcomeActivity extends BaseActivity{
+public class WelcomeActivity extends BaseActivity {
 
 	private Handler mHandler = null;
 	private Intent in_main;

@@ -1,7 +1,6 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.customwidget.ProgressWebView;
 
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-public class WebActivity extends BaseActivity{
+public class WebActivity extends BaseActivity {
 
 	private Bundle datas;
 

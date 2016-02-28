@@ -59,7 +59,7 @@ public class IndividualModifyFragment extends BaseFragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_individual_modify, container, false);
         datas = getActivity().getIntent().getExtras();
-        registerButton();
+        initView();
         return rootView;
 
     }
@@ -72,7 +72,8 @@ public class IndividualModifyFragment extends BaseFragment {
     /**
      * 注册控件
      */
-    private void registerButton() {
+    @Override
+    public void initView() {
         txt_title = (TextView) getActivity().findViewById(R.id.title_individual_modify);
         edit_modify = (EditText) rootView.findViewById(R.id.edit_modify);
         txt_submit = (TextView) getActivity().findViewById(R.id.txt_individual_modify_submit);

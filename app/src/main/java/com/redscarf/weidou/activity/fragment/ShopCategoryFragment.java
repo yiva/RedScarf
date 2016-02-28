@@ -51,6 +51,11 @@ public class ShopCategoryFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initView() {
+
+    }
+
     private class OnShopItemClick implements AdapterView.OnItemClickListener {
 
         @Override

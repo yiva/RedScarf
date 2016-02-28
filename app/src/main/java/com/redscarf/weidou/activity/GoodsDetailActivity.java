@@ -34,8 +34,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.finalteam.toolsfinal.StringUtils;
-
 public class GoodsDetailActivity extends BaseActivity {
 
     private final String TAG = GoodsDetailActivity.class.getSimpleName();

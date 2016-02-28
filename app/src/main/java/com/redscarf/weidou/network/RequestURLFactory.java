@@ -43,8 +43,11 @@ public class RequestURLFactory {
             case AUTHORLIST:
                 res = baseUrl + "?json=get_author_posts&id=" + attributes[0];
                 break;
-            case SEARCHLIST:
+            case HOTSEARCHLIST:
                 res = baseUrl + "?json=get_hot_"+attributes[0]+"&count=10";//[foodposts；discountposts；searches]
+                break;
+            case SEARCHLIST:
+                res = baseUrl + "?json=get_search_category_results&search="+attributes[0];
                 break;
             default:
                 res = "false";

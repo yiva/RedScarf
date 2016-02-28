@@ -148,7 +148,7 @@
 	<color name="navy">#000080</color><!--海军色 -->
 	<color name="black">#000000</color><!--黑色 -->
 	
-	<color name="customappred">#515078</color><!-- 应用的红色 -->
+	<color name="customappred">#515078</color><!-- 应用的主题色 -->
 	<color name="wathetblue">#9e9ecb</color><!-- 首页actionbar浅蓝色 -->
 
 	<color name="allcanting">#ff8e54</color>

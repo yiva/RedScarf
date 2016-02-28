@@ -1,14 +1,12 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-public class ErrorActivity extends BaseActivity{
+public class ErrorActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {

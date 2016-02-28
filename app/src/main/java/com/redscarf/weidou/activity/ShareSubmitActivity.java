@@ -1,11 +1,9 @@
 package com.redscarf.weidou.activity;
 
 
-import com.redscarf.weidou.activity.R;
-
 import android.os.Bundle;
 
-public class ShareSubmitActivity extends BaseActivity{
+public class ShareSubmitActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {

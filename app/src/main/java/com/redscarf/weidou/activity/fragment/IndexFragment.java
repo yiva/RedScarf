@@ -21,7 +21,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,7 +98,7 @@ public class IndexFragment extends BaseFragment implements OnTouchListener {
         lv_index.setLongClickable(true);
         View header = inflater.inflate(R.layout.header_index, null);
         lv_index.addHeaderView(header, null, false);
-        registerButton();
+        initView();
         return rootView;
     }
 
@@ -130,7 +129,8 @@ public class IndexFragment extends BaseFragment implements OnTouchListener {
         this.customClickListener();
     }
 
-    private void registerButton() {
+    @Override
+    public void initView() {
         search = (ImageButton) rootView.findViewById(R.id.btnIndexSearch);
 
         attention = (TextView) rootView.findViewById(R.id.txt_hot_title_attention);

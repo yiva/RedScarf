@@ -13,7 +13,7 @@ import android.widget.TextView;
 /**
  * 分享二级页
  */
-public class WhoseShareActivity extends BaseActivity{
+public class WhoseShareActivity extends BaseActivity {
 
 	private TextView title;
 	private TextView label_user;
