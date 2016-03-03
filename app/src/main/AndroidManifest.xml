@@ -29,9 +29,17 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!-- <meta-data -->
-        <!-- android:name="com.google.android.geo.API_KEY" -->
-        <!-- android:value="AIzaSyApWaJMiXom2d-m_orNs9GOXdvv2LtZ75g" /> -->
+         <!--<meta-data-->
+         <!--android:name="com.google.android.geo.API_KEY"-->
+         <!--android:value="@string/google_maps_key" />-->
+        <!--debug用-->
+        <!--<meta-data-->
+            <!--android:name="com.google.android.maps.v2.API_KEY"-->
+            <!--android:value="@string/google_maps_key" />-->
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDlMo3ZurKFbAVze6Xl3z6bIzjEzvglNqA" />
 
 
         <!-- 启动界面 -->
@@ -149,19 +157,10 @@
             android:name=".ModifyActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
-        </activity>
         <activity
             android:name=".SearchDetailActivity"
-            android:label="@string/title_activity_search_detail" >
-        </activity>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

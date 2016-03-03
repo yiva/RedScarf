@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.MapActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SendReviewActivity;
@@ -27,6 +29,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,6 +64,7 @@ public class FoodDetailFragment extends BaseFragment {
                 } catch (JSONException e) {
                     ExceptionUtil.printAndRecord(TAG, e);
                 }
+                mlistener.sendLcation(body);
                 initView();
                 hideProgressDialog();
             }
@@ -75,8 +79,9 @@ public class FoodDetailFragment extends BaseFragment {
 
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
-        doRequestURL(RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
-                new String[]{datas.getString("key")}), FoodDetailFragment.class, handler, MSG_INDEX);
+        doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                new String[]{datas.getString("key")}), FoodDetailFragment.class, handler,
+                MSG_INDEX,2);
         return rootView;
     }
 
@@ -127,32 +132,37 @@ public class FoodDetailFragment extends BaseFragment {
     @Override
     public void initView() {
 
-
         TextView title_text = (TextView) rootView.findViewById(R.id.txt_food_detail_title);
         TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
         TextView website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
-        ImageView img_call_phone = (ImageView) rootView.findViewById(R.id.btn_food_detail_phone_next);
         HorizontalListView detail_photos = (HorizontalListView) rootView.findViewById(R.id.hlist_food_detail_img);
-
+        TextView address = (TextView) rootView.findViewById(R.id.txt_food_detail_address);
+        TextView underground = (TextView) rootView.findViewById(R.id.txt_food_detail_underground);
+        TextView cost = (TextView) rootView.findViewById(R.id.txt_food_detail_cost);
+        TextView subtype = (TextView) rootView.findViewById(R.id.txt_food_detail_subtype);
+        TextView content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
+        TextView view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
 
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));
         title_text.setText(body.getTitle());
         phone.setText(body.getPhone());
-        website.setText(body.getWebsite());
+        website.setText("View WebSite");
+        address.setText(body.getSubtitle().replace("/n", " "));
+        underground.setText(body.getUnderground());
+        cost.setText(body.getCost());
+        subtype.setText(body.getSubtype());
+        content.setText(body.getContent());
+        view_menu.setText("View menu");
         //Call Phone
-        img_call_phone.setOnClickListener(new onCallPhone());
-        //Jump UserReviewActivity
-//		rootView.findViewById(R.id.btn_food_detail_review_more).setOnClickListener(new onReviewMoreLinstener());
+        phone.setOnClickListener(new onCallPhone());
 
         ////Jump MapActivity
 //        rootView.findViewById(R.id.imbtn_maps).setOnClickListener(new onImgMapsLinstener());
 
         //Jump WebActivity
-        rootView.findViewById(R.id.btn_food_detail_website_next).setOnClickListener(new OnJumpWeb());
-
-//        getActivity().findViewById(R.id.btn_bottom_food_detail_review).setOnClickListener(new onSendReview());
-        mlistener.sendLcation(body);
+        website.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getWebsite()));
+        view_menu.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getMenu()));
     }
 
 

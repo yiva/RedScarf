@@ -1,5 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.redscarf.weidou.activity.BasicViewActivity;
+import com.redscarf.weidou.activity.FoodDetailActivity;
 import com.redscarf.weidou.activity.R;
+import com.redscarf.weidou.activity.SearchDetailActivity;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.adapter.SearchAdapter;
 import com.redscarf.weidou.adapter.ViewPageFragmentAdapter;
@@ -29,6 +34,7 @@ public class SearchFragment extends BaseViewPagerFragment {
 
     private View rootView;
     private ListView lv_search;
+    private ImageButton btn_search;
 
     private String response;
     private final int MSG_INDEX = 1; //msg.what index
@@ -64,6 +70,7 @@ public class SearchFragment extends BaseViewPagerFragment {
 
 //        showProgressDialogNoCancelable("", MyConstants.LOADING);
 //        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.SEARCHLIST, new String[]{"searches"}), SearchFragment.class, handler, MSG_INDEX);
+        initView();
 
         return rootView;
     }
@@ -78,7 +85,8 @@ public class SearchFragment extends BaseViewPagerFragment {
 
     @Override
     public void initView() {
-
+        btn_search = (ImageButton) rootView.findViewById(R.id.btnSearch);
+        btn_search.setOnClickListener(new OnJumpSearchDetailLinstener());
     }
 
     private class onSearchItemClick implements AdapterView.OnItemClickListener{
@@ -86,6 +94,15 @@ public class SearchFragment extends BaseViewPagerFragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Toast.makeText(getActivity(), bodys.get(position).getTerms(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class OnJumpSearchDetailLinstener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent i_search_info = new Intent(getActivity(),SearchDetailActivity.class);
+            startActivity(i_search_info);
         }
     }
 }

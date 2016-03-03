@@ -203,6 +203,42 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
 
+	/**
+	 * @param method
+	 * @param url
+	 * @param clazz
+	 * @param handler
+	 * @param MSG
+	 * @param progressType 1:showProgressDialog 2:showProgressDialogNoCancelable
+	 */
+	protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
+								final int MSG, final int progressType) {
+		if (progressType == 1) {
+			showProgressDialog("", MyConstants.LOADING);
+		}else if(progressType == 2){
+			showProgressDialogNoCancelable("", MyConstants.LOADING);
+		}
+		Uri.Builder builder = Uri.parse(url).buildUpon();
+		stringRequest = new StringRequest(method, builder.toString(), new Response.Listener<String>() {
+			@Override
+			public void onResponse(String s) {
+				Log.i(clazz.getSimpleName(), "success");
+				Bundle data = new Bundle();
+				data.putString("response", s);
+				Message message = Message.obtain(handler, MSG);
+				message.setData(data);
+				handler.sendMessage(message);
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError volleyError) {
+				Log.e(clazz.getSimpleName(), "error", volleyError);
+			}
+		});
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setTag(clazz.getSimpleName());
+		VolleyUtil.getRequestQueue().add(stringRequest);
+	}
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

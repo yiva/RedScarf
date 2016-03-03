@@ -1,675 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-     >
-    <!--<ScrollView-->
-         <!--android:id="@+id/scroll_food_detail"-->
-         <!--android:layout_width="match_parent"-->
-         <!--android:layout_height="match_parent"-->
-         <!--android:fillViewport="false"-->
-         <!--android:scrollbars="vertical|none" >-->
-		<GridLayout
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:columnCount="1"
-		    >
-			<!--<fragment-->
-				<!--android:id="@+id/food_map"-->
-				<!--android:layout_width="match_parent"-->
-				<!--android:layout_height="150dp"-->
-				<!--android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
-         <RelativeLayout
-               android:id="@+id/listview_food_recommend"
+    >
+
+
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="1"
+    android:paddingLeft="@dimen/layout_padding2"
+    android:paddingRight="@dimen/layout_padding2"
+    >
+       <TextView
+           android:id="@+id/txt_food_detail_title"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="@dimen/sys_font_size_bolder"
+           android:textStyle="bold" />
+       <TextView
+           android:id="@+id/txt_food_detail_address"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="@dimen/sys_font_size_normal"
+           android:textStyle="normal"
+           />
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           >
+           <TextView
+               android:id="@+id/txt_food_detail_underground"
                android:layout_width="match_parent"
-               android:layout_height="80dp"
-               android:layout_margin="5dp" >
-                   <LinearLayout
-                       android:layout_width="200dp"
-                       android:layout_height="80dp"
-                       android:layout_marginLeft="5dp"
-                       android:layout_marginStart="5dp"
-                       android:layout_gravity="center_vertical"
-                       android:orientation="vertical">
-                       <TextView
-                           android:id="@+id/txt_food_detail_title"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:textSize="15dp"
-                           android:textStyle="bold" />
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="@string/demotext_foodlist_reviews"
-                           android:textSize="11dp"
-                           android:textColor="#AAAAAA"
-                           android:textStyle="normal" />
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="@string/demotext_foodlist_content"
-                           android:textSize="11dp"
-                           android:textStyle="normal" />
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="@string/demotext_foodlist_location"
-                           android:textSize="11dp"
-                           android:textStyle="normal" />
-                       <TextView
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:text="@string/demotext_foodlist_type"
-                           android:textSize="11dp"
-                           android:textColor="#AAAAAA"
-                           android:textStyle="normal" />
-                   </LinearLayout>
-                   <!-- 商店信息 -->
-                   <RelativeLayout 
-                       android:layout_width="wrap_content"
-                       android:layout_height="match_parent"
-                       android:layout_alignParentRight="true"
-                       android:layout_alignParentEnd="true"
-                       android:layout_marginRight="5dp"
-                       android:orientation="vertical"
-                       >
-                       <TextView 
-                           android:id="@+id/txt_food_detail_distance"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:text="@string/demotext_food_detail_distance"
-                           android:textColor="#AAAAAA"
-                           android:layout_alignParentRight="true"/>
+               android:layout_height="wrap_content"
+               android:textSize="@dimen/sys_font_size_normal"
+               android:textStyle="normal" />
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentRight="true"
+               >
+               <TextView
+                   android:layout_alignParentRight="true"
+                   android:id="@+id/txt_food_detail_cost"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/sys_font_size_normal"
+                   android:textStyle="normal" />
+           </LinearLayout>
 
-				   </RelativeLayout>
-           </RelativeLayout>
-           <View 
-               android:layout_width="match_parent"
-               android:layout_height="1dp"
-               android:background="#DDDDDD"/>
+       </RelativeLayout>
 
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:padding="8dp"
-				android:gravity="center_vertical">
-				<ImageView
-					android:id="@+id/img_food_detail_phone"
-					android:layout_width="20dp"
-					android:layout_height="25dp"
-					android:layout_margin="8dp"
-					android:background="@drawable/food_phone"
-					android:layout_centerVertical="true"/>
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_centerVertical="true"
-					android:layout_toRightOf="@+id/img_food_detail_phone"
-					android:orientation="vertical"
-					>
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/demotext_food_detail_phone"/>
-					<TextView
-						android:id="@+id/txt_food_detail_phone"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"/>
-				</LinearLayout>
-				<ImageView
-					android:id="@+id/btn_food_detail_phone_next"
-					android:layout_width="20dp"
-					android:layout_height="16dp"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:background="@drawable/ic_next_grey"/>
-			</RelativeLayout>
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:background="#DDDDDD"/>
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:padding="8dp">
-				<ImageView
-					android:id="@+id/img_food_detail_mouse"
-					android:layout_width="20dp"
-					android:layout_height="25dp"
-					android:layout_margin="8dp"
-					android:background="@drawable/food_mouse"
-					android:layout_centerVertical="true"/>
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_centerVertical="true"
-					android:layout_toRightOf="@+id/img_food_detail_mouse"
-					android:orientation="vertical"
-					android:paddingRight="25dp"
-					>
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/demotext_food_detail_website"/>
-					<TextView
-						android:id="@+id/txt_food_detail_website"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						style="@style/text_style"
-						android:maxLines="4"/>
-				</LinearLayout>
-				<ImageView
-					android:id="@+id/btn_food_detail_website_next"
-					android:layout_width="20dp"
-					android:layout_height="16dp"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:background="@drawable/ic_next_grey"/>
-			</RelativeLayout>
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:background="#DDDDDD"/>
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:padding="8dp"
-				android:gravity="center_vertical">
-				<ImageView
-					android:id="@+id/img_food_detail_more"
-					android:layout_width="20dp"
-					android:layout_height="25dp"
-					android:layout_margin="8dp"
-					android:background="@drawable/ic_more_grey"
-					android:layout_centerVertical="true"/>
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_centerVertical="true"
-					android:layout_toRightOf="@+id/img_food_detail_more"
-					android:orientation="vertical"
-					android:gravity="center_vertical"
-					>
-					<TextView
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="@string/demotext_food_detail_more"
-						/>
-				</LinearLayout>
-				<ImageView
-					android:id="@+id/btn_food_detail_more_down"
-					android:layout_width="16dp"
-					android:layout_height="20dp"
-					android:layout_marginRight="4dp"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:background="@drawable/ic_down_grey"/>
-			</RelativeLayout>
-			<View
-			   android:layout_marginTop="8dp"
-               android:layout_width="match_parent"
-               android:layout_height="1dp"
-               android:background="#DDDDDD"/>
-			<!-- 餐厅照片 -->
-			<LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:padding="8dp"
-			    android:background="#DDDDDD"
-			    android:orientation="vertical">
+       <TextView
+           android:id="@+id/txt_food_detail_subtype"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textSize="11dp"
+           android:textColor="#AAAAAA"
+           android:textStyle="normal" />
 
-                   <RelativeLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="center_vertical"
-					   android:paddingLeft="8dp"
-					   android:layout_marginBottom="8dp">
+</GridLayout>
+    <View
+        style="@style/hr_line"/>
 
-                       <ImageView
-                           android:id="@+id/img_food_detail_camera"
-                           android:layout_width="20dp"
-                           android:layout_height="20dp"
-						   android:layout_centerVertical="true"
-                           android:background="@drawable/ic_camera" />
+    <TextView
+        android:id="@+id/txt_food_detail_website"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/whitesmoke"
+        android:paddingLeft="@dimen/layout_padding2"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/sys_font_size_h2"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"/>
 
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_centerVertical="true"
-                           android:layout_toRightOf="@+id/img_food_detail_camera"
-                           android:text="@string/demotext_food_detail_photo"
-						   android:layout_marginLeft="8dp" />
-
-                       <!--<ImageButton-->
-                           <!--android:layout_width="20dp"-->
-                           <!--android:layout_height="16dp"-->
-                           <!--android:layout_alignParentRight="true"-->
-						   <!--android:layout_centerVertical="true"-->
-						   <!--android:background="@drawable/ic_next" />-->
-                   </RelativeLayout>
-
-				<com.redscarf.weidou.customwidget.HorizontalListView
-					android:id="@+id/hlist_food_detail_img"
-					android:layout_width="wrap_content"
-					android:layout_height="100dp"
-					android:focusable="false"
-					android:layout_marginTop="8dp">
-
-				</com.redscarf.weidou.customwidget.HorizontalListView>
-
-			    <!--<LinearLayout-->
-			        <!--android:layout_marginTop="8dp"-->
-			        <!--android:paddingLeft="8dp"-->
-			        <!--android:paddingRight="8dp"-->
-			        <!--android:layout_width="match_parent"-->
-			        <!--android:layout_height="100dp"-->
-			        <!--android:orientation="horizontal">-->
-			        <!--<ImageView-->
-			            <!--android:layout_width="85dp"-->
-			            <!--android:layout_height="80dp"-->
-			            <!--android:background="@drawable/img_food_detail_photo"-->
-			            <!--android:layout_weight="1"-->
-			            <!--android:contentDescription="@string/app_name"-->
-			            <!--/>-->
-			        <!--<ImageView-->
-			            <!--android:layout_marginLeft="5dp"-->
-			            <!--android:layout_marginRight="5dp"-->
-			            <!--android:layout_width="85dp"-->
-			            <!--android:layout_height="80dp"-->
-			            <!--android:background="@drawable/img_food_detail_photo"-->
-			            <!--android:layout_weight="1"-->
-			            <!--android:contentDescription="@string/app_name"-->
-			            <!--/>-->
-			        <!--<ImageView-->
-			            <!--android:layout_width="85dp"-->
-			            <!--android:layout_height="80dp"-->
-			            <!--android:background="@drawable/img_food_detail_photo"-->
-			            <!--android:layout_weight="1"-->
-			            <!--android:contentDescription="@string/app_name"-->
-			            <!--/>-->
-			    <!--</LinearLayout>-->
-			    <!--<TextView-->
-			        <!--android:layout_width="wrap_content"-->
-			        <!--android:layout_height="wrap_content"-->
-			        <!--android:text="@string/demotext_food_detail_upload_photo"-->
-			        <!--android:textColor="#d8412e"-->
-			        <!--android:layout_gravity="end"/>-->
-			</LinearLayout>
-			<!-- 网友评价列表 -->
-			<!--<LinearLayout -->
-			    <!--android:layout_width="match_parent"-->
-			    <!--android:layout_height="wrap_content"-->
-			    <!--android:orientation="vertical"-->
-			    <!-->-->
-			    <!--<RelativeLayout -->
-			        <!--android:layout_width="match_parent"-->
-			        <!--android:layout_height="60dp"-->
-			        <!--android:paddingLeft="8dp"-->
-			        <!--android:paddingRight="8dp"-->
-			        <!-->-->
-			        <!--<ImageView -->
-			            <!--android:id="@+id/ic_user_content_food_detail"-->
-			            <!--android:layout_width="wrap_content"-->
-			            <!--android:layout_height="wrap_content"-->
-			            <!--android:layout_centerVertical="true"-->
-			            <!--android:background="@drawable/ic_content"/>-->
-			        <!--<TextView -->
-			            <!--android:layout_width="wrap_content"-->
-			            <!--android:layout_height="wrap_content"-->
-			            <!--android:layout_centerVertical="true"-->
-			            <!--android:layout_toRightOf="@+id/ic_user_content_food_detail"-->
-			            <!--android:text="@string/demotext_food_detail_user_content"/>-->
-			        <!--<ImageButton-->
-			            <!--android:id="@+id/btn_food_detail_review_more"-->
-						<!--android:layout_width="20dp"-->
-						<!--android:layout_height="16dp"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_alignTop="@+id/ic_user_content_food_detail"-->
-                        <!--android:background="@drawable/ic_next"/>-->
-			    <!--</RelativeLayout>-->
-			    	<!--<View -->
-					   <!--android:layout_marginTop="8dp"-->
-		               <!--android:layout_width="match_parent"-->
-		               <!--android:layout_height="1dp"-->
-		               <!--android:paddingLeft="8dp"-->
-			           <!--android:paddingRight="8dp"-->
-		               <!--android:background="#DDDDDD"/>-->
-			    	<!--&lt;!&ndash; Begin 单个网友评价内容 &ndash;&gt;-->
-			    	<!--<LinearLayout -->
-			    	    <!--android:layout_width="match_parent"-->
-			    	    <!--android:layout_height="wrap_content"-->
-			    	    <!--android:paddingLeft="8dp"-->
-			            <!--android:paddingRight="8dp"-->
-			    	    <!--android:orientation="horizontal"-->
-			    	    <!-->-->
-			    	    <!--<ImageView -->
-			    	        <!--android:layout_width="50dp"-->
-			    	        <!--android:layout_height="50dp"-->
-			    	        <!--android:background="@drawable/user_image"/>-->
-			    	    <!--&lt;!&ndash; Begin 评价内容 &ndash;&gt;-->
-			    	    <!--<LinearLayout -->
-			    	        <!--android:layout_width="wrap_content"-->
-			    	        <!--android:layout_height="wrap_content"-->
-			    	        <!--android:layout_gravity="fill_horizontal"-->
-			    	        <!--android:paddingLeft="8dp"-->
-			    	        <!--android:orientation="vertical"-->
-			    	        <!-->-->
-			    	        <!--<RelativeLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="50dp"-->
-			    	            <!-->-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_user_name"-->
-			    	                <!--android:textStyle="bold"/>-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:layout_alignParentRight="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_review_time"/>-->
-			    	        <!--</RelativeLayout>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/greyflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	        <!--</LinearLayout>-->
-			    	        <!--<TextView -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="80dp"-->
-			    	            <!--android:text="@string/demotext_food_detail_review_content"/>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:paddingTop="8dp"-->
-			    	            <!--android:paddingBottom="10dp"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	        <!--</LinearLayout>-->
-			    	    <!--</LinearLayout>-->
-			    	    <!--&lt;!&ndash; End 评价内容 &ndash;&gt;-->
-			    	<!--</LinearLayout>-->
-			    	<!--<View -->
-							   <!--android:layout_marginTop="8dp"-->
-				               <!--android:layout_width="match_parent"-->
-				               <!--android:layout_height="1dp"-->
-				               <!--android:paddingLeft="8dp"-->
-					           <!--android:paddingRight="8dp"-->
-				               <!--android:background="#DDDDDD"/>-->
-			    	<!--&lt;!&ndash; End 单个网友评价内容 &ndash;&gt;-->
-			    	<!--&lt;!&ndash; Begin 单个网友评价内容 &ndash;&gt;-->
-			    	<!--<LinearLayout -->
-			    	    <!--android:layout_width="match_parent"-->
-			    	    <!--android:layout_height="wrap_content"-->
-			    	    <!--android:paddingLeft="8dp"-->
-			            <!--android:paddingRight="8dp"-->
-			    	    <!--android:orientation="horizontal"-->
-			    	    <!-->-->
-			    	    <!--<ImageView -->
-			    	        <!--android:layout_width="50dp"-->
-			    	        <!--android:layout_height="50dp"-->
-			    	        <!--android:background="@drawable/user_image"/>-->
-			    	    <!--&lt;!&ndash; Begin 评价内容 &ndash;&gt;-->
-			    	    <!--<LinearLayout -->
-			    	        <!--android:layout_width="wrap_content"-->
-			    	        <!--android:layout_height="wrap_content"-->
-			    	        <!--android:layout_gravity="fill_horizontal"-->
-			    	        <!--android:paddingLeft="8dp"-->
-			    	        <!--android:orientation="vertical"-->
-			    	        <!-->-->
-			    	        <!--<RelativeLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="50dp"-->
-			    	            <!-->-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_user_name"-->
-			    	                <!--android:textStyle="bold"/>-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:layout_alignParentRight="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_review_time"/>-->
-			    	        <!--</RelativeLayout>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/greyflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	        <!--</LinearLayout>-->
-			    	        <!--<TextView -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="80dp"-->
-			    	            <!--android:text="@string/demotext_food_detail_review_content"/>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:paddingTop="8dp"-->
-			    	            <!--android:paddingBottom="10dp"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	        <!--</LinearLayout>-->
-			    	    <!--</LinearLayout>-->
-			    	    <!--&lt;!&ndash; End 评价内容 &ndash;&gt;-->
-			    	<!--</LinearLayout>-->
-			    	<!--<View -->
-							   <!--android:layout_marginTop="8dp"-->
-				               <!--android:layout_width="match_parent"-->
-				               <!--android:layout_height="1dp"-->
-				               <!--android:paddingLeft="8dp"-->
-					           <!--android:paddingRight="8dp"-->
-				               <!--android:background="#DDDDDD"/>-->
-			    	<!--&lt;!&ndash; End 单个网友评价内容 &ndash;&gt;-->
-			    	<!--&lt;!&ndash; Begin 单个网友评价内容 &ndash;&gt;-->
-			    	<!--<LinearLayout -->
-			    	    <!--android:layout_width="match_parent"-->
-			    	    <!--android:layout_height="wrap_content"-->
-			    	    <!--android:paddingLeft="8dp"-->
-			            <!--android:paddingRight="8dp"-->
-			    	    <!--android:orientation="horizontal"-->
-			    	    <!-->-->
-			    	    <!--<ImageView -->
-			    	        <!--android:layout_width="50dp"-->
-			    	        <!--android:layout_height="50dp"-->
-			    	        <!--android:background="@drawable/user_image"/>-->
-			    	    <!--&lt;!&ndash; Begin 评价内容 &ndash;&gt;-->
-			    	    <!--<LinearLayout -->
-			    	        <!--android:layout_width="wrap_content"-->
-			    	        <!--android:layout_height="wrap_content"-->
-			    	        <!--android:layout_gravity="fill_horizontal"-->
-			    	        <!--android:paddingLeft="8dp"-->
-			    	        <!--android:orientation="vertical"-->
-			    	        <!-->-->
-			    	        <!--<RelativeLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="50dp"-->
-			    	            <!-->-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_user_name"-->
-			    	                <!--android:textStyle="bold"/>-->
-			    	            <!--<TextView -->
-			    	                <!--android:layout_width="wrap_content"-->
-			    	                <!--android:layout_height="wrap_content"-->
-			    	                <!--android:layout_centerVertical="true"-->
-			    	                <!--android:layout_alignParentRight="true"-->
-			    	                <!--android:text="@string/demotext_food_detail_review_time"/>-->
-			    	        <!--</RelativeLayout>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/redflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="20dp"-->
-			    	                <!--android:layout_height="20dp"-->
-			    	                <!--android:background="@drawable/greyflower"-->
-			    	                <!--android:contentDescription="@string/app_name"/>-->
-			    	        <!--</LinearLayout>-->
-			    	        <!--<TextView -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="80dp"-->
-			    	            <!--android:text="@string/demotext_food_detail_review_content"/>-->
-			    	        <!--<LinearLayout -->
-			    	            <!--android:layout_width="match_parent"-->
-			    	            <!--android:layout_height="wrap_content"-->
-			    	            <!--android:paddingTop="8dp"-->
-			    	            <!--android:paddingBottom="10dp"-->
-			    	            <!--android:orientation="horizontal"-->
-			    	            <!-->-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	            <!--<ImageView -->
-			    	                <!--android:layout_width="60dp"-->
-			    	                <!--android:layout_height="60dp"-->
-			    	                <!--android:layout_marginLeft="8dp"-->
-			    	                <!--android:background="@drawable/img_food_detail_photo"/>-->
-			    	        <!--</LinearLayout>-->
-			    	    <!--</LinearLayout>-->
-			    	    <!--&lt;!&ndash; End 评价内容 &ndash;&gt;-->
-			    	<!--</LinearLayout>-->
-			    	<!--<View -->
-							   <!--android:layout_marginTop="8dp"-->
-				               <!--android:layout_width="match_parent"-->
-				               <!--android:layout_height="1dp"-->
-				               <!--android:paddingLeft="8dp"-->
-					           <!--android:paddingRight="8dp"-->
-				               <!--android:background="#DDDDDD"/>-->
-			    	<!--&lt;!&ndash; End 单个网友评价内容 &ndash;&gt;-->
-			<!--</LinearLayout>-->
-			<!-- End 网友评价列表 -->
-		</GridLayout>
-     <!--</ScrollView>-->
-
+    <TextView
+        android:id="@+id/txt_food_detail_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/whitesmoke"
+        android:paddingLeft="@dimen/layout_padding2"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/sys_font_size_h2"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"/>
+    <TextView
+        android:id="@+id/txt_food_detail_view_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/whitesmoke"
+        android:paddingLeft="@dimen/layout_padding2"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/sys_font_size_h2"
+        />
+    <TextView
+        android:id="@+id/txt_food_detail_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin1"
+        android:paddingLeft="@dimen/layout_padding2"
+        android:paddingRight="@dimen/layout_padding2"
+        android:textSize="@dimen/sys_font_size_normal"
+        />
+    <View
+        style="@style/hr_line"/>
+    <!-- 餐厅照片 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#DDDDDD"
+        android:orientation="vertical">
+        <com.redscarf.weidou.customwidget.HorizontalListView
+            android:id="@+id/hlist_food_detail_img"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:focusable="false"
+            android:layout_marginTop="8dp">
+        </com.redscarf.weidou.customwidget.HorizontalListView>
+    </LinearLayout>
 </LinearLayout>

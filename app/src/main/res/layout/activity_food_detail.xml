@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:columnCount="1">
             <fragment
-                android:id="@+id/map"
+                android:id="@+id/food_map"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:name="com.google.android.gms.maps.SupportMapFragment"

@@ -1,20 +1,19 @@
 package com.redscarf.weidou.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class SearchDetailActivity extends AppCompatActivity {
+public class SearchDetailActivity extends BaseActivity {
 
     private EditText search_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_detail);
+        setContentView(R.layout.actionbar_search_detail);
+        initView();
     }
 
     private void initView() {
@@ -27,17 +26,23 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            callChangedText();
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            callChangedText();
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            callChangedText();
         }
+    }
+
+    private boolean callChangedText(){
+        String text = search_content.getText().toString();
+        Toast.makeText(SearchDetailActivity.this, text, Toast.LENGTH_SHORT).show();
+        return true;
     }
 }
