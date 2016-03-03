@@ -26,6 +26,7 @@ import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -227,6 +228,20 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 			Intent i_web = new Intent(context, WebActivity.class);
 			i_web.putExtras(datas);
 			startActivity(i_web);
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		try {
+			Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+			childFragmentManager.setAccessible(true);
+			childFragmentManager.set(this, null);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

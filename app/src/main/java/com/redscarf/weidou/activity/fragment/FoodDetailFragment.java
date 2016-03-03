@@ -21,6 +21,7 @@ import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.util.MyConstants;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ public class FoodDetailFragment extends BaseFragment {
     private FoodDetailBody body;
     private View rootView;
     private ArrayList<String> photoAddr;
+
+    OnShowMapListener mlistener;
 
 
     private Handler handler = new Handler() {
@@ -72,7 +75,20 @@ public class FoodDetailFragment extends BaseFragment {
 
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
+        doRequestURL(RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                new String[]{datas.getString("key")}), FoodDetailFragment.class, handler, MSG_INDEX);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mlistener = (OnShowMapListener) context;
+        } catch (ClassCastException ex) {
+            throw new ClassCastException("must implement "
+                    + OnShowMapListener.class.getSimpleName());
+        }
     }
 
     @Override
@@ -80,8 +96,11 @@ public class FoodDetailFragment extends BaseFragment {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         //请求url参数
-        doRequestURL(RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
-                new String[]{datas.getString("key")}), FoodDetailFragment.class, handler, MSG_INDEX);
+
+    }
+
+    public interface OnShowMapListener {
+        void sendLcation(FoodDetailBody food);
     }
 
     private boolean denoteFoodPhotos() {
@@ -108,6 +127,7 @@ public class FoodDetailFragment extends BaseFragment {
     @Override
     public void initView() {
 
+
         TextView title_text = (TextView) rootView.findViewById(R.id.txt_food_detail_title);
         TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
         TextView website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
@@ -126,12 +146,13 @@ public class FoodDetailFragment extends BaseFragment {
 //		rootView.findViewById(R.id.btn_food_detail_review_more).setOnClickListener(new onReviewMoreLinstener());
 
         ////Jump MapActivity
-        rootView.findViewById(R.id.imbtn_maps).setOnClickListener(new onImgMapsLinstener());
+//        rootView.findViewById(R.id.imbtn_maps).setOnClickListener(new onImgMapsLinstener());
 
         //Jump WebActivity
         rootView.findViewById(R.id.btn_food_detail_website_next).setOnClickListener(new OnJumpWeb());
 
 //        getActivity().findViewById(R.id.btn_bottom_food_detail_review).setOnClickListener(new onSendReview());
+        mlistener.sendLcation(body);
     }
 
 

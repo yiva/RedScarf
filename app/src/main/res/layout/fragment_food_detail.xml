@@ -5,23 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
      >
-    <ScrollView
-         android:id="@+id/scroll_food_detail"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:fillViewport="false"
-         android:scrollbars="vertical|none" >
-		<LinearLayout 
+    <!--<ScrollView-->
+         <!--android:id="@+id/scroll_food_detail"-->
+         <!--android:layout_width="match_parent"-->
+         <!--android:layout_height="match_parent"-->
+         <!--android:fillViewport="false"-->
+         <!--android:scrollbars="vertical|none" >-->
+		<GridLayout
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
+		    android:columnCount="1"
 		    >
-         <ImageButton
-             android:id="@+id/imbtn_maps"
-             android:layout_width="match_parent"
-             android:layout_height="143dp"
-             android:background="@drawable/map"
-             android:contentDescription="@string/app_name" />
+			<!--<fragment-->
+				<!--android:id="@+id/food_map"-->
+				<!--android:layout_width="match_parent"-->
+				<!--android:layout_height="150dp"-->
+				<!--android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
          <RelativeLayout
                android:id="@+id/listview_food_recommend"
                android:layout_width="match_parent"
@@ -670,7 +669,7 @@
 			    	<!--&lt;!&ndash; End 单个网友评价内容 &ndash;&gt;-->
 			<!--</LinearLayout>-->
 			<!-- End 网友评价列表 -->
-		</LinearLayout>
-     </ScrollView>
+		</GridLayout>
+     <!--</ScrollView>-->
 
 </LinearLayout>

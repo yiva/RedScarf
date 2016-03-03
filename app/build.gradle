@@ -13,7 +13,7 @@ android {
     buildToolsVersion '23.0.0'
     defaultConfig {
         applicationId "com.redscarf.weidou.activity"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 15
         versionName "0.5.8"
@@ -26,8 +26,8 @@ android {
     }
 }
 
-repositories{
-    flatDir{
+repositories {
+    flatDir {
         dirs 'libs'
     }
 }
@@ -36,17 +36,18 @@ repositories{
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    //    compile files('libs/android-support-v13.jar')
+    compile files('libs/classes.jar')
+    //动态gif
+    //调用相机相册
+    //asymmetricgridview可跨行列gridview
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
-    compile 'com.google.android.gms:play-services:7.8.0'
-//    compile files('libs/volley.jar')
-    compile files('libs/classes.jar')
+    compile 'com.google.android.gms:play-services:8.3.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'
-    //动态gif
     compile 'cn.finalteam:galleryfinal:1.0.2'
-    //调用相机相册
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-    //asymmetricgridview可跨行列gridview
     compile 'com.felipecsl.asymmetricgridview:library:2.0.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.android.support:support-v13:23.0.1'
 }

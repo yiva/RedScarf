@@ -182,5 +182,6 @@
     <string name="txt_brand_detail_info_more">查看品牌信息</string>
     <string name="txt_brand_detail_website">官方网站</string>
     <string name="txt_brand_detail_copy_code">点击复制折扣码</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
