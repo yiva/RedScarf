@@ -29,9 +29,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!--<meta-data-->
-            <!--android:name="com.google.android.geo.API_KEY"-->
-            <!--android:value="AIzaSyApWaJMiXom2d-m_orNs9GOXdvv2LtZ75g" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="AIzaSyApWaJMiXom2d-m_orNs9GOXdvv2LtZ75g" /> -->
+
 
         <!-- 启动界面 -->
         <activity
@@ -156,6 +157,10 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".SearchDetailActivity"
+            android:label="@string/title_activity_search_detail" >
         </activity>
     </application>
 

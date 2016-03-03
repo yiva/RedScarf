@@ -16,4 +16,15 @@
         android:text="@string/action_search"
         android:textSize="20sp"
         android:textColor="@color/white"/>
+    <ImageButton
+        android:id="@+id/btnSearch"
+        android:layout_marginRight="12.0dp"
+        android:layout_marginTop="12.0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_search"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/app_name"
+        />
 </RelativeLayout>

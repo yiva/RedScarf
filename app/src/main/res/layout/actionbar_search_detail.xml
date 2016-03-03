@@ -1,0 +1,34 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="63.0dp"
+    android:id="@+id/actionbarBrandDetail"
+    android:background="@color/customappred"
+    android:layout_gravity="center_horizontal">
+    <ImageButton
+        android:id="@+id/btn_search_detail_back"
+        android:layout_marginLeft="12.0dp"
+        android:layout_marginTop="12.0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_back"
+        android:contentDescription="@string/app_name"
+        android:onClick="onBackClick"
+        />
+
+    <EditText
+        android:id="@+id/edit_search_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/btn_search_detail_back"
+        android:layout_marginLeft="@dimen/layout_margin2"
+        android:layout_marginRight="@dimen/layout_margin2"
+        android:hint="@string/search_hint"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>

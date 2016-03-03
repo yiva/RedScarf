@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.redscarf.weidou.activity.SearchDetailActivity">
+
+    <include
+        android:id="@+id/actionbar_search_detail"
+        layout="@layout/actionbar_search_detail" />
+
+    <ListView
+        android:id="@+id/list_search_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>
