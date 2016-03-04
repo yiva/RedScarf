@@ -37,6 +37,10 @@ import java.util.Map;
  */
 public abstract class BaseFragment extends Fragment implements BasePageLinstener{
 
+	protected final int PROGRESS_DISVISIBLE = 0;
+	protected final int PROGRESS_NO_CANCLE = 1;
+	protected final int PROGRESS_CANCLE = 2;
+
 	private ProgressDialog progressDialog;
 
 	private StringRequest stringRequest;
@@ -213,9 +217,9 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 	 */
 	protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
 								final int MSG, final int progressType) {
-		if (progressType == 1) {
+		if (progressType == PROGRESS_CANCLE) {
 			showProgressDialog("", MyConstants.LOADING);
-		}else if(progressType == 2){
+		}else if(progressType == PROGRESS_NO_CANCLE){
 			showProgressDialogNoCancelable("", MyConstants.LOADING);
 		}
 		Uri.Builder builder = Uri.parse(url).buildUpon();

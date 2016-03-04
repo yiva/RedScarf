@@ -10,6 +10,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/WhoseShareActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/fragment/FoodFragment.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/adapter/RedScarfBodyAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/customwidget/ClearEditText.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/listener/OnSearchCustom.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/network/DataResponseListener.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/network/ResponseListener.java" charset="GBK" />

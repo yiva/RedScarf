@@ -19,5 +19,8 @@
         <attr name="allowWidthFull" format="boolean"/>
         <attr name="disableViewPager" format="boolean"/>
     </declare-styleable>
-
+    <declare-styleable name="ClearEditText">
+        <!-- 清除按钮的图标 -->
+        <attr name="iconClear" format="reference"/>
+    </declare-styleable>
 </resources>

@@ -43,7 +43,6 @@ public class FoodDetailFragment extends BaseFragment {
     private final String TAG = FoodDetailFragment.class.getSimpleName();
 
     private Bundle datas;
-    private final int MSG_INDEX = 2; //msg.what foods
 
     private FoodDetailBody body;
     private View rootView;

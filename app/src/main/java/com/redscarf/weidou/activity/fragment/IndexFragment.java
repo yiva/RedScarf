@@ -58,8 +58,6 @@ public class IndexFragment extends BaseFragment implements OnTouchListener {
     private TextView hot_food;
     private TextView hot_buy;
 
-    private final int MSG_INDEX = 1; // msg.what index
-    private final int MSG_TAG = 2;  //msg.what Tag Post
 
     private ArrayList<RedScarfBody> bodys;
     private String response;

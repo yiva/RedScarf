@@ -1,10 +1,12 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="63.0dp"
     android:id="@+id/actionbarBrandDetail"
     android:background="@color/customappred"
-    android:layout_gravity="center_horizontal">
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_vertical">
     <ImageButton
         android:id="@+id/btn_search_detail_back"
         android:layout_marginLeft="12.0dp"
@@ -17,18 +19,34 @@
         android:onClick="onBackClick"
         />
 
-    <EditText
+    <!--<Button-->
+        <!--android:id="@+id/btn_search_detail_submit"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="@dimen/layout_margin3"-->
+        <!--android:background="@drawable/btn_blue"-->
+        <!--android:text="@string/action_search"-->
+        <!--android:textSize="@dimen/sys_font_size_normal"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:contentDescription="@string/app_name"-->
+        <!--/>-->
+    <com.redscarf.weidou.customwidget.ClearEditText
         android:id="@+id/edit_search_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/btn_search_detail_back"
-        android:layout_marginLeft="@dimen/layout_margin2"
-        android:layout_marginRight="@dimen/layout_margin2"
+        android:layout_marginLeft="@dimen/layout_margin3"
+        android:layout_marginRight="@dimen/layout_margin3"
+        android:singleLine="true"
         android:hint="@string/search_hint"
-        android:textSize="20sp"
+        android:textSize="@dimen/sys_font_size_normal"
         android:textColor="#FFFFFF"
-        android:contentDescription="@string/app_name" />
+        android:imeOptions="actionSearch"
+        android:drawablePadding="10dp"
+        app:iconClear="@drawable/ic_clear_default_normal"/>
 
 </RelativeLayout>

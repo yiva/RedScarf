@@ -40,6 +40,10 @@ public class BaseActivity extends FragmentActivity{
 	protected final int MSG_IS_FAVOURITE = 2;//make favourite
 	protected final int MSG_IS_NOT_FAVOURITE = 3;//unmake favourite
 
+	protected final int PROGRESS_DISVISIBLE = 0;
+	protected final int PROGRESS_NO_CANCLE = 1;
+	protected final int PROGRESS_CANCLE = 2;
+
 	private ProgressDialog progressDialog;
 	private StringRequest stringRequest;
 
@@ -94,7 +98,19 @@ public class BaseActivity extends FragmentActivity{
 			progressDialog.setTitle(title);
 			progressDialog.setMessage(message);
 		}
+		progressDialog.setCancelable(true);
+		progressDialog.show();
+	}
 
+	public void showProgressDialogNoCancelable(String title, String message)
+	{
+		if (progressDialog == null) {
+			progressDialog = ProgressDialog.show(this, title,
+					message, true, false);
+		} else if (progressDialog.isShowing()) {
+			progressDialog.setTitle(title);
+			progressDialog.setMessage(message);
+		}
 		progressDialog.show();
 	}
 
@@ -180,8 +196,10 @@ public class BaseActivity extends FragmentActivity{
 	 */
 	protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
 								final int MSG, int progressType) {
-		if (progressType == 1) {
+		if (progressType == PROGRESS_NO_CANCLE) {
 			showProgressDialog("", MyConstants.LOADING);
+		}else if(progressType == PROGRESS_CANCLE){
+			showProgressDialogNoCancelable("", MyConstants.LOADING);
 		}
 		Uri.Builder builder = Uri.parse(url).buildUpon();
 		stringRequest = new StringRequest(method, builder.toString(), new Response.Listener<String>() {
@@ -226,34 +244,5 @@ public class BaseActivity extends FragmentActivity{
 		}
 	}
 
-//	protected class OnChangeFavourite implements View.OnClickListener {
-//		private Handler handler;
-//		private Class clazz;
-//		private String is_favourite;
-//		private String uid;
-//		public OnChangeFavourite(String id,String type, Class c,Handler h){
-//			this.handler = h;
-//			this.clazz = c;
-//			this.is_favourite = type;
-//			this.uid = id;
-//		}
-//		@Override
-//		public void onClick(View v) {
-//			switch (is_favourite) {
-//				case "0"://make favourite
-//					doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
-//									new String[]{uid}), BrandDetailActivity.class, handler,
-//							2, 0);
-//					break;
-//				case "1"://unmake favourite
-//					doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
-//									(RequestType.UNMAKE_FAVOURTIE, new String[]{uid}),
-//							BrandDetailActivity.class, handler, 3, 0);
-//					break;
-//				default:
-//					break;
-//			}
-//		}
-//	}
 
 }
