@@ -197,7 +197,7 @@ public class BuyFragment extends BaseFragment
             GoodsBody bodyItem = bodys.get(position);
 
             Bundle data = new Bundle();
-            data.putString("key", bodyItem.getId());
+            data.putString("id", bodyItem.getId());
             data.putString("title", bodyItem.getTitle());
 
             Intent in_shop_detail = new Intent(getActivity(), GoodsDetailActivity.class);

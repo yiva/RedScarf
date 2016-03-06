@@ -1,5 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.redscarf.weidou.activity.FoodDetailActivity;
+import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodSearchAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
@@ -76,7 +79,13 @@ public class FoodSearchFragment extends BaseFragment{
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(),"Food Search",Toast.LENGTH_SHORT).show();
+            Bundle datas = new Bundle();
+            datas.putString("id",bodys.get(position).getId());
+            datas.putString("title",bodys.get(position).getTitle());
+            Intent i_food = new Intent(getActivity(),FoodDetailActivity
+                    .class);
+            i_food.putExtras(datas);
+            startActivity(i_food);
         }
     }
 }

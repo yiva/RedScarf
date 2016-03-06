@@ -1,5 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
+import com.redscarf.weidou.activity.SearchDetailActivity;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.adapter.SearchAdapter;
 import com.redscarf.weidou.network.RequestType;
@@ -75,7 +78,13 @@ public class HotSearchFragment extends BaseFragment{
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), "Hot Search", Toast.LENGTH_SHORT).show();
+            Bundle datas = new Bundle();
+            datas.putString("key","hotsearch");
+            datas.putString("content",bodys.get(position).getTerms());
+            Intent i_search = new Intent(getActivity(),SearchDetailActivity
+                    .class);
+            i_search.putExtras(datas);
+            startActivity(i_search);
         }
     }
 }

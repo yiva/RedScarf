@@ -1,5 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.adapter.ShopSearchAdapter;
@@ -74,7 +76,13 @@ public class ShopSearchFragment extends BaseFragment{
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), "Discount Search", Toast.LENGTH_SHORT).show();
+            Bundle datas = new Bundle();
+            datas.putString("id",bodys.get(position).getId());
+            datas.putString("title",bodys.get(position).getTitle());
+            Intent i_discount = new Intent(getActivity(),GoodsDetailActivity
+                    .class);
+            i_discount.putExtras(datas);
+            startActivity(i_discount);
         }
     }
 }

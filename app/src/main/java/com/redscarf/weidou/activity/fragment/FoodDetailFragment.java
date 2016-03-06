@@ -79,7 +79,7 @@ public class FoodDetailFragment extends BaseFragment {
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
         doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
-                new String[]{datas.getString("key")}), FoodDetailFragment.class, handler,
+                new String[]{datas.getString("id")}), FoodDetailFragment.class, handler,
                 MSG_INDEX,2);
         return rootView;
     }

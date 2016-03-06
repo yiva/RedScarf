@@ -165,7 +165,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
                                 long id) {
             FoodBody bodyItem = bodys.get(position - 1);
             Bundle data = new Bundle();
-            data.putString("key", bodyItem.getId());
+            data.putString("id", bodyItem.getId());
             data.putString("title", bodyItem.getTitle());
             Intent in_food_detail = new Intent(getActivity(), FoodDetailActivity.class);
             in_food_detail.putExtras(data);
@@ -195,12 +195,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
                     currentY = tmpCurrentY;
                     currentDirection = (int) (currentY - lastY);
                     if (lastDirection != currentDirection) {
-                        //如果与上次方向不同，则执行显/隐动画
-                        if (currentDirection < 0) {
-                            getActivity().findViewById(R.id.actionbar_food).setVisibility(View.GONE);
-                        } else {
-                            getActivity().findViewById(R.id.actionbar_food).setVisibility(View.VISIBLE);
-                        }
+//                        //如果与上次方向不同，则执行显/隐动画
+//                        if (currentDirection < 0) {
+//                            getActivity().findViewById(R.id.actionbar_food).setVisibility(View.GONE);
+//                        } else {
+//                            getActivity().findViewById(R.id.actionbar_food).setVisibility(View.VISIBLE);
+//                        }
                     }
                     lastY = currentY;
                 }
