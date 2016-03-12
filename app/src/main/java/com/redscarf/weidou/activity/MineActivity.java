@@ -75,7 +75,7 @@ public class MineActivity extends BaseActivity {
             try {
                 if (msg.what == MSG_NONCE) {
                     nonce = (NonceBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.NonceBody"));
-                    uploadImg(nonce.getNonce());
+//                    uploadImg(nonce.getNonce());
                 }else if (msg.what == MSG_MINE) {
                     body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
                     initView(body);
@@ -139,11 +139,6 @@ public class MineActivity extends BaseActivity {
      */
     private void initView(Member item) {
         txt_nick_name.setText(item.getNickname());
-//		还没有
-//		txt_gender
-//		txt_address
-//		txt_sign
-
 //		加载用户头像
         String profile_image = item.getAvatar();
         user_logo.setBackgroundResource(R.drawable.loading_large);
@@ -172,9 +167,10 @@ public class MineActivity extends BaseActivity {
         }
     }
 
-    private void uploadImg(String nonce) {
+    private void uploadImg() {
         doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType
-                        .CREATE_POST, new String[]{nonce, "1", "1", "1", "1", "1", bos.toString()}),
+                        .UPLOAD_AVATOR, new String[]{MyPreferences.getAppPerenceAttribute
+                        ("user_cookie")}),
                 MineActivity.class, handler, MSG_UPLOAD, 1);
         try {
             fStream.close();
@@ -205,7 +201,8 @@ public class MineActivity extends BaseActivity {
                         sb.append(Hyphens + boundary + end);
 
                         //第二行
-                        sb.append("Content-Disposition: form-data; name=\"attachment\"; filename=\"" + photoFile.getName() + "\"" + end);
+                        sb.append("Content-Disposition: form-data; name=\"file\"; filename=\"" +
+                                photoFile.getName() + "\"" + end);
 
                         //第三行
                         sb.append("Content-Type: " + MimeUtils.guessMimeTypeFromExtension("jpg") + end);
@@ -231,7 +228,9 @@ public class MineActivity extends BaseActivity {
                             sb.setLength(0);
                             sb.append(Hyphens + boundary + Hyphens + end);
                             bos.write(sb.toString().getBytes("utf-8"));
-                            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.NONCE_VALUE, new String[]{"posts", "create_post"}), MineActivity.class,handler,MSG_NONCE);
+                            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.UPLOAD_AVATOR, new
+                                    String[]{MyPreferences.getAppPerenceAttribute
+                                    ("user_cookie"),bos.toString()}), MineActivity.class,handler,MSG_UPLOAD);
 //                            doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType.CREATE_POST, new String[]{"posts", "create_post"}));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();

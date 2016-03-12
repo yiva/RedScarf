@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
 
     private PopupWindow sharePopupWindow;
     private RadioGroup bottom_tab;
+    private Button btn_mine;
 
     HashMap<String, Fragment> mapFragment = new HashMap<String, Fragment>();
     private FragmentTransaction transaction;
@@ -57,6 +59,12 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.activity_basic);
+        initView();
+    }
+
+    private void initView(){
+        btn_mine = (Button) findViewById(R.id.btn_bottom_mine);
+        btn_mine.setOnClickListener(new OnJumpMineActivityClick());
         bottom_tab = (RadioGroup) findViewById(R.id.bottomtabs);
 
         transaction = basicFragment.beginTransaction();
@@ -73,6 +81,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
 
 //		showSharePopupWindow();
     }
+
 
     /*
      * 底部分享弹窗
@@ -203,7 +212,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
                     case R.id.btn_bottom_search:
                         hideFragments();
                         transaction = basicFragment.beginTransaction();
-                        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
+                        if (mapFragment.get(SEARCH_COMTAINER).isAdded()) {
                             transaction.show(mapFragment.get(SEARCH_COMTAINER)).commit();
                         }else{
                             transaction.add(R.id.basicfragment, mapFragment.get(SEARCH_COMTAINER),SEARCH_COMTAINER).commit();
@@ -226,10 +235,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
                         }else{
                             transaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG).commit();
                         }
-                        break;
-                    case R.id.btn_bottom_mine:
-                        Intent in_mine = new Intent(BasicViewActivity.this, MineActivity.class);
-                        startActivity(in_mine);
                         break;
                     default:
                         break;
@@ -313,5 +318,14 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         FragmentTransaction backTransaction = basicFragment.beginTransaction();
         backTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG));
         backTransaction.commit();
+    }
+
+    private class OnJumpMineActivityClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent in_mine = new Intent(BasicViewActivity.this, MineActivity.class);
+            startActivity(in_mine);
+        }
     }
 }

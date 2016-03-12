@@ -131,6 +131,7 @@ public class RequestURLFactory {
             case UNMAKE_FAVOURTIE:
                 res = baseUrl + "?json=unmark_activity_favorite&post_id=" + attributes[0] + "&author_id=" + author_id;
                 break;
+
             default:
                 res = "false";
                 break;
@@ -168,6 +169,10 @@ public class RequestURLFactory {
              */
             case NONCE_VALUE:
                 res = baseUrl + "get_nonce/?controller="+attributes[0]+"&method="+attributes[1];
+                break;
+            case UPLOAD_AVATOR:
+                res = baseUrl + "user/upload_avatar/?cookie=" +
+                        attributes[0]+"&avatar="+attributes[1];
                 break;
             default:
                 res = "false";

@@ -29,6 +29,7 @@ import com.redscarf.weidou.network.VolleyUtil;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -284,4 +285,25 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 			throw new RuntimeException(e);
 		}
 	}
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		Fragment fragment = getParentFragment();
+		if (fragment != null) {
+			fragment.startActivityForResult(intent, requestCode);
+		} else {
+			super.startActivityForResult(intent, requestCode);
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		List<Fragment> fragmentList = getChildFragmentManager().getFragments();
+		if (fragmentList != null) {
+			for(Fragment fragment : fragmentList){
+				fragment.onActivityResult(requestCode, resultCode, data);
+			}
+		}
+	}
+
 }

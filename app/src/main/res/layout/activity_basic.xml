@@ -6,7 +6,7 @@
         android:id="@+id/basicfragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomtabs">
+        android:layout_above="@+id/bottomtabs_layout">
         </FrameLayout>
     <!-- Begin 底部按钮 -->
 
@@ -102,46 +102,55 @@
         <!--</RelativeLayout>-->
 
     <!--</LinearLayout>-->
-    <RadioGroup
-        android:id="@+id/bottomtabs"
+    <LinearLayout
+        android:id="@+id/bottomtabs_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/customappred"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
+        android:background="@color/customappred"
+        android:gravity="center_vertical"
         >
-        <RadioButton
-            style="@style/index_tab"
-            android:id="@+id/btn_bottom_buy"
-            android:background="@drawable/bottom_shop_selector"
-            android:contentDescription="@string/app_name"
-            android:checked="true"
-            android:layout_weight="1"/>
-
-        <RadioButton
-            style="@style/index_tab"
-            android:id="@+id/btn_bottom_food"
-            android:background="@drawable/bottom_food_selector"
-            android:contentDescription="@string/app_name"
-            android:layout_weight="1"/>
-        <RadioButton
-            style="@style/index_tab"
-            android:id="@+id/btn_bottom_search"
-            android:background="@drawable/bottom_search_selector"
-            android:contentDescription="@string/app_name"
+        <RadioGroup
+            android:id="@+id/bottomtabs"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@color/customappred"
+            android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="35dp"
-        />
-        <RadioButton
+            >
+            <RadioButton
+                style="@style/index_tab"
+                android:id="@+id/btn_bottom_buy"
+                android:background="@drawable/bottom_shop_selector"
+                android:contentDescription="@string/app_name"
+                android:checked="true"
+                android:layout_weight="1"/>
+            <RadioButton
+                style="@style/index_tab"
+                android:id="@+id/btn_bottom_food"
+                android:background="@drawable/bottom_food_selector"
+                android:contentDescription="@string/app_name"
+                android:layout_weight="1"/>
+            <RadioButton
+                style="@style/index_tab"
+                android:id="@+id/btn_bottom_search"
+                android:background="@drawable/bottom_search_selector"
+                android:contentDescription="@string/app_name"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                />
+        </RadioGroup>
+        <Button
             style="@style/index_tab"
+            android:layout_width="match_parent"
             android:id="@+id/btn_bottom_mine"
             android:background="@drawable/bottom_mine_selector"
             android:contentDescription="@string/app_name"
-            android:layout_weight="1"
-        />
-    </RadioGroup>
+            android:layout_weight="3"
+            />
+    </LinearLayout>
+
     <!-- End 底部按钮 -->
 </RelativeLayout>

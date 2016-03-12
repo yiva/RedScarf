@@ -113,7 +113,7 @@ public class Member implements Parcelable{
 		this.capabilites = capabilites;
 	}
 	public String getAvatar() {
-		return "http:"+avatar;
+		return avatar;
 	}
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;

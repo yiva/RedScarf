@@ -25,5 +25,6 @@ public enum RequestType {
     ,MAKE_FAVOURITE //收藏
     ,UNMAKE_FAVOURTIE   //取消收藏
     ,DISCOUNT_POST  //商品页面
+    ,UPLOAD_AVATOR  //上传照片
 
 }

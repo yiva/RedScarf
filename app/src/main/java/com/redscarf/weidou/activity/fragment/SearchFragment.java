@@ -89,14 +89,6 @@ public class SearchFragment extends BaseViewPagerFragment {
         btn_search.setOnClickListener(new OnJumpSearchDetailLinstener());
     }
 
-    private class onSearchItemClick implements AdapterView.OnItemClickListener{
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), bodys.get(position).getTerms(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private class OnJumpSearchDetailLinstener implements View.OnClickListener{
 
         @Override
