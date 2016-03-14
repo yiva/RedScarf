@@ -34,7 +34,7 @@ import java.util.Map;
  * @author yeahwa
  *
  */
-public class BaseActivity extends FragmentActivity{
+public abstract class BaseActivity extends FragmentActivity{
 
 	protected final int MSG_INDEX = 1;
 	protected final int MSG_IS_FAVOURITE = 2;//make favourite
@@ -195,6 +195,35 @@ public class BaseActivity extends FragmentActivity{
 	 * @param progressType 1:showProgressDialog
 	 */
 	protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
+								final int MSG, int progressType) {
+		if (progressType == PROGRESS_NO_CANCLE) {
+			showProgressDialog("", MyConstants.LOADING);
+		}else if(progressType == PROGRESS_CANCLE){
+			showProgressDialogNoCancelable("", MyConstants.LOADING);
+		}
+		Uri.Builder builder = Uri.parse(url).buildUpon();
+		stringRequest = new StringRequest(method, builder.toString(), new Response.Listener<String>() {
+			@Override
+			public void onResponse(String s) {
+				Log.i(clazz.getSimpleName(), "success");
+				Bundle data = new Bundle();
+				data.putString("response", s);
+				Message message = Message.obtain(handler, MSG);
+				message.setData(data);
+				handler.sendMessage(message);
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError volleyError) {
+				Log.e(clazz.getSimpleName(), "error", volleyError);
+			}
+		});
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setTag(clazz.getSimpleName());
+		VolleyUtil.getRequestQueue().add(stringRequest);
+	}
+
+	protected void doUploadFile(int method, String url,  final Class clazz, final Handler handler,
 								final int MSG, int progressType) {
 		if (progressType == PROGRESS_NO_CANCLE) {
 			showProgressDialog("", MyConstants.LOADING);

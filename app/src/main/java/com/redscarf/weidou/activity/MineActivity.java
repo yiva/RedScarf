@@ -1,6 +1,7 @@
 package com.redscarf.weidou.activity;
 
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
@@ -9,6 +10,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.redscarf.weidou.activity.fragment.IndividualModifyFragment;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.network.ResponseListener;
+import com.redscarf.weidou.network.UploadApi;
+import com.redscarf.weidou.pojo.FormImage;
 import com.redscarf.weidou.pojo.Member;
 import com.redscarf.weidou.pojo.NonceBody;
 import com.redscarf.weidou.util.BitmapCache;
@@ -23,9 +27,11 @@ import com.redscarf.weidou.util.MyPreferences;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -192,53 +198,78 @@ public class MineActivity extends BaseActivity {
                     //获得图片地址
                     photoFile = new File(photoInfo.getPhotoPath());
                     if (photoFile.exists()) {
-                        bos = new ByteArrayOutputStream();
-                        String end = "\r\n";
-                        String Hyphens = "--";
-                        String boundary = UUID.randomUUID().toString();
-                        StringBuffer sb = new StringBuffer();
-                        //第一行
-                        sb.append(Hyphens + boundary + end);
-
-                        //第二行
-                        sb.append("Content-Disposition: form-data; name=\"file\"; filename=\"" +
-                                photoFile.getName() + "\"" + end);
-
-                        //第三行
-                        sb.append("Content-Type: " + MimeUtils.guessMimeTypeFromExtension("jpg") + end);
-
-                        //第四行
-                        sb.append(end);
-
-						/* 取得文件的FileInputStream */
                         try {
-                            bos.write(sb.toString().getBytes("utf-8"));
+                            FormImage image = new FormImage("file",photoFile.getName(),MimeUtils
+                                    .guessMimeTypeFromExtension("jpg"), BitmapFactory
+                                    .decodeStream(new FileInputStream(photoFile)));
+                            UploadApi.uploadImg(RequestURLFactory.sysRequestURL(RequestType
+                                    .UPLOAD_AVATOR, new String[]{MyPreferences
+                                    .getAppPerenceAttribute("user_cookie")}),image,new ResponseListener<String>(){
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.v("upload", "===========VolleyError=========") ;
+                                    Toast.makeText(MineActivity.this,"上传成功",Toast.LENGTH_SHORT)
+                                            .show() ;
+                                }
 
-                            fStream = new FileInputStream(photoFile);
-                            /* 设定每次写入1024bytes */
-                            int bufferSize = 1024;
-                            byte[] buffer = new byte[bufferSize];
-                            int length = -1;
-							/* 从文件读取数据到缓冲区 */
-                            while ((length = fStream.read(buffer)) != -1) {
-        						/* 将数据写入DataOutputStream中 */
-                                bos.write(buffer, 0, length);
-                            }
-                            bos.write(end.getBytes("utf-8"));
-                            sb.setLength(0);
-                            sb.append(Hyphens + boundary + Hyphens + end);
-                            bos.write(sb.toString().getBytes("utf-8"));
-                            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.UPLOAD_AVATOR, new
-                                    String[]{MyPreferences.getAppPerenceAttribute
-                                    ("user_cookie"),bos.toString()}), MineActivity.class,handler,MSG_UPLOAD);
-//                            doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType.CREATE_POST, new String[]{"posts", "create_post"}));
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.v("upload", "===========VolleyError=========" + error) ;
+                                    Toast.makeText(MineActivity.this,"上传失败",Toast.LENGTH_SHORT).show() ;
+                                }
+                            });
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }finally {
+                        }finally{
 
                         }
+//                        bos = new ByteArrayOutputStream();
+//                        String end = "\r\n";
+//                        String Hyphens = "--";
+//                        String boundary = "WebKitFormBoundary"+UUID.randomUUID().toString();
+//                        StringBuffer sb = new StringBuffer();
+//                        //第一行
+//                        sb.append(Hyphens + boundary + end);
+//
+//                        //第二行
+//                        sb.append("Content-Disposition: form-data; name=\"file\"; filename=\"" +
+//                                photoFile.getName() + "\"" + end);
+//
+//                        //第三行
+//                        sb.append("Content-Type: " + MimeUtils.guessMimeTypeFromExtension("jpg") + end);
+//
+//                        //第四行
+//                        sb.append(end);
+//
+//						/* 取得文件的FileInputStream */
+//                        try {
+//                            bos.write(sb.toString().getBytes("utf-8"));
+//
+//                            fStream = new FileInputStream(photoFile);
+//                            /* 设定每次写入1024bytes */
+//                            int bufferSize = 1024;
+//                            byte[] buffer = new byte[bufferSize];
+//                            int length = -1;
+//							/* 从文件读取数据到缓冲区 */
+//                            while ((length = fStream.read(buffer)) != -1) {
+//        						/* 将数据写入DataOutputStream中 */
+//                                bos.write(buffer, 0, length);
+//                            }
+//                            bos.write(end.getBytes("utf-8"));
+//                            sb.setLength(0);
+//                            sb.append(Hyphens + boundary + Hyphens + end);
+//                            bos.write(sb.toString().getBytes("utf-8"));
+//                            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.UPLOAD_AVATOR, new
+//                                    String[]{MyPreferences.getAppPerenceAttribute
+//                                    ("user_cookie"),bos.toString()}), MineActivity.class,handler,MSG_UPLOAD);
+////                            doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType.CREATE_POST, new String[]{"posts", "create_post"}));
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }finally {
+//
+//                        }
 
 //                        Toast.makeText(this, photoFile.getAbsolutePath().toString(), Toast.LENGTH_SHORT).show();
                     }

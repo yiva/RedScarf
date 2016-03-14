@@ -9,12 +9,13 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.redscarf.weidou.pojo.FormImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 对数据的封装
@@ -29,7 +30,7 @@ public class PostUploadRequest extends Request<String> {
     /*请求 数据通过参数的形式传入*/
     private List<FormImage> mListItem ;
 
-    private String BOUNDARY = "--------------2016-01-01"; //数据分隔线
+    private String BOUNDARY = "--------------WebKitFormBoundary"+UUID.randomUUID().toString(); //数据分隔线
     private String MULTIPART_FORM_DATA = "multipart/form-data";
 
     public PostUploadRequest(String url, List<FormImage> listItem, ResponseListener listener) {
@@ -37,7 +38,8 @@ public class PostUploadRequest extends Request<String> {
         this.mListener = listener ;
         setShouldCache(false);
         mListItem = listItem ;
-        setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     /**
