@@ -30,7 +30,7 @@ public class PostUploadRequest extends Request<String> {
     /*请求 数据通过参数的形式传入*/
     private List<FormImage> mListItem ;
 
-    private String BOUNDARY = "--------------WebKitFormBoundary"+UUID.randomUUID().toString(); //数据分隔线
+    private String BOUNDARY = "--WebKitFormBoundary" + UUID.randomUUID().toString(); //数据分隔线
     private String MULTIPART_FORM_DATA = "multipart/form-data";
 
     public PostUploadRequest(String url, List<FormImage> listItem, ResponseListener listener) {
@@ -44,7 +44,7 @@ public class PostUploadRequest extends Request<String> {
 
     /**
      * 这里开始解析数据
-     * @param response Response from the network
+     * @param networkResponse Response from the network
      * @return
      */
     @Override
@@ -81,7 +81,7 @@ public class PostUploadRequest extends Request<String> {
             formImage = mListItem.get(i) ;
             StringBuffer sb= new StringBuffer() ;
             /*第一行*/
-            sb.append("--"+BOUNDARY);
+            sb.append(BOUNDARY);
             sb.append("\r\n") ;
             /*第二行*/
             sb.append("Content-Disposition: form-data;");
