@@ -207,15 +207,17 @@ public class MineActivity extends BaseActivity {
                                     .getAppPerenceAttribute("user_cookie")}),image,new ResponseListener<String>(){
                                 @Override
                                 public void onResponse(String response) {
-                                    Log.v("upload", "===========VolleyError=========") ;
-                                    Toast.makeText(MineActivity.this,"上传成功",Toast.LENGTH_SHORT)
-                                            .show() ;
+                                    Log.i(MineActivity.class.getSimpleName(), response);
+                                    Bundle data = new Bundle();
+                                    data.putString("response", response);
+                                    Message message = Message.obtain(handler, MSG_UPLOAD);
+                                    message.setData(data);
+                                    handler.sendMessage(message);
                                 }
-
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.v("upload", "===========VolleyError=========" + error) ;
-                                    Toast.makeText(MineActivity.this,"上传失败",Toast.LENGTH_SHORT).show() ;
+                                    Log.e(MineActivity.class.getSimpleName(), "error", error);
+//                                    hideProgressDialog();
                                 }
                             });
                         } catch (FileNotFoundException e) {

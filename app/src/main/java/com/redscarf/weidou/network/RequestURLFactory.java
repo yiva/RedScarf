@@ -172,7 +172,7 @@ public class RequestURLFactory {
                 break;
             case UPLOAD_AVATOR:
                 res = baseUrl + "user/upload_avatar/?cookie=" +
-                        attributes[0]+"&avatar="+attributes[1];
+                        attributes[0];
                 break;
             default:
                 res = "false";
