@@ -109,7 +109,7 @@ public class PostUploadRequest extends Request<String> {
 
         }
         /*结尾行*/
-        String endLine = "--" + BOUNDARY + "--" + "\r\n" ;
+        String endLine = BOUNDARY + "--" + "\r\n";
         try {
             bos.write(endLine.toString().getBytes("utf-8"));
         } catch (IOException e) {
