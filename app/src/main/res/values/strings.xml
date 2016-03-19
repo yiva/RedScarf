@@ -158,7 +158,7 @@
     <string name="txt_login_hint_email">用户名</string>
     <string name="txt_login_hint_pwd">密码</string>
     <string name="txt_login_submit">登录</string>
-    <string name="txt_login_nonce">我想先看看再说</string>
+    <string name="txt_login_nonce">跳过</string>
 
     <!--注册页-->
     <string name="txt_register_other">注册：</string>

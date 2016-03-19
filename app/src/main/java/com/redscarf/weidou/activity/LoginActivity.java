@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -39,7 +40,8 @@ public class LoginActivity extends BaseActivity {
     private EditText e_username;
     private EditText e_pwd;
     private Button btn_login;
-    private Button btn_nonce;
+    private Button btn_register;
+    private TextView txt_nonce;
 
     private CookieBody cookie_body;
     private Boolean cookie_valid;
@@ -71,21 +73,22 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_login);
-        this.registerButton();
-//        mVolleyQueue = Volley.newRequestQueue(LoginActivity.this);
+        this.initView();
     }
 
-    private void registerButton() {
+    private void initView() {
         e_username = (EditText) findViewById(R.id.edit_login_email);
         e_pwd = (EditText) findViewById(R.id.edit_login_pwd);
         btn_login = (Button) findViewById(R.id.btn_login_submit);
 //        btn_login_weibo = (Button) findViewById(R.id.btn_login_weibo);
 //        btn_login_weixin = (Button) findViewById(R.id.btn_login_weixin);
 //        btn_login_qq = (Button) findViewById(R.id.btn_login_qq);
-        btn_nonce = (Button) findViewById(R.id.btn_login_nonce);
+        txt_nonce = (TextView) findViewById(R.id.txt_login_nonce);
+        btn_register = (Button) findViewById(R.id.btn_login_register);
 
         btn_login.setOnClickListener(new onLogin());//login with email
-        btn_nonce.setOnClickListener(new onNonceLogin());//login with guest
+        txt_nonce.setOnClickListener(new onNonceLogin());//login with guest
+        btn_register.setOnClickListener(new OnBackClickListener());//register
     }
 
     private void login() {
@@ -213,6 +216,15 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             loginNonce();
+        }
+    }
+
+    private class OnRegisterClick implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Intent i_register = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(i_register);
         }
     }
 
