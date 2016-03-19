@@ -1,7 +1,8 @@
 package com.redscarf.weidou.activity;
 
 
-import com.android.volley.VolleyError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
@@ -10,9 +11,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.redscarf.weidou.activity.fragment.IndividualModifyFragment;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
-import com.redscarf.weidou.network.ResponseListener;
-import com.redscarf.weidou.network.UploadApi;
-import com.redscarf.weidou.pojo.FormImage;
+import com.redscarf.weidou.network.MultipartEntity;
+import com.redscarf.weidou.network.MultipartRequest;
+import com.redscarf.weidou.pojo.AvatarResultBody;
 import com.redscarf.weidou.pojo.Member;
 import com.redscarf.weidou.pojo.NonceBody;
 import com.redscarf.weidou.util.BitmapCache;
@@ -21,13 +22,11 @@ import com.redscarf.weidou.util.GalleryImageLoader;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
-import com.redscarf.weidou.util.MimeUtils;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,13 +37,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import cn.finalteam.galleryfinal.GalleryHelper;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
@@ -68,6 +66,7 @@ public class MineActivity extends BaseActivity {
     private String response;
     private Member body;
     private NonceBody nonce;
+    private AvatarResultBody avatar_result;
     private File photoFile;
     private ByteArrayOutputStream bos = null;
     private FileInputStream fStream = null;
@@ -86,7 +85,16 @@ public class MineActivity extends BaseActivity {
                     body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
                     initView(body);
                 }else if (msg.what == MSG_UPLOAD) {
-                    Toast.makeText(MineActivity.this, "OK", Toast.LENGTH_SHORT).show();
+                    if (response != null) {
+                        avatar_result = (AvatarResultBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com" +
+                                ".redscarf.weidou.pojo.AvatarResultBody"));
+                        if(avatar_result.getSuccess() == "true"){
+                            Toast.makeText(MineActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(MineActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    hideProgressDialog();
                 }
             } catch (Exception e) {
                 Toast.makeText(MineActivity.this, "信息读取失败", Toast.LENGTH_SHORT).show();
@@ -199,88 +207,56 @@ public class MineActivity extends BaseActivity {
                     photoFile = new File(photoInfo.getPhotoPath());
                     if (photoFile.exists()) {
                         try {
-                            FormImage image = new FormImage("file",photoFile.getName(),MimeUtils
-                                    .guessMimeTypeFromExtension("jpg"), BitmapFactory
-                                    .decodeStream(new FileInputStream(photoFile)));
-                            UploadApi.uploadImg(RequestURLFactory.sysRequestURL(RequestType
-                                    .UPLOAD_AVATOR, new String[]{MyPreferences
-                                    .getAppPerenceAttribute("user_cookie")}),image,new ResponseListener<String>(){
-                                @Override
-                                public void onResponse(String response) {
-                                    Log.i(MineActivity.class.getSimpleName(), response);
-                                    Bundle data = new Bundle();
-                                    data.putString("response", response);
-                                    Message message = Message.obtain(handler, MSG_UPLOAD);
-                                    message.setData(data);
-                                    handler.sendMessage(message);
-                                }
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e(MineActivity.class.getSimpleName(), "error", error);
-//                                    hideProgressDialog();
-                                }
-                            });
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }finally{
+                            showProgressDialogNoCancelable("","图片上传中......");
+                            String filename = photoFile.getName();
+                            int dot = filename.lastIndexOf('.');
+                            if ((dot > -1) && (dot < (filename.length()))) {
+                                filename = filename.substring(0, dot);
+                            }
+//                            RequestQueue queue = Volley.newRequestQueue(this);
 
+                            MultipartRequest multipartRequest = new MultipartRequest(
+                                    RequestURLFactory.sysRequestURL(RequestType
+                                            .UPLOAD_AVATOR, new String[]{MyPreferences
+                                            .getAppPerenceAttribute("user_cookie"), filename}),
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Log.i(MineActivity.class.getSimpleName(), response);
+                                            Bundle data = new Bundle();
+                                            data.putString("response", response);
+                                            Message message = Message.obtain(handler, MSG_UPLOAD);
+                                            message.setData(data);
+                                            handler.sendMessage(message);
+                                        }
+
+                                    });
+                            // 添加header
+                            multipartRequest.addHeader("header-name", "value");
+                            // 通过MultipartEntity来设置参数
+                            MultipartEntity multi = multipartRequest.getMultiPartEntity();
+                            // 文本参数
+                            multi.addStringPart("userCookie", MyPreferences
+                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
+                            multi.addStringPart("userCookie_name", MyPreferences
+                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME));
+                            // 上传文件
+                            multi.addFilePart("file", photoFile);
+                            // 将请求添加到队列中
+                            multipartRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            multipartRequest.setTag(MineActivity.class.getSimpleName());
+                            VolleyUtil.getRequestQueue().add(multipartRequest);
+//                            queue.add(multipartRequest);
+                        } catch (Exception ex) {
+                            hideProgressDialog();
+                            Toast.makeText(MineActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                            ExceptionUtil.printAndRecord(TAG,ex);
                         }
-//                        bos = new ByteArrayOutputStream();
-//                        String end = "\r\n";
-//                        String Hyphens = "--";
-//                        String boundary = "WebKitFormBoundary"+UUID.randomUUID().toString();
-//                        StringBuffer sb = new StringBuffer();
-//                        //第一行
-//                        sb.append(Hyphens + boundary + end);
-//
-//                        //第二行
-//                        sb.append("Content-Disposition: form-data; name=\"file\"; filename=\"" +
-//                                photoFile.getName() + "\"" + end);
-//
-//                        //第三行
-//                        sb.append("Content-Type: " + MimeUtils.guessMimeTypeFromExtension("jpg") + end);
-//
-//                        //第四行
-//                        sb.append(end);
-//
-//						/* 取得文件的FileInputStream */
-//                        try {
-//                            bos.write(sb.toString().getBytes("utf-8"));
-//
-//                            fStream = new FileInputStream(photoFile);
-//                            /* 设定每次写入1024bytes */
-//                            int bufferSize = 1024;
-//                            byte[] buffer = new byte[bufferSize];
-//                            int length = -1;
-//							/* 从文件读取数据到缓冲区 */
-//                            while ((length = fStream.read(buffer)) != -1) {
-//        						/* 将数据写入DataOutputStream中 */
-//                                bos.write(buffer, 0, length);
-//                            }
-//                            bos.write(end.getBytes("utf-8"));
-//                            sb.setLength(0);
-//                            sb.append(Hyphens + boundary + Hyphens + end);
-//                            bos.write(sb.toString().getBytes("utf-8"));
-//                            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.UPLOAD_AVATOR, new
-//                                    String[]{MyPreferences.getAppPerenceAttribute
-//                                    ("user_cookie"),bos.toString()}), MineActivity.class,handler,MSG_UPLOAD);
-////                            doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType.CREATE_POST, new String[]{"posts", "create_post"}));
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }finally {
-//
-//                        }
 
-//                        Toast.makeText(this, photoFile.getAbsolutePath().toString(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
 
-//                if (photoInfoList != null) {
-//                    Toast.makeText(this, "选择了" + photoInfoList.size() + "张", Toast.LENGTH_SHORT).show();
-//                }
             }
     }
 

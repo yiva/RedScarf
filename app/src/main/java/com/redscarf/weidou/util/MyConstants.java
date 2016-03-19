@@ -22,6 +22,8 @@ public class MyConstants {
 	//Preference用户Cookie属性
 	public static final String PREF_USER_COOKIE = "user_cookie";
 
+	//Preference用户CookieName属性
+	public static final String PREF_USER_COOKIE_NAME = "cookie_name";
 	//Preference username属性
 	public static final String PREF_USER_NAME = "user_name";
 

@@ -10,10 +10,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.redscarf.weidou.pojo.FormImage;
+import com.redscarf.weidou.util.MyConstants;
+import com.redscarf.weidou.util.MyPreferences;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.BufferUnderflowException;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,12 +72,51 @@ public class PostUploadRequest extends Request<String> {
     protected void deliverResponse(String response) {
         mListener.onResponse(response);
     }
+
     @Override
     public byte[] getBody() throws AuthFailureError {
         if (mListItem == null||mListItem.size() == 0){
             return super.getBody() ;
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
+        StringBuffer sc= new StringBuffer() ;
+            /*第一行*/
+        sc.append(BOUNDARY);
+        sc.append("\r\n") ;
+            /*第二行*/
+        sc.append("Content-Disposition: form-data;");
+        sc.append(" name=\"");
+        sc.append("userCookie");
+        sc.append("\"") ;
+        sc.append("\r\n") ;
+            /*第三行*/
+        sc.append("Content-Type: text/plain; charset=UTF-8");
+        sc.append("\r\n") ;
+            /*第四行*/
+        sc.append("\r\n") ;
+        sc.append(MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
+        sc.append("\r\n") ;
+        /*第一行*/
+        sc.append(BOUNDARY);
+        sc.append("\r\n") ;
+            /*第二行*/
+        sc.append("Content-Disposition: form-data;");
+        sc.append(" name=\"");
+        sc.append("userCookie_name");
+        sc.append("\"") ;
+        sc.append("\r\n") ;
+            /*第三行*/
+        sc.append("Content-Type: text/plain; charset=UTF-8");
+        sc.append("\r\n") ;
+            /*第四行*/
+        sc.append("\r\n") ;
+        sc.append(MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME));
+        try {
+            bos.write(sc.toString().getBytes("utf-8"));
+            bos.write("\r\n".getBytes("utf-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int N = mListItem.size() ;
         FormImage formImage ;
         for (int i = 0; i < N ;i++){
@@ -115,7 +157,7 @@ public class PostUploadRequest extends Request<String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.v("zgy","=====formImage====\n"+bos.toString()) ;
+        Log.v("zgy", "=====formImage====\n" + bos.toString()) ;
         return bos.toByteArray();
     }
 
@@ -123,4 +165,5 @@ public class PostUploadRequest extends Request<String> {
     public String getBodyContentType() {
         return MULTIPART_FORM_DATA+"; boundary="+BOUNDARY;
     }
+
 }

@@ -156,6 +156,7 @@ public class LoginActivity extends BaseActivity {
     private void loginForward(CookieBody body) {
         if ("ok".equals(body.getStatus())) {
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, body.getCookie());
+            MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, body.getCookie_name());
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_ID, makeID(body.getUser()));
             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
             Intent i_login = new Intent(LoginActivity.this, BasicViewActivity.class);
@@ -164,6 +165,7 @@ public class LoginActivity extends BaseActivity {
         }else {
             Toast.makeText(LoginActivity.this, body.getError(), Toast.LENGTH_SHORT).show();
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, "");
+            MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, "");
         }
     }
 

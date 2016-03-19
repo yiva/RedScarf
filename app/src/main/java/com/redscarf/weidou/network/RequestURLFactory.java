@@ -3,6 +3,9 @@ package com.redscarf.weidou.network;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import cn.finalteam.toolsfinal.StringUtils;
 
 /**
@@ -171,8 +174,12 @@ public class RequestURLFactory {
                 res = baseUrl + "get_nonce/?controller="+attributes[0]+"&method="+attributes[1];
                 break;
             case UPLOAD_AVATOR:
-                res = baseUrl + "user/upload_avatar/?cookie=" +
-                        attributes[0];
+                try {
+                    res = baseUrl + "user/upload_avatar/?cookie=" +
+                            URLEncoder.encode(attributes[0],"utf-8")+"&file="+URLEncoder.encode(attributes[1],"utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 res = "false";
