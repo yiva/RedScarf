@@ -76,7 +76,8 @@ public class LoginActivity extends BaseActivity {
         this.initView();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         e_username = (EditText) findViewById(R.id.edit_login_email);
         e_pwd = (EditText) findViewById(R.id.edit_login_pwd);
         btn_login = (Button) findViewById(R.id.btn_login_submit);

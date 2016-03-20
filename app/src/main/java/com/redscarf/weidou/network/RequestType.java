@@ -18,6 +18,7 @@ public enum RequestType {
     ,BRAND_POST     //折扣详细页面
     ,LOGIN_FIRST    //第一次登录
     ,LOGIN_AGAIN    //再次登录
+    ,REGISTER       //注册
     ,MINE_PROFILE   //个人信息页面
     ,SEND_COMMENT   //发送评论
     ,CREATE_POST    //上传分享

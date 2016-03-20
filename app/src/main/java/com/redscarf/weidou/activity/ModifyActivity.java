@@ -24,7 +24,9 @@ public class ModifyActivity extends BaseActivity {
 
     }
 
-//    private void enterFragment(){
-//
-//    }
+    @Override
+    public void initView() {
+
+    }
+
 }

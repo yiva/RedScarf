@@ -63,7 +63,7 @@ public class BrandDetailActivity extends BaseActivity {
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
-                    initView(brand_body);
+                    initView();
                     hideProgressDialog();
                     break;
                 case MSG_IS_FAVOURITE:
@@ -111,7 +111,8 @@ public class BrandDetailActivity extends BaseActivity {
                 new String[]{datas.getString("id")}), BrandDetailActivity.class, handler, MSG_INDEX);
     }
 
-    private void initView(BrandDetailBody body) {
+    @Override
+    public void initView() {
         //register
         title = (TextView) findViewById(R.id.txt_brand_detail_title);
         label = (TextView) findViewById(R.id.txt_brand_detail_label);
@@ -124,12 +125,12 @@ public class BrandDetailActivity extends BaseActivity {
         share = (ImageButton) findViewById(R.id.btn_brand_detail_share);
 
         //put data
-        title.setText(body.getTitle());
-        label.setText(body.getTitle());
-        description.setText(body.getSubtype().substring(1, body.getSubtype().length() - 1));
+        title.setText(brand_body.getTitle());
+        label.setText(brand_body.getTitle());
+        description.setText(brand_body.getSubtype().substring(1, brand_body.getSubtype().length() - 1));
 
         //load image
-        String imageUrl = body.getPost_medium();
+        String imageUrl = brand_body.getPost_medium();
         photo.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             photo.setDefaultImageResId(R.drawable.loading_large);
@@ -139,14 +140,14 @@ public class BrandDetailActivity extends BaseActivity {
         }
 
         //favourite button
-        if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
+        if (brand_body.getIs_favorate().equals("1") || brand_body.getIs_favorate() == "1") {
             favourite.setBackgroundResource(R.drawable.ic_favourite_red);
         }
 
         //set listener
-        website.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, body.getTitle(), body.getWebsite()));
-        service.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, body.getTitle(), body.getCustomer_service()));
-        postinfo.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, body.getTitle(),body.getDeliver_info()));
+        website.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(), brand_body.getWebsite()));
+        service.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(), brand_body.getCustomer_service()));
+        postinfo.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(),brand_body.getDeliver_info()));
         share.setOnClickListener(new OnSharePage());
         favourite.setOnClickListener(new OnChangeFavourite());
     }

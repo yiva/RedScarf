@@ -73,16 +73,15 @@ public class FoodDetailActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_food_detail);
 //		this.setActionBarLayout(R.layout.actionbar_food_detail);
-        this.registerButton();
+        this.initView();
 
     }
 
-    public void registerButton() {
-//		this.setDefaultLocation();
+    @Override
+    public void initView() {
         this.findViewById(R.id.actionbar_food_detail_back).setOnClickListener(new
                 OnBackClickListener());
     }
-
 
     @Override
     public void sendLcation(FoodDetailBody food) {

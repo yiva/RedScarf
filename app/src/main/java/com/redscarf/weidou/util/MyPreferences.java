@@ -49,4 +49,19 @@ public class MyPreferences {
         editor.commit();
     }
 
+    public static void clearAppPerenceAttribut(String key) {
+        SharedPreferences tmp_writer = MyPreferences.getAppSharedPerences();
+        SharedPreferences.Editor editor = tmp_writer.edit();
+        editor.remove(key);
+        editor.commit();
+
+    }
+
+    public static void clearAllAppPerenceAttribut() {
+        SharedPreferences tmp_writer = MyPreferences.getAppSharedPerences();
+        SharedPreferences.Editor editor = tmp_writer.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 }

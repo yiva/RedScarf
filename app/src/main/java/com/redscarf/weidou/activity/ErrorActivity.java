@@ -17,7 +17,12 @@ public class ErrorActivity extends BaseActivity {
 		
 		this.findViewById(R.id.txt_error_submit).setOnClickListener(new onSendMsg());
 	}
-	
+
+	@Override
+	public void initView() {
+		
+	}
+
 	private class onSendMsg implements OnClickListener{
 		@Override
 		public void onClick(View v) {

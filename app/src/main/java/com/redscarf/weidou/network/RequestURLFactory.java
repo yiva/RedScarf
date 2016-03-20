@@ -35,10 +35,10 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_category_posts&id=289&count=10&page=" + attributes[0];
                 break;
             case BUYLIST://buylist BuyFragment
-                res = baseUrl + "?json=get_category_posts&id="+attributes[0]+"&count=10&page=" + attributes[1];
+                res = baseUrl + "?json=get_category_posts&id=" + attributes[0] + "&count=10&page=" + attributes[1];
                 break;
             case FOODLIST://foodlist FoodFragment
-                res = baseUrl + "?json=get_category_posts&id="+attributes[0]+"&count=10&page=" + attributes[1];
+                res = baseUrl + "?json=get_category_posts&id=" + attributes[0] + "&count=10&page=" + attributes[1];
                 break;
             case TAGLIST:
                 res = baseUrl + "?json=get_tag_posts&tag_slug=" + attributes[0];
@@ -47,10 +47,10 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_author_posts&id=" + attributes[0];
                 break;
             case HOTSEARCHLIST:
-                res = baseUrl + "?json=get_hot_"+attributes[0]+"&count=10";//[foodposts；discountposts；searches]
+                res = baseUrl + "?json=get_hot_" + attributes[0] + "&count=10";//[foodposts；discountposts；searches]
                 break;
             case SEARCHLIST:
-                res = baseUrl + "?json=get_search_category_results&search="+attributes[0];
+                res = baseUrl + "?json=get_search_category_results&search=" + attributes[0];
                 break;
             default:
                 res = "false";
@@ -61,17 +61,15 @@ public class RequestURLFactory {
     }
 
     /**
-     *
-     * @param type [MODIFY_INDIVIDUAL //个人信息修改
-                    ,FOOD_POST      //美食详细页面
-                    ,BRAND_POST     //折扣详细页面
-                    ,MINE_PROFILE   //个人信息页面
-                    ,SEND_COMMENT   //发送评论
-                    ,CREATE_POST    //上传分享]
+     * @param type       [MODIFY_INDIVIDUAL //个人信息修改
+     *                   ,FOOD_POST      //美食详细页面
+     *                   ,BRAND_POST     //折扣详细页面
+     *                   ,MINE_PROFILE   //个人信息页面
+     *                   ,SEND_COMMENT   //发送评论
+     *                   ,CREATE_POST    //上传分享]
      * @param attributes
      * @return
-     * @//
-     * TODO: 2015/11/28
+     * @// TODO: 2015/11/28
      * modify individaul 两个参数
      * food post 一个参数
      * brand post 一个参数
@@ -93,15 +91,15 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_discountpost&post_id=" + attributes[0];
                 break;
             case SEND_COMMENT:
-                res = baseUrl + "user/post_comment/?cookie="+MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)
-                        +"&post_id="+attributes[0]+"&content="+attributes[1]+"&comment_status="+attributes[2];
+                res = baseUrl + "user/post_comment/?cookie=" + MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)
+                        + "&post_id=" + attributes[0] + "&content=" + attributes[1] + "&comment_status=" + attributes[2];
                 break;
             /*
             imageFile:图片字节码
              */
             case CREATE_POST:
-                res = baseUrl + "posts/create_post/?nonce="+attributes[0]+"&status=publish&title="+attributes[1]
-                        +"&content="+attributes[2]+"&categories="+attributes[3]+"&tags="+attributes[4]+"&imageFile="+attributes[5];
+                res = baseUrl + "posts/create_post/?nonce=" + attributes[0] + "&status=publish&title=" + attributes[1]
+                        + "&content=" + attributes[2] + "&categories=" + attributes[3] + "&tags=" + attributes[4] + "&imageFile=" + attributes[5];
                 break;
             default:
                 res = "false";
@@ -143,9 +141,8 @@ public class RequestURLFactory {
     }
 
     /**
-     * 
-     * @param type [LOGIN_FIRST    //第一次登录
-     *             ,LOGIN_AGAIN    //再次登录]
+     * @param type       [LOGIN_FIRST    //第一次登录
+     *                   ,LOGIN_AGAIN    //再次登录]
      * @param attributes
      * @return
      * @// TODO: 2015/11/28 login first 两个参数，login again 一个参数
@@ -166,17 +163,23 @@ public class RequestURLFactory {
             case LOGIN_AGAIN:
                 res = baseUrl + "user/validate_auth_cookie/?cookie=" + attributes[0];
                 break;
+            case REGISTER:
+                res = baseUrl + "user/register/?username=" + attributes[0] + "&email=" + attributes
+                        [1] + "&display_name=" + attributes[2] + "&nickname=" + attributes[3] +
+                        "&password="+attributes[4]+"&nonce="
+                        + attributes[5];
+                break;
             /*
             controller:posts
             method:create_post
              */
             case NONCE_VALUE:
-                res = baseUrl + "get_nonce/?controller="+attributes[0]+"&method="+attributes[1];
+                res = baseUrl + "get_nonce/?controller=" + attributes[0] + "&method=" + attributes[1];
                 break;
             case UPLOAD_AVATOR:
                 try {
                     res = baseUrl + "user/upload_avatar/?cookie=" +
-                            URLEncoder.encode(attributes[0],"utf-8")+"&file="+URLEncoder.encode(attributes[1],"utf-8");
+                            URLEncoder.encode(attributes[0], "utf-8") + "&file=" + URLEncoder.encode(attributes[1], "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

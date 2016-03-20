@@ -12,5 +12,10 @@ public class ShareSubmitActivity extends BaseActivity {
 		this.setContentView(R.layout.activity_share_submit);
 		this.setActionBarLayout(R.layout.actionbar_share_submit);
 	}
-	
+
+	@Override
+	public void initView() {
+
+	}
+
 }

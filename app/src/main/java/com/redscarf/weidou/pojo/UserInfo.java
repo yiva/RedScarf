@@ -10,11 +10,9 @@ import android.os.Parcelable;
 public class UserInfo implements Parcelable{
 
 
-    public UserInfo(){
-
-    }
-    protected UserInfo(Parcel in) {
-    }
+    private String status;
+    private String cookie;
+    private String user_id;
 
     public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
         @Override
@@ -28,6 +26,39 @@ public class UserInfo implements Parcelable{
         }
     };
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public UserInfo(){
+
+    }
+    protected UserInfo(Parcel in) {
+        status = in.readString();
+        cookie = in.readString();
+        user_id = in.readString();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -35,5 +66,8 @@ public class UserInfo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(status);
+        dest.writeString(cookie);
+        dest.writeString(user_id);
     }
 }

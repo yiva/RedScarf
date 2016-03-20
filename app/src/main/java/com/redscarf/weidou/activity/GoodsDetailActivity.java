@@ -131,8 +131,8 @@ public class GoodsDetailActivity extends BaseActivity {
 
     }
 
-
-    private void initView() {
+    @Override
+    public void initView() {
         title = (TextView) findViewById(R.id.txt_goods_detail_title);
         content = (TextView) findViewById(R.id.txt_goods_detail_content);
         subtitle = (TextView) findViewById(R.id.txt_goods_detail_subtitle);

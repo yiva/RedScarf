@@ -11,4 +11,9 @@ public class ShopListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_shop_list);
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

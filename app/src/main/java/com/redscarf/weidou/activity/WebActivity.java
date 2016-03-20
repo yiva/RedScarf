@@ -34,6 +34,11 @@ public class WebActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public void initView() {
+
+	}
+
 	/**
 	 * 不跳转到系统浏览器
 	 */

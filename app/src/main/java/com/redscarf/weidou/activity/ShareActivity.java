@@ -19,6 +19,11 @@ public class ShareActivity extends BaseActivity {
 		this.showPhotoAndContent();
 	}
 
+	@Override
+	public void initView() {
+
+	}
+
 	/*
 	 * 对图片和内容进行显示和更新
 	 */

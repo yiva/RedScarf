@@ -97,6 +97,11 @@ public class SplashActivity extends BaseActivity {
 		}
 	}
 
+	@Override
+	public void initView() {
+
+	}
+
 	/**
 	 *
 	 * @param valid 根据已存在cookie判断登录

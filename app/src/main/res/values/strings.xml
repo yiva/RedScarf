@@ -166,6 +166,7 @@
     <string name="txt_register_hint_pwd">密码</string>
     <string name="txt_register_hint_username">用户名</string>
     <string name="txt_register_hint_confirm_pwd">确认密码</string>
+    <string name="txt_nickname">昵称</string>
 
     <string name="txt_register_submit">注册</string>
 

@@ -86,7 +86,8 @@ public class SearchDetailActivity extends BaseActivity
         initView();
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         search_content = (ClearEditText) findViewById(R.id.edit_search_detail);
 
         search_content.setOnEditorActionListener(new OnSearchSubmitListener());

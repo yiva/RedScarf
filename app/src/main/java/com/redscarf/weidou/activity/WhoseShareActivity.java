@@ -35,7 +35,8 @@ public class WhoseShareActivity extends BaseActivity {
 
 	}
 
-	private void initView(){
+	@Override
+	public void initView(){
 		datas = getIntent().getExtras();
 		body = datas.getParcelable("body");
 		this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());

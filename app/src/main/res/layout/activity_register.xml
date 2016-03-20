@@ -26,13 +26,6 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_register_other"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +40,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:background="@drawable/btn_white"
-            android:hint="@string/txt_register_hint_username"
+            android:hint="@string/txt_nickname"
             android:textColorHint="@color/customappred"
             android:textSize="15sp"
             android:inputType="textPassword"
@@ -74,19 +67,6 @@
             android:paddingRight="8dp"
             android:background="@drawable/btn_white"
             android:hint="@string/txt_register_hint_pwd"
-            android:textColorHint="@color/customappred"
-            android:textSize="15sp"
-            android:inputType="textPassword"
-            />
-        <EditText
-            android:id="@+id/edit_register_confirm_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:background="@drawable/btn_white"
-            android:hint="@string/txt_register_hint_confirm_pwd"
             android:textColorHint="@color/customappred"
             android:textSize="15sp"
             android:inputType="textPassword"

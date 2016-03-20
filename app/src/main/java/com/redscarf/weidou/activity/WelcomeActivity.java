@@ -40,4 +40,9 @@ public class WelcomeActivity extends BaseActivity {
 				, MyConstants.WELCOME_TIME);
 	}
 
+	@Override
+	public void initView() {
+
+	}
+
 }

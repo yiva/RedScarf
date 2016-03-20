@@ -12,4 +12,9 @@ public class UserReviewActivity extends BaseActivity {
 		setContentView(R.layout.activity_user_review);
 		this.setActionBarLayout(R.layout.actionbar_user_review);
 	}
+
+	@Override
+	public void initView() {
+
+	}
 }

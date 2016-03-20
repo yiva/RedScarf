@@ -39,6 +39,7 @@ public abstract class BaseActivity extends FragmentActivity{
 	protected final int MSG_INDEX = 1;
 	protected final int MSG_IS_FAVOURITE = 2;//make favourite
 	protected final int MSG_IS_NOT_FAVOURITE = 3;//unmake favourite
+	protected final int MSG_NONCE = 4;
 
 	protected final int PROGRESS_DISVISIBLE = 0;
 	protected final int PROGRESS_NO_CANCLE = 1;
@@ -274,4 +275,13 @@ public abstract class BaseActivity extends FragmentActivity{
 	}
 
 
+	public abstract void initView();
+
+	protected void JumpToActivity(Context mContext,Class clazz,Bundle datas) {
+		Intent intent = new Intent(mContext, clazz);
+		if (datas != null) {
+			intent.putExtras(datas);
+		}
+		startActivity(intent);
+	}
 }

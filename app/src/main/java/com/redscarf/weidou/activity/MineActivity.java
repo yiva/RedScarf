@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class MineActivity extends BaseActivity {
     private TextView txt_address;
     private TextView txt_sign;
     private TextView txt_change_photo;
+    private TableRow btn_mine_logoff;
 
     protected ImageLoader imageLoader;
     private int MSG_MINE = 1;
@@ -83,7 +85,7 @@ public class MineActivity extends BaseActivity {
 //                    uploadImg(nonce.getNonce());
                 }else if (msg.what == MSG_MINE) {
                     body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
-                    initView(body);
+                    initView();
                 }else if (msg.what == MSG_UPLOAD) {
                     if (response != null) {
                         avatar_result = (AvatarResultBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com" +
@@ -113,7 +115,6 @@ public class MineActivity extends BaseActivity {
         this.setContentView(R.layout.activity_mine);
 //		mVolleyQueue = Volley.newRequestQueue(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
-        registerButton();
         doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
                         new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
                 MineActivity.class, handler, MSG_MINE);
@@ -134,27 +135,15 @@ public class MineActivity extends BaseActivity {
     /**
      * 注册控件
      */
-    private void registerButton() {
-        user_logo = (NetworkImageView) findViewById(R.id.mine_user_photo);
+    @Override
+    public void initView() {
         txt_nick_name = (TextView) findViewById(R.id.txt_mine_nickname);
-//		txt_gender = (TextView) findViewById(R.id.txt_mine_gender);
-//		txt_address = (TextView) findViewById(R.id.txt_mine_address);
-//		txt_sign = (TextView) findViewById(R.id.txt_mine_);
+        user_logo = (NetworkImageView) findViewById(R.id.mine_user_photo);
+        btn_mine_logoff = (TableRow) findViewById(R.id.btn_mine_logoff);
 
-//        this.photoFile = new File("/sdcard/a.jpg");
-
-        user_logo.setOnClickListener(new changePhoto());
-
-
-    }
-
-    /**
-     * 初始化控件
-     */
-    private void initView(Member item) {
-        txt_nick_name.setText(item.getNickname());
+        txt_nick_name.setText(body.getNickname());
 //		加载用户头像
-        String profile_image = item.getAvatar();
+        String profile_image = body.getAvatar();
         user_logo.setBackgroundResource(R.drawable.loading_large);
         if ((profile_image != null) && (!profile_image.equals(""))) {
             user_logo.setDefaultImageResId(R.drawable.loading_large);
@@ -162,8 +151,8 @@ public class MineActivity extends BaseActivity {
             user_logo.setBackgroundColor(0);
             user_logo.setImageUrl(profile_image, imageLoader);
         }
-
-
+        user_logo.setOnClickListener(new changePhoto());
+        btn_mine_logoff.setOnClickListener(new OnLogOffClick());
     }
 
     /**
@@ -306,5 +295,15 @@ public class MineActivity extends BaseActivity {
         i_sub.putExtras(data);
         startActivity(i_sub);
 
+    }
+
+    private class OnLogOffClick implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            MyPreferences.clearAppPerenceAttribut(MyConstants.PREF_USER_ID);
+            Toast.makeText(MineActivity.this, "已登出", Toast.LENGTH_SHORT).show();
+            JumpToActivity(MineActivity.this, LoginActivity.class, null);
+        }
     }
 }

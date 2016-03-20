@@ -62,7 +62,8 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         initView();
     }
 
-    private void initView(){
+    @Override
+    public void initView(){
         btn_mine = (Button) findViewById(R.id.btn_bottom_mine);
         btn_mine.setOnClickListener(new OnJumpMineActivityClick());
         bottom_tab = (RadioGroup) findViewById(R.id.bottomtabs);

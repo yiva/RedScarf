@@ -58,6 +58,11 @@ public class SendReviewActivity extends BaseActivity {
 
 	}
 
+	@Override
+	public void initView() {
+
+	}
+
 
 	/**
 	 *
