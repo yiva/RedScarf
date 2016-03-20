@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-//    signingConfigs {
-//        Weidou {
-//            keyAlias 'weidou'
-//            keyPassword 'weidou'
-//            storeFile file('E:/Workspaces/signed key/weidou.keystore')
-//            storePassword 'weidou'
-//        }
-//    }
     packagingOptions{
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -42,8 +34,8 @@ android {
         applicationId "com.redscarf.weidou.activity"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 19
-        versionName "0.7.0"
+        versionCode 20
+        versionName "0.8.0"
     }
     buildTypes {
         release {
