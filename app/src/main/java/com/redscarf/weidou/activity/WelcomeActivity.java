@@ -2,6 +2,7 @@ package com.redscarf.weidou.activity;
 
 import pl.droidsonroids.gif.GifImageView;
 
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 
 import android.content.Intent;
@@ -24,13 +25,12 @@ public class WelcomeActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_welcome);
+		GlobalApplication.getInstance().addActivity(this);
 		welcome_gif = (GifImageView) findViewById(R.id.img_welcome);
 		welcome_gif.setBackgroundResource(R.drawable.w1);
 		this.mHandler = new Handler();
-		this.mHandler.postDelayed(new Runnable()
-		{
-			public void run()
-			{
+		this.mHandler.postDelayed(new Runnable() {
+			public void run() {
 
 				in_main = new Intent(WelcomeActivity.this, LoginActivity.class);
 				startActivity(in_main);

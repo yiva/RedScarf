@@ -19,6 +19,7 @@ import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.BrandDetailBody;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,6 +108,7 @@ public class BrandDetailActivity extends BaseActivity {
         this.setContentView(R.layout.activity_brand_detail);
         datas = this.getIntent().getExtras();
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
+        GlobalApplication.getInstance().addActivity(this);
         doRequestURL(RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
                 new String[]{datas.getString("id")}), BrandDetailActivity.class, handler, MSG_INDEX);
     }

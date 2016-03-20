@@ -2,6 +2,7 @@ package com.redscarf.weidou.activity;
 
 
 import com.redscarf.weidou.customwidget.ProgressWebView;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -31,6 +32,8 @@ public class WebActivity extends BaseActivity {
 		webview.setWebViewClient(new LocalWebViewClient());
 		// 加载需要显示的网页
 		webview.loadUrl(datas.getString("url"));
+		GlobalApplication.getInstance().addActivity(this);
+
 
 	}
 

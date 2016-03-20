@@ -22,6 +22,7 @@ import com.redscarf.weidou.util.GalleryImageLoader;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
@@ -113,7 +114,7 @@ public class MineActivity extends BaseActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_mine);
-//		mVolleyQueue = Volley.newRequestQueue(this);
+        GlobalApplication.getInstance().addActivity(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
                         new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
@@ -301,9 +302,10 @@ public class MineActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            MyPreferences.clearAppPerenceAttribut(MyConstants.PREF_USER_ID);
+            MyPreferences.clearAllAppPerenceAttribut();
             Toast.makeText(MineActivity.this, "已登出", Toast.LENGTH_SHORT).show();
             JumpToActivity(MineActivity.this, LoginActivity.class, null);
+            finish();
         }
     }
 }

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.redscarf.weidou.util.GlobalApplication;
+
 public class ShareActivity extends BaseActivity {
 
 	private ImageView photo;
@@ -17,6 +19,7 @@ public class ShareActivity extends BaseActivity {
 		this.setContentView(R.layout.activity_share);
 		this.setActionBarLayout(R.layout.actionbar_share);
 		this.showPhotoAndContent();
+		GlobalApplication.getInstance().addActivity(this);
 	}
 
 	@Override

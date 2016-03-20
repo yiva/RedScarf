@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.redscarf.weidou.activity.fragment.IndividualModifyFragment;
+import com.redscarf.weidou.util.GlobalApplication;
 
 /**
  * Created by yeahwang on 2015/11/4.
@@ -17,6 +18,7 @@ public class ModifyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
+        GlobalApplication.getInstance().addActivity(this);
         FragmentTransaction transaction = basicFragment.beginTransaction();
         transaction.add(R.id.modifyFragment, new IndividualModifyFragment(), MODIFY_CONTAINER);
         transaction.addToBackStack(MODIFY_CONTAINER);

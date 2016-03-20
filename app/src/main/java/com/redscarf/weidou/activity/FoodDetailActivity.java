@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.redscarf.weidou.activity.fragment.FoodDetailFragment;
 import com.redscarf.weidou.pojo.FoodDetailBody;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class FoodDetailActivity extends BaseActivity implements
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_food_detail);
-//		this.setActionBarLayout(R.layout.actionbar_food_detail);
+        GlobalApplication.getInstance().addActivity(this);
         this.initView();
 
     }

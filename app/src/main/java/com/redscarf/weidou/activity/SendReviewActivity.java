@@ -4,6 +4,7 @@ package com.redscarf.weidou.activity;
 import com.redscarf.weidou.activity.fragment.FoodDetailFragment;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,8 +54,9 @@ public class SendReviewActivity extends BaseActivity {
 		findViewById(R.id.txt_send_review_submit).setOnClickListener(new ReviewPublishListener());
 
 		doRequestURL(RequestURLFactory.getRequestURL(RequestType.SEND_COMMENT,
-						new String[]{""+datas.getInt("key"),contents.getText().toString().trim(),"1"}),
+						new String[]{"" + datas.getInt("key"), contents.getText().toString().trim(), "1"}),
 				SendReviewActivity.class, handler, MSG_INDEX);
+		GlobalApplication.getInstance().addActivity(this);
 
 	}
 

@@ -3,6 +3,8 @@ package com.redscarf.weidou.activity;
 
 import android.os.Bundle;
 
+import com.redscarf.weidou.util.GlobalApplication;
+
 public class ShareSubmitActivity extends BaseActivity {
 
 	@Override
@@ -11,6 +13,7 @@ public class ShareSubmitActivity extends BaseActivity {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_share_submit);
 		this.setActionBarLayout(R.layout.actionbar_share_submit);
+		GlobalApplication.getInstance().addActivity(this);
 	}
 
 	@Override

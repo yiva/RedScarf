@@ -31,6 +31,7 @@ import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.pojo.SearchDetailBody;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 
 import org.json.JSONException;
@@ -83,6 +84,7 @@ public class SearchDetailActivity extends BaseActivity
         setContentView(R.layout.activity_search_detail);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         datas = this.getIntent().getExtras();
+        GlobalApplication.getInstance().addActivity(this);
         initView();
     }
 

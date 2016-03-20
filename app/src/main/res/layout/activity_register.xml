@@ -43,7 +43,7 @@
             android:hint="@string/txt_nickname"
             android:textColorHint="@color/customappred"
             android:textSize="15sp"
-            android:inputType="textPassword"
+            android:inputType="textAutoComplete"
             />
         <EditText
             android:id="@+id/edit_register_email"

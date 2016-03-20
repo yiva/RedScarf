@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +16,7 @@ import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.pojo.NonceBody;
 import com.redscarf.weidou.pojo.RedScarfBody;
 import com.redscarf.weidou.pojo.UserInfo;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
@@ -38,6 +40,7 @@ public class RegisterActivity extends BaseActivity {
     private String response;
     private NonceBody nonce;
     private UserInfo user_info;
+    private ImageButton btn_back;
 
     private Handler handler = new Handler() {
         @Override
@@ -55,7 +58,7 @@ public class RegisterActivity extends BaseActivity {
                     user_info = (UserInfo) RedScarfBodyAdapter.parseObj(response,
                             Class.forName("com.redscarf.weidou.pojo.UserInfo"));
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                    if (user_info.getStatus() == "ok") {
+                    if ("ok".equals(user_info.getStatus())) {
                         JumpToActivity(RegisterActivity.this, LoginActivity.class, null);
                         finish();
                     }
@@ -77,6 +80,7 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_register);
+        GlobalApplication.getInstance().addActivity(this);
         this.initView();
 
     }
@@ -87,8 +91,10 @@ public class RegisterActivity extends BaseActivity {
         edit_email = (EditText) this.findViewById(R.id.edit_register_email);
         edit_password = (EditText) this.findViewById(R.id.edit_register_pwd);
         btn_register = (Button) this.findViewById(R.id.btn_register_submit);
+        btn_back = (ImageButton) this.findViewById(R.id.btn_register_back);
 
         btn_register.setOnClickListener(new OnRegisterClick());
+        btn_back.setOnClickListener(new OnBackClickListener());
     }
 
     private class OnRegisterClick implements View.OnClickListener{
@@ -105,6 +111,7 @@ public class RegisterActivity extends BaseActivity {
             }
         }
     }
+
 
     private void register(String nonce) {
         doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType

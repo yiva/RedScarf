@@ -8,6 +8,7 @@ import com.redscarf.weidou.activity.fragment.FoodCategoryFragment;
 import com.redscarf.weidou.activity.fragment.FoodFragment;
 import com.redscarf.weidou.activity.fragment.SearchFragment;
 import com.redscarf.weidou.activity.fragment.ShopCategoryFragment;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,13 +53,12 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     HashMap<String, Fragment> mapFragment = new HashMap<String, Fragment>();
     private FragmentTransaction transaction;
 
-    private long exitTime = 0;
-
     @Override
     protected void onCreate(Bundle arg0) {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.activity_basic);
+        GlobalApplication.getInstance().addActivity(this);
         initView();
     }
 
@@ -177,28 +177,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         }
         return super.onKeyDown(keyCode, event);
     }
-
-    /*
-     * index_container界面执行退出，否则返回到上一个fragment
-     */
-    public void ExitApp() {
-//		if(null != getSupportFragmentManager().findFragmentByTag("IndividualShare") && getSupportFragmentManager().findFragmentByTag("IndividualShare").isVisible()){
-//			Log.d("back", "Back Fragment");
-//			getSupportFragmentManager().popBackStack();
-//
-//		}else{
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            this.finish();
-            System.exit(0);
-
-        }
-//		}
-
-    }
-
 
 
     /*

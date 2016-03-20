@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -51,11 +52,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 		setContentView(R.layout.activity_map);
 //		this.setActionBarLayout(R.layout.actionbar_map);
 		datas = this.getIntent().getExtras();
-//		MapFragment mapFragment = (MapFragment) getFragmentManager()
-//				.findFragmentById(R.id.map);
-//
-//		mapFragment.getMapAsync(this);
-
+		GlobalApplication.getInstance().addActivity(this);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.redscarf.weidou.adapter.CookieAdapter;
 import com.redscarf.weidou.pojo.CookieBody;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 import com.redscarf.weidou.network.RequestType;
@@ -73,6 +75,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_login);
+        GlobalApplication.getInstance().addActivity(this);
         this.initView();
     }
 
@@ -89,7 +92,7 @@ public class LoginActivity extends BaseActivity {
 
         btn_login.setOnClickListener(new onLogin());//login with email
         txt_nonce.setOnClickListener(new onNonceLogin());//login with guest
-        btn_register.setOnClickListener(new OnBackClickListener());//register
+        btn_register.setOnClickListener(new OnRegisterClick());//register
     }
 
     private void login() {
@@ -227,6 +230,15 @@ public class LoginActivity extends BaseActivity {
             Intent i_register = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(i_register);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            ExitApp();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

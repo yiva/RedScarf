@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -50,6 +52,7 @@ public abstract class BaseActivity extends FragmentActivity{
 
 	protected HashMap<String,String> url_map;
 	protected FragmentManager basicFragment = getSupportFragmentManager();
+	private long exitTime = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -284,4 +287,18 @@ public abstract class BaseActivity extends FragmentActivity{
 		}
 		startActivity(intent);
 	}
+
+	/*
+     * index_container界面执行退出，否则返回到上一个fragment
+     */
+	public void ExitApp() {
+		if ((System.currentTimeMillis() - exitTime) > 2000) {
+			Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+			exitTime = System.currentTimeMillis();
+		} else {
+//            this.finish();
+//			System.exit(0);
+			GlobalApplication.getInstance().exit();
+		}
+		}
 }

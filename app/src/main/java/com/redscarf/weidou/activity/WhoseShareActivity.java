@@ -6,6 +6,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.pojo.RedScarfBody;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class WhoseShareActivity extends BaseActivity {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_whose_share);
 		this.setActionBarLayout(R.layout.actionbar_whose_share);
+		GlobalApplication.getInstance().addActivity(this);
 		initView();
 
 

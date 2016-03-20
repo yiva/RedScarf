@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.redscarf.weidou.util.GlobalApplication;
+
 public class ErrorActivity extends BaseActivity {
 
 	@Override
@@ -14,6 +16,7 @@ public class ErrorActivity extends BaseActivity {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_error);
 		this.setActionBarLayout(R.layout.actionbar_error);
+		GlobalApplication.getInstance().addActivity(this);
 		
 		this.findViewById(R.id.txt_error_submit).setOnClickListener(new onSendMsg());
 	}

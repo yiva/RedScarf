@@ -1,13 +1,50 @@
 package com.redscarf.weidou.util;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
 import com.redscarf.weidou.network.VolleyUtil;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class GlobalApplication extends Application{
 	
 	private static Context context;
+	//运用list来保存们每一个activity是关键
+	private List<Activity> mList = new LinkedList<Activity>();
+	//为了实现每次使用该类时不创建新的对象而创建的静态对象
+	private static GlobalApplication instance;
+	//实例化一次
+	public synchronized static GlobalApplication getInstance(){
+		if (null == instance) {
+			instance = new GlobalApplication();
+		}
+		return instance;
+	}
+	// add Activity
+	public void addActivity(Activity activity) {
+		mList.add(activity);
+	}
+	//关闭每一个list内的activity
+	public void exit() {
+		try {
+			for (Activity activity:mList) {
+				if (activity != null)
+					activity.finish();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			System.exit(0);
+		}
+	}
+	//杀进程
+	public void onLowMemory() {
+		super.onLowMemory();
+		System.gc();
+	}
 
 	@Override
 	public void onCreate() {

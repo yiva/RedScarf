@@ -18,6 +18,7 @@ import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -120,6 +121,7 @@ public class GoodsDetailActivity extends BaseActivity {
         actionbar_title = (TextView) findViewById(R.id.title_good_detail);
 
         actionbar_title.setText(String.valueOf(datas.getString("title")));
+        GlobalApplication.getInstance().addActivity(this);
 
         //请求参数
         url_map = new HashMap<String, String>();

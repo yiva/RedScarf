@@ -166,8 +166,8 @@ public class RequestURLFactory {
             case REGISTER:
                 res = baseUrl + "user/register/?username=" + attributes[0] + "&email=" + attributes
                         [1] + "&display_name=" + attributes[2] + "&nickname=" + attributes[3] +
-                        "&password="+attributes[4]+"&nonce="
-                        + attributes[5];
+                        "&user_pass="+attributes[4]+"&nonce="
+                        + attributes[5]+"&notify=no";
                 break;
             /*
             controller:posts
