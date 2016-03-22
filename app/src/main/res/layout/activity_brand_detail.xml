@@ -39,6 +39,7 @@
                 android:paddingRight="8dp"
                 android:layout_marginTop="@dimen/text_margin1"
                 android:background="@color/cornflowerblue"
+                android:visibility="gone"
                 />
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/img_brand_detail_photo"

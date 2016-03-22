@@ -60,7 +60,7 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody>{
 		  	viewHolder.food_style.setText(getItem(position).getSubtype());
 	    	viewHolder.position = position;
 	    	viewHolder.food_photo.setImageResource(R.drawable.loading_large);
-	    	String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
+	    	String imageUrl = this.mRedScarfBodies.get(position).getPost_medium();
 		    if ((imageUrl != null) && (!imageUrl.equals(""))){
 		    	  viewHolder.food_photo.setDefaultImageResId(R.drawable.loading_large);
 		    	  viewHolder.food_photo.setErrorImageResId(R.drawable.null_large);

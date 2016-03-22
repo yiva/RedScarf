@@ -15,6 +15,29 @@ public class FoodBody implements Parcelable {
     private String subtype;
     private String modified;
     private String post_thumbnail;
+    private String post_medium;
+
+    protected FoodBody(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        subtitle = in.readString();
+        subtype = in.readString();
+        modified = in.readString();
+        post_thumbnail = in.readString();
+        post_medium = in.readString();
+    }
+
+    public static final Creator<FoodBody> CREATOR = new Creator<FoodBody>() {
+        @Override
+        public FoodBody createFromParcel(Parcel in) {
+            return new FoodBody(in);
+        }
+
+        @Override
+        public FoodBody[] newArray(int size) {
+            return new FoodBody[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -56,6 +79,14 @@ public class FoodBody implements Parcelable {
         this.post_thumbnail = post_thumbnail;
     }
 
+    public String getPost_medium() {
+        return MyConstants.URL+"wp-content/uploads"+post_medium;
+    }
+
+    public void setPost_medium(String post_medium) {
+        this.post_medium = post_medium;
+    }
+
     public String getModified() {
         return modified;
     }
@@ -67,28 +98,6 @@ public class FoodBody implements Parcelable {
     public FoodBody(){
 
     }
-
-    protected FoodBody(Parcel in) {
-        this.id = in.readString();
-        this.title = in.readString();
-        this.subtitle = in.readString();
-        this.subtype = in.readString();
-        this.modified = in.readString();
-        this.post_thumbnail = in.readString();
-
-    }
-
-    public static final Creator<FoodBody> CREATOR = new Creator<FoodBody>() {
-        @Override
-        public FoodBody createFromParcel(Parcel in) {
-            return new FoodBody(in);
-        }
-
-        @Override
-        public FoodBody[] newArray(int size) {
-            return new FoodBody[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -103,6 +112,6 @@ public class FoodBody implements Parcelable {
         dest.writeString(subtype);
         dest.writeString(modified);
         dest.writeString(post_thumbnail);
-
+        dest.writeString(post_medium);
     }
 }

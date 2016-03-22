@@ -21,6 +21,7 @@ import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -129,7 +130,8 @@ public class BrandDetailActivity extends BaseActivity {
         //put data
         title.setText(brand_body.getTitle());
         label.setText(brand_body.getTitle());
-        description.setText(brand_body.getSubtype().substring(1, brand_body.getSubtype().length() - 1));
+        description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
+        description.setVisibility(View.VISIBLE);
 
         //load image
         String imageUrl = brand_body.getPost_medium();
