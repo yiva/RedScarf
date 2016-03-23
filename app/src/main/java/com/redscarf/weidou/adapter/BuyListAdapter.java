@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,8 +56,12 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.title.setText(getItem(position).getTitle());
-//        viewHolder.expires.setText("Expires " + getItem(position).getExpires().substring(0, 10));
-        viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
+        viewHolder.expires.setText("Expires " + getItem(position).getExpires().substring(0, 10));
+        if (StringUtils.isBlank(getItem(position).getExpires()) ||
+                StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
+            viewHolder.expires.setVisibility(View.GONE);
+        }
+            viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
 
         viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
         viewHolder.position = position;

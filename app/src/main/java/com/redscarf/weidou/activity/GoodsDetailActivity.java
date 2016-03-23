@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,6 +164,18 @@ public class GoodsDetailActivity extends BaseActivity {
         subtitle.setText(body.getSubtitle());
         expires.setText(body.getExpires());
         copy_code.setText("折扣码: "+body.getOthers());
+
+        //无过期时间，隐藏expires
+        if (StringUtils.isBlank(body.getExpires()) || StringUtils.contains(body.getExpires(),
+                "0000-00-00")){
+            expires.setVisibility(View.GONE);
+        }
+
+        //无折扣码
+        if (StringUtils.isBlank(body.getOthers())){
+            copy_code.setVisibility(View.GONE);
+        }
+
         //button listener
 
         favourite.setOnClickListener(new OnChangeFavourite());

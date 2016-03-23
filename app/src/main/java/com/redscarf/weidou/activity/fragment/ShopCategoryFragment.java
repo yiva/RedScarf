@@ -94,7 +94,7 @@ public class ShopCategoryFragment extends BaseFragment {
                 "餐厅票务", "酒店交通"};
         Integer[] postIds = {5, 481, 480, 478, 483, 479, 484, 482};
         List<GridBody> headerBody = new ArrayList<>();
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < postIds.length; ++i) {
             headerBody.add(new GridBody(colors[i], title[i], photo[i],postIds[i]));
         }
         return headerBody;

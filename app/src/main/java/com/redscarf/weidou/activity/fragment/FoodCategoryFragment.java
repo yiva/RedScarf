@@ -89,7 +89,7 @@ public class FoodCategoryFragment extends BaseFragment {
                 "下午茶", "咖啡甜品店", "外卖快餐店"};
         Integer[] postIds = {4, 533, 534, 535, 536, 537, 709, 538, 539, 540};
         List<GridBody> headerBody = new ArrayList<>();
-        for (int i = 0; i < 9; ++i) {
+        for (int i = 0; i < postIds.length; ++i) {
             headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));
         }
         return headerBody;
