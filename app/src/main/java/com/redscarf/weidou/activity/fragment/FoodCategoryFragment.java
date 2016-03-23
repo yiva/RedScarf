@@ -64,28 +64,30 @@ public class FoodCategoryFragment extends BaseFragment {
      * @return
      */
     public List<GridBody> makeFoodHeaderGridArrays() {
-        Integer[] colors = {R.color.allcanting,
-                R.color.chinesecanting,
-                R.color.rihan,
-                R.color.southeast,
-                R.color.west,
-                R.color.middleeast,
-                R.color.noontea,
-                R.color.cafe,
-                R.color.fastfood};
+        Integer[] colors = {R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple};
         Integer[] photo = {R.drawable.all_canting,
                 R.drawable.china_canting,
                 R.drawable.sushi,
                 R.drawable.noodle,
                 R.drawable.hotfood,
+                R.drawable.india,
                 R.drawable.chicken_leg,
                 R.drawable.tea,
                 R.drawable.cake,
                 R.drawable.forma};
         String[] title = {"全部餐厅", "中餐厅", "日韩餐厅",
-                "东南亚餐厅", "西餐厅", "中东印巴餐厅",
+                "东南亚餐厅", "西餐厅","印度餐厅", "中东餐厅",
                 "下午茶", "咖啡甜品店", "外卖快餐店"};
-        Integer[] postIds = {4, 533, 534, 535, 536, 537, 538, 539, 540};
+        Integer[] postIds = {4, 533, 534, 535, 536, 537, 709, 538, 539, 540};
         List<GridBody> headerBody = new ArrayList<>();
         for (int i = 0; i < 9; ++i) {
             headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));

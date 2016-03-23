@@ -71,14 +71,15 @@ public class ShopCategoryFragment extends BaseFragment {
      * @return
      */
     public List<GridBody> makeShopHeaderGridArrays() {
-        Integer[] colors = {R.color.allcanting,
-                R.color.chinesecanting,
-                R.color.rihan,
-                R.color.southeast,
-                R.color.west,
-                R.color.middleeast,
-                R.color.noontea,
-                R.color.cafe,};
+        Integer[] colors = {R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple
+        };
         Integer[] photo = {R.drawable.basket,
                 R.drawable.purse,
                 R.drawable.lipstick,
@@ -86,8 +87,7 @@ public class ShopCategoryFragment extends BaseFragment {
                 R.drawable.wine_glass,
                 R.drawable.tv,
                 R.drawable.ticket,
-                R.drawable.car,
-
+                R.drawable.car
         };
         String[] title = {"全部购物", "时尚配饰", "护肤美妆",
                 "保健塑身", "食品酒水", "家居电子",
