@@ -280,6 +280,12 @@ public abstract class BaseActivity extends FragmentActivity{
 
 	public abstract void initView();
 
+	/**
+	 *
+	 * @param mContext
+	 * @param clazz
+	 * @param datas
+	 */
 	protected void JumpToActivity(Context mContext,Class clazz,Bundle datas) {
 		Intent intent = new Intent(mContext, clazz);
 		if (datas != null) {
@@ -288,7 +294,32 @@ public abstract class BaseActivity extends FragmentActivity{
 		startActivity(intent);
 	}
 
-	/*
+	/**
+	 * 跳转activity事件
+	 */
+	protected class OnJumpToActivityClick implements View.OnClickListener{
+		private Context mContext;
+		private Class clazz;
+		private Bundle datas;
+
+		/**
+		 *
+		 * @param c current activity
+		 * @param cl target activity
+		 * @param d data of this intent，if don't have any data, just set it "null"
+		 */
+		public OnJumpToActivityClick(Context c, Class cl, Bundle d) {
+			this.mContext = c;
+			this.clazz = cl;
+			this.datas = d;
+		}
+		@Override
+		public void onClick(View v) {
+			JumpToActivity(this.mContext,this.clazz,this.datas);
+		}
+	}
+
+	/**
      * index_container界面执行退出，否则返回到上一个fragment
      */
 	public void ExitApp() {

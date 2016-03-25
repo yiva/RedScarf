@@ -36,6 +36,7 @@
             android:layout_marginTop="@dimen/layout_margin3"
             />
         <LinearLayout
+            android:id="@+id/layout_search_shop_expires"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

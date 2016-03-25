@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class MineActivity extends BaseActivity {
     private TextView txt_sign;
     private TextView txt_change_photo;
     private TableRow btn_mine_logoff;
+    private ImageButton img_jump_individual;
 
     protected ImageLoader imageLoader;
     private int MSG_MINE = 1;
@@ -141,6 +143,7 @@ public class MineActivity extends BaseActivity {
         txt_nick_name = (TextView) findViewById(R.id.txt_mine_nickname);
         user_logo = (NetworkImageView) findViewById(R.id.mine_user_photo);
         btn_mine_logoff = (TableRow) findViewById(R.id.btn_mine_logoff);
+        img_jump_individual = (ImageButton) findViewById(R.id.btn_jump_individual_mine);
 
         txt_nick_name.setText(body.getNickname());
 //		加载用户头像
@@ -154,6 +157,8 @@ public class MineActivity extends BaseActivity {
         }
         user_logo.setOnClickListener(new changePhoto());
         btn_mine_logoff.setOnClickListener(new OnLogOffClick());
+        img_jump_individual.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
+                IndividualInfoActivity.class, null));
     }
 
     /**

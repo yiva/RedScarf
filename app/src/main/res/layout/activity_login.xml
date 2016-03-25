@@ -10,19 +10,29 @@
     android:paddingTop="16dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin3">
         <ImageButton
             android:id="@+id/btn_login_back"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/ic_cyclic_back"
-            android:layout_gravity="left"/>
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="@drawable/ic_launcher"
-            android:layout_centerHorizontal="true"/>
+            android:layout_gravity="left"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:id="@+id/layout_user_photo_login"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/photo_bg_login"
+            >
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/img_user_photo_login"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/weidou_photo"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout

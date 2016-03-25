@@ -21,19 +21,19 @@
             android:paddingTop="30dp"
             android:paddingBottom="30dp"
             >
-            <LinearLayout 
+            <RelativeLayout
                 android:layout_centerInParent="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/activity_element_margin"
                 >
                 <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/mine_user_photo"
-                android:background="@drawable/logo"
+                android:background="@drawable/loading_min"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                    android:layout_marginLeft="@dimen/activity_element_margin"
+                android:layout_marginLeft="@dimen/activity_element_margin"
+                android:layout_centerVertical="true"
                 />
                 <TextView
                     android:id="@+id/txt_mine_nickname"
@@ -41,8 +41,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_element_margin"
                     android:textSize="@dimen/sys_font_size_h1"
+                    android:layout_toRightOf="@+id/mine_user_photo"
+                    android:layout_centerVertical="true"
                     />
-            </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btn_jump_individual_mine"
+                    android:layout_width="20dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_next_grey"
+                    android:layout_marginRight="@dimen/layout_margin3"/>
+            </RelativeLayout>
 
             	
         </RelativeLayout>

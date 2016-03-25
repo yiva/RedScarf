@@ -38,7 +38,8 @@ public class FoodSearchAdapter extends BaseRedScarfAdapter<HotFoodBody> {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.content.setText(getItem(position).getSubtitle());
+        String content = getItem(position).getSubtitle().replace("/n","\r\n");
+        viewHolder.content.setText(content);
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.type.setText(getItem(position).getSubtype());
         viewHolder.money.setText(getItem(position).getCost());

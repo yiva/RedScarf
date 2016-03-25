@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.pojo.HotShopBody;
 import com.redscarf.weidou.pojo.SearchBody;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
             viewHolder.title = (TextView) convertView.findViewById(R.id.txt_search_shop_title);
             viewHolder.time = (TextView) convertView.findViewById(R.id.txt_search_shop_time);
             viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_search_shop);
+            viewHolder.expires = (LinearLayout) convertView.findViewById(R.id.layout_search_shop_expires);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -40,6 +44,9 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
         viewHolder.content.setText(getItem(position).getSubtitle());
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.time.setText(getItem(position).getExpires());
+        if(StringUtils.contains(getItem(position).getExpires(),"0000-00-00")){
+            viewHolder.expires.setVisibility(View.GONE);
+        }
 
         String imageUrl = getItem(position).getPost_thumbnail();
         viewHolder.image.setBackgroundResource(R.drawable.loading_large);
@@ -58,5 +65,6 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
         TextView title;
         TextView time;
         NetworkImageView image;
+        LinearLayout expires;
     }
 }

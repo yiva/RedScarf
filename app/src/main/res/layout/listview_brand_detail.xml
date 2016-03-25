@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_vertical">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/whitesmoke"/>
     <TextView
         android:id="@+id/txt_brand_detail"
         android:layout_width="wrap_content"

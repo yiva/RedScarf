@@ -330,7 +330,8 @@ public class BuyFragment extends BaseFragment
         lv_brand_detail = (ListView) contentView.findViewById(R.id.list_brand_detail);
         lv_brand_detail.setAdapter(new BrandDetailAdapter(getActivity(),brands));
         lv_brand_detail.setOnItemClickListener(new OnBrandDetailItemClick(brands));
-        popup_brand_detail = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, 400);
+        popup_brand_detail = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         popup_brand_detail.setFocusable(true);
         popup_brand_detail.setOutsideTouchable(true);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
