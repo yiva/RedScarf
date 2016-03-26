@@ -17,7 +17,9 @@ import com.redscarf.weidou.adapter.BuyListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
 import com.redscarf.weidou.pojo.GoodsBody;
+import com.redscarf.weidou.util.DisplayUtil;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
@@ -28,10 +30,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -328,7 +332,11 @@ public class BuyFragment extends BaseFragment
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.popup_brand_detail, null);
         lv_brand_detail = (ListView) contentView.findViewById(R.id.list_brand_detail);
-        lv_brand_detail.setAdapter(new BrandDetailAdapter(getActivity(),brands));
+        int height = DisplayUtil.px2dip(getActivity(), GlobalApplication.getScreenHeight(getActivity()));
+        ViewGroup.LayoutParams params = lv_brand_detail.getLayoutParams();
+        params.height = height-50;
+        lv_brand_detail.setLayoutParams(params);
+        lv_brand_detail.setAdapter(new BrandDetailAdapter(getActivity(), brands));
         lv_brand_detail.setOnItemClickListener(new OnBrandDetailItemClick(brands));
         popup_brand_detail = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -336,7 +344,7 @@ public class BuyFragment extends BaseFragment
         popup_brand_detail.setOutsideTouchable(true);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popup_brand_detail.setBackgroundDrawable(new BitmapDrawable());
-        popup_brand_detail.showAsDropDown(view,0,8);
+        popup_brand_detail.showAsDropDown(view, 0, 8);
     }
 
     /**

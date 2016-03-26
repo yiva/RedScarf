@@ -43,10 +43,10 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody>{
 	    	convertView = LayoutInflater.from(mContext).inflate(R.layout.listview_food, parent, false);
 	    	viewHolder = new ViewHolder();
 	    	viewHolder.food_photo = ((NetworkImageView)convertView.findViewById(R.id.img_photo_food));
-	    	viewHolder.food_ad_icon = ((ImageView)convertView.findViewById(R.id.img_ad_food));
-	    	viewHolder.food_star = ((ImageView)convertView.findViewById(R.id.img_star_food));
+//	    	viewHolder.food_ad_icon = ((ImageView)convertView.findViewById(R.id.img_ad_food));
+//	    	viewHolder.food_star = ((ImageView)convertView.findViewById(R.id.img_star_food));
 	    	viewHolder.title = ((TextView)convertView.findViewById(R.id.txt_title_food));
-	    	viewHolder.review = ((TextView)convertView.findViewById(R.id.txt_review_food));
+//	    	viewHolder.review = ((TextView)convertView.findViewById(R.id.txt_review_food));
 	    	viewHolder.subtitle = ((TextView)convertView.findViewById(R.id.txt_subtitle_food));
 	    	viewHolder.food_style = ((TextView)convertView.findViewById(R.id.txt_style_food));
 	    	convertView.setTag(viewHolder);
@@ -54,9 +54,9 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody>{
 	    	viewHolder = (ViewHolder) convertView.getTag();
 		}
 	    	viewHolder.title.setText(getItem(position).getTitle());
-	    	viewHolder.review.setText("12Reviews");
-	    	viewHolder.food_star.setImageResource(R.drawable.flower_2);
-		  	viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
+//	    	viewHolder.review.setText("12Reviews");
+//	    	viewHolder.food_star.setImageResource(R.drawable.flower_2);
+		  	viewHolder.subtitle.setText(getItem(position).getSubtitle().replace("/n","\r\n"));
 		  	viewHolder.food_style.setText(getItem(position).getSubtype());
 	    	viewHolder.position = position;
 	    	viewHolder.food_photo.setImageResource(R.drawable.loading_large);

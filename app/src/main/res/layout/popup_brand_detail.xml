@@ -7,22 +7,26 @@
 	    android:layout_gravity="top"
         android:layout_marginTop="103dp"
 	    android:padding="8dp" >
-	<ListView
-        android:id="@+id/list_brand_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:dividerHeight="1dp"
-		android:divider="@color/weidou_purple">
-    </ListView>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:background="@color/whitesmoke">
+		<ListView
+			android:id="@+id/list_brand_detail"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:dividerHeight="1dp"
+			android:divider="@color/weidou_purple">
+		</ListView>
+	</LinearLayout>
 	<View
 		style="@style/hr_line"
 		android:background="@color/weidou_purple"/>
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center_horizontal"
-		android:paddingTop="@dimen/layout_padding1"
-		android:paddingBottom="@dimen/layout_padding1">
+		android:gravity="center_horizontal">
 		<ImageButton
 			android:id="@+id/btn_hide_up_brand"
 			android:layout_width="25dp"

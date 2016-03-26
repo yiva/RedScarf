@@ -3,6 +3,9 @@ package com.redscarf.weidou.util;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.redscarf.weidou.network.VolleyUtil;
 
@@ -62,6 +65,30 @@ public class GlobalApplication extends Application{
 	private void initRequestQueue(){
 		//初始化 volley
 		VolleyUtil.initialize(context);
+	}
+
+	/**
+	 * 获取屏幕宽度像素值（需转为dip进行计算）
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenWidth(Context context){
+		DisplayMetrics metrics = new DisplayMetrics();
+		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(metrics);
+		return metrics.widthPixels;
+	}
+
+	/**
+	 * 获取屏幕高度像素值（需转为dip进行计算）
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenHeight(Context context){
+		DisplayMetrics metrics = new DisplayMetrics();
+		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(metrics);
+		return metrics.heightPixels;
 	}
 
 }

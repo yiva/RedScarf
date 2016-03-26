@@ -48,8 +48,8 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_shop));
             viewHolder.expires = ((TextView) convertView.findViewById(R.id.txt_expires_shop));
             viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_shop));
-            viewHolder.shop_ad_icon = ((ImageView) convertView.findViewById(R.id.img_ad_shop));
-            viewHolder.exclusive = ((TextView) convertView.findViewById(R.id.txt_ad_shop));
+//            viewHolder.shop_ad_icon = ((ImageView) convertView.findViewById(R.id.img_ad_shop));
+//            viewHolder.exclusive = ((TextView) convertView.findViewById(R.id.txt_ad_shop));
 
             convertView.setTag(viewHolder);
         } else {
@@ -66,12 +66,12 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
         viewHolder.position = position;
         viewHolder.shop_photo.setImageResource(R.drawable.loading_large);
-        if ((Math.random() * 5) % 2 == 0) {
-            viewHolder.shop_ad_icon.setVisibility(View.VISIBLE);
-        }
-        if ((Math.random() * 5) % 3 == 0) {
-            viewHolder.exclusive.setVisibility(View.VISIBLE);
-        }
+//        if ((Math.random() * 5) % 2 == 0) {
+//            viewHolder.shop_ad_icon.setVisibility(View.VISIBLE);
+//        }
+//        if ((Math.random() * 5) % 3 == 0) {
+//            viewHolder.exclusive.setVisibility(View.VISIBLE);
+//        }
         String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             viewHolder.shop_photo.setDefaultImageResId(R.drawable.loading_large);
@@ -84,9 +84,9 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
 
     private static class ViewHolder {
         int position;
-        ImageView shop_ad_icon;
+//        ImageView shop_ad_icon;
         NetworkImageView shop_photo;
-        TextView exclusive;
+//        TextView exclusive;
         TextView subtitle;
         TextView expires;//有效期
         TextView title;
