@@ -62,6 +62,7 @@ public class MineActivity extends BaseActivity {
     private TextView txt_sign;
     private TextView txt_change_photo;
     private TableRow btn_mine_logoff;
+    private TableRow btn_mine_my_favourite;
     private ImageButton img_jump_individual;
 
     protected ImageLoader imageLoader;
@@ -85,7 +86,6 @@ public class MineActivity extends BaseActivity {
             try {
                 if (msg.what == MSG_NONCE) {
                     nonce = (NonceBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.NonceBody"));
-//                    uploadImg(nonce.getNonce());
                 }else if (msg.what == MSG_MINE) {
                     body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
                     initView();
@@ -144,6 +144,7 @@ public class MineActivity extends BaseActivity {
         user_logo = (NetworkImageView) findViewById(R.id.mine_user_photo);
         btn_mine_logoff = (TableRow) findViewById(R.id.btn_mine_logoff);
         img_jump_individual = (ImageButton) findViewById(R.id.btn_jump_individual_mine);
+        btn_mine_my_favourite = (TableRow) findViewById(R.id.btn_mine_my_favourite);
 
         txt_nick_name.setText(body.getNickname());
 //		加载用户头像
@@ -159,12 +160,13 @@ public class MineActivity extends BaseActivity {
         btn_mine_logoff.setOnClickListener(new OnLogOffClick());
         img_jump_individual.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
                 IndividualInfoActivity.class, null));
+        btn_mine_my_favourite.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
+                IndividualFavouriteActivity.class, null));
     }
 
     /**
      * 修改照片
      */
-    private static int SELECT_PICTURE;
 
     private class changePhoto implements View.OnClickListener {
 

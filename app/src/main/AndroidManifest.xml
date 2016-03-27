@@ -170,6 +170,11 @@
             android:name=".IndividualInfoActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
+        <!-- 我的收藏 -->
+        <activity
+            android:name=".IndividualFavouriteActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.redscarf.weidou.activity.WebActivity;
+import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.util.GlobalApplication;
@@ -36,16 +37,7 @@ import java.util.Map;
  * @author yeahwa
  *
  */
-public abstract class BaseActivity extends FragmentActivity{
-
-	protected final int MSG_INDEX = 1;
-	protected final int MSG_IS_FAVOURITE = 2;//make favourite
-	protected final int MSG_IS_NOT_FAVOURITE = 3;//unmake favourite
-	protected final int MSG_NONCE = 4;
-
-	protected final int PROGRESS_DISVISIBLE = 0;
-	protected final int PROGRESS_NO_CANCLE = 1;
-	protected final int PROGRESS_CANCLE = 2;
+public abstract class BaseActivity extends FragmentActivity implements BasePageLinstener{
 
 	private ProgressDialog progressDialog;
 	private StringRequest stringRequest;

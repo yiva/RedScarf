@@ -33,43 +33,11 @@ public class SearchFragment extends BaseViewPagerFragment {
     private final String TAG = SearchFragment.class.getSimpleName();
 
     private View rootView;
-    private ListView lv_search;
     private ImageButton btn_search;
-
-    private String response;
-    private final int MSG_INDEX = 1; //msg.what index
-    private ArrayList<SearchBody> bodys;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == MSG_INDEX) {
-                Bundle indexObj = msg.getData();
-                response = indexObj.getString("response");
-                try {
-                    bodys = (ArrayList<SearchBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.SearchBody"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (bodys.size() != 0) {
-                    lv_search.setAdapter(new SearchAdapter(getActivity(), bodys));
-
-                }
-                hideProgressDialog();
-            }
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_search, container, false);
-
-//        lv_search = (ListView) rootView.findViewById(R.id.list_search);
-
-//        showProgressDialogNoCancelable("", MyConstants.LOADING);
-//        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.SEARCHLIST, new String[]{"searches"}), SearchFragment.class, handler, MSG_INDEX);
         initView();
 
         return rootView;

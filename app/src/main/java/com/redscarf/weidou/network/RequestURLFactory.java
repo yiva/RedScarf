@@ -132,7 +132,10 @@ public class RequestURLFactory {
             case UNMAKE_FAVOURTIE:
                 res = baseUrl + "?json=unmark_activity_favorite&post_id=" + attributes[0] + "&author_id=" + author_id;
                 break;
-
+            case MY_FAOURITE:
+                res = baseUrl + "?json=get_author_favorites&author_id=" + author_id + "&count=-1" +
+                        "&page=1";
+                break;
             default:
                 res = "false";
                 break;
@@ -166,8 +169,8 @@ public class RequestURLFactory {
             case REGISTER:
                 res = baseUrl + "user/register/?username=" + attributes[0] + "&email=" + attributes
                         [1] + "&display_name=" + attributes[2] + "&nickname=" + attributes[3] +
-                        "&user_pass="+attributes[4]+"&nonce="
-                        + attributes[5]+"&notify=no";
+                        "&user_pass=" + attributes[4] + "&nonce="
+                        + attributes[5] + "&notify=no";
                 break;
             /*
             controller:posts

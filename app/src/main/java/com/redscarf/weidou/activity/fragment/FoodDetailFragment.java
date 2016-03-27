@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import com.android.volley.Request;
+import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.MapActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SendReviewActivity;
@@ -34,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,16 +46,53 @@ public class FoodDetailFragment extends BaseFragment {
 
     private Bundle datas;
 
-    private FoodDetailBody body;
     private View rootView;
+    private ImageButton favourite;
+
+    private FoodDetailBody body;
     private ArrayList<String> photoAddr;
+    private String response;
 
     OnShowMapListener mlistener;
+
 
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_INDEX:
+
+                case MSG_IS_FAVOURITE:
+                    try {
+                        JSONObject jo = new JSONObject(response);
+                        if ("true".equals(jo.getString("result")) || "true" == jo.getString
+                                ("result")) {
+                            body.setIs_favorate("1");
+                            favourite.setBackgroundResource(R.drawable.ic_favourite_red);
+                            Toast.makeText(getActivity(), "收藏成功", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                        Toast.makeText(getActivity(), "收藏失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case MSG_IS_NOT_FAVOURITE:
+                    try {
+                        JSONObject jo = new JSONObject(response);
+                        if ("true".equals(jo.getString("result")) || "true" == jo.getString
+                                ("result")) {
+                            body.setIs_favorate("0");
+                            favourite.setBackgroundResource(R.drawable.ic_favourite_white);
+                            Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                        Toast.makeText(getActivity(), "取消收藏失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
             if (msg.what == MSG_INDEX) {
                 Bundle indexObj = msg.getData();
                 try {
@@ -67,6 +106,7 @@ public class FoodDetailFragment extends BaseFragment {
                 initView();
                 hideProgressDialog();
             }
+
         }
     };
 
@@ -141,6 +181,7 @@ public class FoodDetailFragment extends BaseFragment {
         TextView subtype = (TextView) rootView.findViewById(R.id.txt_food_detail_subtype);
         TextView content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
         TextView view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
+        favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_food_detail_favorite);
 
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));
@@ -162,6 +203,7 @@ public class FoodDetailFragment extends BaseFragment {
         //Jump WebActivity
         website.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getWebsite()));
         view_menu.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getMenu()));
+        favourite.setOnClickListener(new OnChangeFavourite());
     }
 
 
@@ -238,4 +280,26 @@ public class FoodDetailFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 收藏功能
+     */
+    private class OnChangeFavourite implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch (body.getIs_favorate()) {
+                case "0"://make favourite
+                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
+                                    new String[]{body.getId()}), FoodDetailFragment.class, handler,
+                            MSG_IS_FAVOURITE, 0);
+                    break;
+                case "1"://unmake favourite
+                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
+                                    (RequestType.UNMAKE_FAVOURTIE, new String[]{body.getId()}),
+                            FoodDetailFragment.class, handler, MSG_IS_NOT_FAVOURITE, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
