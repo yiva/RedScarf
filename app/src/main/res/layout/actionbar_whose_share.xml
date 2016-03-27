@@ -6,10 +6,9 @@
     android:background="@color/customappred" >
     <ImageButton
         android:id="@+id/btn_whose_share_back"
+        style="@style/widget_actionbar"
         android:layout_marginLeft="12.0dp"
         android:layout_marginTop="12.0dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_back"
         android:contentDescription="@string/app_name"
@@ -28,8 +27,7 @@
     
     <ImageButton
         android:id="@+id/actionbar_whose_share_share"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_alignTop="@+id/actionbar_whose_share_favorite"
         android:layout_toLeftOf="@+id/actionbar_whose_share_favorite"
         android:layout_marginRight="12dp"
@@ -37,12 +35,11 @@
         android:background="@drawable/ic_share" />
     <ImageButton
         android:id="@+id/actionbar_whose_share_favorite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="12dp"
-        android:background="@drawable/ic_favorite"
+        android:background="@drawable/ic_favourite_white"
         android:contentDescription="@string/app_name"/>
 </RelativeLayout>

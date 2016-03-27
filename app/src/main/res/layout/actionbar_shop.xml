@@ -7,10 +7,9 @@
     android:layout_gravity="center_vertical">
     <ImageButton
         android:id="@+id/btnShopMenu"
+        style="@style/widget_actionbar"
         android:layout_marginLeft="12.0dp"
         android:layout_marginTop="12.0dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_setting"
         android:contentDescription="@string/app_name"
@@ -30,11 +29,10 @@
     
     <ImageButton
         android:id="@+id/btnShopSearch"
+        style="@style/widget_actionbar"
         android:layout_alignParentRight="true"
         android:layout_marginRight="12.0dp"
         android:layout_marginTop="12.0dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_search"
         android:contentDescription="@string/app_name"

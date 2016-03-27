@@ -8,10 +8,9 @@
     
     <ImageButton
         android:id="@+id/btnMineBack"
+        style="@style/widget_actionbar"
         android:layout_marginLeft="12.0dp"
         android:layout_marginTop="12.0dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:background="@drawable/ic_back"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"

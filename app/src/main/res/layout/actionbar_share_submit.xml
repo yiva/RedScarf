@@ -34,8 +34,7 @@
 
     <ImageButton
         android:id="@+id/btn_share_submit_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"

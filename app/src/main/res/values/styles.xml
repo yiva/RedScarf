@@ -123,5 +123,10 @@
         <item name="android:textSize">@dimen/sys_font_size_h2</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="widget_actionbar">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        </style>
     <!-- End Button Style -->
 </resources>

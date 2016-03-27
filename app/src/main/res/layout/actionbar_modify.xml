@@ -5,8 +5,7 @@
     android:background="@color/customappred">
     <ImageButton
         android:id="@+id/btn_individual_modify_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12.0dp"
         android:background="@drawable/ic_back"

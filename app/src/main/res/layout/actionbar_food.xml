@@ -7,10 +7,9 @@
     android:layout_gravity="center_horizontal">
     <ImageButton
         android:id="@+id/btn_food_list_back"
+        style="@style/widget_actionbar"
         android:layout_marginLeft="12.0dp"
         android:layout_marginTop="12.0dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_back"
         android:contentDescription="@string/app_name"

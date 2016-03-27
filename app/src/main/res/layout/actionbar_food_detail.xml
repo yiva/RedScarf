@@ -7,8 +7,7 @@
 
     <ImageButton
         android:id="@+id/actionbar_food_detail_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12.0dp"
         android:background="@drawable/ic_back"
@@ -24,21 +23,19 @@
 
     <ImageButton
         android:id="@+id/actionbar_food_detail_share"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_alignTop="@+id/actionbar_food_detail_favorite"
         android:layout_toLeftOf="@+id/actionbar_food_detail_favorite"
         android:layout_marginRight="12dp"
         android:background="@drawable/ic_share" />
     <ImageButton
         android:id="@+id/actionbar_food_detail_favorite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="12dp"
-        android:background="@drawable/ic_favorite"
+        android:background="@drawable/ic_favourite_white"
         android:contentDescription="@string/app_name"/>
 
 </RelativeLayout>
