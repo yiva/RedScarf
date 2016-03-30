@@ -36,11 +36,13 @@ public class FoodDetailPhotoAdapter extends BaseRedScarfAdapter<String> {
                     R.layout.listview_food_detail_photo, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.img = (NetworkImageView) convertView.findViewById(R.id.food_photos);
+            viewHolder.big_img = (NetworkImageView) convertView.findViewById(R.id.food_photos_big);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.img.setTag(getItem(position));
+        viewHolder.big_img.setTag(getItem(position));
         String imageUrl = getItem(position);
         viewHolder.img.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
@@ -48,10 +50,12 @@ public class FoodDetailPhotoAdapter extends BaseRedScarfAdapter<String> {
             viewHolder.img.setErrorImageResId(R.drawable.null_large);
             viewHolder.img.setBackgroundColor(0);
             viewHolder.img.setImageUrl(imageUrl, imageLoader);
+            viewHolder.big_img.setImageUrl(imageUrl,imageLoader);
         }
         return convertView;
     }
     private static class ViewHolder{
         NetworkImageView img;
+        NetworkImageView big_img;
     }
 }

@@ -35,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -204,20 +205,10 @@ public class FoodDetailFragment extends BaseFragment {
         website.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getWebsite()));
         view_menu.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getMenu()));
         favourite.setOnClickListener(new OnChangeFavourite());
+        detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
     }
 
 
-    /*
-     * Jump UserReviewActivity
-     */
-    private class onReviewMoreLinstener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), UserReviewActivity.class);
-            startActivity(intent);
-        }
-
-    }
 
     /*
      * Jump MapActivity
@@ -296,6 +287,23 @@ public class FoodDetailFragment extends BaseFragment {
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
                                     (RequestType.UNMAKE_FAVOURTIE, new String[]{body.getId()}),
                             FoodDetailFragment.class, handler, MSG_IS_NOT_FAVOURITE, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private class OnDisplayBigImagesClick implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (view.getId()){
+                case R.id.food_photos:
+                    parent.findViewById(R.id.food_photos_big).setVisibility(View.VISIBLE);
+                    break;
+                case R.id.food_photos_big:
+                    parent.findViewById(R.id.food_photos_big).setVisibility(View.INVISIBLE);
                     break;
                 default:
                     break;
