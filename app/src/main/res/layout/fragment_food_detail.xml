@@ -1,131 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
-
-
-<GridLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:columnCount="1"
-    android:paddingLeft="@dimen/layout_padding2"
-    android:paddingRight="@dimen/layout_padding2"
-    >
-       <TextView
-           android:id="@+id/txt_food_detail_title"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textSize="@dimen/sys_font_size_bolder"
-           android:textStyle="bold" />
-       <TextView
-           android:id="@+id/txt_food_detail_address"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textSize="@dimen/sys_font_size_normal"
-           android:textStyle="normal"
-           />
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:paddingLeft="@dimen/layout_padding2"
+        android:paddingRight="@dimen/layout_padding2"
+        >
            <TextView
-               android:id="@+id/txt_food_detail_underground"
+               android:id="@+id/txt_food_detail_title"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textSize="@dimen/sys_font_size_bolder"
+               android:textStyle="bold" />
+           <TextView
+               android:id="@+id/txt_food_detail_address"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:textSize="@dimen/sys_font_size_normal"
-               android:textStyle="normal" />
-           <LinearLayout
-               android:layout_width="wrap_content"
+               android:textStyle="normal"
+               />
+           <RelativeLayout
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_alignParentRight="true"
                >
                <TextView
-                   android:layout_alignParentRight="true"
-                   android:id="@+id/txt_food_detail_cost"
+                   android:id="@+id/txt_food_detail_underground"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:textSize="@dimen/sys_font_size_normal"
                    android:textStyle="normal" />
-           </LinearLayout>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   >
+                   <TextView
+                       android:layout_alignParentRight="true"
+                       android:id="@+id/txt_food_detail_cost"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:textSize="@dimen/sys_font_size_normal"
+                       android:textStyle="normal" />
+               </LinearLayout>
 
-       </RelativeLayout>
+           </RelativeLayout>
 
-       <TextView
-           android:id="@+id/txt_food_detail_subtype"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textSize="11dp"
-           android:textColor="#AAAAAA"
-           android:textStyle="normal" />
+           <TextView
+               android:id="@+id/txt_food_detail_subtype"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textSize="11dp"
+               android:textColor="#AAAAAA"
+               android:textStyle="normal" />
 
-</GridLayout>
-    <View
-        style="@style/hr_line"/>
+    </GridLayout>
+        <View
+            style="@style/hr_line"/>
 
-    <TextView
-        android:id="@+id/txt_food_detail_website"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/whitesmoke"
-        android:paddingLeft="@dimen/layout_padding2"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/sys_font_size_h2"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"/>
+        <TextView
+            android:id="@+id/txt_food_detail_website"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/whitesmoke"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sys_font_size_h2"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"/>
 
-    <TextView
-        android:id="@+id/txt_food_detail_phone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/whitesmoke"
-        android:paddingLeft="@dimen/layout_padding2"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/sys_font_size_h2"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"/>
-    <TextView
-        android:id="@+id/txt_food_detail_view_menu"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/whitesmoke"
-        android:paddingLeft="@dimen/layout_padding2"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/sys_font_size_h2"
-        />
-    <TextView
-        android:id="@+id/txt_food_detail_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_margin1"
-        android:paddingLeft="@dimen/layout_padding2"
-        android:paddingRight="@dimen/layout_padding2"
-        android:textSize="@dimen/sys_font_size_normal"
-        />
-    <View
-        style="@style/hr_line"/>
-    <!-- 餐厅照片 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="#DDDDDD"
-        android:orientation="vertical">
-        <com.redscarf.weidou.customwidget.HorizontalListView
-            android:id="@+id/hlist_food_detail_img"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:focusable="false"
-            android:layout_marginTop="8dp">
-        </com.redscarf.weidou.customwidget.HorizontalListView>
+        <TextView
+            android:id="@+id/txt_food_detail_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/whitesmoke"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sys_font_size_h2"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/txt_food_detail_view_menu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/whitesmoke"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sys_font_size_h2"
+            />
+        <TextView
+            android:id="@+id/txt_food_detail_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin1"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:paddingRight="@dimen/layout_padding2"
+            android:textSize="@dimen/sys_font_size_normal"
+            />
+        <View
+            style="@style/hr_line"/>
+        <!-- 餐厅照片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#DDDDDD"
+            android:orientation="vertical">
+            <com.redscarf.weidou.customwidget.HorizontalListView
+                android:id="@+id/hlist_food_detail_img"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:focusable="false"
+                android:layout_marginTop="8dp">
+            </com.redscarf.weidou.customwidget.HorizontalListView>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>

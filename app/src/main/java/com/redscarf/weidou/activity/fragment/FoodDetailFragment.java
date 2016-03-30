@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.MapActivity;
 import com.redscarf.weidou.activity.R;
@@ -18,7 +20,9 @@ import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.adapter.FoodDetailPhotoAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
+import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.FoodDetailBody;
+import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
@@ -38,6 +42,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +52,13 @@ public class FoodDetailFragment extends BaseFragment {
     private final String TAG = FoodDetailFragment.class.getSimpleName();
 
     private Bundle datas;
+    protected ImageLoader imageLoader;
 
     private View rootView;
     private ImageButton favourite;
+    private RelativeLayout layout_photo_big;
+    private NetworkImageView img_photo_big;
+    private LinearLayout layout;
 
     private FoodDetailBody body;
     private ArrayList<String> photoAddr;
@@ -63,7 +73,18 @@ public class FoodDetailFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MSG_INDEX:
-
+                    Bundle indexObj = msg.getData();
+                    try {
+                        ArrayList<FoodDetailBody> arrRed = RedScarfBodyAdapter
+                                .fromJSON(indexObj.getString("response"), FoodDetailBody.class);
+                        body = arrRed.get(0);
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    mlistener.sendLcation(body);
+                    initView();
+                    hideProgressDialog();
+                    break;
                 case MSG_IS_FAVOURITE:
                     try {
                         JSONObject jo = new JSONObject(response);
@@ -94,19 +115,6 @@ public class FoodDetailFragment extends BaseFragment {
                     }
                     break;
             }
-            if (msg.what == MSG_INDEX) {
-                Bundle indexObj = msg.getData();
-                try {
-                    ArrayList<FoodDetailBody> arrRed = RedScarfBodyAdapter
-                            .fromJSON(indexObj.getString("response"), FoodDetailBody.class);
-                    body = arrRed.get(0);
-                } catch (JSONException e) {
-                    ExceptionUtil.printAndRecord(TAG, e);
-                }
-                mlistener.sendLcation(body);
-                initView();
-                hideProgressDialog();
-            }
 
         }
     };
@@ -117,6 +125,7 @@ public class FoodDetailFragment extends BaseFragment {
 
         rootView = inflater.inflate(R.layout.fragment_food_detail, container, false);
 
+        this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
         doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
@@ -183,6 +192,9 @@ public class FoodDetailFragment extends BaseFragment {
         TextView content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
         TextView view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
         favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_food_detail_favorite);
+        layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
+        img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
+//        layout = (LinearLayout) getActivity().findViewById(R.id.sublayout_photo_big_food);
 
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));
@@ -206,6 +218,7 @@ public class FoodDetailFragment extends BaseFragment {
         view_menu.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getMenu()));
         favourite.setOnClickListener(new OnChangeFavourite());
         detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
+        layout_photo_big.setOnClickListener(new OnHidePhotoCanvasClick());
     }
 
 
@@ -298,16 +311,23 @@ public class FoodDetailFragment extends BaseFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (view.getId()){
-                case R.id.food_photos:
-                    parent.findViewById(R.id.food_photos_big).setVisibility(View.VISIBLE);
-                    break;
-                case R.id.food_photos_big:
-                    parent.findViewById(R.id.food_photos_big).setVisibility(View.INVISIBLE);
-                    break;
-                default:
-                    break;
+            layout_photo_big.setVisibility(View.VISIBLE);
+            String imageUrl = photoAddr.get(position);
+            img_photo_big.setBackgroundResource(R.drawable.loading_min);
+            if ((imageUrl != null) && (!imageUrl.equals(""))) {
+                img_photo_big.setDefaultImageResId(R.drawable.loading_min);
+                img_photo_big.setErrorImageResId(R.drawable.null_large);
+                img_photo_big.setBackgroundColor(0);
+                img_photo_big.setImageUrl(imageUrl, imageLoader);
             }
+        }
+    }
+
+    private class OnHidePhotoCanvasClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            layout_photo_big.setVisibility(View.GONE);
         }
     }
 }
