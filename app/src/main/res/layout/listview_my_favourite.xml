@@ -8,8 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin3"
+        android:layout_marginBottom="@dimen/layout_margin3"
         android:paddingLeft="@dimen/layout_padding3"
-        android:paddingRight="@dimen/layout_padding3">
+        android:paddingRight="@dimen/layout_padding3"
+        >
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/img_my_favourite"
         android:layout_width="100dp"
@@ -53,7 +55,6 @@
                 style="@style/text_style_content_normal"
                 android:layout_marginLeft="@dimen/layout_margin3"
                 />
-
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
