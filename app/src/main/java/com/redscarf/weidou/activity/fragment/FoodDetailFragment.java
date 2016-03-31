@@ -3,6 +3,7 @@ package com.redscarf.weidou.activity.fragment;
 import java.util.ArrayList;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -313,6 +314,9 @@ public class FoodDetailFragment extends BaseFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             layout_photo_big.setVisibility(View.VISIBLE);
             String imageUrl = photoAddr.get(position);
+            if (StringUtils.contains(imageUrl,"-150x150")){
+                imageUrl = imageUrl.replace("-150x150","");
+            }
             img_photo_big.setBackgroundResource(R.drawable.loading_min);
             if ((imageUrl != null) && (!imageUrl.equals(""))) {
                 img_photo_big.setDefaultImageResId(R.drawable.loading_min);
