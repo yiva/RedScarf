@@ -3,22 +3,74 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <include
+        android:id="@+id/actionbar_individual_info"
+        layout="@layout/actionbar_individual_info"
+        />
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_margin2"
-        android:layout_marginRight="@dimen/layout_margin2"
         android:columnCount="1">
         <RelativeLayout
             android:id="@+id/layout_user_photo"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:paddingRight="@dimen/layout_padding2"
+            android:background="@color/white"
             >
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/img_photo_individual_info"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
+
+        <GridLayout
+            android:layout_marginTop="@dimen/layout_margin1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/layout_padding2"
+            android:paddingRight="@dimen/layout_padding2"
+            android:background="@color/white"
+            android:columnCount="2">
+            <TextView
+                android:id="@+id/label_nickname_individual_info"
+                style="@style/text_style_individual_info"
+                android:text="@string/label_mine_nickname"
+                />
+            <TextView
+                android:id="@+id/txt_nickname_individual_info"
+                style="@style/text_style_individual_info"
+                />
+            <TextView
+                android:id="@+id/label_gender_individual_info"
+                style="@style/text_style_individual_info"
+                android:text="@string/label_mine_gender"
+                />
+            <TextView
+                android:id="@+id/txt_gender_individual_info"
+                style="@style/text_style_individual_info"
+                />
+            <TextView
+                android:id="@+id/label_birthday_individual_info"
+                style="@style/text_style_individual_info"
+                android:text="@string/label_mine_birthday"
+                />
+            <TextView
+                android:id="@+id/txt_birthday_individual_info"
+                style="@style/text_style_individual_info"
+                />
+            <TextView
+                android:id="@+id/label_address_individual_info"
+                style="@style/text_style_individual_info"
+                android:text="@string/label_mine_address"
+                />
+            <TextView
+                android:id="@+id/txt_address_individual_info"
+                style="@style/text_style_individual_info"
+                />
+        </GridLayout>
 
     </GridLayout>
 </LinearLayout>

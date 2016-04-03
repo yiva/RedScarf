@@ -73,9 +73,8 @@ public class MineActivity extends BaseActivity {
     private Member body;
     private NonceBody nonce;
     private AvatarResultBody avatar_result;
-    private File photoFile;
-    private ByteArrayOutputStream bos = null;
-    private FileInputStream fStream = null;
+
+
 
 
     private Handler handler = new Handler() {
@@ -156,153 +155,11 @@ public class MineActivity extends BaseActivity {
             user_logo.setBackgroundColor(0);
             user_logo.setImageUrl(profile_image, imageLoader);
         }
-        user_logo.setOnClickListener(new changePhoto());
+//        user_logo.setOnClickListener(new changePhoto());
         btn_mine_logoff.setOnClickListener(new OnLogOffClick());
-        img_jump_individual.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
-                IndividualInfoActivity.class, null));
+        img_jump_individual.setOnClickListener(new OnJumpIndividualInfoClick());
         btn_mine_my_favourite.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
                 IndividualFavouriteActivity.class, null));
-    }
-
-    /**
-     * 修改照片
-     */
-
-    private class changePhoto implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            GalleryHelper.openGallerySingle(MineActivity.this, true, new GalleryImageLoader());
-
-            initImageLoader(MineActivity.this);
-        }
-    }
-
-    private void uploadImg() {
-        doRequestURL(StringRequest.Method.POST, RequestURLFactory.getRequestURL(RequestType
-                        .UPLOAD_AVATOR, new String[]{MyPreferences.getAppPerenceAttribute
-                        ("user_cookie")}),
-                MineActivity.class, handler, MSG_UPLOAD, 1);
-        try {
-            fStream.close();
-            bos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GalleryHelper.GALLERY_REQUEST_CODE)
-            if (resultCode == GalleryHelper.GALLERY_RESULT_SUCCESS) {
-                PhotoInfo photoInfo = data.getParcelableExtra(GalleryHelper.RESULT_DATA);
-                List<PhotoInfo> photoInfoList = (List<PhotoInfo>) data.getSerializableExtra(GalleryHelper.RESULT_LIST_DATA);
-
-                if (photoInfo != null) {
-                    com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage("file:/" + photoInfo.getPhotoPath(), user_logo);
-                    //获得图片地址
-                    photoFile = new File(photoInfo.getPhotoPath());
-                    if (photoFile.exists()) {
-                        try {
-                            showProgressDialogNoCancelable("","图片上传中......");
-                            String filename = photoFile.getName();
-                            int dot = filename.lastIndexOf('.');
-                            if ((dot > -1) && (dot < (filename.length()))) {
-                                filename = filename.substring(0, dot);
-                            }
-//                            RequestQueue queue = Volley.newRequestQueue(this);
-
-                            MultipartRequest multipartRequest = new MultipartRequest(
-                                    RequestURLFactory.sysRequestURL(RequestType
-                                            .UPLOAD_AVATOR, new String[]{MyPreferences
-                                            .getAppPerenceAttribute("user_cookie"), filename}),
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            Log.i(MineActivity.class.getSimpleName(), response);
-                                            Bundle data = new Bundle();
-                                            data.putString("response", response);
-                                            Message message = Message.obtain(handler, MSG_UPLOAD);
-                                            message.setData(data);
-                                            handler.sendMessage(message);
-                                        }
-
-                                    });
-                            // 添加header
-                            multipartRequest.addHeader("header-name", "value");
-                            // 通过MultipartEntity来设置参数
-                            MultipartEntity multi = multipartRequest.getMultiPartEntity();
-                            // 文本参数
-                            multi.addStringPart("userCookie", MyPreferences
-                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
-                            multi.addStringPart("userCookie_name", MyPreferences
-                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME));
-                            // 上传文件
-                            multi.addFilePart("file", photoFile);
-                            // 将请求添加到队列中
-                            multipartRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                            multipartRequest.setTag(MineActivity.class.getSimpleName());
-                            VolleyUtil.getRequestQueue().add(multipartRequest);
-//                            queue.add(multipartRequest);
-                        } catch (Exception ex) {
-                            hideProgressDialog();
-                            Toast.makeText(MineActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
-                            ExceptionUtil.printAndRecord(TAG,ex);
-                        }
-
-                    }
-
-                }
-
-            }
-    }
-
-    public static void initImageLoader(Context context) {
-        // This configuration tuning is custom. You can tune every option, you may tune some of them,
-        // or you can create default configuration by
-        //  ImageLoaderConfiguration.createDefault(this);
-        // method.
-        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
-        config.threadPriority(Thread.NORM_PRIORITY - 2);
-        config.denyCacheImageMultipleSizesInMemory();
-        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
-        config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        config.writeDebugLogs(); // Remove for release app
-
-        // Initialize ImageLoader with configuration.
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config.build());
-    }
-
-    private void onMakeModify(View v) {
-        TextView modifyTextLabel = null;
-        TextView modifyTextValue = null;
-        Bundle data = new Bundle();
-        switch (v.getId()) {
-//			case R.id.btn_modify_mine_nickname: //修改昵称
-//				modifyTextLabel = (TextView) findViewById(R.id.label_mine_nickname);
-//				modifyTextValue = (TextView) findViewById(R.id.txt_mine_nickname);
-//				data.putString("meta_key","nickname");
-//				break;
-//			case R.id.btn_modify_mine_gender:  //修改性别
-//				modifyTextLabel = (TextView) findViewById(R.id.label_mine_gender);
-//				modifyTextValue = (TextView) findViewById(R.id.txt_mine_gender);
-//				data.putString("meta_key","gender");
-//				break;
-//			case R.id.btn_modify_mine_sign:  //修改签名
-//				modifyTextLabel = (TextView) findViewById(R.id.label_mine_sign);
-//				data.putString("meta_key","sign");
-//				break;
-            default:
-                break;
-        }
-        Intent i_sub = new Intent(MineActivity.this, IndividualModifyFragment.class);
-
-        data.putString("title", modifyTextLabel.getText().toString());
-        data.putString("value", modifyTextValue.getText().toString());
-        i_sub.putExtras(data);
-        startActivity(i_sub);
-
     }
 
     private class OnLogOffClick implements View.OnClickListener{
@@ -313,6 +170,17 @@ public class MineActivity extends BaseActivity {
             Toast.makeText(MineActivity.this, "已登出", Toast.LENGTH_SHORT).show();
             JumpToActivity(MineActivity.this, LoginActivity.class, null);
             finish();
+        }
+    }
+
+    private class OnJumpIndividualInfoClick implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            Bundle data = new Bundle();
+            data.putParcelable("profile_body",body);
+            JumpToActivity(MineActivity.this,
+                    IndividualInfoActivity.class, data);
         }
     }
 }

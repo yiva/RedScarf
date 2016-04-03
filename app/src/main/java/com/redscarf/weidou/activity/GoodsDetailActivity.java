@@ -124,10 +124,6 @@ public class GoodsDetailActivity extends BaseActivity {
         actionbar_title.setText(String.valueOf(datas.getString("title")));
         GlobalApplication.getInstance().addActivity(this);
 
-        //请求参数
-        url_map = new HashMap<String, String>();
-        url_map.put("json", "get_brandpost");
-        url_map.put("post_id", datas.getString("id"));
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
                         new String[]{datas.getString("id")}), GoodsDetailActivity.class, handler,
                 MSG_INDEX, 1);

@@ -16,6 +16,7 @@
         android:maxLines="6"
         android:minLines="6"
         android:inputType="textMultiLine"
-        android:gravity="left|top"/>
+        android:gravity="left|top"
+        android:textSize="@dimen/sys_font_size_normal"/>
 
 </RelativeLayout>

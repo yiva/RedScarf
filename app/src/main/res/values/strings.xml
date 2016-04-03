@@ -42,6 +42,7 @@
     <string name="title_discount">折扣</string>
     <string name="title_mine">我的</string>
     <string name="title_mine_activity">个人资料</string>
+    <string name="title_individual_info">编辑个人资料</string>
     <string name="title_map">位置</string>
     <string name="title_error">报错</string>
     <string name="title_share">餐厅分享</string>
@@ -125,6 +126,7 @@
     <string name="txt_mine_clear_cache">清空缓存</string>
     <string name="txt_mine_about_weidou">关于围兜</string>
     <string name="txt_mine_logoff">登出</string>
+    <string name="label_mine_birthday">生日</string>
 	
 	<string name="txt_error_submit">发送</string>
 	<string name="txt_error_label">哎呀好像哪里不对，告诉委媛吧:</string>

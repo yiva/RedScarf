@@ -63,6 +63,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="text_style_individual_info">
+        <item name="android:textSize">@dimen/sys_font_size_bolder</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingTop">@dimen/layout_padding1</item>
+        <item name="android:paddingBottom">@dimen/layout_padding1</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin1</item>
+    </style>
+
 
     <!--MineActivity-->
     <style name="table_row_mine" >
