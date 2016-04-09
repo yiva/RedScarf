@@ -84,13 +84,13 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
 
         initView();
         //头部设计
-        View header = inflater.inflate(R.layout.header_food, null);
+//        View header = inflater.inflate(R.layout.header_food, null);
 //        GridView foodHeaderGrid = (GridView) header.findViewById(R.id.grid_food_header);
 //        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), makeFoodHeaderGridArrays()));
 //        CalGridViewHeight.setGridViewHeightBasedOnChildren(foodHeaderGrid);
 //        TextView txt_header = (TextView) header.findViewById(R.id.txt_header_food_title);
 //        txt_header.setText("美食");
-        lv_food.addHeaderView(header, null, false);
+//        lv_food.addHeaderView(header, null, false);
 
         return rootView;
     }
@@ -163,7 +163,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            FoodBody bodyItem = bodys.get(position - 1);
+//            FoodBody bodyItem = bodys.get(position - 1);
+            FoodBody bodyItem = bodys.get(position);
             Bundle data = new Bundle();
             data.putString("id", bodyItem.getId());
             data.putString("title", bodyItem.getTitle());
