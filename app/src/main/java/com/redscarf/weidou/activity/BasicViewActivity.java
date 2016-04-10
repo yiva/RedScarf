@@ -226,7 +226,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     }
 
     @Override
-    public void OnShopCategoryClickItem(int postid) {
+    public void OnShopCategoryClickItem(int postid,String title) {
         SHOP_EXCAHNGE_TAG = SHOP_LIST_CONTAINER;
         this.hideFragments();
         FragmentTransaction changeTransaction = basicFragment.beginTransaction();
@@ -237,6 +237,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
             if (postid != args.getInt("category_id")){
                 args.putInt("flag", 1);
                 args.putInt("category_id", postid);
+                args.putString("title",title);
             }
             changeTransaction.show(buy);
             buy.onResume();
@@ -244,6 +245,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
             Bundle args = new Bundle();
             args.putInt("flag", 1);
             args.putInt("category_id", postid);
+            args.putString("title", title);
             buy.setArguments(args);
             changeTransaction.add(R.id.basicfragment, buy, SHOP_EXCAHNGE_TAG);
         }
@@ -264,7 +266,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     }
 
     @Override
-    public void foodCategoryClick(int postid) {
+    public void foodCategoryClick(int postid,String title) {
         FOOD_EXCAHNGE_TAG = FOOD_LIST_CONTAINER;
         this.hideFragments();
         FragmentTransaction changeTransaction = basicFragment.beginTransaction();
@@ -275,6 +277,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
             if (postid != args.getInt("category_id")){
                 args.putInt("flag", 1);
                 args.putInt("category_id", postid);
+                args.putString("title", title);
             }
             changeTransaction.show(item);
             item.onResume();
@@ -282,6 +285,7 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
             Bundle args = new Bundle();
             args.putInt("flag", 1);
             args.putInt("category_id", postid);
+            args.putString("title",title);
             item.setArguments(args);
             changeTransaction.add(R.id.basicfragment, item, FOOD_EXCAHNGE_TAG);
         }

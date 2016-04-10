@@ -141,6 +141,10 @@ public class BuyFragment extends BaseFragment
         super.onResume();
         Integer flag = getArguments().getInt("flag");
         Integer category_id = getArguments().getInt("category_id");
+        String title = getArguments().getString("title");
+        TextView txt_title = (TextView) rootView.findViewById(R.id.img_disount_title);
+        txt_title.setText(title);
+
         if (flag.equals(1)) {
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
@@ -161,6 +165,7 @@ public class BuyFragment extends BaseFragment
     @Override
     public void initView() {
         ImageButton back = (ImageButton) rootView.findViewById(R.id.btn_shop_list_back);
+
         back.setOnClickListener(new OnbackClick());
     }
 

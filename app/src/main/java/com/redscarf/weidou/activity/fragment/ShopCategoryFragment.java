@@ -60,7 +60,8 @@ public class ShopCategoryFragment extends BaseFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mlistener.OnShopCategoryClickItem(datas.get(position).getPostId());
+            mlistener.OnShopCategoryClickItem(datas.get(position).getPostId(),datas.get(position)
+                    .getTitle());
         }
     }
 
@@ -102,7 +103,7 @@ public class ShopCategoryFragment extends BaseFragment {
 
     public interface OnChangeShopListFragmentListener{
         //类别ID
-        void OnShopCategoryClickItem(int postid);
+        void OnShopCategoryClickItem(int postid,String title);
     }
 
 

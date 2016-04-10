@@ -33,6 +33,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class FoodFragment extends BaseFragment implements OnTouchListener {
 
 
@@ -117,6 +119,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         super.onResume();
         Integer flag = getArguments().getInt("flag");
         Integer category_id = getArguments().getInt("category_id");
+        String title = getArguments().getString("title");
+        TextView food_title = (TextView) rootView.findViewById(R.id.imgShopTitle);
+        food_title.setText(title);
+
         if (flag.equals(1)) {
             getArguments().putInt("flag",0);
             showProgressDialogNoCancelable("", MyConstants.LOADING);

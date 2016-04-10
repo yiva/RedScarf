@@ -55,7 +55,7 @@ public class FoodCategoryFragment extends BaseFragment {
     }
 
     public interface OnChangeFoodListFragmentListener {
-        void foodCategoryClick(int postid);
+        void foodCategoryClick(int postid,String title);
     }
 
     /**
@@ -99,7 +99,8 @@ public class FoodCategoryFragment extends BaseFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mchangelistener.foodCategoryClick(datas.get(position).getPostId());
+            mchangelistener.foodCategoryClick(datas.get(position).getPostId(),datas.get(position)
+                    .getTitle());
         }
     }
 }
