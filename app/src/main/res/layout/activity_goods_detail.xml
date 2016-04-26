@@ -74,6 +74,7 @@
                         style="@style/hr_line"
                         android:background="@color/gainsboro"/>
                     <LinearLayout
+                        android:id="@+id/layout_dead_time_goods_detail"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:gravity="center_vertical"
@@ -104,9 +105,10 @@
                             android:layout_marginLeft="@dimen/layout_margin3"
                             />
                     </LinearLayout>
-                <View
-                    style="@style/hr_line"
-                    android:background="@color/gainsboro"/>
+                    <View
+                        android:id="@+id/view_dead_time_goods_detail"
+                        style="@style/hr_line"
+                        android:background="@color/gainsboro"/>
                     <TextView
                         android:id="@+id/txt_goods_detail_content"
                         android:layout_width="wrap_content"
@@ -114,6 +116,7 @@
                         android:minLines="3"
                         android:textSize="14sp"/>
                     <TextView
+                        android:id="@+id/txt_sales_code_goods_detail"
                         style="@style/text_style_content_normal"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/txt_brand_detail_copy_code"

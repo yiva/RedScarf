@@ -40,7 +40,7 @@ public class FoodDetailActivity extends BaseActivity implements
                 setUpMapIfNeeded();
             }else if(msg.what == MSG_FAIL){
                 setDefaultLocation();
-                Toast.makeText(FoodDetailActivity.this, "地理信息获取失败", Toast.LENGTH_LONG).show();
+//                Toast.makeText(FoodDetailActivity.this, "地理信息获取失败", Toast.LENGTH_LONG).show();
             }
         }
     };

@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,11 +49,13 @@ public class GoodsDetailActivity extends BaseActivity {
     private TextView subtitle;
     private TextView exclusive;
     private TextView expires;
+    private TextView label_sales_code;
     private ImageButton favourite;
     private ImageButton share;
     private Button copy_code;
     private Button buy;
     private Button brand_info;
+    private LinearLayout layout_dead_time;
 
     private DiscountBody body;
     private String response;
@@ -141,6 +144,9 @@ public class GoodsDetailActivity extends BaseActivity {
         copy_code = (Button) findViewById(R.id.btn_good_detail_sale_code);
         buy = (Button) findViewById(R.id.btn_good_detail_buy_now);
         brand_info = (Button) findViewById(R.id.btn_good_detail_info_more);
+        label_sales_code = (TextView) findViewById(R.id.txt_sales_code_goods_detail);
+        layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
+        View divider = findViewById(R.id.view_dead_time_goods_detail);
 
         title.setText(body.getTitle());
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
@@ -164,12 +170,14 @@ public class GoodsDetailActivity extends BaseActivity {
         //无过期时间，隐藏expires
         if (StringUtils.isBlank(body.getExpires()) || StringUtils.contains(body.getExpires(),
                 "0000-00-00")){
-            expires.setVisibility(View.GONE);
+            layout_dead_time.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);
         }
 
         //无折扣码
         if (StringUtils.isBlank(body.getOthers())){
             copy_code.setVisibility(View.GONE);
+            label_sales_code.setVisibility(View.GONE);
         }
 
         //button listener
