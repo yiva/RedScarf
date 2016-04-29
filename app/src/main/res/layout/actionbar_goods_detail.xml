@@ -20,6 +20,11 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
+        android:layout_toRightOf="@+id/actionbar_goods_detail_back"
+        android:layout_toLeftOf="@+id/actionbar_good_detail_share"
+        android:paddingLeft="@dimen/layout_padding3"
+        android:paddingRight="@dimen/layout_padding3"
+        android:singleLine="true"
         />
 
     <ImageButton

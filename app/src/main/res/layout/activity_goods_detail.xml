@@ -41,23 +41,23 @@
         	                android:text="Exclusive"
         	                android:visibility="gone"
         	                />
-	        		    <TextView
-	                    android:id="@+id/txt_goods_detail_title"
-	                    android:padding="8dp"
-	                    android:layout_width="match_parent"
-	                    android:layout_height="wrap_content"
-	                    android:textStyle="bold"
-	                    android:textSize="15sp"
-	                    />
+	        		    <!--<TextView-->
+	                    <!--android:id="@+id/txt_goods_detail_title"-->
+	                    <!--android:padding="8dp"-->
+	                    <!--android:layout_width="match_parent"-->
+	                    <!--android:layout_height="wrap_content"-->
+	                    <!--android:textStyle="bold"-->
+	                    <!--android:textSize="15sp"-->
+	                    <!--/>-->
 	        		</LinearLayout>
-                    <TextView
-                        android:id="@+id/txt_goods_detail_subtitle"
-                        android:padding="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        />
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_goods_detail_subtitle"-->
+                        <!--android:padding="8dp"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textSize="15sp"-->
+                        <!--/>-->
                 	<RelativeLayout
 	                    android:layout_width="match_parent"
 	                    android:layout_height="250dp"

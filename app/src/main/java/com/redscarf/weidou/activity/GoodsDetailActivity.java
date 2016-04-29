@@ -135,9 +135,9 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        title = (TextView) findViewById(R.id.txt_goods_detail_title);
+//        title = (TextView) findViewById(R.id.txt_goods_detail_title);
         content = (TextView) findViewById(R.id.txt_goods_detail_content);
-        subtitle = (TextView) findViewById(R.id.txt_goods_detail_subtitle);
+//        subtitle = (TextView) findViewById(R.id.txt_goods_detail_subtitle);
         exclusive = (TextView) findViewById(R.id.txt_exclusive_good_detail);
         expires = (TextView) findViewById(R.id.txt_expires_goods_detail);
         favourite = (ImageButton) findViewById(R.id.actionbar_good_detail_favorite);
@@ -148,7 +148,7 @@ public class GoodsDetailActivity extends BaseActivity {
         layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
         View divider = findViewById(R.id.view_dead_time_goods_detail);
 
-        title.setText(body.getTitle());
+//        title.setText(body.getTitle());
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
             favourite.setBackgroundResource(R.drawable.ic_favourite_red);
         }
@@ -163,7 +163,7 @@ public class GoodsDetailActivity extends BaseActivity {
             goodsImage.setImageUrl(imageUrl, imageLoader);
         }
         content.setText(Html.fromHtml(body.getContent()));
-        subtitle.setText(body.getSubtitle());
+//        subtitle.setText(body.getSubtitle());
         expires.setText(body.getExpires());
         copy_code.setText("折扣码: "+body.getOthers());
 

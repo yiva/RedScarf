@@ -19,14 +19,14 @@
             android:paddingRight="@dimen/layout_padding2"
             android:paddingLeft="@dimen/layout_padding2"
             android:columnCount="1">
-            <TextView
-                android:id="@+id/txt_brand_detail_label"
-                android:textSize="@dimen/sys_font_size_h1"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/text_margin1"
-                />
+            <!--<TextView-->
+                <!--android:id="@+id/txt_brand_detail_label"-->
+                <!--android:textSize="@dimen/sys_font_size_h1"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/text_margin1"-->
+                <!--/>-->
             <TextView
                 android:id="@+id/txt_brand_detail_description"
                 android:textSize="@dimen/sys_font_size_bolder"

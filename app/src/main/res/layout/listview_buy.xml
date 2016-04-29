@@ -47,18 +47,22 @@
 							android:layout_height="wrap_content"
 							android:layout_marginLeft="4dp"
 							android:textStyle="bold"
+							android:textColor="@color/white"
 							android:textSize="@dimen/sys_font_size_bolder"/>
 						<TextView
 							android:id="@+id/txt_subtitle_shop"
+							android:textColor="@color/white"
 							android:textSize="@dimen/sys_font_size_normal"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
 							/>
 						<TextView
 							android:id="@+id/txt_expires_shop"
 							android:textSize="@dimen/sys_font_size_normal"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginLeft="4dp"
 							android:textColor="@color/red"
 							/>
         	        </LinearLayout>

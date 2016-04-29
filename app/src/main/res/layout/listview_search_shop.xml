@@ -29,6 +29,7 @@
             android:id="@+id/txt_search_shop_title"
             style="@style/text_style_content_normal"
             android:textSize="@dimen/sys_font_size_h2"
+            android:singleLine="true"
             />
         <TextView
             android:id="@+id/txt_search_shop_content"

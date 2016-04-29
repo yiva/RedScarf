@@ -80,7 +80,12 @@ public class IndividualFavouriteActivity extends BaseActivity{
             String category = String.valueOf(bodys.get(position).getCategory());
             switch (category){
                 //购物
-                case "1":
+                case "4":
+                    JumpToActivity(IndividualFavouriteActivity.this, FoodDetailActivity.class, null);
+                    break;
+                case "5":
+                    JumpToActivity(IndividualFavouriteActivity.this, GoodsDetailActivity.class, null);
+                    break;
                 case "283":
                     JumpToActivity(IndividualFavouriteActivity.this, BrandDetailActivity.class, null);
                     break;

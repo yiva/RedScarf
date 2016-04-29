@@ -45,12 +45,16 @@
                                 android:id="@+id/txt_title_food"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/sys_font_size_bolder"
                                 android:textStyle="bold" />
                             <TextView
                                 android:id="@+id/txt_subtitle_food"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/white"
                                 android:textSize="11dp"
                                 android:textStyle="normal"
                                 android:maxLines="3"/>
@@ -58,6 +62,7 @@
                                 android:id="@+id/txt_style_food"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
                                 android:textSize="11dp"
                                 android:textColor="#AAAAAA"
                                 android:textStyle="normal" />

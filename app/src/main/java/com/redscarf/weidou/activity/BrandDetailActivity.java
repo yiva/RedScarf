@@ -118,7 +118,7 @@ public class BrandDetailActivity extends BaseActivity {
     public void initView() {
         //register
         title = (TextView) findViewById(R.id.txt_brand_detail_title);
-        label = (TextView) findViewById(R.id.txt_brand_detail_label);
+//        label = (TextView) findViewById(R.id.txt_brand_detail_label);
         description = (TextView) findViewById(R.id.txt_brand_detail_description);
         photo = (NetworkImageView) findViewById(R.id.img_brand_detail_photo);
         website = (Button) findViewById(R.id.btn_brand_detail_website);
@@ -129,7 +129,7 @@ public class BrandDetailActivity extends BaseActivity {
 
         //put data
         title.setText(brand_body.getTitle());
-        label.setText(brand_body.getTitle());
+//        label.setText(brand_body.getTitle());
         description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
         description.setVisibility(View.VISIBLE);
 
