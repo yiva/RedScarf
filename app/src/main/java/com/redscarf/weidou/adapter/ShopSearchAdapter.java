@@ -36,7 +36,7 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
             viewHolder.title = (TextView) convertView.findViewById(R.id.txt_search_shop_title);
             viewHolder.time = (TextView) convertView.findViewById(R.id.txt_search_shop_time);
             viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_search_shop);
-            viewHolder.expires = (LinearLayout) convertView.findViewById(R.id.layout_search_shop_expires);
+//            viewHolder.expires = (LinearLayout) convertView.findViewById(R.id.layout_search_shop_expires);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -45,7 +45,7 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.time.setText(getItem(position).getExpires());
         if(StringUtils.contains(getItem(position).getExpires(),"0000-00-00")){
-            viewHolder.expires.setVisibility(View.GONE);
+            viewHolder.time.setVisibility(View.GONE);
         }
 
         String imageUrl = getItem(position).getPost_thumbnail();
@@ -65,6 +65,6 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
         TextView title;
         TextView time;
         NetworkImageView image;
-        LinearLayout expires;
+//        LinearLayout expires;
     }
 }

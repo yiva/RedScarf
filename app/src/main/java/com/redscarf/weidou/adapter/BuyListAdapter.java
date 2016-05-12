@@ -29,13 +29,11 @@ import org.json.JSONObject;
 
 public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
 
-//	private ImageLoader imageLoader;
-//	private RequestQueue queue;
+    private int mFlag;
 
-    public BuyListAdapter(Context context, List<GoodsBody> listData) {
+    public BuyListAdapter(Context context, List<GoodsBody> listData,int flag) {
         super(context, listData);
-//		this.queue = Volley.newRequestQueue(mContext);
-//		this.imageLoader = new ImageLoader(this.queue, new BitmapCache());
+        this.mFlag = flag;
     }
 
     @Override
@@ -55,14 +53,16 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.expires.setText("Expires " + getItem(position).getExpires().substring(0, 10));
         if (StringUtils.isBlank(getItem(position).getExpires()) ||
                 StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
             viewHolder.expires.setVisibility(View.GONE);
         }
+        if (5 != mFlag) {
             viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
-
+        }
         viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
         viewHolder.position = position;
         viewHolder.shop_photo.setImageResource(R.drawable.loading_large);

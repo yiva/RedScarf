@@ -21,6 +21,7 @@ import java.util.List;
  * Created by yeahwang on 2016/1/29.
  */
 public class BrandsListAdapter extends BaseRedScarfAdapter<String> {
+
     public BrandsListAdapter(Context context, List<String> listData) {
         super(context, listData);
 

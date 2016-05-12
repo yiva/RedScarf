@@ -52,9 +52,8 @@ import android.widget.Toast;
  * @author yeahwa
  */
 public class BuyFragment extends BaseFragment
+        //        implements OnTouchListener
 {
-//        implements OnTouchListener {
-
     private final String TAG = BuyFragment.class.getSimpleName();
 
     private ImageButton discount_search;
@@ -78,6 +77,7 @@ public class BuyFragment extends BaseFragment
     private ArrayList<String> listbrands_title;
     private float lastY = 0f;
     private float currentY = 0f;
+    private Integer category_id;
 
     BackShopCategoryListener mbackClickListener;
 
@@ -100,7 +100,7 @@ public class BuyFragment extends BaseFragment
 					lv_brands.setAdapter(new BrandsListAdapter(getActivity(), listbrands_title));
 				}
                 if (bodys.size() != 0) {
-                    lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys));
+                    lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys,category_id));
                 }
                 hideProgressDialog();
             }
@@ -140,7 +140,7 @@ public class BuyFragment extends BaseFragment
     public void onResume() {
         super.onResume();
         Integer flag = getArguments().getInt("flag");
-        Integer category_id = getArguments().getInt("category_id");
+        category_id = getArguments().getInt("category_id");
         String title = getArguments().getString("title");
         TextView txt_title = (TextView) rootView.findViewById(R.id.img_disount_title);
         txt_title.setText(title);
