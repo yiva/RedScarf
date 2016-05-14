@@ -267,7 +267,8 @@ public class FoodDetailFragment extends BaseFragment {
             if (null == num && "".equals(num.trim())) {
                 Toast.makeText(getActivity(), "无电话号码", Toast.LENGTH_SHORT).show();
             } else {
-                Intent call = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + num));
+                Intent call = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + num));
+                call.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(call);
             }
         }
