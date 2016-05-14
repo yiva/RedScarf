@@ -3,6 +3,8 @@ package com.redscarf.weidou.util;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -90,5 +92,17 @@ public class GlobalApplication extends Application{
 		windowManager.getDefaultDisplay().getMetrics(metrics);
 		return metrics.heightPixels;
 	}
+
+	public static String getVersion() {
+		 try {
+				 PackageManager manager = context.getPackageManager();
+				 PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+				 String version = info.versionName;
+				 return version;
+			 } catch (Exception e) {
+				 e.printStackTrace();
+				return "";
+			 }
+	 }
 
 }

@@ -16,6 +16,9 @@ public class FoodBody implements Parcelable {
     private String modified;
     private String post_thumbnail;
     private String post_medium;
+    private String underground;
+    private String cost;
+
 
     protected FoodBody(Parcel in) {
         id = in.readString();
@@ -25,6 +28,8 @@ public class FoodBody implements Parcelable {
         modified = in.readString();
         post_thumbnail = in.readString();
         post_medium = in.readString();
+        underground = in.readString();
+        cost = in.readString();
     }
 
     public static final Creator<FoodBody> CREATOR = new Creator<FoodBody>() {
@@ -95,6 +100,22 @@ public class FoodBody implements Parcelable {
         this.modified = modified;
     }
 
+    public String getUnderground() {
+        return underground;
+    }
+
+    public void setUnderground(String underground) {
+        this.underground = underground;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
     public FoodBody(){
 
     }
@@ -113,5 +134,7 @@ public class FoodBody implements Parcelable {
         dest.writeString(modified);
         dest.writeString(post_thumbnail);
         dest.writeString(post_medium);
+        dest.writeString(underground);
+        dest.writeString(cost);
     }
 }

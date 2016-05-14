@@ -43,7 +43,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             convertView = LayoutInflater.from(this.mContext).inflate(R.layout.listview_buy, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.shop_photo = ((NetworkImageView) convertView.findViewById(R.id.img_shop));
-            viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_shop));
+//            viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_shop));
             viewHolder.expires = ((TextView) convertView.findViewById(R.id.txt_expires_shop));
             viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_shop));
 //            viewHolder.shop_ad_icon = ((ImageView) convertView.findViewById(R.id.img_ad_shop));
@@ -54,15 +54,15 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.title.setText(getItem(position).getTitle());
+//        viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.expires.setText("Expires " + getItem(position).getExpires().substring(0, 10));
         if (StringUtils.isBlank(getItem(position).getExpires()) ||
                 StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
             viewHolder.expires.setVisibility(View.GONE);
         }
-        if (5 != mFlag) {
+//        if (5 != mFlag) {
             viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
-        }
+//        }
         viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
         viewHolder.position = position;
         viewHolder.shop_photo.setImageResource(R.drawable.loading_large);

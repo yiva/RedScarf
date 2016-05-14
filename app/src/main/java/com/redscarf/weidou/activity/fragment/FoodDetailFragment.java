@@ -182,7 +182,7 @@ public class FoodDetailFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        TextView title_text = (TextView) rootView.findViewById(R.id.txt_food_detail_title);
+        TextView title_text = (TextView) getActivity().findViewById(R.id.txt_food_detail_title);
         TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
         TextView website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
         HorizontalListView detail_photos = (HorizontalListView) rootView.findViewById(R.id.hlist_food_detail_img);

@@ -57,7 +57,7 @@
             <Button
                 android:id="@+id/btn_brand_detail_service"
                 android:layout_marginTop="@dimen/layout_margin2"
-                style="@style/button_danger"
+                style="@style/button_3f3d65"
                 android:text="@string/txt_brand_detail_service"
                 />
             <Button

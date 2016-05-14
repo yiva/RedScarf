@@ -175,6 +175,11 @@
             android:name=".IndividualFavouriteActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
+        <!-- 关于围兜 -->
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

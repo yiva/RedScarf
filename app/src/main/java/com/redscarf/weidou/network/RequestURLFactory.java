@@ -107,7 +107,7 @@ public class RequestURLFactory {
         }
         String author_id = String.valueOf(MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID));
         if (!StringUtils.isBlank(author_id)) {
-            res += res + "&author_id=" + author_id;
+            res = res + "&author_id=" + author_id;
         }
         return res;
     }

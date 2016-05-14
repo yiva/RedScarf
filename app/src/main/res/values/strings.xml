@@ -13,6 +13,8 @@
     <string name="image_btn_food"></string>
     <string name="image_btn_shop"></string>
     <string name="image_btn_discount"></string>
+    <string name="txt_email">邮箱：</string>
+    <string name="email_address">hello@weidou.co.uk</string>
     
     <string name="btn_text_buy_right_now">立即购买</string>
     
@@ -183,10 +185,15 @@
 
     <string name="txt_brand_detail_dead_time">折扣到期时间：</string>
     <string name="txt_brand_detail_service">品牌客服</string>
-    <string name="txt_brand_detail_info_more">查看品牌信息</string>
+    <string name="txt_brand_detail_info_more">邮寄信息</string>
     <string name="txt_brand_detail_website">官方网站</string>
     <string name="txt_brand_detail_copy_code">点击复制折扣码</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_search_detail">SearchDetailActivity</string>
+
+    <string name="txt_about_title">“大家好，我是兜兜”</string>
+    <string
+        name="txt_about_content">围兜提供英国购物及伦敦地区餐厅信息。兜兜现在还是一只小柯基，刚刚开始学会走路，请大家给它长大的时间。如果你有想对兜兜说的话，就发一封邮件给它吧。
+    </string>
 
 </resources>

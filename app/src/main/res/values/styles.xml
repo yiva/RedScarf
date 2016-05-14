@@ -47,21 +47,25 @@
     <style name="index_tab">
         <item name="android:layout_height">28dp</item>
         <item name="android:layout_width">30dp</item>
-        <!--<item name="android:gravity">center</item>-->
-        <!--<item name="android:textSize">14sp</item>-->
         <item name="android:padding">20dp</item>
         <item name="android:layout_margin">28dp</item>
-        <!--<item name="android:paddingBottom">4dp</item>-->
         <item name="android:button">@null</item>
     </style>
     <style name="text_style">
-        <item name="android:lineSpacingMultiplier">1.0</item>
+        <item name="android:lineSpacingMultiplier">1</item>
     </style>
-    <style name="text_style_content_normal">
+    <style name="text_style_content_normal" parent="@style/text_style">
         <item name="android:textSize">@dimen/sys_font_size_normal</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="text_style_content_detail" parent="@style/text_style">
+        <item name="android:textSize">@dimen/sys_font_size_normal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/detail_content</item>
+        <item name="android:lineSpacingMultiplier">2</item>
     </style>
     <style name="text_style_individual_info">
         <item name="android:textSize">@dimen/sys_font_size_bolder</item>
@@ -125,6 +129,14 @@
         <item name="android:textSize">@dimen/sys_font_size_h2</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="button_3f3d65">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/btn_3f3d65</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sys_font_size_h2</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="button_normal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -145,4 +157,5 @@
         <item name="android:paddingRight">@dimen/layout_padding3</item>
     </style>
     <!-- End Button Style -->
+
 </resources>

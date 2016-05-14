@@ -48,11 +48,12 @@
 							android:layout_marginLeft="4dp"
 							android:textStyle="bold"
 							android:textColor="@color/white"
-							android:textSize="@dimen/sys_font_size_bolder"/>
+							android:textSize="@dimen/sys_font_size_bolder"
+							android:visibility="gone"/>
 						<TextView
 							android:id="@+id/txt_subtitle_shop"
 							android:textColor="@color/white"
-							android:textSize="@dimen/sys_font_size_normal"
+							android:textSize="@dimen/sys_font_size_bolder"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:layout_marginLeft="4dp"

@@ -15,7 +15,6 @@
         >
         <ListView
             android:id="@+id/list_my_favourite"
-            style="@style/listview_with_divider"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </ListView>

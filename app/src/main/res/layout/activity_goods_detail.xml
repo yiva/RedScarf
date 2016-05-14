@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         >
         <ScrollView 
@@ -24,12 +23,20 @@
         		<GridLayout
 	                android:layout_width="match_parent"
 	        		android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/layout_padding2"
-                    android:paddingLeft="@dimen/layout_padding2"
                     android:columnCount="1">
+                    <TextView
+                        android:id="@+id/txt_good_detail_subtitle"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        android:layout_marginLeft="@dimen/layout_margin2"
+                        android:layout_marginRight="@dimen/layout_margin2"
+                        android:textSize="@dimen/sys_font_size_bolder"
+                        android:textStyle="bold"
+                        />
 	        		<LinearLayout
 	        		    android:layout_width="match_parent"
 	        		    android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_margin2"
+                        android:layout_marginRight="@dimen/layout_margin2"
 	        		    android:orientation="horizontal">
 	        		    <TextView
         	                android:id="@+id/txt_exclusive_good_detail"
@@ -41,188 +48,99 @@
         	                android:text="Exclusive"
         	                android:visibility="gone"
         	                />
-	        		    <!--<TextView-->
-	                    <!--android:id="@+id/txt_goods_detail_title"-->
-	                    <!--android:padding="8dp"-->
-	                    <!--android:layout_width="match_parent"-->
-	                    <!--android:layout_height="wrap_content"-->
-	                    <!--android:textStyle="bold"-->
-	                    <!--android:textSize="15sp"-->
-	                    <!--/>-->
 	        		</LinearLayout>
-                    <!--<TextView-->
-                        <!--android:id="@+id/txt_goods_detail_subtitle"-->
-                        <!--android:padding="8dp"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textStyle="bold"-->
-                        <!--android:textSize="15sp"-->
-                        <!--/>-->
                 	<RelativeLayout
 	                    android:layout_width="match_parent"
 	                    android:layout_height="250dp"
 	                    android:layout_gravity="center"
-	                    android:padding="20dp">
+                        android:layout_marginTop="@dimen/layout_margin1"
+                        android:layout_marginBottom="@dimen/layout_margin1"
+                        >
 	                    <com.android.volley.toolbox.NetworkImageView
 	                        android:id="@+id/goods_detail_image"
 	                        android:layout_width="match_parent"
 	                        android:layout_height="match_parent"
 	                        android:scaleType="centerCrop"/>
 	                </RelativeLayout>
-
-                    <View
-                        style="@style/hr_line"
-                        android:background="@color/gainsboro"/>
-                    <LinearLayout
-                        android:id="@+id/layout_dead_time_goods_detail"
+                    <GridLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/layout_margin2"
-                        >
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/watch_red"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/txt_brand_detail_dead_time"
-                            android:textSize="@dimen/sys_font_size_normal"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/layout_margin3"
-                            />
-                        <TextView
-                            android:id="@+id/txt_expires_goods_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/sys_font_size_normal"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/layout_margin3"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:id="@+id/view_dead_time_goods_detail"
-                        style="@style/hr_line"
-                        android:background="@color/gainsboro"/>
-                    <TextView
-                        android:id="@+id/txt_goods_detail_content"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minLines="3"
-                        android:textSize="14sp"/>
-                    <TextView
-                        android:id="@+id/txt_sales_code_goods_detail"
-                        style="@style/text_style_content_normal"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/txt_brand_detail_copy_code"
-                        />
-                    <Button
-                        android:id="@+id/btn_good_detail_sale_code"
-                        android:layout_marginTop="@dimen/layout_margin2"
-                        style="@style/button_cancel"
-                        />
-                    <Button
-                        android:id="@+id/btn_good_detail_buy_now"
-                        android:layout_marginTop="@dimen/layout_margin2"
-                        style="@style/button_danger"
-                        android:text="@string/btn_text_buy_right_now"
-                        />
-                    <Button
-                        android:id="@+id/btn_good_detail_info_more"
-                        android:layout_marginTop="@dimen/layout_margin2"
-                        android:layout_marginBottom="@dimen/layout_margin1"
-                        style="@style/button_normal"
-                        android:text="@string/txt_brand_detail_info_more"
-                        />
+                        android:paddingRight="@dimen/layout_padding2"
+                        android:paddingLeft="@dimen/layout_padding2"
+                        android:columnCount="1">
+                        <LinearLayout
+                            android:id="@+id/layout_dead_time_goods_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/layout_margin2"
+                            >
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/watch_red"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txt_brand_detail_dead_time"
+                                android:textSize="@dimen/sys_font_size_normal"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/layout_margin3"
+                                />
+                            <TextView
+                                android:id="@+id/txt_expires_goods_detail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/sys_font_size_normal"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/layout_margin3"
+                                />
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/view_dead_time_goods_detail"
+                            style="@style/hr_line"
+                            android:background="@color/gainsboro"/>
+                        <TextView
+                            style="@style/text_style_content_detail"
+                            android:id="@+id/txt_goods_detail_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minLines="3"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/txt_sales_code_goods_detail"
+                            style="@style/text_style_content_normal"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/txt_brand_detail_copy_code"
+                            />
+                        <Button
+                            android:id="@+id/btn_good_detail_sale_code"
+                            android:layout_marginTop="@dimen/layout_margin2"
+                            style="@style/button_cancel"
+                            />
+                        <Button
+                            android:id="@+id/btn_good_detail_buy_now"
+                            android:layout_marginTop="@dimen/layout_margin2"
+                            style="@style/button_danger"
+                            android:text="@string/btn_text_buy_right_now"
+                            />
+                        <Button
+                            android:id="@+id/btn_good_detail_info_more"
+                            android:layout_marginTop="@dimen/layout_margin2"
+                            android:layout_marginBottom="@dimen/layout_margin1"
+                            style="@style/button_normal"
+                            android:text="@string/txt_brand_detail_info_more"
+                            android:visibility="gone"
+                            />
+                    </GridLayout>
              </GridLayout>
              <!-- End 购物信息 -->
         </ScrollView>
 
     </LinearLayout>
     <!-- End 主体 -->
-    <!-- Begin 底部按钮 -->
-     <!--<LinearLayout-->
-        <!--android:id="@+id/bottom_tabs_goods_detail"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:background="@color/customappred"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:padding="5dp">-->
-        <!--<RelativeLayout -->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal"-->
-            <!-->-->
-            <!--<ImageButton -->
-            <!--android:id="@+id/btn_bottom_goods_detail_photo" -->
-            <!--android:layout_width="30dp" -->
-            <!--android:layout_height="30dp" -->
-            <!--android:background="@drawable/ic_white_camera" -->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:contentDescription="@string/app_name" -->
-            <!--android:onClick="onClick"/>-->
-            <!--<TextView -->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_photo"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="@string/demotext_user_review_bottom_camera"-->
-                <!--android:textColor="#FFFFFF"/>-->
-        <!--</RelativeLayout>-->
-        <!--<RelativeLayout -->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal"-->
-            <!-->-->
-            <!--<ImageButton-->
-            <!--android:id="@+id/btn_bottom_goods_detail_review"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="fill"-->
-            <!--android:background="@drawable/ic_white_content"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:onClick="onClick" />-->
-            <!--<TextView -->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_review"-->
-                <!--android:text="@string/demotext_user_review_bottom_review"-->
-                <!--android:textColor="#FFFFFF"/>-->
-        <!--</RelativeLayout>-->
-        <!--<RelativeLayout -->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal"-->
-            <!-->-->
-            <!--<ImageButton-->
-            <!--android:id="@+id/btn_bottom_goods_detail_bug"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="fill"-->
-            <!--android:background="@drawable/ic_white_bug"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:onClick="onClick" />-->
-            <!--<TextView -->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toRightOf="@+id/btn_bottom_goods_detail_bug"-->
-                <!--android:text="@string/demotext_food_detail_bottom_bug"-->
-                <!--android:textColor="#FFFFFF"/>-->
-        <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
-    <!-- End 底部按钮 -->
-
 </RelativeLayout>

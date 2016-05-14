@@ -63,6 +63,7 @@ public class MineActivity extends BaseActivity {
     private TextView txt_change_photo;
     private TableRow btn_mine_logoff;
     private TableRow btn_mine_my_favourite;
+    private TableRow btn_mine_about_weidou;
     private ImageButton img_jump_individual;
 
     protected ImageLoader imageLoader;
@@ -144,6 +145,7 @@ public class MineActivity extends BaseActivity {
         btn_mine_logoff = (TableRow) findViewById(R.id.btn_mine_logoff);
         img_jump_individual = (ImageButton) findViewById(R.id.btn_jump_individual_mine);
         btn_mine_my_favourite = (TableRow) findViewById(R.id.btn_mine_my_favourite);
+        btn_mine_about_weidou = (TableRow) findViewById(R.id.btn_mine_about_weidou);
 
         txt_nick_name.setText(body.getNickname());
 //		加载用户头像
@@ -160,6 +162,8 @@ public class MineActivity extends BaseActivity {
         img_jump_individual.setOnClickListener(new OnJumpIndividualInfoClick());
         btn_mine_my_favourite.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
                 IndividualFavouriteActivity.class, null));
+        btn_mine_about_weidou.setOnClickListener(new OnJumpToActivityClick(MineActivity.this,
+                AboutActivity.class, null));
     }
 
     private class OnLogOffClick implements View.OnClickListener{

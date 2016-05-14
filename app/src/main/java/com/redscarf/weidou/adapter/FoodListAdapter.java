@@ -56,7 +56,8 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody>{
 	    	viewHolder.title.setText(getItem(position).getTitle());
 //	    	viewHolder.review.setText("12Reviews");
 //	    	viewHolder.food_star.setImageResource(R.drawable.flower_2);
-		  	viewHolder.subtitle.setText(getItem(position).getSubtitle().replace("/n","\r\n"));
+//		  	viewHolder.subtitle.setText(getItem(position).getSubtitle().replace("/n","\r\n"));
+		  viewHolder.subtitle.setText(getItem(position).getUnderground());
 		  	viewHolder.food_style.setText(getItem(position).getSubtype());
 	    	viewHolder.position = position;
 	    	viewHolder.food_photo.setImageResource(R.drawable.loading_large);

@@ -135,9 +135,8 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-//        title = (TextView) findViewById(R.id.txt_goods_detail_title);
+        subtitle = (TextView) findViewById(R.id.txt_good_detail_subtitle);
         content = (TextView) findViewById(R.id.txt_goods_detail_content);
-//        subtitle = (TextView) findViewById(R.id.txt_goods_detail_subtitle);
         exclusive = (TextView) findViewById(R.id.txt_exclusive_good_detail);
         expires = (TextView) findViewById(R.id.txt_expires_goods_detail);
         favourite = (ImageButton) findViewById(R.id.actionbar_good_detail_favorite);
@@ -148,12 +147,11 @@ public class GoodsDetailActivity extends BaseActivity {
         layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
         View divider = findViewById(R.id.view_dead_time_goods_detail);
 
-//        title.setText(body.getTitle());
+        subtitle.setText(body.getSubtitle());
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
             favourite.setBackgroundResource(R.drawable.ic_favourite_red);
         }
         NetworkImageView goodsImage = (NetworkImageView) findViewById(R.id.goods_detail_image);
-//		BaseRedScarfAdapter.formatRedScarfBody(body);
         String imageUrl = body.getPost_medium();
         goodsImage.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
@@ -163,19 +161,18 @@ public class GoodsDetailActivity extends BaseActivity {
             goodsImage.setImageUrl(imageUrl, imageLoader);
         }
         content.setText(Html.fromHtml(body.getContent()));
-//        subtitle.setText(body.getSubtitle());
         expires.setText(body.getExpires());
-        copy_code.setText("折扣码: "+body.getOthers());
+        copy_code.setText("折扣码: " + body.getOthers());
 
         //无过期时间，隐藏expires
         if (StringUtils.isBlank(body.getExpires()) || StringUtils.contains(body.getExpires(),
-                "0000-00-00")){
+                "0000-00-00")) {
             layout_dead_time.setVisibility(View.GONE);
             divider.setVisibility(View.GONE);
         }
 
         //无折扣码
-        if (StringUtils.isBlank(body.getOthers())){
+        if (StringUtils.isBlank(body.getOthers())) {
             copy_code.setVisibility(View.GONE);
             label_sales_code.setVisibility(View.GONE);
         }
@@ -185,24 +182,12 @@ public class GoodsDetailActivity extends BaseActivity {
         favourite.setOnClickListener(new OnChangeFavourite());
         buy.setOnClickListener(new OnJumpToPageClick(GoodsDetailActivity.this, body.getTitle(),
                 body.getWebsite()));
-        brand_info.setOnClickListener(new OnJumpToBrandClick());
-        copy_code.setOnClickListener(new OnCopySalesCodeClick());
-    }
-
-    private class onBuySubmitClick implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Intent in_web = new Intent(GoodsDetailActivity.this, WebActivity.class);
-
-            Bundle data = new Bundle();
-            data.putString("title", body.getTitle());
-            data.putString("url", body.getWebsite());
-            in_web.putExtras(data);
-
-            startActivity(in_web);
+        if (StringUtils.isNotBlank(StringUtils.trimToEmpty(
+                StringUtils.substringBetween(body.getBrand(), "[", "]")))) {
+            brand_info.setVisibility(View.VISIBLE);
+            brand_info.setOnClickListener(new OnJumpToBrandClick());
         }
-
+        copy_code.setOnClickListener(new OnCopySalesCodeClick());
     }
 
     /**
@@ -228,7 +213,7 @@ public class GoodsDetailActivity extends BaseActivity {
         }
     }
 
-    private class OnJumpToBrandClick implements OnClickListener{
+    private class OnJumpToBrandClick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -240,8 +225,8 @@ public class GoodsDetailActivity extends BaseActivity {
                 Intent i_brand_detail = new Intent(GoodsDetailActivity.this, BrandDetailActivity.class);
                 i_brand_detail.putExtras(data);
                 startActivity(i_brand_detail);
-            } catch (JSONException e) {
-                Toast.makeText(GoodsDetailActivity.this,"网络故障！",Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(GoodsDetailActivity.this, "网络故障！", Toast.LENGTH_SHORT).show();
                 ExceptionUtil.printAndRecord(TAG, e);
             }
 
@@ -251,19 +236,19 @@ public class GoodsDetailActivity extends BaseActivity {
     /**
      * 复制折扣码
      */
-    private class OnCopySalesCodeClick implements OnClickListener{
+    private class OnCopySalesCodeClick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
             // Gets a handle to the clipboard service.
-            ClipboardManager clipboard = (ClipboardManager)getSystemService(Context
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context
                     .CLIPBOARD_SERVICE);
             // Creates a new text clip to put on the clipboard
-            ClipData clip = ClipData.newPlainText("sales_code",body.getOthers());
+            ClipData clip = ClipData.newPlainText("sales_code", body.getOthers());
             // Set the clipboard's primary clip.
             clipboard.setPrimaryClip(clip);
 
-            Toast.makeText(GoodsDetailActivity.this,"复制成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(GoodsDetailActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
         }
     }
 

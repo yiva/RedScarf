@@ -29,6 +29,7 @@
     <dimen name="layout_margin3">8dp</dimen>
     <dimen name="layout_padding1">20dp</dimen>
     <dimen name="layout_padding2">16dp</dimen>
+    <dimen name="layout_padding2_minus">-16dp</dimen>
     <dimen name="layout_padding3">8dp</dimen>
 
     <dimen name="img_height1">250dp</dimen>
