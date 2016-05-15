@@ -83,10 +83,12 @@
             <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#DDDDDD"/>
+            android:background="#DDDDDD"
+            android:visibility="gone"/>
             <TableRow
                 android:id="@+id/btn_mine_clear_cache"
-                style="@style/table_row_mine">
+                style="@style/table_row_mine"
+                android:visibility="gone">
                 <ImageView
                     style="@style/image_view_mine"
                     android:background="@drawable/m_setting"
