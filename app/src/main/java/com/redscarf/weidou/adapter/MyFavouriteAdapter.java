@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by yeahwang on 2016/3/28.
  */
-public class MyFavouriteAdapter extends BaseRedScarfAdapter<MyFavouriteBody>{
+public class MyFavouriteAdapter extends BaseRedScarfAdapter<MyFavouriteBody> {
     public MyFavouriteAdapter(Context context, List<MyFavouriteBody> listData) {
         super(context, listData);
 
@@ -37,14 +37,15 @@ public class MyFavouriteAdapter extends BaseRedScarfAdapter<MyFavouriteBody>{
             viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_my_favourite);
             viewHolder.expires = (LinearLayout) convertView.findViewById(R.id.layout_expires_my_favourite);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        setImageViewMeasure(viewHolder.image);
         viewHolder.content.setText(getItem(position).getSubtitle());
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.time.setText(getItem(position).getExpires());
-        if(StringUtils.contains(getItem(position).getExpires(), "0000-00-00") || StringUtils
-                .isBlank(getItem(position).getExpires())){
+        if (StringUtils.contains(getItem(position).getExpires(), "0000-00-00") || StringUtils
+                .isBlank(getItem(position).getExpires())) {
             viewHolder.expires.setVisibility(View.GONE);
         }
 

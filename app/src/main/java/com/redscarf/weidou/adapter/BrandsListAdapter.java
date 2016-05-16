@@ -39,13 +39,6 @@ public class BrandsListAdapter extends BaseRedScarfAdapter<String> {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-//        String key = "";
-//        try {
-//            JSONArray sub_jas = new JSONArray(getItem(position));
-//            key = new JSONObject(sub_jas.get(0).toString()).getString("title").substring(0, 1);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
         viewHolder.brand_title.setText(getItem(position));
         return convertView;
     }
@@ -55,8 +48,4 @@ public class BrandsListAdapter extends BaseRedScarfAdapter<String> {
         TextView brand_title;
     }
 
-    private List<String> parseBrandDetailList(JSONArray jsonArray) {
-        
-        return null;
-    }
 }

@@ -10,9 +10,14 @@ import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 
 import org.json.JSONArray;
@@ -109,6 +114,29 @@ public abstract class BaseRedScarfAdapter<T> extends BaseAdapter{
 	public static String replaceContent(String str) {
 		return str.replaceAll(MyConstants.REPLACE_STRINGS, "");
 
+	}
+
+	/**
+	 * 设置图片大小比为3：2
+	 * @param v 需设置图片
+	 */
+	protected void setImageViewMeasure(final View v){
+		//按比例设置图片大小
+		ViewTreeObserver vto = v.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+			@Override
+			public void onGlobalLayout() {
+				v.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				v.getHeight();
+				int width = v.getWidth();
+				int height = width * 2 / 3;
+				ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
+				layoutParams.width = width;
+				layoutParams.height = height;
+				v.setLayoutParams(layoutParams);
+			}
+		});
 	}
 
 }

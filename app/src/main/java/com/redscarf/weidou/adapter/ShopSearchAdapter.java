@@ -36,15 +36,15 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
             viewHolder.title = (TextView) convertView.findViewById(R.id.txt_search_shop_title);
             viewHolder.time = (TextView) convertView.findViewById(R.id.txt_search_shop_time);
             viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_search_shop);
-//            viewHolder.expires = (LinearLayout) convertView.findViewById(R.id.layout_search_shop_expires);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        setImageViewMeasure(viewHolder.image);
         viewHolder.content.setText(getItem(position).getSubtitle());
         viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.time.setText(getItem(position).getExpires());
-        if(StringUtils.contains(getItem(position).getExpires(),"0000-00-00")){
+        if (StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
             viewHolder.time.setVisibility(View.GONE);
         }
 

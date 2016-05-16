@@ -274,18 +274,6 @@ public class FoodDetailFragment extends BaseFragment {
         }
     }
 
-    private class onSendReview implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Intent i_review = new Intent(getActivity(), SendReviewActivity.class);
-            Bundle data = new Bundle();
-//			data.putInt("key", body.getId());
-            i_review.putExtras(data);
-            startActivity(i_review);
-        }
-    }
-
     /**
      * 收藏功能
      */
@@ -318,9 +306,9 @@ public class FoodDetailFragment extends BaseFragment {
             if (StringUtils.contains(imageUrl,"-150x150")){
                 imageUrl = imageUrl.replace("-150x150","");
             }
-            img_photo_big.setBackgroundResource(R.drawable.loading_min);
+            img_photo_big.setBackgroundResource(R.drawable.loading_large);
             if ((imageUrl != null) && (!imageUrl.equals(""))) {
-                img_photo_big.setDefaultImageResId(R.drawable.loading_min);
+                img_photo_big.setDefaultImageResId(R.drawable.loading_large);
                 img_photo_big.setErrorImageResId(R.drawable.null_large);
                 img_photo_big.setBackgroundColor(0);
                 img_photo_big.setImageUrl(imageUrl, imageLoader);

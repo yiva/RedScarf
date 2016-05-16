@@ -38,6 +38,7 @@ public class FoodSearchAdapter extends BaseRedScarfAdapter<HotFoodBody> {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        setImageViewMeasure(viewHolder.image);
         String content = getItem(position).getSubtitle().replace("/n","\r\n");
         viewHolder.content.setText(content);
         viewHolder.title.setText(getItem(position).getTitle());

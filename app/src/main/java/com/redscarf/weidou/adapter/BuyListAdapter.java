@@ -12,14 +12,20 @@ import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.pojo.RedScarfBody;
 import com.redscarf.weidou.util.BitmapCache;
+import com.redscarf.weidou.util.DisplayUtil;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +37,10 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
 
     private int mFlag;
 
-    public BuyListAdapter(Context context, List<GoodsBody> listData,int flag) {
+    private int height;
+    private int width;
+
+    public BuyListAdapter(Context context, List<GoodsBody> listData, int flag) {
         super(context, listData);
         this.mFlag = flag;
     }
@@ -54,6 +63,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        setImageViewMeasure(viewHolder.shop_photo);
 //        viewHolder.title.setText(getItem(position).getTitle());
         viewHolder.expires.setText("Expires " + getItem(position).getExpires().substring(0, 10));
         if (StringUtils.isBlank(getItem(position).getExpires()) ||
@@ -61,7 +71,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder.expires.setVisibility(View.GONE);
         }
 //        if (5 != mFlag) {
-            viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
+        viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
 //        }
         viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
         viewHolder.position = position;
@@ -84,9 +94,9 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
 
     private static class ViewHolder {
         int position;
-//        ImageView shop_ad_icon;
+        //        ImageView shop_ad_icon;
         NetworkImageView shop_photo;
-//        TextView exclusive;
+        //        TextView exclusive;
         TextView subtitle;
         TextView expires;//有效期
         TextView title;
