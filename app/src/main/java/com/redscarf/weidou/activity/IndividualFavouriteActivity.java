@@ -69,28 +69,46 @@ public class IndividualFavouriteActivity extends BaseActivity{
     public void initView() {
         lv_favourite = (ListView) findViewById(R.id.list_my_favourite);
         lv_favourite.setOnItemClickListener(new OnMyFavouriteItemClick());
+        lv_favourite.setOnItemLongClickListener(new OnMyFavouriteItemLongClick());
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType
                 .MY_FAOURITE, ""), IndividualInfoActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCLE);
     }
 
+    //点击事件
     private class OnMyFavouriteItemClick implements AdapterView.OnItemClickListener{
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String category = String.valueOf(bodys.get(position).getCategory());
+            Bundle data = new Bundle();
+            data.putString("id", bodys.get(position).getId());
+            data.putString("title", bodys.get(position).getTitle());
             switch (category){
                 //购物
                 case "4":
-                    JumpToActivity(IndividualFavouriteActivity.this, FoodDetailActivity.class, null);
+                    JumpToActivity(IndividualFavouriteActivity.this, FoodDetailActivity.class,
+                            data);
                     break;
                 case "5":
-                    JumpToActivity(IndividualFavouriteActivity.this, GoodsDetailActivity.class, null);
+                    JumpToActivity(IndividualFavouriteActivity.this, GoodsDetailActivity.class,
+                            data);
                     break;
                 case "283":
-                    JumpToActivity(IndividualFavouriteActivity.this, BrandDetailActivity.class, null);
+                    JumpToActivity(IndividualFavouriteActivity.this, BrandDetailActivity.class,
+                            data);
                     break;
 
             }
+        }
+    }
+
+    //长按事件
+    private class OnMyFavouriteItemLongClick implements AdapterView.OnItemLongClickListener{
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+            return false;
         }
     }
 }
