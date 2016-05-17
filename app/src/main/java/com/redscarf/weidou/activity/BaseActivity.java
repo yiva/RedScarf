@@ -26,6 +26,9 @@ import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.util.MyPreferences;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -324,4 +327,13 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 			GlobalApplication.getInstance().exit();
 		}
 		}
+
+	/**
+	 * 判断是否有用户登录
+	 * @return
+	 */
+	protected boolean isLogin(){
+		return StringUtils.isNotBlank(MyPreferences.getAppPerenceAttribute(MyConstants
+				.PREF_USER_ID))?true:false;
+	}
 }

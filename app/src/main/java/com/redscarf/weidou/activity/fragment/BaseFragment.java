@@ -25,6 +25,9 @@ import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.util.MyPreferences;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -304,6 +307,15 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 				fragment.onActivityResult(requestCode, resultCode, data);
 			}
 		}
+	}
+
+	/**
+	 * 判断是否有用户登录
+	 * @return
+	 */
+	protected boolean isLogin(){
+		return StringUtils.isNotBlank(MyPreferences.getAppPerenceAttribute(MyConstants
+				.PREF_USER_ID))?true:false;
 	}
 
 }

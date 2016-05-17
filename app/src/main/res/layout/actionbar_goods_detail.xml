@@ -34,7 +34,8 @@
         android:layout_toLeftOf="@+id/actionbar_good_detail_favorite"
         android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_share" />
+        android:background="@drawable/ic_share"
+        android:visibility="gone"/>
     <ImageButton
         android:id="@+id/actionbar_good_detail_favorite"
         style="@style/widget_actionbar"

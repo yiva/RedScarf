@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.activity.BrandDetailActivity;
+import com.redscarf.weidou.activity.LoginActivity;
 import com.redscarf.weidou.activity.MapActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SendReviewActivity;
@@ -280,6 +281,10 @@ public class FoodDetailFragment extends BaseFragment {
     private class OnChangeFavourite implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if (!isLogin()) {
+                Intent in_login = new Intent(getActivity(), LoginActivity.class);
+                startActivity(in_login);
+            }
             switch (body.getIs_favorate()) {
                 case "0"://make favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,

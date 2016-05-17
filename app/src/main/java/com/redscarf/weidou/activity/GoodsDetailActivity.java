@@ -196,6 +196,9 @@ public class GoodsDetailActivity extends BaseActivity {
     private class OnChangeFavourite implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if (!isLogin()) {
+                JumpToActivity(GoodsDetailActivity.this, LoginActivity.class, null);
+            }
             switch (body.getIs_favorate()) {
                 case "0"://make favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,

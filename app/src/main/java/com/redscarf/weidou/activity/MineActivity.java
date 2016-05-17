@@ -115,6 +115,9 @@ public class MineActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        if (!super.isLogin()) {
+            JumpToActivity(MineActivity.this, LoginActivity.class, null);
+        }
         this.setContentView(R.layout.activity_mine);
         GlobalApplication.getInstance().addActivity(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());

@@ -40,6 +40,7 @@
         android:contentDescription="@string/app_name"
         android:layout_toLeftOf="@+id/btn_brand_detail_like"
         android:layout_marginRight="@dimen/layout_margin3"
+        android:visibility="gone"
         />
     <ImageButton
         android:id="@+id/btn_brand_detail_like"
