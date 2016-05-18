@@ -81,12 +81,26 @@ public class GlobalApplication extends Application{
 		return metrics.widthPixels;
 	}
 
+	public static int getScreenWidth(){
+		DisplayMetrics metrics = new DisplayMetrics();
+		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(metrics);
+		return metrics.widthPixels;
+	}
+
 	/**
 	 * 获取屏幕高度像素值（需转为dip进行计算）
 	 * @param context
 	 * @return
 	 */
 	public static int getScreenHeight(Context context){
+		DisplayMetrics metrics = new DisplayMetrics();
+		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(metrics);
+		return metrics.heightPixels;
+	}
+
+	public static int getScreenHeight(){
 		DisplayMetrics metrics = new DisplayMetrics();
 		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		windowManager.getDefaultDisplay().getMetrics(metrics);

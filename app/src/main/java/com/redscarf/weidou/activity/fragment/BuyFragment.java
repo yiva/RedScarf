@@ -24,17 +24,22 @@ import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -68,6 +73,7 @@ public class BuyFragment extends BaseFragment
     private ListView lv_selector;
     private ListView lv_brand_detail;
     private PopupWindow popup_brand_detail;
+    private ImageButton btn_hide_brand_detail;
 
     List<TextView> headtabs = new ArrayList<TextView>();
     private String response;
@@ -237,31 +243,6 @@ public class BuyFragment extends BaseFragment
         lv_shop.invalidate();
     }
 
-    private class onSearchClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getActivity(), "Search Button", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    /**
-     * 左上角菜单事件
-     */
-    private class onMenuClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            if (!selecter.isShowing()) {
-                selecter.showAsDropDown(getActivity().findViewById(R.id.actionbar_buy), 0, 0);
-                selecter.setOutsideTouchable(true);
-            } else {
-                selecter.dismiss();
-            }
-        }
-    }
-
 
     /**
      * selector list datas
@@ -337,11 +318,30 @@ public class BuyFragment extends BaseFragment
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.popup_brand_detail, null);
         lv_brand_detail = (ListView) contentView.findViewById(R.id.list_brand_detail);
-        int height = DisplayUtil.px2dip(getActivity(), GlobalApplication.getScreenHeight(getActivity()));
-        ViewGroup.LayoutParams params = lv_brand_detail.getLayoutParams();
-        params.height = height-50;
-        lv_brand_detail.setLayoutParams(params);
+
+
+//        params.height = height-50;
+//        lv_brand_detail.setLayoutParams(params);
         lv_brand_detail.setAdapter(new BrandDetailAdapter(getActivity(), brands));
+        ViewTreeObserver vto = lv_brand_detail.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onGlobalLayout() {
+                lv_brand_detail.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int shop_height = lv_shop.getHeight();
+                int lv_height = lv_brand_detail.getHeight();
+                if (shop_height >= lv_height){
+                    return ;
+                }
+                ViewGroup.LayoutParams layoutParams = lv_brand_detail.getLayoutParams();
+                layoutParams.width = GlobalApplication.getScreenWidth();
+                layoutParams.height = shop_height - DisplayUtil.dip2px(getActivity(),50);
+                lv_brand_detail.setLayoutParams(layoutParams);
+            }
+        });
+        ViewGroup.LayoutParams params = lv_brand_detail.getLayoutParams();
+
         lv_brand_detail.setOnItemClickListener(new OnBrandDetailItemClick(brands));
         popup_brand_detail = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -350,6 +350,8 @@ public class BuyFragment extends BaseFragment
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popup_brand_detail.setBackgroundDrawable(new BitmapDrawable());
         popup_brand_detail.showAsDropDown(view, 0, 8);
+        btn_hide_brand_detail = (ImageButton) contentView.findViewById(R.id.btn_hide_up_brand);
+        btn_hide_brand_detail.setOnClickListener(new OnBrandDetailHideClick());
     }
 
     /**
@@ -370,6 +372,14 @@ public class BuyFragment extends BaseFragment
             Intent i_brand_detail = new Intent(getActivity(), BrandDetailActivity.class);
             i_brand_detail.putExtras(data);
             startActivity(i_brand_detail);
+        }
+    }
+
+    private class OnBrandDetailHideClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            popup_brand_detail.dismiss();
         }
     }
 
