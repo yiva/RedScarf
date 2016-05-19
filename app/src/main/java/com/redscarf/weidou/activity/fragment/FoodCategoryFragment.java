@@ -11,6 +11,7 @@ import android.widget.GridView;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodHeaderGridAdapter;
 import com.redscarf.weidou.pojo.GridBody;
+import com.redscarf.weidou.util.ActionBarType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.List;
  */
 public class FoodCategoryFragment extends BaseFragment {
 
-    private View rootView;
     private GridView grid_food;
     private List<GridBody> datas;
 
@@ -32,9 +32,7 @@ public class FoodCategoryFragment extends BaseFragment {
 
         rootView = inflater.inflate(R.layout.fragment_food_category, container, false);
 
-        grid_food = (GridView) rootView.findViewById(R.id.grid_food);
-        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), datas = this.makeFoodHeaderGridArrays()));
-        grid_food.setOnItemClickListener(new OnFoodGridItemClick());
+        initView();
         return rootView;
     }
 
@@ -51,7 +49,10 @@ public class FoodCategoryFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        setActionBarLayout(getResources().getString(R.string.title_food), ActionBarType.NORMAL);
+        grid_food = (GridView) rootView.findViewById(R.id.grid_food);
+        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), datas = this.makeFoodHeaderGridArrays()));
+        grid_food.setOnItemClickListener(new OnFoodGridItemClick());
     }
 
     public interface OnChangeFoodListFragmentListener {

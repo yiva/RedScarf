@@ -17,6 +17,7 @@ import com.redscarf.weidou.adapter.BuyListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
 import com.redscarf.weidou.pojo.GoodsBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.DisplayUtil;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
@@ -63,7 +64,6 @@ public class BuyFragment extends BaseFragment
 
     private ImageButton discount_search;
     private TextView shop_selector;
-    private View rootView;
     private PopupWindow selecter;
     private TextView txt_discount;
     private TextView txt_brand;
@@ -118,21 +118,7 @@ public class BuyFragment extends BaseFragment
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_buy, container, false);
-
-        // 定义列表
-        lv_shop = (ListView) rootView.findViewById(R.id.list_shop);
-
-        lv_shop.setOnItemClickListener(new onListBuyItemClick());
-//        lv_shop.setOnTouchListener(this);
-        lv_shop.setLongClickable(true);
-//        View header = inflater.inflate(R.layout.header_buy, null);
-//        lv_shop.addHeaderView(header, null, false);
-
-        lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
-        lv_brands.setOnItemClickListener(new onListBrandItemClick());
         initView();
-
-
         return rootView;
     }
 
@@ -148,8 +134,7 @@ public class BuyFragment extends BaseFragment
         Integer flag = getArguments().getInt("flag");
         category_id = getArguments().getInt("category_id");
         String title = getArguments().getString("title");
-        TextView txt_title = (TextView) rootView.findViewById(R.id.img_disount_title);
-        txt_title.setText(title);
+        setActionBarLayout(title, ActionBarType.WITHBACK);
 
         if (flag.equals(1)) {
             showProgressDialogNoCancelable("", MyConstants.LOADING);
@@ -170,9 +155,17 @@ public class BuyFragment extends BaseFragment
 
     @Override
     public void initView() {
-        ImageButton back = (ImageButton) rootView.findViewById(R.id.btn_shop_list_back);
-
+        ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setOnClickListener(new OnbackClick());
+
+        // 定义列表
+        lv_shop = (ListView) rootView.findViewById(R.id.list_shop);
+        lv_shop.setOnItemClickListener(new onListBuyItemClick());
+        lv_shop.setLongClickable(true);
+
+        lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
+        lv_brands.setOnItemClickListener(new onListBrandItemClick());
+
     }
 
 

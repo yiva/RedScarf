@@ -17,6 +17,7 @@ import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.BrandDetailBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
@@ -116,20 +117,16 @@ public class BrandDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setActionBarLayout(brand_body.getTitle(), ActionBarType.WITHSHARE);
         //register
-        title = (TextView) findViewById(R.id.txt_brand_detail_title);
-//        label = (TextView) findViewById(R.id.txt_brand_detail_label);
         description = (TextView) findViewById(R.id.txt_brand_detail_description);
         photo = (NetworkImageView) findViewById(R.id.img_brand_detail_photo);
         website = (Button) findViewById(R.id.btn_brand_detail_website);
         service = (Button) findViewById(R.id.btn_brand_detail_service);
         postinfo = (Button) findViewById(R.id.btn_brand_detail_post_info);
-        favourite = (ImageButton) findViewById(R.id.btn_brand_detail_like);
-        share = (ImageButton) findViewById(R.id.btn_brand_detail_share);
+        favourite = (ImageButton) findViewById(R.id.actionbar_with_share_favorite);
+        share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
 
-        //put data
-        title.setText(brand_body.getTitle());
-//        label.setText(brand_body.getTitle());
         description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
         description.setVisibility(View.VISIBLE);
 

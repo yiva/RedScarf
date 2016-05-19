@@ -15,7 +15,6 @@ public class ErrorActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_error);
-		this.setActionBarLayout(R.layout.actionbar_error);
 		GlobalApplication.getInstance().addActivity(this);
 		
 		this.findViewById(R.id.txt_error_submit).setOnClickListener(new onSendMsg());

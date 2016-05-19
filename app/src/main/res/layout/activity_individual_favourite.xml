@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
     <include
         android:id="@+id/actionbar_favourite"
-        layout="@layout/actionbar_individual_favourite"
+        layout="@layout/actionbar_normal"
         />
     <LinearLayout
         android:layout_below="@+id/actionbar_favourite"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.GlobalApplication;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ public class AboutActivity extends BaseActivity{
 
     @Override
     public void initView() {
+        setActionBarLayout(getResources().getString(R.string.title_about), ActionBarType.WITHBACK);
         version = (TextView) findViewById(R.id.txt_about_version);
         email = (TextView) findViewById(R.id.txt_about_email_address);
 

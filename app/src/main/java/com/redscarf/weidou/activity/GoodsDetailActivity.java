@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.pojo.DiscountBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
@@ -122,9 +123,7 @@ public class GoodsDetailActivity extends BaseActivity {
         //get datas
         datas = this.getIntent().getExtras();
 
-        actionbar_title = (TextView) findViewById(R.id.title_good_detail);
-
-        actionbar_title.setText(String.valueOf(datas.getString("title")));
+        setActionBarLayout(String.valueOf(datas.getString("title")), ActionBarType.WITHSHARE);
         GlobalApplication.getInstance().addActivity(this);
 
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
@@ -139,7 +138,7 @@ public class GoodsDetailActivity extends BaseActivity {
         content = (TextView) findViewById(R.id.txt_goods_detail_content);
         exclusive = (TextView) findViewById(R.id.txt_exclusive_good_detail);
         expires = (TextView) findViewById(R.id.txt_expires_goods_detail);
-        favourite = (ImageButton) findViewById(R.id.actionbar_good_detail_favorite);
+        favourite = (ImageButton) findViewById(R.id.actionbar_with_share_favorite);
         copy_code = (Button) findViewById(R.id.btn_good_detail_sale_code);
         buy = (Button) findViewById(R.id.btn_good_detail_buy_now);
         brand_info = (Button) findViewById(R.id.btn_good_detail_info_more);

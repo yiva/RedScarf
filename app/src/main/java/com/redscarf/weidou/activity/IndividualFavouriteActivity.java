@@ -14,6 +14,7 @@ import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.pojo.MyFavouriteBody;
+import com.redscarf.weidou.util.ActionBarType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
@@ -67,6 +68,7 @@ public class IndividualFavouriteActivity extends BaseActivity{
 
     @Override
     public void initView() {
+        setActionBarLayout(getResources().getString(R.string.title_individual_favourite), ActionBarType.WITHBACK);
         lv_favourite = (ListView) findViewById(R.id.list_my_favourite);
         lv_favourite.setOnItemClickListener(new OnMyFavouriteItemClick());
         lv_favourite.setOnItemLongClickListener(new OnMyFavouriteItemLongClick());

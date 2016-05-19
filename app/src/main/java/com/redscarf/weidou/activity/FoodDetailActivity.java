@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.redscarf.weidou.activity.fragment.FoodDetailFragment;
 import com.redscarf.weidou.pojo.FoodDetailBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
 
@@ -55,14 +56,6 @@ public class FoodDetailActivity extends BaseActivity implements
     /**
      * Represents a geographical location.
      */
-    protected Location mLastLocation;
-
-    protected TextView mLatitudeText;
-    protected TextView mLongitudeText;
-
-    int PLACE_PICKER_REQUEST = 1;
-
-    private Bundle datas;
     private LatLng lng;
     private FoodDetailBody food_body;
     private GoogleMap mMap;
@@ -80,8 +73,7 @@ public class FoodDetailActivity extends BaseActivity implements
 
     @Override
     public void initView() {
-        this.findViewById(R.id.actionbar_food_detail_back).setOnClickListener(new
-                OnBackClickListener());
+
     }
 
     @Override

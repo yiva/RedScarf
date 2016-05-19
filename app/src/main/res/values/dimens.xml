@@ -15,7 +15,7 @@
     <dimen name="activity_horizontal_padding">8dp</dimen>
     <dimen name="activity_vertical_padding">8dp</dimen>
     <dimen name="activity_element_margin">8dp</dimen>
-    <dimen name="actionbar_width">63dp</dimen>
+    <dimen name="actionbar_height">63dp</dimen>
 
     <dimen name="actionbar_element_margin">12dp</dimen>
     <dimen name="actionbar_title_height">63dp</dimen>

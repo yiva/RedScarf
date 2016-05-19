@@ -7,6 +7,7 @@ import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.pojo.FoodBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
@@ -48,7 +49,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     private final String TAG = FoodFragment.class.getSimpleName();
 
     private ListView lv_food;
-    private View rootView;
 
     private final int MSG_INDEX = 1; //msg.what index
     private ArrayList<FoodBody> bodys;
@@ -85,14 +85,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
                 false);
 
         initView();
-        //头部设计
-//        View header = inflater.inflate(R.layout.header_food, null);
-//        GridView foodHeaderGrid = (GridView) header.findViewById(R.id.grid_food_header);
-//        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), makeFoodHeaderGridArrays()));
-//        CalGridViewHeight.setGridViewHeightBasedOnChildren(foodHeaderGrid);
-//        TextView txt_header = (TextView) header.findViewById(R.id.txt_header_food_title);
-//        txt_header.setText("美食");
-//        lv_food.addHeaderView(header, null, false);
 
         return rootView;
     }
@@ -120,9 +112,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         Integer flag = getArguments().getInt("flag");
         Integer category_id = getArguments().getInt("category_id");
         String title = getArguments().getString("title");
-        TextView food_title = (TextView) rootView.findViewById(R.id.imgShopTitle);
-        food_title.setText(title);
-
+        setActionBarLayout(title, ActionBarType.WITHBACK);
         if (flag.equals(1)) {
             getArguments().putInt("flag",0);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
@@ -132,24 +122,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
 
     @Override
     public void initView() {
+        ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
+        back.setOnClickListener(new OnBackClick());
         lv_food = (ListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
-        ImageButton back = (ImageButton) rootView.findViewById(R.id.btn_food_list_back);
-        back.setOnClickListener(new OnBackClick());
-        //弹出框
-//        View selectorView = getActivity().getLayoutInflater().inflate(R.layout.pop_selector, null);
-//        lv_selector = (ListView) selectorView.findViewById(R.id.list_pop_selector);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_selector, getDatas());
-//        lv_selector.setAdapter(arrayAdapter);
-
-//        shop_menu = (TextView) rootView.findViewById(R.id.btnFoodSelector);
-//        shop_menu.setOnClickListener(new onMenuClickListener());
-
-//        selecter = new PopupWindow(selectorView, measureContentWidth(arrayAdapter), ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//        selecter.setBackgroundDrawable(new BitmapDrawable());
-//		getActivity().findViewById(R.id.btnShopSearch).setOnClickListener(new onSearchClickListener());
     }
 
     private class OnBackClick implements OnClickListener{

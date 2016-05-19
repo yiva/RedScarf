@@ -26,6 +26,7 @@ import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.AvatarResultBody;
 import com.redscarf.weidou.pojo.Member;
 import com.redscarf.weidou.pojo.NonceBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GalleryImageLoader;
@@ -116,7 +117,7 @@ public class IndividualInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        setActionBarLayout(getResources().getString(R.string.title_individual_info), ActionBarType.WITHBACK);
         Member m = datas.getParcelable("profile_body");
 
         txt_nickname = (TextView) findViewById(R.id.txt_nickname_individual_info);

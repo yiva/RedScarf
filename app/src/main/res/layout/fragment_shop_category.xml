@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/actionbar_shop_category"
-        layout="@layout/actionbar_shop_category" />
+        layout="@layout/actionbar_normal" />
 
     <GridView
         android:id="@+id/grid_shop"

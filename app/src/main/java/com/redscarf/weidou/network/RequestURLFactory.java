@@ -25,7 +25,7 @@ public class RequestURLFactory {
     public static String getRequestListURL(RequestType type, String... attributes) {
         String res = "";
         switch (type) {
-            case INDEXLIST://indexlist IndexFragment
+            case INDEXLIST:
                 res = baseUrl + "?json=get_category_posts&id=183&count=10&page=" + attributes[0];
                 break;
             case HOTFOODLIST:

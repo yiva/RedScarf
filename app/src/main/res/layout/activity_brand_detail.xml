@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <include
         android:id="@+id/actionbar_brand_detail"
-        layout="@layout/actionbar_brand_detail"
+        layout="@layout/actionbar_with_share"
         />
 
     <ScrollView

@@ -32,7 +32,6 @@ public class SearchFragment extends BaseViewPagerFragment {
 
     private final String TAG = SearchFragment.class.getSimpleName();
 
-    private View rootView;
     private ImageButton btn_search;
 
     @Override

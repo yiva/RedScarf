@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="63.0dp"
-    android:background="@color/customappred"
-    android:layout_gravity="center_vertical" >
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/actionbar_height"
+                android:background="@color/customappred"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/actionbar_with_share">
 
     <ImageButton
-        android:id="@+id/actionbar_food_detail_back"
+        android:id="@+id/actionbar_with_share_back"
         style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12.0dp"
         android:background="@drawable/ic_back"
         android:onClick="onBackClick" />
     <TextView
-        android:id="@+id/txt_food_detail_title"
+        android:id="@+id/actionbar_with_share_title"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/actionbar_food_detail_back"
-        android:layout_toLeftOf="@+id/actionbar_food_detail_share"
+        android:layout_toRightOf="@+id/actionbar_with_share_back"
+        android:layout_toLeftOf="@+id/actionbar_with_share_share"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:singleLine="true"
         />
 
     <ImageButton
-        android:id="@+id/actionbar_food_detail_share"
+        android:id="@+id/actionbar_with_share_share"
         style="@style/widget_actionbar"
-        android:layout_alignTop="@+id/actionbar_food_detail_favorite"
-        android:layout_toLeftOf="@+id/actionbar_food_detail_favorite"
+        android:layout_alignTop="@+id/actionbar_with_share_favorite"
+        android:layout_toLeftOf="@+id/actionbar_with_share_favorite"
         android:layout_marginRight="12dp"
         android:background="@drawable/ic_share"
-        android:visibility="gone"/>
+        />
     <ImageButton
-        android:id="@+id/actionbar_food_detail_favorite"
+        android:id="@+id/actionbar_with_share_favorite"
         style="@style/widget_actionbar"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"

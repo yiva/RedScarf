@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="63.0dp"
-    android:id="@+id/actionbarMap"
-    android:background="@color/customappred"
-    android:layout_gravity="center_horizontal" >
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/actionbar_height"
+                android:id="@+id/actionbar_normal"
+                android:background="@color/customappred"
+                android:layout_gravity="center_horizontal" >
     <ImageButton
-        android:id="@+id/btnAboutBack"
+        android:id="@+id/actionbar_back"
         style="@style/widget_actionbar"
         android:layout_marginLeft="12.0dp"
         android:layout_marginTop="12.0dp"
@@ -17,14 +17,13 @@
         />
 
     <TextView
-        android:id="@+id/imgAboutTitle"
+        android:id="@+id/actionbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:text="@string/title_about"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:contentDescription="@string/app_name" />
-    
+
 </RelativeLayout>

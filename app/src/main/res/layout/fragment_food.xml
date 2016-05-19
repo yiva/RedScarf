@@ -21,6 +21,6 @@
     </ListView>
 	<include 
 	    android:id="@+id/actionbar_food"
-	    layout="@layout/actionbar_food"
+	    layout="@layout/actionbar_normal"
 	    />
 </RelativeLayout>

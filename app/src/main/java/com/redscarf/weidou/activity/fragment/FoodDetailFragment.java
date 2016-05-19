@@ -7,23 +7,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.LoginActivity;
 import com.redscarf.weidou.activity.MapActivity;
 import com.redscarf.weidou.activity.R;
-import com.redscarf.weidou.activity.SendReviewActivity;
-import com.redscarf.weidou.activity.UserReviewActivity;
 import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.adapter.FoodDetailPhotoAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
 import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.FoodDetailBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
@@ -36,14 +33,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,7 +51,6 @@ public class FoodDetailFragment extends BaseFragment {
     private Bundle datas;
     protected ImageLoader imageLoader;
 
-    private View rootView;
     private ImageButton favourite;
     private RelativeLayout layout_photo_big;
     private NetworkImageView img_photo_big;
@@ -182,8 +176,7 @@ public class FoodDetailFragment extends BaseFragment {
      */
     @Override
     public void initView() {
-
-        TextView title_text = (TextView) getActivity().findViewById(R.id.txt_food_detail_title);
+        TextView title_text = (TextView) getActivity().findViewById(R.id.actionbar_with_share_title);
         TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
         TextView website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
         HorizontalListView detail_photos = (HorizontalListView) rootView.findViewById(R.id.hlist_food_detail_img);
@@ -193,14 +186,14 @@ public class FoodDetailFragment extends BaseFragment {
         TextView subtype = (TextView) rootView.findViewById(R.id.txt_food_detail_subtype);
         TextView content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
         TextView view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
-        favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_food_detail_favorite);
+        favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_with_share_favorite);
         layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
 //        layout = (LinearLayout) getActivity().findViewById(R.id.sublayout_photo_big_food);
 
+        title_text.setText(body.getTitle());
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));
-        title_text.setText(body.getTitle());
         phone.setText(body.getPhone());
         website.setText("View WebSite");
         address.setText(body.getSubtitle().replace("/n", " "));

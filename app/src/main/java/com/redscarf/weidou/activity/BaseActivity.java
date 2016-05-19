@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -23,6 +25,7 @@ import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
@@ -44,6 +47,7 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 
 	private ProgressDialog progressDialog;
 	private StringRequest stringRequest;
+	private TextView actionbar_title;
 
 	protected HashMap<String,String> url_map;
 	protected FragmentManager basicFragment = getSupportFragmentManager();
@@ -57,17 +61,24 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 
 	/**
 	 * 设置ActionBar的布局
-	 * @param layoutId
 	 *            布局Id
 	 */
-	protected void setActionBarLayout(int layoutId) {
-		final ActionBar actionBar = getActionBar();
-		if (null != actionBar) {
-			actionBar.setDisplayShowHomeEnabled(false);
-			actionBar.setDisplayShowTitleEnabled(false);
-			actionBar.setDisplayShowCustomEnabled(true);
-			actionBar.setCustomView(layoutId);
+	protected void setActionBarLayout(String title,ActionBarType type) {
+
+		switch (type){
+			case NORMAL:
+				ImageButton btn_back = (ImageButton) findViewById(R.id.actionbar_back);
+				btn_back.setVisibility(View.GONE);
+			case WITHBACK:
+				actionbar_title = (TextView) findViewById(R.id.actionbar_title);
+				break;
+			case WITHSHARE:
+				actionbar_title = (TextView) findViewById(R.id.actionbar_with_share_title);
+				break;
+			default:
+				break;
 		}
+		actionbar_title.setText(title);
 	}
 
 	/*

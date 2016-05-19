@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <include
         android:id="@+id/actionbar_about"
-        layout="@layout/actionbar_about"
+        layout="@layout/actionbar_normal"
         />
     <LinearLayout
         android:layout_width="match_parent"

@@ -28,7 +28,6 @@ public class IndividualModifyFragment extends BaseFragment {
 
     private static final String TAG = IndividualModifyFragment.class.getSimpleName();
     private Bundle datas;
-    private View rootView;
 
     private TextView txt_title;
     private EditText edit_modify;

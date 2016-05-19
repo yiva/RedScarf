@@ -36,7 +36,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         FoodCategoryFragment.OnChangeFoodListFragmentListener,
         FoodFragment.BackFoodCategoryListener{
 
-    //	private static final String INDEX_CONTAINER = "IndexFragment";
     private static final String FOOD_CONTAINER = "FoodCategoryFragment";
     private static final String SHOP_CONTAINER = "ShopCategoryFragment";
     private static final String SEARCH_COMTAINER = "SearchFragment";

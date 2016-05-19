@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
     <include
         android:id="@+id/actionbar_individual_info"
-        layout="@layout/actionbar_individual_info"
+        layout="@layout/actionbar_normal"
         />
     <GridLayout
         android:layout_width="match_parent"

@@ -16,6 +16,7 @@ import com.redscarf.weidou.network.MultipartRequest;
 import com.redscarf.weidou.pojo.AvatarResultBody;
 import com.redscarf.weidou.pojo.Member;
 import com.redscarf.weidou.pojo.NonceBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GalleryImageLoader;
@@ -119,6 +120,7 @@ public class MineActivity extends BaseActivity {
             JumpToActivity(MineActivity.this, LoginActivity.class, null);
         }
         this.setContentView(R.layout.activity_mine);
+        setActionBarLayout(getResources().getString(R.string.title_mine_activity), ActionBarType.WITHBACK);
         GlobalApplication.getInstance().addActivity(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,

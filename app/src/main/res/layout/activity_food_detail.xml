@@ -8,7 +8,7 @@
     >
     <include
         android:id="@+id/actionbar_food_detail"
-        layout="@layout/actionbar_food_detail"
+        layout="@layout/actionbar_with_share"
         />
     <ScrollView
         android:id="@+id/scroll_food_detail"

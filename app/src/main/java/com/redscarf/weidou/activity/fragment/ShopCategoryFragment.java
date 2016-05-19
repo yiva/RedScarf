@@ -11,6 +11,7 @@ import android.widget.GridView;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.ShopGridAdapter;
 import com.redscarf.weidou.pojo.GridBody;
+import com.redscarf.weidou.util.ActionBarType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.List;
  */
 public class ShopCategoryFragment extends BaseFragment {
 
-    private View rootView;
     private GridView grid_shop;
     private List<GridBody> datas;
 
@@ -32,10 +32,8 @@ public class ShopCategoryFragment extends BaseFragment {
 
         rootView = inflater.inflate(R.layout.fragment_shop_category, container, false);
 
-        grid_shop = (GridView) rootView.findViewById(R.id.grid_shop);
-        grid_shop.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeShopHeaderGridArrays()));
-        grid_shop.setOnItemClickListener(new OnShopItemClick());
 
+        initView();
         return rootView;
     }
 
@@ -53,7 +51,10 @@ public class ShopCategoryFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        setActionBarLayout(getResources().getString(R.string.title_shopping), ActionBarType.NORMAL);
+        grid_shop = (GridView) rootView.findViewById(R.id.grid_shop);
+        grid_shop.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeShopHeaderGridArrays()));
+        grid_shop.setOnItemClickListener(new OnShopItemClick());
     }
 
     private class OnShopItemClick implements AdapterView.OnItemClickListener {

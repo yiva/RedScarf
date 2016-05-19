@@ -71,22 +71,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >‘
         </activity>
-        <activity
-            android:name=".ShopListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".FoodListActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
         <!-- 分享二级页面 -->
-        <activity
-            android:name=".WhoseShareActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
         <!-- 品牌详情 -->
         <activity
             android:name=".BrandDetailActivity"
@@ -100,10 +85,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <!-- 用户评价 -->
-        <activity
-            android:name=".UserReviewActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".GoodsDetailActivity"
             android:label="@string/app_name"
@@ -127,20 +108,8 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <!-- 餐厅分享 -->
-        <activity
-            android:name=".ShareActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
         <!-- 分享发布 -->
-        <activity
-            android:name=".ShareSubmitActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
         <!-- 发布评论 -->
-        <activity
-            android:name=".SendReviewActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
         <!-- 网页界面 -->
         <activity
             android:name=".WebActivity"

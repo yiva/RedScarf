@@ -6,13 +6,13 @@
 
     >
     <LinearLayout
-        android:id="@+id/actionbar_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <include
-            layout="@layout/actionbar_discount"
+            android:id="@+id/actionbar_buy"
+            layout="@layout/actionbar_normal"
             />
     <LinearLayout
         android:layout_width="match_parent"

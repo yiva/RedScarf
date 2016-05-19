@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
     <include 
 	    android:id="@+id/actionbar_goods_detail"
-	    layout="@layout/actionbar_goods_detail"
+	    layout="@layout/actionbar_with_share"
 	    />
     <!-- Begin 主体 -->
     <LinearLayout
