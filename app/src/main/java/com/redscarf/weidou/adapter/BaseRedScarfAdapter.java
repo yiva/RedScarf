@@ -61,14 +61,11 @@ public abstract class BaseRedScarfAdapter<T> extends BaseAdapter{
 
 	protected void formatRedScarfBody(RedScarfBody item) {
 		try {
-//			item.setCategories(denoteJSONArray(
-//					new JSONArray(item.getCategories()), "title"));
 			item.setTags(denoteJSONArray(new JSONArray(item.getTags()), "title"));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-//		item.setContent(replaceContent(item.getContent()));
 	}
 
 	//index数据格式化
