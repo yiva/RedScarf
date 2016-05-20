@@ -81,8 +81,6 @@ public class BuyFragment extends BaseFragment
     private ArrayList<GoodsBody> bodys;
     private HashMap<String,ArrayList<String>> map_brands;
     private ArrayList<String> listbrands_title;
-    private float lastY = 0f;
-    private float currentY = 0f;
     private Integer category_id;
 
     BackShopCategoryListener mbackClickListener;
@@ -185,13 +183,6 @@ public class BuyFragment extends BaseFragment
 
     }
 
-    /**
-     * 获取选项卡控件
-     */
-//	public void setAllHeadTab() {
-//		headtabs.add((TextView) getActivity().findViewById(R.id.index_discount));
-//		headtabs.add((TextView) getActivity().findViewById(R.id.index_beauty));
-//	}
 
 
 	/**
@@ -313,8 +304,6 @@ public class BuyFragment extends BaseFragment
         lv_brand_detail = (ListView) contentView.findViewById(R.id.list_brand_detail);
 
 
-//        params.height = height-50;
-//        lv_brand_detail.setLayoutParams(params);
         lv_brand_detail.setAdapter(new BrandDetailAdapter(getActivity(), brands));
         ViewTreeObserver vto = lv_brand_detail.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

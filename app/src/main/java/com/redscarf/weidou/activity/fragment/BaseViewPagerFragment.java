@@ -39,16 +39,11 @@ public abstract class BaseViewPagerFragment extends BaseFragment {
 
 		mViewPager = (ViewPager) view.findViewById(R.id.pager);
 
-		// mErrorLayout = (EmptyLayout) view.findViewById(R.id.error_layout);
 
 		mTabsAdapter = new ViewPageFragmentAdapter(getChildFragmentManager(),
 				mTabStrip, mViewPager);
 		setScreenPageLimit();
 		onSetupTabAdapter(mTabsAdapter);
-		// if (savedInstanceState != null) {
-		// int pos = savedInstanceState.getInt("position");
-		// mViewPager.setCurrentItem(pos, true);
-		// }
 	}
     
 	/**
@@ -57,14 +52,6 @@ public abstract class BaseViewPagerFragment extends BaseFragment {
 	protected void setScreenPageLimit() {
 	}
 
-	// @Override
-	// public void onSaveInstanceState(Bundle outState) {
-	// //No call for super(). Bug on API Level > 11.
-	// if (outState != null && mViewPager != null) {
-	// outState.putInt("position", mViewPager.getCurrentItem());
-	// }
-	// //super.onSaveInstanceState(outState);
-	// }
 
 	protected abstract void onSetupTabAdapter(ViewPageFragmentAdapter adapter);
 }

@@ -39,13 +39,6 @@ import org.w3c.dom.Text;
 public class FoodFragment extends BaseFragment implements OnTouchListener {
 
 
-    private TextView shop_menu;
-    private ImageButton shop_search;
-    private PopupWindow selecter;
-    private ListView lv_selector;
-    private GridView grid_food;
-
-
     private final String TAG = FoodFragment.class.getSimpleName();
 
     private ListView lv_food;
@@ -208,23 +201,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     }
 
     /**
-     * 左上角菜单事件
-     */
-    private class onMenuClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            if (!selecter.isShowing()) {
-                selecter.showAsDropDown(getActivity().findViewById(R.id.actionbar_food), 0, 0);
-                selecter.setOutsideTouchable(true);
-            } else {
-                selecter.dismiss();
-            }
-        }
-
-    }
-
-    /**
      * selector list datas
      *
      * @return selectors
@@ -236,39 +212,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         selectors.add("最热查询");
         selectors.add("最高评价");
         return selectors;
-    }
-
-
-    /**
-     * item of food selector click listener implement
-     */
-    private class foodSelecotorClick implements OnItemClickListener {
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 0://委媛推荐
-
-                    break;
-                case 1://离我最近
-                    break;
-                case 2://最热查询
-                    break;
-                case 3://最高评价
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    private class onSearchClickListener implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getActivity(), "search_button", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     public interface BackFoodCategoryListener{

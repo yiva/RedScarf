@@ -189,7 +189,6 @@ public class FoodDetailFragment extends BaseFragment {
         favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_with_share_favorite);
         layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
-//        layout = (LinearLayout) getActivity().findViewById(R.id.sublayout_photo_big_food);
 
         title_text.setText(body.getTitle());
         this.denoteFoodPhotos();
@@ -205,8 +204,6 @@ public class FoodDetailFragment extends BaseFragment {
         //Call Phone
         phone.setOnClickListener(new onCallPhone());
 
-        ////Jump MapActivity
-//        rootView.findViewById(R.id.imbtn_maps).setOnClickListener(new onImgMapsLinstener());
 
         //Jump WebActivity
         website.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getWebsite()));
@@ -214,39 +211,6 @@ public class FoodDetailFragment extends BaseFragment {
         favourite.setOnClickListener(new OnChangeFavourite());
         detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
         layout_photo_big.setOnClickListener(new OnHidePhotoCanvasClick());
-    }
-
-
-
-    /*
-     * Jump MapActivity
-     */
-    private class onImgMapsLinstener implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Bundle map_data = new Bundle();
-//			map_data.putString("location", body.getLocation());
-            Intent mapIntent = new Intent(getActivity(), MapActivity.class);
-            mapIntent.putExtras(map_data);
-            startActivity(mapIntent);
-        }
-
-    }
-
-    /**
-     * 访问页面
-     */
-    private class OnJumpWeb implements OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Bundle datas = new Bundle();
-            datas.putString("url", body.getWebsite());
-            Intent i_web = new Intent(getActivity(), WebActivity.class);
-            i_web.putExtras(datas);
-            startActivity(i_web);
-        }
     }
 
     /**
