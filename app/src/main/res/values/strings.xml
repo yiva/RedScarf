@@ -197,4 +197,16 @@
         name="txt_about_content">围兜提供英国购物及伦敦地区餐厅信息。兜兜现在还是一只小柯基，刚刚开始学会走路，请大家给它长大的时间。如果你有想对兜兜说的话，就发一封邮件给它吧。
     </string>
 
+    <string name="head">这里是HeadView</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+
 </resources>

@@ -41,12 +41,24 @@
         </com.redscarf.weidou.customwidget.HorizontalListView>
     </LinearLayout>
 
-    <ListView
-           android:id="@+id/list_shop"
-           android:layout_width="match_parent"
-    	   android:layout_height="match_parent"
-           android:divider="@null"
-           ></ListView>
+        <com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
+            android:id="@+id/refresh_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <include layout="@layout/refresh_head" />
+            <!-- 支持所有实现Pullable接口的View -->
+
+            <com.redscarf.weidou.customwidget.pullableview.PullableListView
+                android:id="@+id/list_shop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></com.redscarf.weidou.customwidget.pullableview.PullableListView>
+
+            <include layout="@layout/load_more" />
+        </com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
+
 
     </LinearLayout>
 </RelativeLayout>

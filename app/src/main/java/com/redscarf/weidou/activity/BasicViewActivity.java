@@ -129,35 +129,6 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     }
 
 
-
-//	@Override
-//	public void onSearch(View v) {
-//		Toast.makeText(null, "search", Toast.LENGTH_SHORT).show();
-//		Log.d("search btn", "not do it!");
-//	}
-
-    public void onAdvHide(View v) {
-        switch (v.getId()) {
-            case R.id.btn_adv_esc:
-                View view = findViewById(R.id.adv_frame);
-                view.setVisibility(View.GONE);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public void onToMineActivity(View v) {
-        switch (v.getId()) {
-            case R.id.btn_bottom_mine:
-                Intent in_mine = new Intent(this, MineActivity.class);
-                startActivity(in_mine);
-                break;
-        }
-    }
-
-
     /*
      *
      * (non-Javadoc)
