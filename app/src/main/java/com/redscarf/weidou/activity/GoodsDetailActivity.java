@@ -145,6 +145,7 @@ public class GoodsDetailActivity extends BaseActivity {
         label_sales_code = (TextView) findViewById(R.id.txt_sales_code_goods_detail);
         layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
         View divider = findViewById(R.id.view_dead_time_goods_detail);
+        share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
 
         subtitle.setText(body.getSubtitle());
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
@@ -187,6 +188,7 @@ public class GoodsDetailActivity extends BaseActivity {
             brand_info.setOnClickListener(new OnJumpToBrandClick());
         }
         copy_code.setOnClickListener(new OnCopySalesCodeClick());
+        share.setOnClickListener(new OnShareContent());
     }
 
     /**

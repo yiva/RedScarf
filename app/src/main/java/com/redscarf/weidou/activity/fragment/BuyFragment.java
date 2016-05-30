@@ -16,6 +16,9 @@ import com.redscarf.weidou.adapter.BrandsListAdapter;
 import com.redscarf.weidou.adapter.BuyListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
+import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
+import com.redscarf.weidou.customwidget.pullableview.PullableListView;
+import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.DisplayUtil;
@@ -68,7 +71,7 @@ public class BuyFragment extends BaseFragment
     private TextView txt_discount;
     private TextView txt_brand;
     private View is_click_head_btn;
-    private ListView lv_shop;
+    private PullableListView lv_shop;
     private HorizontalListView lv_brands;
     private ListView lv_selector;
     private ListView lv_brand_detail;
@@ -127,8 +130,8 @@ public class BuyFragment extends BaseFragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         Integer flag = getArguments().getInt("flag");
         category_id = getArguments().getInt("category_id");
         String title = getArguments().getString("title");
@@ -138,6 +141,26 @@ public class BuyFragment extends BaseFragment
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        popup_brand_detail.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Integer flag = getArguments().getInt("flag");
+//        category_id = getArguments().getInt("category_id");
+//        String title = getArguments().getString("title");
+//        setActionBarLayout(title, ActionBarType.WITHBACK);
+//
+//        if (flag.equals(1)) {
+//            showProgressDialogNoCancelable("", MyConstants.LOADING);
+//            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+//        }
     }
 
     @Override
@@ -157,9 +180,11 @@ public class BuyFragment extends BaseFragment
         back.setOnClickListener(new OnbackClick());
 
         // 定义列表
-        lv_shop = (ListView) rootView.findViewById(R.id.list_shop);
+        lv_shop = (PullableListView) rootView.findViewById(R.id.list_shop);
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
+        ((PullToRefreshLayout)rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(new
+                        PullRefreshListener());
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());

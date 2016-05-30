@@ -45,6 +45,8 @@ import java.util.Map;
  */
 public abstract class BaseActivity extends FragmentActivity implements BasePageLinstener{
 
+	private static final String TAG = BaseActivity.class.getSimpleName();
+
 	private ProgressDialog progressDialog;
 	private StringRequest stringRequest;
 	private TextView actionbar_title;
@@ -57,6 +59,28 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 //		url_map = new HashMap<String,String>();
+	}
+
+	/**
+	 * 监听是否有分享信息
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Log.d(TAG, "on start");
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.d(TAG, "on restart");
+	}
+
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d(TAG, "on resume");
 	}
 
 	/**
@@ -333,8 +357,6 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 			Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 			exitTime = System.currentTimeMillis();
 		} else {
-//            this.finish();
-//			System.exit(0);
 			GlobalApplication.getInstance().exit();
 		}
 		}
@@ -346,5 +368,13 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 	protected boolean isLogin(){
 		return StringUtils.isNotBlank(MyPreferences.getAppPerenceAttribute(MyConstants
 				.PREF_USER_ID))?true:false;
+	}
+
+	protected class OnShareContent implements View.OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+
+		}
 	}
 }

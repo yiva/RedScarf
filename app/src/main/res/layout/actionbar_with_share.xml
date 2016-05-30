@@ -32,6 +32,7 @@
         android:layout_toLeftOf="@+id/actionbar_with_share_favorite"
         android:layout_marginRight="12dp"
         android:background="@drawable/ic_share"
+        android:visibility="gone"
         />
     <ImageButton
         android:id="@+id/actionbar_with_share_favorite"

@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name="com.redscarf.weidou.util.GlobalApplication"
@@ -41,7 +42,11 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDlMo3ZurKFbAVze6Xl3z6bIzjEzvglNqA" />
 
-
+        <!--友盟APPKEY-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="574520cfe0f55a613f000f7a" >
+        </meta-data>
         <!-- 启动界面 -->
         <activity
             android:name=".SplashActivity"
