@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +85,9 @@ public class BuyFragment extends BaseFragment
     private ArrayList<GoodsBody> bodys;
     private HashMap<String,ArrayList<String>> map_brands;
     private ArrayList<String> listbrands_title;
-    private Integer category_id;
+    private static Integer category_id = 5;
+    private static Integer flag = 1;
+    private static String title = "全部购物";
 
     BackShopCategoryListener mbackClickListener;
 
@@ -132,12 +135,18 @@ public class BuyFragment extends BaseFragment
     @Override
     public void onStart() {
         super.onStart();
-        Integer flag = getArguments().getInt("flag");
-        category_id = getArguments().getInt("category_id");
-        String title = getArguments().getString("title");
-        setActionBarLayout(title, ActionBarType.WITHBACK);
+        try {
+            flag = getArguments().getInt("flag");
+            category_id = getArguments().getInt("category_id");
+            title = getArguments().getString("title");
+            setActionBarLayout(title, ActionBarType.WITHBACK);
 
-        if (flag.equals(1)) {
+            if (flag.equals(1)) {
+                showProgressDialogNoCancelable("", MyConstants.LOADING);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+            }
+        } catch (Exception ex) {
+            ExceptionUtil.printAndRecord(TAG,ex);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
         }
@@ -146,7 +155,9 @@ public class BuyFragment extends BaseFragment
     @Override
     public void onPause() {
         super.onPause();
-        popup_brand_detail.dismiss();
+        if (popup_brand_detail != null) {
+            popup_brand_detail.dismiss();
+        }
     }
 
     @Override

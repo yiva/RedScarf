@@ -50,6 +50,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     private float currentY = 0f;
 
     private BackFoodCategoryListener mfoodBackListener;
+    private static Integer category_id = 4;
+    private static Integer flag = 1;
+    private static String title = "全部餐厅";
 
     private Handler handler = new Handler() {
         @Override
@@ -102,14 +105,21 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     @Override
     public void onResume() {
         super.onResume();
-        Integer flag = getArguments().getInt("flag");
-        Integer category_id = getArguments().getInt("category_id");
-        String title = getArguments().getString("title");
-        setActionBarLayout(title, ActionBarType.WITHBACK);
-        if (flag.equals(1)) {
-            getArguments().putInt("flag",0);
+        try {
+            flag = getArguments().getInt("flag");
+            category_id = getArguments().getInt("category_id");
+            title = getArguments().getString("title");
+            setActionBarLayout(title, ActionBarType.WITHBACK);
+
+            if (flag.equals(1)) {
+                getArguments().putInt("flag",0);
+                showProgressDialogNoCancelable("", MyConstants.LOADING);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(),"1"}), FoodFragment.class, handler, MSG_INDEX);
+            }
+        } catch (Exception ex) {
+            ExceptionUtil.printAndRecord(TAG, ex);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(),"1"}), FoodFragment.class, handler, MSG_INDEX);
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), "1"}), FoodFragment.class, handler, MSG_INDEX);
         }
     }
 
