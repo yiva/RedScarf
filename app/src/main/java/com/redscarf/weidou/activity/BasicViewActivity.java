@@ -229,10 +229,11 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         SHOP_EXCAHNGE_TAG = SHOP_CONTAINER;
         this.hideFragments();
         FragmentTransaction backTransaction = basicFragment.beginTransaction();
-        backTransaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG));
-        backTransaction.commit();
-
-
+        if (mapFragment.get(SHOP_EXCAHNGE_TAG).isAdded()){
+            backTransaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG)).commit();
+        }else{
+            backTransaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG).commit();
+        }
     }
 
     @Override
@@ -269,8 +270,11 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         FOOD_EXCAHNGE_TAG = FOOD_CONTAINER;
         this.hideFragments();
         FragmentTransaction backTransaction = basicFragment.beginTransaction();
-        backTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG));
-        backTransaction.commit();
+        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
+            backTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG)).commit();
+        }else{
+            backTransaction.add(R.id.basicfragment, mapFragment.get(FOOD_EXCAHNGE_TAG),FOOD_EXCAHNGE_TAG).commit();
+        }
     }
 
     private class OnJumpMineActivityClick implements OnClickListener{

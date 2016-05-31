@@ -147,6 +147,7 @@ public class BuyFragment extends BaseFragment
             }
         } catch (Exception ex) {
             ExceptionUtil.printAndRecord(TAG,ex);
+            setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
         }
