@@ -203,14 +203,24 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         BuyFragment buy = (BuyFragment) mapFragment.get(SHOP_EXCAHNGE_TAG);
         if (buy.isAdded()) {
             Bundle args = buy.getArguments();
-            args.putInt("flag", 0);
-            if (postid != args.getInt("category_id")){
-                args.putInt("flag", 1);
-                args.putInt("category_id", postid);
-                args.putString("title",title);
+            if (args == null) {
+                args = new Bundle();
+                args.putInt("flag", 0);
+                if (postid != args.getInt("category_id")){
+                    args.putInt("flag", 1);
+                    args.putInt("category_id", postid);
+                    args.putString("title",title);
+                }
+                buy.setArguments(args);
+            }else{
+                args.putInt("flag", 0);
+                if (postid != args.getInt("category_id")){
+                    args.putInt("flag", 1);
+                    args.putInt("category_id", postid);
+                    args.putString("title",title);
+                }
             }
             changeTransaction.show(buy);
-            buy.onResume();
         }else {
             Bundle args = new Bundle();
             args.putInt("flag", 1);
@@ -244,14 +254,24 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
         FoodFragment item = (FoodFragment) mapFragment.get(FOOD_EXCAHNGE_TAG);
         if (item.isAdded()) {
             Bundle args = item.getArguments();
-            args.putInt("flag", 0);
-            if (postid != args.getInt("category_id")){
-                args.putInt("flag", 1);
-                args.putInt("category_id", postid);
-                args.putString("title", title);
+            if (args == null) {
+                args = new Bundle();
+                args.putInt("flag", 0);
+                if (postid != args.getInt("category_id")){
+                    args.putInt("flag", 1);
+                    args.putInt("category_id", postid);
+                    args.putString("title", title);
+                }
+                item.setArguments(args);
+            } else {
+                args.putInt("flag", 0);
+                if (postid != args.getInt("category_id")){
+                    args.putInt("flag", 1);
+                    args.putInt("category_id", postid);
+                    args.putString("title", title);
+                }
             }
             changeTransaction.show(item);
-            item.onResume();
         }else {
             Bundle args = new Bundle();
             args.putInt("flag", 1);

@@ -50,9 +50,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     private float currentY = 0f;
 
     private BackFoodCategoryListener mfoodBackListener;
-    private static Integer category_id = 4;
-    private static Integer flag = 1;
-    private static String title = "全部餐厅";
+    private static Integer category_id;
+    private static Integer flag;
+    private static String title;
 
     private Handler handler = new Handler() {
         @Override
@@ -121,6 +121,28 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), "1"}), FoodFragment.class, handler, MSG_INDEX);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            try {
+                flag = getArguments().getInt("flag");
+                category_id = getArguments().getInt("category_id");
+                title = getArguments().getString("title");
+                setActionBarLayout(title, ActionBarType.WITHBACK);
+                if (flag.equals(1)) {
+                    showProgressDialogNoCancelable("", MyConstants.LOADING);
+                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+                }
+            } catch (Exception ex) {
+                ExceptionUtil.printAndRecord(TAG,ex);
+                setActionBarLayout(title, ActionBarType.WITHBACK);
+                showProgressDialogNoCancelable("", MyConstants.LOADING);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+            }
         }
     }
 
