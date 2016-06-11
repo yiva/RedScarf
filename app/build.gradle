@@ -73,4 +73,5 @@ dependencies {
     compile 'com.hynnet:httpclient:4.5.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile files('libs/umeng_social_sdk.jar')
+    compile project(':weiboSDK')
 }

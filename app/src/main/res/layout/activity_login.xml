@@ -85,12 +85,52 @@
             android:text="@string/txt_register_submit"
             android:textColor="@color/white"
             android:textSize="20sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin2"
+            android:layout_marginBottom="@dimen/layout_margin2">
+            <View
+                style="@style/hr_line"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/label_login_or"
+                android:layout_marginRight="@dimen/layout_margin2"></View>
+            <TextView
+                android:id="@+id/label_login_or"
+                style="@style/text_style_content_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/or"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sys_font_size_h2"
+                android:layout_centerInParent="true"/>
+            <View
+                style="@style/hr_line"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/label_login_or"
+                android:layout_marginLeft="@dimen/layout_margin2"></View>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/btn_login_by_weibo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/weibo_white"/>
+            <TextView
+                style="@style/text_style_content_normal"
+                android:layout_marginLeft="@dimen/layout_margin2"
+                android:text="@string/txt_login_by_weibo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sys_font_size_h2"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/layout_padding1"
         android:paddingRight="@dimen/layout_padding1"
         android:layout_marginTop="@dimen/layout_margin1"
         android:orientation="horizontal"
@@ -99,7 +139,6 @@
             android:id="@+id/txt_login_nonce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/txt_login_nonce"
             android:textColor="@color/white"
             android:textSize="20sp" />
