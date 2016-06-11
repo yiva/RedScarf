@@ -6,8 +6,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/BasicViewActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/ErrorActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/MapActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/SendReviewActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/WhoseShareActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/activity/fragment/FoodFragment.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/adapter/RedScarfBodyAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/redscarf/weidou/customwidget/ClearEditText.java" charset="UTF-8" />
