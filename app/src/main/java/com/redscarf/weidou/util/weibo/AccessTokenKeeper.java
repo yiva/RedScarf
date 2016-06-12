@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.redscarf.weidou.util;
+package com.redscarf.weidou.util.weibo;
 
 import android.content.Context;
 import android.content.SharedPreferences;

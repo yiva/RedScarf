@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.redscarf.weidou.adapter.CookieAdapter;
 import com.redscarf.weidou.pojo.CookieBody;
-import com.redscarf.weidou.util.AccessTokenKeeper;
+import com.redscarf.weidou.util.weibo.AccessTokenKeeper;
 import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
@@ -34,6 +34,11 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.net.RequestListener;
+import com.sina.weibo.sdk.openapi.UsersAPI;
+import com.sina.weibo.sdk.openapi.models.ErrorInfo;
+import com.sina.weibo.sdk.openapi.models.User;
+import com.sina.weibo.sdk.utils.LogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +72,8 @@ public class LoginActivity extends BaseActivity {
 
     /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
     private SsoHandler mSsoHandler;
+    /** 用户信息接口 */
+    private UsersAPI mUsersAPI;
 
     private final int MSG_GENERATE = 11; // msg.what generate cookie
     private final int MSG_VALID = 12; //msg.what valid cookie
@@ -311,6 +318,10 @@ public class LoginActivity extends BaseActivity {
 
                 // 保存 Token 到 SharedPreferences
                 AccessTokenKeeper.writeAccessToken(LoginActivity.this, mAccessToken);
+                // 获取用户信息接口
+                mUsersAPI = new UsersAPI(LoginActivity.this, MyConstants.APP_KEY, mAccessToken);
+                long uid = Long.parseLong(mAccessToken.getUid());
+                mUsersAPI.show(uid, mListener);
                 Toast.makeText(LoginActivity.this,
                         R.string.weibosdk_demo_toast_auth_success, Toast.LENGTH_SHORT).show();
             } else {
@@ -357,4 +368,32 @@ public class LoginActivity extends BaseActivity {
         }
 //        mTokenText.setText(message);
     }
+
+    /**
+     * 微博 OpenAPI 回调接口。
+     */
+    private RequestListener mListener = new RequestListener() {
+        @Override
+        public void onComplete(String response) {
+            if (!TextUtils.isEmpty(response)) {
+                LogUtil.i(TAG, response);
+                // 调用 User#parse 将JSON串解析成User对象
+                User user = User.parse(response);
+                if (user != null) {
+                    Toast.makeText(LoginActivity.this,
+                            "获取User信息成功，用户昵称：" + user.screen_name,
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        @Override
+        public void onWeiboException(WeiboException e) {
+            LogUtil.e(TAG, e.getMessage());
+            ErrorInfo info = ErrorInfo.parse(e.getMessage());
+            Toast.makeText(LoginActivity.this, info.toString(), Toast.LENGTH_LONG).show();
+        }
+    };
 }

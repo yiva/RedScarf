@@ -28,7 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.redscarf.weidou.util.AccessTokenKeeper;
+import com.redscarf.weidou.util.weibo.AccessTokenKeeper;
 import com.redscarf.weidou.util.MyConstants;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
