@@ -166,6 +166,15 @@ public class RequestURLFactory {
             case LOGIN_AGAIN:
                 res = baseUrl + "user/validate_auth_cookie/?cookie=" + attributes[0];
                 break;
+            case LOGIN_WEIBO:
+                res = baseUrl + "user/three_party_login/?weibo=" + attributes[0] +
+                        "&username=" + attributes[1] +
+                        "&email=" + attributes[2] +
+                        "&display_name=" + attributes[3] +
+                        "&nickname=" + attributes[4] +
+                        "&gender=" + attributes[5] +
+                        "&location=" + attributes[6] + "&notify=no";
+                break;
             case REGISTER:
                 res = baseUrl + "user/register/?username=" + attributes[0] + "&email=" + attributes
                         [1] + "&display_name=" + attributes[2] + "&nickname=" + attributes[3] +

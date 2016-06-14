@@ -21,7 +21,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.redscarf.weidou.adapter.CookieAdapter;
+import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.pojo.CookieBody;
+import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.weibo.AccessTokenKeeper;
 import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
@@ -44,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * 登录注册Activity
@@ -67,22 +71,31 @@ public class LoginActivity extends BaseActivity {
 
     private AuthInfo mAuthInfo;
 
-    /** 封装了 "access_token"，"expires_in"，"refresh_token"，并提供了他们的管理功能  */
+    /**
+     * 封装了 "access_token"，"expires_in"，"refresh_token"，并提供了他们的管理功能
+     */
     private Oauth2AccessToken mAccessToken;
 
-    /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    /**
+     * 注意：SsoHandler 仅当 SDK 支持 SSO 时有效
+     */
     private SsoHandler mSsoHandler;
-    /** 用户信息接口 */
+    /**
+     * 用户信息接口
+     */
     private UsersAPI mUsersAPI;
+
+    private String response;
 
     private final int MSG_GENERATE = 11; // msg.what generate cookie
     private final int MSG_VALID = 12; //msg.what valid cookie
+    private final int MSG_LOGIN_WEIBO = 13;//msg.what login with weibo
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             Bundle indexObj = msg.getData();
-            switch (msg.what){
+            switch (msg.what) {
                 case MSG_GENERATE:
                     cookie_body = indexObj.getParcelable("result");
                     loginForward(cookie_body);
@@ -90,6 +103,16 @@ public class LoginActivity extends BaseActivity {
                 case MSG_VALID:
                     cookie_valid = indexObj.getBoolean("valid");
                     loginValid(cookie_valid);
+                    break;
+                case MSG_LOGIN_WEIBO:
+                    response = indexObj.getString("response");
+                    try {
+                        JSONObject iObj = new JSONObject(response);
+                        cookie_body = JSONHelper.parseObject(iObj, CookieBody.class);
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    loginForward(cookie_body);
                     break;
             }
             hideProgressDialog();
@@ -153,27 +176,27 @@ public class LoginActivity extends BaseActivity {
                     Log.e(TAG, "error", error);
                 }
             });
-        }else {//已经登录过，验证cookie
+        } else {//已经登录过，验证cookie
             jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
                     RequestURLFactory.sysRequestURL(RequestType.LOGIN_AGAIN,
                             new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)}),
-                   new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.i(TAG, "success");
-                    boolean res = false;
-                    try {
-                        res = response.getBoolean("valid");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Bundle data = new Bundle();
-                    data.putBoolean("valid", res);
-                    Message message = Message.obtain(handler, MSG_VALID);
-                    message.setData(data);
-                    handler.sendMessage(message);
-                }
-            }, new Response.ErrorListener() {
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i(TAG, "success");
+                            boolean res = false;
+                            try {
+                                res = response.getBoolean("valid");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Bundle data = new Bundle();
+                            data.putBoolean("valid", res);
+                            Message message = Message.obtain(handler, MSG_VALID);
+                            message.setData(data);
+                            handler.sendMessage(message);
+                        }
+                    }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -188,7 +211,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     *
      * @param body 生成cookie进行登录
      */
     private void loginForward(CookieBody body) {
@@ -200,14 +222,14 @@ public class LoginActivity extends BaseActivity {
             Intent i_login = new Intent(LoginActivity.this, BasicViewActivity.class);
             startActivity(i_login);
             finish();
-        }else {
+        } else {
             Toast.makeText(LoginActivity.this, body.getError(), Toast.LENGTH_SHORT).show();
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, "");
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, "");
         }
     }
 
-    private class OnLoginByWeibo implements View.OnClickListener{
+    private class OnLoginByWeibo implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -228,7 +250,6 @@ public class LoginActivity extends BaseActivity {
 
 
     /**
-     *
      * @param valid 根据已存在cookie判断登录
      */
     private void loginValid(Boolean valid) {
@@ -236,7 +257,7 @@ public class LoginActivity extends BaseActivity {
             Intent i_login = new Intent(LoginActivity.this, BasicViewActivity.class);
             startActivity(i_login);
             finish();
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
         }
 
@@ -247,7 +268,7 @@ public class LoginActivity extends BaseActivity {
         startActivity(i_login_nonce);
     }
 
-    private class onLogin implements View.OnClickListener{
+    private class onLogin implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -255,14 +276,14 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private class onNonceLogin implements View.OnClickListener{
+    private class onNonceLogin implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             loginNonce();
         }
     }
 
-    private class OnRegisterClick implements View.OnClickListener{
+    private class OnRegisterClick implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -300,7 +321,7 @@ public class LoginActivity extends BaseActivity {
     /**
      * 微博认证授权回调类。
      * 1. SSO 授权时，需要在 {@link #onActivityResult} 中调用 {@link SsoHandler#authorizeCallBack} 后，
-     *    该回调才会被执行。
+     * 该回调才会被执行。
      * 2. 非 SSO 授权时，当授权结束后，该回调就会被执行。
      * 当授权成功后，请保存该 access_token、expires_in、uid 等信息到 SharedPreferences 中。
      */
@@ -311,7 +332,7 @@ public class LoginActivity extends BaseActivity {
             // 从 Bundle 中解析 Token
             mAccessToken = Oauth2AccessToken.parseAccessToken(values);
             //从这里获取用户输入的 电话号码信息
-            String  phoneNum =  mAccessToken.getPhoneNum();
+            String phoneNum = mAccessToken.getPhoneNum();
             if (mAccessToken.isSessionValid()) {
                 // 显示 Token
                 updateTokenView(false);
@@ -380,9 +401,20 @@ public class LoginActivity extends BaseActivity {
                 // 调用 User#parse 将JSON串解析成User对象
                 User user = User.parse(response);
                 if (user != null) {
-                    Toast.makeText(LoginActivity.this,
-                            "获取User信息成功，用户昵称：" + user.screen_name,
-                            Toast.LENGTH_LONG).show();
+                    String email = "wb" + user.idstr + "@weidou.co.uk";
+                    String gender = "";
+                    if ("f".equals(user.gender)) {
+                        gender = "女";
+                    } else if ("m".equals(user.gender)) {
+                        gender = "男";
+                    }
+                    doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
+                                    .LOGIN_WEIBO, new String[]{user.idstr, email, email, user
+                                    .screen_name, user.screen_name,
+                                    gender, user.location}),
+                            LoginActivity.class,
+                            handler,
+                            MSG_LOGIN_WEIBO, PROGRESS_DISVISIBLE);
                 } else {
                     Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
                 }

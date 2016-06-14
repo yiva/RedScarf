@@ -28,5 +28,5 @@ public enum RequestType {
     ,MY_FAOURITE        //我的收藏
     ,DISCOUNT_POST  //商品页面
     ,UPLOAD_AVATOR  //上传照片
-
+    ,LOGIN_WEIBO    //微博登录
 }
