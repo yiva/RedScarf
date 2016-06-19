@@ -207,7 +207,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
             }
         });
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         stringRequest.setTag(clazz.getSimpleName());
         VolleyUtil.getRequestQueue().add(stringRequest);
     }
@@ -231,7 +231,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
             }
         });
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         stringRequest.setTag(clazz.getSimpleName());
         VolleyUtil.getRequestQueue().add(stringRequest);
     }
@@ -268,7 +268,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
                 Log.e(clazz.getSimpleName(), "error", volleyError);
             }
         });
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         stringRequest.setTag(clazz.getSimpleName());
         VolleyUtil.getRequestQueue().add(stringRequest);
     }

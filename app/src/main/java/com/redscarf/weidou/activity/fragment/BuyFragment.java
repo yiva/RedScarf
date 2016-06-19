@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
@@ -19,7 +20,6 @@ import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
 import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
 import com.redscarf.weidou.customwidget.pullableview.PullableListView;
-import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.DisplayUtil;
@@ -33,19 +33,16 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -54,27 +51,21 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 /**
  * 购物fragment
  *
  * @author yeahwa
  */
-public class BuyFragment extends BaseFragment
+public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener
         //        implements OnTouchListener
 {
     private final String TAG = BuyFragment.class.getSimpleName();
+    private static int CURRENT_PAGE = 1;
 
-    private ImageButton discount_search;
-    private TextView shop_selector;
-    private PopupWindow selecter;
-    private TextView txt_discount;
-    private TextView txt_brand;
     private View is_click_head_btn;
     private PullableListView lv_shop;
     private HorizontalListView lv_brands;
-    private ListView lv_selector;
     private ListView lv_brand_detail;
     private PopupWindow popup_brand_detail;
     private ImageButton btn_hide_brand_detail;
@@ -89,30 +80,57 @@ public class BuyFragment extends BaseFragment
     private static Integer flag;
     private static String title;
 
+    private BuyListAdapter buyListAdapter;
+    private BrandsListAdapter brandsListAdapter;
+
     BackShopCategoryListener mbackClickListener;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_INDEX) {
-                Bundle indexObj = msg.getData();
-                response = indexObj.getString("response");
-                try {
-                    JSONObject jo = new JSONObject(response);
-                    listbrands_title = parseBrands(jo.getString("brands"));
-                    bodys = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
-                } catch (ClassNotFoundException e) {
-                    ExceptionUtil.printAndRecord(TAG, e);
-                } catch (JSONException e) {
-                    ExceptionUtil.printAndRecord(TAG, e);
-                }
-				if (listbrands_title.size() != 0) {
-					lv_brands.setAdapter(new BrandsListAdapter(getActivity(), listbrands_title));
-				}
-                if (bodys.size() != 0) {
-                    lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys,category_id));
-                }
-                hideProgressDialog();
+            switch (msg.what) {
+                case MSG_INDEX:
+                    Bundle indexObj = msg.getData();
+                    response = indexObj.getString("response");
+                    try {
+                        JSONObject jo = new JSONObject(response);
+                        listbrands_title = parseBrands(jo.getString("brands"));
+                        bodys = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
+                    } catch (ClassNotFoundException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    if (listbrands_title.size() != 0) {
+                        brandsListAdapter = new BrandsListAdapter(getActivity(), listbrands_title);
+                        lv_brands.setAdapter(brandsListAdapter);
+                    }
+                    if (bodys.size() != 0) {
+                        buyListAdapter = new BuyListAdapter(getActivity(), bodys, category_id);
+                        lv_shop.setAdapter(buyListAdapter);
+                    }
+                    hideProgressDialog();
+                    break;
+                case MSG_NEXT_PAGE:
+                    Bundle nextObj = msg.getData();
+                    response = nextObj.getString("response");
+                    try {
+                        JSONObject jo = new JSONObject(response);
+                        ArrayList<GoodsBody> items = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
+                        if (items.size() != 0) {
+                            bodys.addAll(items);
+                            buyListAdapter.notifyDataSetChanged();
+//                            lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys, category_id));
+                        }
+                    } catch (ClassNotFoundException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -220,12 +238,49 @@ public class BuyFragment extends BaseFragment
         lv_shop = (PullableListView) rootView.findViewById(R.id.list_shop);
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
-        ((PullToRefreshLayout)rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(new
-                        PullRefreshListener());
+        ((PullToRefreshLayout)rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
 
+    }
+
+    /**
+     * 下拉
+     * @param pullToRefreshLayout
+     */
+    @Override
+    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+        // 下拉刷新操作
+        new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                // 千万别忘了告诉控件刷新完毕了哦！
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 5000);
+    }
+
+    /**
+     * 上拉
+     * @param pullToRefreshLayout
+     */
+    @Override
+    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+        // 加载操作
+        new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                doRequestURL(Request.Method.GET,RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_NEXT_PAGE,PROGRESS_DISVISIBLE);
+                // 千万别忘了告诉控件加载完毕了哦！
+                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 5000);
     }
 
 

@@ -2,10 +2,13 @@ package com.redscarf.weidou.activity.fragment;
 
 import java.util.ArrayList;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.FoodDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
+import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
@@ -36,7 +39,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class FoodFragment extends BaseFragment implements OnTouchListener {
+public class FoodFragment extends BaseFragment implements OnTouchListener,PullToRefreshLayout.OnRefreshListener {
 
 
     private final String TAG = FoodFragment.class.getSimpleName();
@@ -54,21 +57,44 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
     private static Integer flag;
     private static String title;
 
+    private static int CURRENT_PAGE = 1;
+
+    private FoodListAdapter foodListAdapter;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_INDEX) {
-                Bundle indexObj = msg.getData();
-                response = indexObj.getString("response");
-                try {
-                    bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
-                } catch (Exception e) {
-                    ExceptionUtil.printAndRecord(TAG, e);
-                }
-                if (bodys.size() != 0) {
-                    lv_food.setAdapter(new FoodListAdapter(getActivity(), bodys));
-                }
-                hideProgressDialog();
+            switch (msg.what) {
+                case MSG_INDEX:
+                    Bundle indexObj = msg.getData();
+                    response = indexObj.getString("response");
+                    try {
+                        bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
+                    } catch (Exception e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    if (bodys.size() != 0) {
+                        foodListAdapter = new FoodListAdapter(getActivity(), bodys);
+                        lv_food.setAdapter(foodListAdapter);
+                    }
+                    hideProgressDialog();
+                    break;
+                case MSG_NEXT_PAGE:
+                    Bundle foodObj = msg.getData();
+                    response = foodObj.getString("response");
+                    try {
+                        ArrayList<FoodBody> items = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
+                        if (bodys.size() != 0) {
+                            bodys.addAll(items);
+                            foodListAdapter.notifyDataSetChanged();
+                        }
+                    } catch (Exception e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -154,6 +180,36 @@ public class FoodFragment extends BaseFragment implements OnTouchListener {
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
+    }
+
+    @Override
+    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+        // 下拉刷新操作
+        new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                // 千万别忘了告诉控件刷新完毕了哦！
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
+                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 5000);
+    }
+
+    @Override
+    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+        // 加载操作
+        new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                doRequestURL(Request.Method.GET,RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), ++CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_NEXT_PAGE,PROGRESS_DISVISIBLE);
+                // 千万别忘了告诉控件加载完毕了哦！
+                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 5000);
     }
 
     private class OnBackClick implements OnClickListener{

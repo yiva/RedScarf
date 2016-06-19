@@ -5,6 +5,11 @@ import android.os.Message;
 
 import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
 
+/**
+ * 下拉刷新
+ * 上拉加载更多（10个）
+ * 原有基础上进行改进，对listview控件进行统一刷新处理
+ */
 public class PullRefreshListener implements PullToRefreshLayout.OnRefreshListener
 {
 
