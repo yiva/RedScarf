@@ -146,9 +146,9 @@ public class BrandDetailActivity extends BaseActivity {
         }
 
         //set listener
-        website.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(), brand_body.getWebsite()));
-        service.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(), brand_body.getCustomer_service()));
-        postinfo.setOnClickListener(new OnJumpToPageClick(BrandDetailActivity.this, brand_body.getTitle(),brand_body.getDeliver_info()));
+        website.setOnClickListener(new OnJumpToBrowerClick(brand_body.getWebsite()));
+        service.setOnClickListener(new OnJumpToBrowerClick(brand_body.getCustomer_service()));
+        postinfo.setOnClickListener(new OnJumpToBrowerClick(brand_body.getDeliver_info()));
         share.setOnClickListener(new OnSharePage());
         favourite.setOnClickListener(new OnChangeFavourite());
     }

@@ -16,6 +16,7 @@
     <string name="txt_email">邮箱：</string>
     <string name="email_address">hello@weidou.co.uk</string>
     <string name="or">或</string>
+    <string name="dismiss">收起</string>
     
     <string name="btn_text_buy_right_now">立即购买</string>
     
@@ -188,7 +189,8 @@
 
     <string name="txt_brand_detail_dead_time">折扣到期时间：</string>
     <string name="txt_brand_detail_service">品牌客服</string>
-    <string name="txt_brand_detail_info_more">邮寄信息</string>
+    <string name="txt_brand_detail_info_more">查看品牌信息</string>
+    <string name="txt_brand_detail_post_code">邮寄信息</string>
     <string name="txt_brand_detail_website">官方网站</string>
     <string name="txt_brand_detail_copy_code">点击复制折扣码</string>
     <string name="title_activity_maps">Map</string>

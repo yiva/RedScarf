@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
     <include
         android:id="@+id/actionbar_brand_detail"
         layout="@layout/actionbar_with_share"
@@ -38,7 +39,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:layout_marginTop="@dimen/text_margin1"
-                android:background="@color/cornflowerblue"
+                android:background="@color/wathetblue"
                 android:visibility="gone"
                 />
             <com.android.volley.toolbox.NetworkImageView
@@ -65,7 +66,7 @@
                 android:layout_marginTop="@dimen/layout_margin2"
                 android:layout_marginBottom="@dimen/layout_margin1"
                 style="@style/button_normal"
-                android:text="@string/txt_brand_detail_info_more"
+                android:text="@string/txt_brand_detail_post_code"
                 />
         </GridLayout>
     </ScrollView>

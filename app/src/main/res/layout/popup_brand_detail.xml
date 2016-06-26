@@ -6,7 +6,8 @@
 	    android:orientation="vertical"
 	    android:layout_gravity="top"
         android:layout_marginTop="103dp"
-	    android:padding="8dp" >
+	    android:padding="8dp"
+		android:id="@+id/layout_popup_brand_detail">
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

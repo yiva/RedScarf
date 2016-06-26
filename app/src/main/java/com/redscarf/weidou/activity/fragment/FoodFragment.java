@@ -8,6 +8,7 @@ import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
+import com.redscarf.weidou.customwidget.pullableview.PullableListView;
 import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.util.ActionBarType;
@@ -44,7 +45,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
 
     private final String TAG = FoodFragment.class.getSimpleName();
 
-    private ListView lv_food;
+    private PullableListView lv_food;
+    private ImageButton selector;
 
     private final int MSG_INDEX = 1; //msg.what index
     private ArrayList<FoodBody> bodys;
@@ -53,9 +55,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
     private float currentY = 0f;
 
     private BackFoodCategoryListener mfoodBackListener;
-    private static Integer category_id;
-    private static Integer flag;
-    private static String title;
+    private static Integer category_id = 4;
+    private static Integer flag = 1;
+    private static String title = "全部餐厅";
 
     private static int CURRENT_PAGE = 1;
 
@@ -132,21 +134,21 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
     public void onResume() {
         super.onResume();
         try {
-            flag = getArguments().getInt("flag");
-            category_id = getArguments().getInt("category_id");
-            title = getArguments().getString("title");
+//            flag = getArguments().getInt("flag");
+//            category_id = getArguments().getInt("category_id");
+//            title = getArguments().getString("title");
             setActionBarLayout(title, ActionBarType.WITHBACK);
 
             if (flag.equals(1)) {
                 getArguments().putInt("flag",0);
                 showProgressDialogNoCancelable("", MyConstants.LOADING);
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(),"1"}), FoodFragment.class, handler, MSG_INDEX);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(),CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
             }
         } catch (Exception ex) {
             ExceptionUtil.printAndRecord(TAG, ex);
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), "1"}), FoodFragment.class, handler, MSG_INDEX);
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
         }
     }
 
@@ -155,13 +157,13 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
         super.onHiddenChanged(hidden);
         if (!hidden) {
             try {
-                flag = getArguments().getInt("flag");
-                category_id = getArguments().getInt("category_id");
-                title = getArguments().getString("title");
+//                flag = getArguments().getInt("flag");
+//                category_id = getArguments().getInt("category_id");
+//                title = getArguments().getString("title");
                 setActionBarLayout(title, ActionBarType.WITHBACK);
                 if (flag.equals(1)) {
                     showProgressDialogNoCancelable("", MyConstants.LOADING);
-                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
                 }
             } catch (Exception ex) {
                 ExceptionUtil.printAndRecord(TAG,ex);
@@ -175,11 +177,15 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
     @Override
     public void initView() {
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
-        back.setOnClickListener(new OnBackClick());
-        lv_food = (ListView) rootView.findViewById(R.id.list_food);
+        back.setVisibility(View.GONE);
+        selector = (ImageButton) rootView.findViewById(R.id.actionbar_selector);
+        selector.setVisibility(View.VISIBLE);
+//        back.setOnClickListener(new OnBackClick());
+        lv_food = (PullableListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
+        ((PullToRefreshLayout)rootView.findViewById(R.id.food_refresh_view)).setOnRefreshListener(this);
     }
 
     @Override
@@ -190,6 +196,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
             @Override
             public void handleMessage(Message msg)
             {
+                CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
                 doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);

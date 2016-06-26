@@ -42,8 +42,8 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
     private static final String SHOP_LIST_CONTAINER = "BuyFragment";
     private static final String FOOD_LIST_CONTAINER = "FoodFragment";
 
-    private static String SHOP_EXCAHNGE_TAG = SHOP_CONTAINER;
-    private static String FOOD_EXCAHNGE_TAG = FOOD_CONTAINER;
+    private static String SHOP_EXCAHNGE_TAG = SHOP_LIST_CONTAINER;
+    private static String FOOD_EXCAHNGE_TAG = FOOD_LIST_CONTAINER;
 
     private PopupWindow sharePopupWindow;
     private RadioGroup bottom_tab;

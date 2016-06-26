@@ -23,8 +23,6 @@
         android:id="@+id/txt_individual_modify_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/actionbar_food_detail_favorite"
-        android:layout_toLeftOf="@+id/actionbar_food_detail_favorite"
         android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"

@@ -286,6 +286,19 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
 
+	protected class OnJumpToBrowerClick implements View.OnClickListener {
+		private String url;
+
+		public OnJumpToBrowerClick(String u) {
+			this.url = u;
+		}
+		@Override
+		public void onClick(View v) {
+			Uri uri = Uri.parse(url);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
+		}
+	}
 	protected class OnJumpToPageClick implements View.OnClickListener{
 
 		private String url;

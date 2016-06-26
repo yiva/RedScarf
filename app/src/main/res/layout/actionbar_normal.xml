@@ -26,4 +26,15 @@
         android:textColor="#FFFFFF"
         android:contentDescription="@string/app_name" />
 
+    <ImageButton
+        android:id="@+id/actionbar_selector"
+        style="@style/widget_actionbar"
+        android:layout_marginRight="12.0dp"
+        android:layout_marginTop="12.0dp"
+        android:background="@drawable/m_weidou"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/app_name"
+        android:visibility="gone"
+        />
 </RelativeLayout>

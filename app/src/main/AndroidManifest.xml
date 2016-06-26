@@ -42,7 +42,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDlMo3ZurKFbAVze6Xl3z6bIzjEzvglNqA" />
-
         <!--友盟APPKEY-->
         <meta-data
             android:name="UMENG_APPKEY"
