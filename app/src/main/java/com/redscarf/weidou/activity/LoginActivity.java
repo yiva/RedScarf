@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 登录注册Activity
@@ -143,10 +144,16 @@ public class LoginActivity extends BaseActivity {
         btn_register.setOnClickListener(new OnRegisterClick());//register
         btn_login_by_weibo.setOnClickListener(new OnLoginByWeibo());
 
-        // 快速授权时，请不要传入 SCOPE，否则可能会授权不成功
-        mAuthInfo = new AuthInfo(this, MyConstants.APP_KEY, MyConstants.REDIRECT_URL, MyConstants
-                .SCOPE);
-        mSsoHandler = new SsoHandler(LoginActivity.this, mAuthInfo);
+        try {
+            // 快速授权时，请不要传入 SCOPE，否则可能会授权不成功
+            mAuthInfo = new AuthInfo(this, MyConstants.APP_KEY, MyConstants.REDIRECT_URL, MyConstants
+                    .SCOPE);
+            mSsoHandler = new SsoHandler(LoginActivity.this, mAuthInfo);
+        } catch (Exception ex) {
+            ExceptionUtil.printAndRecord(TAG, ex);
+        }
+
+
     }
 
     private void login() {

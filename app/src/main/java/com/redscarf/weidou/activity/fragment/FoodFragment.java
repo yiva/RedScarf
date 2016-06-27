@@ -1,27 +1,33 @@
 package com.redscarf.weidou.activity.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.volley.Request;
 import com.redscarf.weidou.activity.FoodDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.adapter.ShopGridAdapter;
 import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
 import com.redscarf.weidou.customwidget.pullableview.PullableListView;
 import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.FoodBody;
+import com.redscarf.weidou.pojo.GridBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +35,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -47,6 +54,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
 
     private PullableListView lv_food;
     private ImageButton selector;
+    private GridView grid_food;
+    private Button dismiss;
+    private View actionbar_food;
+    private PopupWindow popup_selector;
+
+    private List<GridBody> datas;
 
     private final int MSG_INDEX = 1; //msg.what index
     private ArrayList<FoodBody> bodys;
@@ -134,9 +147,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
     public void onResume() {
         super.onResume();
         try {
-//            flag = getArguments().getInt("flag");
-//            category_id = getArguments().getInt("category_id");
-//            title = getArguments().getString("title");
             setActionBarLayout(title, ActionBarType.WITHBACK);
 
             if (flag.equals(1)) {
@@ -157,19 +167,16 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
         super.onHiddenChanged(hidden);
         if (!hidden) {
             try {
-//                flag = getArguments().getInt("flag");
-//                category_id = getArguments().getInt("category_id");
-//                title = getArguments().getString("title");
                 setActionBarLayout(title, ActionBarType.WITHBACK);
                 if (flag.equals(1)) {
                     showProgressDialogNoCancelable("", MyConstants.LOADING);
-                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
                 }
             } catch (Exception ex) {
                 ExceptionUtil.printAndRecord(TAG,ex);
                 setActionBarLayout(title, ActionBarType.WITHBACK);
                 showProgressDialogNoCancelable("", MyConstants.LOADING);
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), "1"}), FoodFragment.class, handler, MSG_INDEX);
             }
         }
     }
@@ -178,14 +185,19 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
     public void initView() {
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setVisibility(View.GONE);
+
+        //品牌类别选择
         selector = (ImageButton) rootView.findViewById(R.id.actionbar_selector);
         selector.setVisibility(View.VISIBLE);
+        selector.setOnClickListener(new OnSelectFoodCategaryClick());
 //        back.setOnClickListener(new OnBackClick());
         lv_food = (PullableListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
         ((PullToRefreshLayout)rootView.findViewById(R.id.food_refresh_view)).setOnRefreshListener(this);
+        actionbar_food = rootView.findViewById(R.id.actionbar_food);
+        popup_selector = new PopupWindow();
     }
 
     @Override
@@ -296,22 +308,110 @@ public class FoodFragment extends BaseFragment implements OnTouchListener,PullTo
         lv_food.invalidate();
     }
 
-    /**
-     * selector list datas
-     *
-     * @return selectors
-     */
-    public ArrayList<String> getDatas() {
-        ArrayList<String> selectors = new ArrayList<String>();
-        selectors.add("委媛推荐");
-        selectors.add("离我最近");
-        selectors.add("最热查询");
-        selectors.add("最高评价");
-        return selectors;
-    }
-
     public interface BackFoodCategoryListener{
         void backToFoodCategory();
+    }
+
+    private void showFoodCategaryPopupWindow(){
+        View contentView = LayoutInflater.from(getActivity()).inflate(
+                R.layout.fragment_food_category, null);
+        dismiss = (Button) contentView.findViewById(R.id.btn_food_category_dismiss);
+        grid_food = (GridView) contentView.findViewById(R.id.grid_food);
+        grid_food.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeFoodHeaderGridArrays()));
+        grid_food.setOnItemClickListener(new OnFoodItemClick());
+        int h = GlobalApplication.getScreenHeight(getActivity());
+        int w = GlobalApplication.getScreenWidth(getActivity());
+        // 设置SelectPicPopupWindow的View
+        popup_selector.setContentView(contentView);
+        // 设置SelectPicPopupWindow弹出窗体的宽
+        popup_selector.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        // 设置SelectPicPopupWindow弹出窗体的高
+        popup_selector.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        // 设置SelectPicPopupWindow弹出窗体可点击
+        popup_selector.setFocusable(true);
+        popup_selector.setOutsideTouchable(true);
+        // 刷新状态
+        popup_selector.update();
+//      // 这个是为了点击“返回Back”也能使其消失，并且不会影响背景
+        popup_selector.setBackgroundDrawable(new BitmapDrawable());
+//        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        // 设置SelectPicPopupWindow弹出窗体动画效果
+        popup_selector.setAnimationStyle(R.style.AnimationPreview);
+        popup_selector.showAtLocation(actionbar_food, Gravity.CENTER,ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dismiss.setOnClickListener(new OnFoodCategoryDismissClick());
+    }
+
+    /**
+     * 初始化顶部控件数据
+     *
+     * @return
+     */
+    public List<GridBody> makeFoodHeaderGridArrays() {
+        Integer[] colors = {R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple,
+                R.color.weidou_purple};
+        Integer[] photo = {R.drawable.all_canting,
+                R.drawable.china_canting,
+                R.drawable.sushi,
+                R.drawable.noodle,
+                R.drawable.hotfood,
+                R.drawable.india,
+                R.drawable.chicken_leg,
+                R.drawable.tea,
+                R.drawable.cake,
+                R.drawable.forma};
+        String[] title = {"全部餐厅", "中餐厅", "日韩餐厅",
+                "东南亚餐厅", "西餐厅","印度餐厅", "中东餐厅",
+                "下午茶", "咖啡甜品店", "外卖快餐店"};
+        Integer[] postIds = {4, 533, 534, 535, 536, 537, 709, 538, 539, 540};
+        List<GridBody> headerBody = new ArrayList<>();
+        for (int i = 0; i < postIds.length; ++i) {
+            headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));
+        }
+        return headerBody;
+    }
+
+    private class OnFoodItemClick implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            GridBody body = datas.get(position);
+            CURRENT_PAGE = 1;
+            category_id = body.getPostId();
+            title = body.getTitle();
+            setActionBarLayout(title, ActionBarType.WITHBACK);
+            showProgressDialogNoCancelable("", MyConstants.LOADING);
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), FoodFragment.class, handler, MSG_INDEX);
+            popup_selector.dismiss();
+        }
+    }
+
+    private class OnFoodCategoryDismissClick implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            popup_selector.dismiss();
+        }
+    }
+    /**
+     * 品牌类别点击事件
+     */
+    private class OnSelectFoodCategaryClick implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (!popup_selector.isShowing()) {
+                // 以下拉方式显示popupwindow
+                showFoodCategaryPopupWindow();
+            } else {
+                popup_selector.dismiss();
+            }
+        }
     }
 
 }
