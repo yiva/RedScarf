@@ -279,29 +279,6 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
-    protected class OnJumpToPageClick implements View.OnClickListener {
-        private String title;
-        private String url;
-        private Context context;
-
-        public OnJumpToPageClick(Context mContext, String t, String u) {
-            this.title = t;
-            this.url = u;
-            this.context = mContext;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Bundle datas = new Bundle();
-            datas.putString("url", url);
-            datas.putString("title", title);
-            Intent i_web = new Intent(context, WebActivity.class);
-            i_web.putExtras(datas);
-            startActivity(i_web);
-        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
