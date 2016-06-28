@@ -4,25 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.activity.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
 /**
- * 品牌查询列表
- * Created by yeahwang on 2016/1/29.
+ * Created by XZR on 2016/6/28.
  */
-public class BrandsListAdapter extends BaseRedScarfAdapter<String> {
-
-    public BrandsListAdapter(Context context, List<String> listData) {
+public class FoodSelectListAdapter extends BaseRedScarfAdapter<String>  {
+    public FoodSelectListAdapter(Context context, List<String> listData) {
         super(context, listData);
     }
 
@@ -31,20 +23,19 @@ public class BrandsListAdapter extends BaseRedScarfAdapter<String> {
         final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(
-                    R.layout.listview_brand, parent, false);
+                    R.layout.listview_food_select, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.brand_title = (TextView) convertView.findViewById(R.id.brands);
+            viewHolder.food_select = (TextView) convertView.findViewById(R.id.food_select);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.brand_title.setText(getItem(position));
+        viewHolder.food_select.setText(getItem(position));
         return convertView;
     }
 
     private static class ViewHolder {
         int position;
-        TextView brand_title;
+        TextView food_select;
     }
-
 }

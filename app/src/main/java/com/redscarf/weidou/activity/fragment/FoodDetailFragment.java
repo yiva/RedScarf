@@ -206,8 +206,8 @@ public class FoodDetailFragment extends BaseFragment {
 
 
         //Jump WebActivity
-        website.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getWebsite()));
-        view_menu.setOnClickListener(new OnJumpToPageClick(getActivity(),body.getTitle(),body.getMenu()));
+        website.setOnClickListener(new OnJumpToBrowerClick(body.getWebsite()));
+        view_menu.setOnClickListener(new  OnJumpToBrowerClick(body.getMenu()));
         favourite.setOnClickListener(new OnChangeFavourite());
         detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
         layout_photo_big.setOnClickListener(new OnHidePhotoCanvasClick());

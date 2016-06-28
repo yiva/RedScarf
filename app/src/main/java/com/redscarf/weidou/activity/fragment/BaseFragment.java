@@ -324,4 +324,17 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
                 .PREF_USER_ID)) ? true : false;
     }
 
+    protected class OnJumpToBrowerClick implements View.OnClickListener {
+        private String url;
+
+        public OnJumpToBrowerClick(String u) {
+            this.url = u;
+        }
+        @Override
+        public void onClick(View v) {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
 }

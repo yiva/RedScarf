@@ -17,7 +17,15 @@
     <string name="email_address">hello@weidou.co.uk</string>
     <string name="or">或</string>
     <string name="dismiss">收起</string>
-    
+    <string name="reset">重置</string>
+    <string name="finish">完成</string>
+    <string name="sort">排序</string>
+    <string name="update_time">更新时间</string>
+    <string name="price">价格</string>
+    <string name="distance">距离</string>
+    <string name="food_series">菜系</string>
+    <string name="more">更多</string>
+
     <string name="btn_text_buy_right_now">立即购买</string>
     
     <string name="index_discount">折扣</string>
@@ -235,4 +243,5 @@
     <string name="weibosdk_demo_step_to_obtain_token">第二步：通过 Code 获取 Token</string>
     <string name="weibosdk_demo_code_text_hint">第一步获取到的 Code：（一次性有效）</string>
     <string name="weibosdk_demo_token_text_hint">第二步获取到的 Token：</string>
+
 </resources>

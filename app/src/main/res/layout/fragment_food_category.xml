@@ -18,29 +18,123 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/layout_margin1"
         android:background="@color/white">
-        <GridView
-            android:id="@+id/grid_food"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/layout_margin3"
-            android:verticalSpacing="@dimen/layout_margin3"
-            android:stretchMode="columnWidth"
-            android:padding="@dimen/sys_padding"
-            android:background="@color/white"
-            android:layout_above="@+id/btn_food_category_dismiss"
-            />
-        <Button
-            android:id="@+id/btn_food_category_dismiss"
+            android:paddingTop="@dimen/layout_padding1"
+            android:paddingLeft="@dimen/layout_padding3"
+            android:orientation="vertical"
+            android:divider="@drawable/spacer_medium"
+            android:showDividers="middle"
+            >
+            <TextView
+                style="@style/text_style_content_normal"
+                android:text="@string/sort"
+                android:textColor="@color/customappred"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:divider="@drawable/spacer_medium"
+                android:showDividers="middle"
+                android:layout_marginRight="@dimen/layout_margin1"
+                >
+                <Button
+                    android:id="@+id/food_select_update_time"
+                    style="@style/text_style_content_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_bg_purple"
+                    android:text="@string/update_time"
+                    android:textColor="@color/white"/>
+                <Button
+                    android:id="@+id/food_select_price"
+                    style="@style/text_style_content_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_bg_purple"
+                    android:text="@string/price"
+                    android:textColor="@color/white"/>
+                <Button
+                    android:id="@+id/food_select_distance"
+                    style="@style/text_style_content_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/corners_bg_purple"
+                    android:text="@string/distance"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <TextView
+                style="@style/text_style_content_normal"
+                android:text="@string/food_series"
+                android:textColor="@color/customappred"
+                />
+            <com.redscarf.weidou.customwidget.HorizontalListView
+                android:id="@+id/list_select_food_series"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:paddingTop="8dp"
+                android:divider="@drawable/spacer_medium"
+                >
+            </com.redscarf.weidou.customwidget.HorizontalListView>
+
+            <TextView
+                style="@style/text_style_content_normal"
+                android:text="@string/more"
+                android:textColor="@color/customappred"
+                />
+            <com.redscarf.weidou.customwidget.HorizontalListView
+                android:id="@+id/list_select_food_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:divider="@drawable/spacer_medium"
+                >
+            </com.redscarf.weidou.customwidget.HorizontalListView>
+        </LinearLayout>
+
+        <!--<GridView-->
+            <!--android:id="@+id/grid_food"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:numColumns="2"-->
+            <!--android:gravity="center"-->
+            <!--android:horizontalSpacing="@dimen/layout_margin3"-->
+            <!--android:verticalSpacing="@dimen/layout_margin3"-->
+            <!--android:stretchMode="columnWidth"-->
+            <!--android:padding="@dimen/sys_padding"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_above="@+id/btn_food_category_dismiss"-->
+            <!--/>-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true">
+            <Button
+            android:id="@+id/btn_food_category_reset"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="@string/dismiss"
+            android:text="@string/reset"
             android:textColor="@color/white"
             android:textSize="@dimen/sys_font_size_bolder"
             android:background="@color/weidou_purple"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             />
+            <Button
+                android:id="@+id/btn_food_category_finish"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/finish"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sys_font_size_bolder"
+                android:background="@color/customappred"
+                />
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

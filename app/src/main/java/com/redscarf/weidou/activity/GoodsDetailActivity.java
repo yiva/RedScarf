@@ -180,8 +180,7 @@ public class GoodsDetailActivity extends BaseActivity {
         //button listener
 
         favourite.setOnClickListener(new OnChangeFavourite());
-        buy.setOnClickListener(new OnJumpToPageClick(GoodsDetailActivity.this, body.getTitle(),
-                body.getWebsite()));
+        buy.setOnClickListener(new OnJumpToBrowerClick(body.getWebsite()));
         if (StringUtils.isNotBlank(StringUtils.trimToEmpty(
                 StringUtils.substringBetween(body.getBrand(), "[", "]")))) {
             brand_info.setVisibility(View.VISIBLE);
