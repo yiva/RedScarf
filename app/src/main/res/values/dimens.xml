@@ -34,4 +34,10 @@
 
     <dimen name="img_height1">250dp</dimen>
 
+    <dimen name="radius">8dp</dimen>
+    <dimen name="top_left_radius">8dp</dimen>
+    <dimen name="top_right_radius">8dp</dimen>
+    <dimen name="bottom_left_radius">8dp</dimen><!--这是右-->
+    <dimen name="bottom_right_radius">8dp</dimen><!--这是左-->
+
 </resources>

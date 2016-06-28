@@ -36,7 +36,7 @@
             android:text="@string/dismiss"
             android:textColor="@color/white"
             android:textSize="@dimen/sys_font_size_bolder"
-            android:background="@drawable/btn_blue"
+            android:background="@color/weidou_purple"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             />

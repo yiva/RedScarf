@@ -134,7 +134,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_cancel"
+        android:background="@drawable/corners_bg_dark_blue"
         android:text="@string/txt_cancel"
         android:textColor="@color/white"
         android:textSize="20sp" />

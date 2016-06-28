@@ -4,41 +4,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!--<GridView-->
-        <!--android:id="@+id/grid_food"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:numColumns="2"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingTop="80dp"-->
-        <!--/>-->
-    <!--<ListView-->
-        <!--android:id="@+id/list_food"-->
-        <!--android:layout_below="@+id/actionbar_food"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--&gt;-->
-    <!--</ListView>-->
-	<com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
-		android:id="@+id/food_refresh_view"
-		android:layout_below="@+id/actionbar_food"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:orientation="vertical"
 		>
-
-		<include layout="@layout/refresh_head" />
-		<!-- 支持所有实现Pullable接口的View -->
-
-		<com.redscarf.weidou.customwidget.pullableview.PullableListView
-			android:id="@+id/list_food"
+		<include
+			android:id="@+id/actionbar_food"
+			layout="@layout/actionbar_normal"
+			/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="50dp"
+			android:background="@color/weidou_purple"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:descendantFocusability="blocksDescendants"
+			>
+			<com.redscarf.weidou.customwidget.HorizontalListView
+				android:id="@+id/list_food_select"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:focusable="false"
+				android:paddingTop="8dp"
+				>
+			</com.redscarf.weidou.customwidget.HorizontalListView>
+		</LinearLayout>
+		<com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
+			android:id="@+id/food_refresh_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			></com.redscarf.weidou.customwidget.pullableview.PullableListView>
+			>
 
-		<include layout="@layout/load_more" />
-	</com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
-	<include 
-	    android:id="@+id/actionbar_food"
-	    layout="@layout/actionbar_normal"
-	    />
+			<include layout="@layout/refresh_head" />
+			<!-- 支持所有实现Pullable接口的View -->
+
+			<com.redscarf.weidou.customwidget.pullableview.PullableListView
+				android:id="@+id/list_food"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				></com.redscarf.weidou.customwidget.pullableview.PullableListView>
+
+			<include layout="@layout/load_more" />
+		</com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
+	</LinearLayout>
 </RelativeLayout>
