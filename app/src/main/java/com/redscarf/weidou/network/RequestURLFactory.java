@@ -52,6 +52,9 @@ public class RequestURLFactory {
             case SEARCHLIST:
                 res = baseUrl + "?json=get_search_category_results&search=" + attributes[0];
                 break;
+            case FOOD_FILTER_LIST:
+                res = baseUrl + "json=get_food_category_filter";
+                break;
             default:
                 res = "false";
                 break;

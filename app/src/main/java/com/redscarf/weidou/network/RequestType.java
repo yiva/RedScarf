@@ -29,4 +29,5 @@ public enum RequestType {
     ,DISCOUNT_POST  //商品页面
     ,UPLOAD_AVATOR  //上传照片
     ,LOGIN_WEIBO    //微博登录
+    ,FOOD_FILTER_LIST   //美食filter
 }
