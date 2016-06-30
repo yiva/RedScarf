@@ -34,8 +34,8 @@ android {
         applicationId "com.redscarf.weidou.activity"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 23
-        versionName "0.9.2"
+        versionCode 24
+        versionName "0.9.3"
         multiDexEnabled true
     }
     buildTypes {
@@ -64,18 +64,20 @@ dependencies {
     compile files('libs/umeng_social_sdk.jar')
     compile project(':weiboSDK')
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:support-v13:23.0.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'
     compile 'cn.finalteam:galleryfinal:1.0.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.felipecsl.asymmetricgridview:library:2.0.1'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.android.support:support-v13:23.0.1'
-//    compile 'com.google.android.gms:play-services:9.0.2'
+    compile 'com.mcxiaoke.volley:library:1.0.19'//网络请求插件
     compile 'com.hynnet:httpclient:4.5.1'
     compile 'org.apache.commons:commons-lang3:3.4'
+    //google play services
     compile 'com.google.android.gms:play-services-location:9.0.2'
     compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'com.google.android.gms:play-services-identity:9.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.greenrobot:eventbus:3.0.0'//通信插件
+
+    compile 'de.hdodenhof:circleimageview:2.0.0'//圆形、圆角图片
 //    compile 'com.android.support:multidex:1.0.1'
 }

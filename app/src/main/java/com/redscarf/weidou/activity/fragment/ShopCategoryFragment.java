@@ -37,24 +37,24 @@ public class ShopCategoryFragment extends BaseFragment {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try{
-            mlistener = (OnChangeShopListFragmentListener) context;
-        }catch(ClassCastException ex) {
-            throw new ClassCastException(context.toString()
-                    + "must implement OnChangeShopListFragmentListener");
-        }
-
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        try{
+//            mlistener = (OnChangeShopListFragmentListener) context;
+//        }catch(ClassCastException ex) {
+//            throw new ClassCastException(context.toString()
+//                    + "must implement OnChangeShopListFragmentListener");
+//        }
+//
+//    }
 
     @Override
     public void initView() {
-        setActionBarLayout(getResources().getString(R.string.title_shopping), ActionBarType.NORMAL);
-        grid_shop = (GridView) rootView.findViewById(R.id.grid_shop);
-        grid_shop.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeShopHeaderGridArrays()));
-        grid_shop.setOnItemClickListener(new OnShopItemClick());
+//        setActionBarLayout(getResources().getString(R.string.title_shopping), ActionBarType.NORMAL);
+//        grid_shop = (GridView) rootView.findViewById(R.id.grid_shop);
+//        grid_shop.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeShopHeaderGridArrays()));
+//        grid_shop.setOnItemClickListener(new OnShopItemClick());
     }
 
     private class OnShopItemClick implements AdapterView.OnItemClickListener {

@@ -214,16 +214,16 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mbackClickListener = (BackShopCategoryListener) context;
-        } catch (ClassCastException ex) {
-            throw new ClassCastException(context.toString()
-                    + "must implement BackShopCategoryFragment");
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        try {
+//            mbackClickListener = (BackShopCategoryListener) context;
+//        } catch (ClassCastException ex) {
+//            throw new ClassCastException(context.toString()
+//                    + "must implement BackShopCategoryFragment");
+//        }
+//    }
 
     @Override
     public void onPause() {

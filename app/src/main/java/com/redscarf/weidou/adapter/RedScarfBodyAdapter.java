@@ -56,6 +56,29 @@ public class RedScarfBodyAdapter {
 		return items;
 	}
 
+	/**
+	 *
+	 * @param json
+	 * @param attribute 取该元素下的JSON值
+	 * @param cl
+	 * @param <T>
+	 * @return
+     * @throws JSONException
+     */
+	public static <T> ArrayList<T> fromJSONWithAttr(String json,String attribute,Class<T> cl) throws JSONException {
+		ArrayList<T> items = new ArrayList<T>();
+		String jsonStr = "";
+		JSONObject jsonObj = new JSONObject(json);
+		//单条是为post，多条时为posts
+		if (jsonObj.isNull(attribute)) {
+			throw new JSONException("The attribute '" + attribute + "' is nullable!");
+		} else {
+			jsonStr = jsonObj.getString(attribute);
+			items = (ArrayList<T>) JSONHelper.parseCollection(jsonStr, ArrayList.class, cl);
+		}
+		return items;
+	}
+
 	public static <T> T parseObj(String jsonStr,Class<T> cl) throws JSONException {
 		T instance = null;
 		instance = JSONHelper.parseObject(jsonStr, cl);

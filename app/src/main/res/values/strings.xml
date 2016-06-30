@@ -221,6 +221,11 @@
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
 
+    <string name="price_1">￡</string>
+    <string name="price_2">￡￡</string>
+    <string name="price_3">￡￡￡</string>
+    <string name="price_4">￡￡￡￡</string>
+
     <string name="weibosdk_demo_obtain_token_via_sso_all_in_one">SSO 授权（ALL IN ONE）</string>
     <string name="weibosdk_demo_toast_auth_success">授权成功</string>
     <string name="weibosdk_demo_toast_auth_failed">授权失败</string>

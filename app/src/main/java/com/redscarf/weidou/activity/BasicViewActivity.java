@@ -30,11 +30,12 @@ import android.widget.Toast;
  *
  * @author yeahwang
  */
-public class BasicViewActivity extends BaseActivity implements OnTouchListener,
-        ShopCategoryFragment.OnChangeShopListFragmentListener,
-        BuyFragment.BackShopCategoryListener,
-        FoodCategoryFragment.OnChangeFoodListFragmentListener,
-        FoodFragment.BackFoodCategoryListener{
+public class BasicViewActivity extends BaseActivity implements OnTouchListener
+//        ,ShopCategoryFragment.OnChangeShopListFragmentListener,
+//        BuyFragment.BackShopCategoryListener,
+//        FoodCategoryFragment.OnChangeFoodListFragmentListener,
+//        FoodFragment.BackFoodCategoryListener
+{
 
     private static final String FOOD_CONTAINER = "FoodCategoryFragment";
     private static final String SHOP_CONTAINER = "ShopCategoryFragment";
@@ -195,107 +196,107 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener,
 
     }
 
-    @Override
-    public void OnShopCategoryClickItem(int postid,String title) {
-        SHOP_EXCAHNGE_TAG = SHOP_LIST_CONTAINER;
-        this.hideFragments();
-        FragmentTransaction changeTransaction = basicFragment.beginTransaction();
-        BuyFragment buy = (BuyFragment) mapFragment.get(SHOP_EXCAHNGE_TAG);
-        if (buy.isAdded()) {
-            Bundle args = buy.getArguments();
-            if (args == null) {
-                args = new Bundle();
-                args.putInt("flag", 0);
-                if (postid != args.getInt("category_id")){
-                    args.putInt("flag", 1);
-                    args.putInt("category_id", postid);
-                    args.putString("title",title);
-                }
-                buy.setArguments(args);
-            }else{
-                args.putInt("flag", 0);
-                if (postid != args.getInt("category_id")){
-                    args.putInt("flag", 1);
-                    args.putInt("category_id", postid);
-                    args.putString("title",title);
-                }
-            }
-            changeTransaction.show(buy);
-        }else {
-            Bundle args = new Bundle();
-            args.putInt("flag", 1);
-            args.putInt("category_id", postid);
-            args.putString("title", title);
-            buy.setArguments(args);
-            changeTransaction.add(R.id.basicfragment, buy, SHOP_EXCAHNGE_TAG);
-        }
-        changeTransaction.commit();
-    }
+//    @Override
+//    public void OnShopCategoryClickItem(int postid,String title) {
+//        SHOP_EXCAHNGE_TAG = SHOP_LIST_CONTAINER;
+//        this.hideFragments();
+//        FragmentTransaction changeTransaction = basicFragment.beginTransaction();
+//        BuyFragment buy = (BuyFragment) mapFragment.get(SHOP_EXCAHNGE_TAG);
+//        if (buy.isAdded()) {
+//            Bundle args = buy.getArguments();
+//            if (args == null) {
+//                args = new Bundle();
+//                args.putInt("flag", 0);
+//                if (postid != args.getInt("category_id")){
+//                    args.putInt("flag", 1);
+//                    args.putInt("category_id", postid);
+//                    args.putString("title",title);
+//                }
+//                buy.setArguments(args);
+//            }else{
+//                args.putInt("flag", 0);
+//                if (postid != args.getInt("category_id")){
+//                    args.putInt("flag", 1);
+//                    args.putInt("category_id", postid);
+//                    args.putString("title",title);
+//                }
+//            }
+//            changeTransaction.show(buy);
+//        }else {
+//            Bundle args = new Bundle();
+//            args.putInt("flag", 1);
+//            args.putInt("category_id", postid);
+//            args.putString("title", title);
+//            buy.setArguments(args);
+//            changeTransaction.add(R.id.basicfragment, buy, SHOP_EXCAHNGE_TAG);
+//        }
+//        changeTransaction.commit();
+//    }
 
-    @Override
-    public void backToShopCategory() {
-        BuyFragment buy = (BuyFragment) basicFragment.findFragmentByTag(SHOP_LIST_CONTAINER);
-        ShopCategoryFragment shopcategory = (ShopCategoryFragment) basicFragment.findFragmentByTag(SHOP_CONTAINER);
-        SHOP_EXCAHNGE_TAG = SHOP_CONTAINER;
-        this.hideFragments();
-        FragmentTransaction backTransaction = basicFragment.beginTransaction();
-        if (mapFragment.get(SHOP_EXCAHNGE_TAG).isAdded()){
-            backTransaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG)).commit();
-        }else{
-            backTransaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG).commit();
-        }
-    }
-
-    @Override
-    public void foodCategoryClick(int postid,String title) {
-        FOOD_EXCAHNGE_TAG = FOOD_LIST_CONTAINER;
-        this.hideFragments();
-        FragmentTransaction changeTransaction = basicFragment.beginTransaction();
-        FoodFragment item = (FoodFragment) mapFragment.get(FOOD_EXCAHNGE_TAG);
-        if (item.isAdded()) {
-            Bundle args = item.getArguments();
-            if (args == null) {
-                args = new Bundle();
-                args.putInt("flag", 0);
-                if (postid != args.getInt("category_id")){
-                    args.putInt("flag", 1);
-                    args.putInt("category_id", postid);
-                    args.putString("title", title);
-                }
-                item.setArguments(args);
-            } else {
-                args.putInt("flag", 0);
-                if (postid != args.getInt("category_id")){
-                    args.putInt("flag", 1);
-                    args.putInt("category_id", postid);
-                    args.putString("title", title);
-                }
-            }
-            changeTransaction.show(item);
-        }else {
-            Bundle args = new Bundle();
-            args.putInt("flag", 1);
-            args.putInt("category_id", postid);
-            args.putString("title",title);
-            item.setArguments(args);
-            changeTransaction.add(R.id.basicfragment, item, FOOD_EXCAHNGE_TAG);
-        }
-        changeTransaction.commit();
-    }
-
-    @Override
-    public void backToFoodCategory() {
-        FoodFragment buy = (FoodFragment) basicFragment.findFragmentByTag(FOOD_LIST_CONTAINER);
-        FoodCategoryFragment foodcategory = (FoodCategoryFragment) basicFragment.findFragmentByTag(FOOD_CONTAINER);
-        FOOD_EXCAHNGE_TAG = FOOD_CONTAINER;
-        this.hideFragments();
-        FragmentTransaction backTransaction = basicFragment.beginTransaction();
-        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
-            backTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG)).commit();
-        }else{
-            backTransaction.add(R.id.basicfragment, mapFragment.get(FOOD_EXCAHNGE_TAG),FOOD_EXCAHNGE_TAG).commit();
-        }
-    }
+//    @Override
+//    public void backToShopCategory() {
+//        BuyFragment buy = (BuyFragment) basicFragment.findFragmentByTag(SHOP_LIST_CONTAINER);
+//        ShopCategoryFragment shopcategory = (ShopCategoryFragment) basicFragment.findFragmentByTag(SHOP_CONTAINER);
+//        SHOP_EXCAHNGE_TAG = SHOP_CONTAINER;
+//        this.hideFragments();
+//        FragmentTransaction backTransaction = basicFragment.beginTransaction();
+//        if (mapFragment.get(SHOP_EXCAHNGE_TAG).isAdded()){
+//            backTransaction.show(mapFragment.get(SHOP_EXCAHNGE_TAG)).commit();
+//        }else{
+//            backTransaction.add(R.id.basicfragment, mapFragment.get(SHOP_EXCAHNGE_TAG),SHOP_EXCAHNGE_TAG).commit();
+//        }
+//    }
+//
+//    @Override
+//    public void foodCategoryClick(int postid,String title) {
+//        FOOD_EXCAHNGE_TAG = FOOD_LIST_CONTAINER;
+//        this.hideFragments();
+//        FragmentTransaction changeTransaction = basicFragment.beginTransaction();
+//        FoodFragment item = (FoodFragment) mapFragment.get(FOOD_EXCAHNGE_TAG);
+//        if (item.isAdded()) {
+//            Bundle args = item.getArguments();
+//            if (args == null) {
+//                args = new Bundle();
+//                args.putInt("flag", 0);
+//                if (postid != args.getInt("category_id")){
+//                    args.putInt("flag", 1);
+//                    args.putInt("category_id", postid);
+//                    args.putString("title", title);
+//                }
+//                item.setArguments(args);
+//            } else {
+//                args.putInt("flag", 0);
+//                if (postid != args.getInt("category_id")){
+//                    args.putInt("flag", 1);
+//                    args.putInt("category_id", postid);
+//                    args.putString("title", title);
+//                }
+//            }
+//            changeTransaction.show(item);
+//        }else {
+//            Bundle args = new Bundle();
+//            args.putInt("flag", 1);
+//            args.putInt("category_id", postid);
+//            args.putString("title",title);
+//            item.setArguments(args);
+//            changeTransaction.add(R.id.basicfragment, item, FOOD_EXCAHNGE_TAG);
+//        }
+//        changeTransaction.commit();
+//    }
+//
+//    @Override
+//    public void backToFoodCategory() {
+//        FoodFragment buy = (FoodFragment) basicFragment.findFragmentByTag(FOOD_LIST_CONTAINER);
+//        FoodCategoryFragment foodcategory = (FoodCategoryFragment) basicFragment.findFragmentByTag(FOOD_CONTAINER);
+//        FOOD_EXCAHNGE_TAG = FOOD_CONTAINER;
+//        this.hideFragments();
+//        FragmentTransaction backTransaction = basicFragment.beginTransaction();
+//        if (mapFragment.get(FOOD_EXCAHNGE_TAG).isAdded()) {
+//            backTransaction.show(mapFragment.get(FOOD_EXCAHNGE_TAG)).commit();
+//        }else{
+//            backTransaction.add(R.id.basicfragment, mapFragment.get(FOOD_EXCAHNGE_TAG),FOOD_EXCAHNGE_TAG).commit();
+//        }
+//    }
 
     private class OnJumpMineActivityClick implements OnClickListener{
 

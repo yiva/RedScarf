@@ -77,7 +77,7 @@ public class FoodBody implements Parcelable {
     }
 
     public String getPost_thumbnail() {
-        return MyConstants.URL+"wp-content/uploads"+post_thumbnail;
+        return MyConstants.URL + "wp-content/uploads" + post_thumbnail;
     }
 
     public void setPost_thumbnail(String post_thumbnail) {
@@ -85,7 +85,7 @@ public class FoodBody implements Parcelable {
     }
 
     public String getPost_medium() {
-        return MyConstants.URL+"wp-content/uploads"+post_medium;
+        return MyConstants.URL + "wp-content/uploads" + post_medium;
     }
 
     public void setPost_medium(String post_medium) {
@@ -116,7 +116,7 @@ public class FoodBody implements Parcelable {
         this.cost = cost;
     }
 
-    public FoodBody(){
+    public FoodBody() {
 
     }
 
