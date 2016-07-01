@@ -80,14 +80,15 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private static Integer category_id = 4;
     private static Integer flag = 1;
     private static String title = "全部餐厅";
+    private static int CURRENT_PAGE = 1;
+    private static String url_attr = "";
+
     private ArrayList<FoodBody> bodys;
     private List<GridBody> datas;
     private ArrayList<String> list_food_select;
 
     private ArrayList<FoodSeriesBody> list_food_series;
     private ArrayList<FoodTopicBody> list_food_more;
-
-    private static int CURRENT_PAGE = 1;
 
     private FoodListAdapter foodListAdapter;
     private FoodSelectListAdapter foodSelectListAdapter;
@@ -352,6 +353,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //    }
 
     private void showFoodCategaryPopupWindow() {
+        url_attr = "";
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_food_category, null);
         //重置按钮
@@ -392,6 +394,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         popup_selector.showAtLocation(actionbar_food, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         reset.setOnClickListener(new OnFoodCategoryResetClick());
         submit.setOnClickListener(new OnFoodCategorySubmitClick());
+
     }
 
     /**
@@ -431,18 +434,32 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         return headerBody;
     }
 
-    private class OnFoodItemClick implements AdapterView.OnItemClickListener {
+    /**
+     * 菜系
+     */
+    private class OnFoodSeriesItemClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            GridBody body = datas.get(position);
+            FoodSeriesBody body = list_food_series.get(position);
             CURRENT_PAGE = 1;
-            category_id = body.getPostId();
+            category_id = Integer.parseInt(body.getId());
             title = body.getTitle();
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
             popup_selector.dismiss();
+        }
+    }
+
+    /**
+     * 更多
+     */
+    private class OnFoodMoreItemClick implements OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         }
     }
 
