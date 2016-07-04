@@ -20,6 +20,7 @@ import com.redscarf.weidou.listener.PullRefreshListener;
 import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.pojo.FoodSeriesBody;
 import com.redscarf.weidou.pojo.FoodTopicBody;
+import com.redscarf.weidou.pojo.FoodUrlAttribute;
 import com.redscarf.weidou.pojo.GridBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
@@ -81,7 +82,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private static Integer flag = 1;
     private static String title = "全部餐厅";
     private static int CURRENT_PAGE = 1;
-    private static String url_attr = "";
+    private FoodUrlAttribute foodUrlAttribute;
 
     private ArrayList<FoodBody> bodys;
     private List<GridBody> datas;
@@ -214,6 +215,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     @Override
     public void initView() {
+        foodUrlAttribute = new FoodUrlAttribute();
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setVisibility(View.GONE);
 
@@ -353,7 +355,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //    }
 
     private void showFoodCategaryPopupWindow() {
-        url_attr = "";
+
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_food_category, null);
         //重置按钮
@@ -466,6 +468,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private class OnFoodCategoryResetClick implements OnClickListener {
         @Override
         public void onClick(View v) {
+            foodUrlAttribute.clear();
             popup_selector.dismiss();
         }
     }
@@ -474,6 +477,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         @Override
         public void onClick(View v) {
             popup_selector.dismiss();
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
+                    String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                    MSG_INDEX);
         }
     }
 
