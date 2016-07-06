@@ -68,6 +68,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private ImageButton selector;
     private Button reset;
     private Button submit;
+    private Button update_time;
+    private Button price;
+    private Button distance;
     private View actionbar_food;
     private PopupWindow popup_selector;
     private HorizontalListView lv_food_select;
@@ -362,7 +365,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         reset = (Button) contentView.findViewById(R.id.btn_food_category_reset);
         //确定按钮
         submit = (Button) contentView.findViewById(R.id.btn_food_category_finish);
-
+        update_time = (Button) contentView.findViewById(R.id.food_select_update_time);
+        price = (Button) contentView.findViewById(R.id.food_select_price);
+        distance = (Button) contentView.findViewById(R.id.food_select_distance);
         //菜系
         lv_select_food_series = (HorizontalListView) contentView.findViewById(R.id.list_select_food_series);
         if (list_food_series.size() != 0) {
@@ -396,7 +401,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         popup_selector.showAtLocation(actionbar_food, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         reset.setOnClickListener(new OnFoodCategoryResetClick());
         submit.setOnClickListener(new OnFoodCategorySubmitClick());
-
+        update_time.setOnClickListener(new OnFoodSortFilterClick());
+        price.setOnClickListener(new OnFoodSortFilterClick());
+        distance.setOnClickListener(new OnFoodSortFilterClick());
     }
 
     /**
@@ -480,6 +487,25 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
                     String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
                     MSG_INDEX);
+        }
+    }
+
+    private class OnFoodSortFilterClick implements OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.food_select_update_time:
+                    update_time.setSelected(true);
+                    break;
+                case R.id.food_select_price:
+                    break;
+                case R.id.food_select_distance:
+                    break;
+                default:
+                    break;
+
+            }
         }
     }
 

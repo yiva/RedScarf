@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--&lt;!&ndash; 点击时的背景图 &ndash;&gt;-->
+    <!--<item android:state_pressed="true">-->
+        <!--<shape>-->
+            <!--<solid android:color="#3F3D65" />-->
+            <!--<corners android:topLeftRadius="@dimen/radius"-->
+                     <!--android:topRightRadius="@dimen/radius"-->
+                     <!--android:bottomRightRadius="@dimen/radius"-->
+                     <!--android:bottomLeftRadius="@dimen/radius"/>-->
+        <!--</shape>-->
+    <!--</item>-->
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="#3F3D65" />
+            <corners android:topLeftRadius="@dimen/radius"
+                     android:topRightRadius="@dimen/radius"
+                     android:bottomRightRadius="@dimen/radius"
+                     android:bottomLeftRadius="@dimen/radius"/>
+        </shape>
+    </item>
+
+    <item android:state_selected="true">
+        <shape>
+            <solid android:color="#3F3D65" />
+            <corners android:topLeftRadius="@dimen/radius"
+                     android:topRightRadius="@dimen/radius"
+                     android:bottomRightRadius="@dimen/radius"
+                     android:bottomLeftRadius="@dimen/radius"/>
+        </shape>
+    </item>
+
+    <!-- 默认的背景图 -->
+    <item>
+        <shape>
+            <solid android:color="@color/weidou_purple" />
+            <corners android:topLeftRadius="@dimen/radius"
+                     android:topRightRadius="@dimen/radius"
+                     android:bottomRightRadius="@dimen/radius"
+                     android:bottomLeftRadius="@dimen/radius"/>
+        </shape>
+    </item>
+</selector>
