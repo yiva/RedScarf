@@ -12,6 +12,13 @@ public class FoodUrlAttribute {
     private String distance;//位置
     private String main_category;//主类别
     private String fisrt_key; //首字母
+    private Integer cost_flag;
+    private Integer topic_flag;
+    private Integer sub_category_flag;
+    private Integer order_flag;
+    private Integer distance_flag;
+    private Integer main_category_flag;
+    private Integer update_time_flag;
 
     public FoodUrlAttribute() {
         this.cost = "";
@@ -21,6 +28,87 @@ public class FoodUrlAttribute {
         this.distance = "";
         this.main_category = "4";
         this.fisrt_key = "";
+        this.cost_flag = 0;
+        this.topic_flag = 0;
+        this.sub_category_flag = 0;
+        this.order_flag = 0;
+        this.distance_flag = 0;
+        this.main_category_flag = 0;
+        this.update_time_flag = 0;
+
+    }
+
+    public void clear(){
+        this.cost = "";
+        this.topic = "";
+        this.sub_category = "";
+        this.order = "";
+        this.distance = "";
+        this.main_category = "4";
+        this.fisrt_key = "";
+        this.cost_flag = 0;
+        this.topic_flag = 0;
+        this.sub_category_flag = 0;
+        this.order_flag = 0;
+        this.distance_flag = 0;
+        this.main_category_flag = 0;
+        this.update_time_flag = 0;
+    }
+
+    public Integer getUpdate_time_flag() {
+        return update_time_flag;
+    }
+
+    public void setUpdate_time_flag(Integer update_time_flag) {
+        this.update_time_flag = update_time_flag;
+    }
+
+    public Integer getCost_flag() {
+        return cost_flag;
+    }
+
+    public void setCost_flag(Integer cost_flag) {
+        this.cost_flag = cost_flag;
+    }
+
+    public Integer getTopic_flag() {
+        return topic_flag;
+    }
+
+    public void setTopic_flag(Integer topic_flag) {
+        this.topic_flag = topic_flag;
+    }
+
+    public Integer getSub_category_flag() {
+        return sub_category_flag;
+    }
+
+    public void setSub_category_flag(Integer sub_category_flag) {
+        this.sub_category_flag = sub_category_flag;
+    }
+
+    public Integer getOrder_flag() {
+        return order_flag;
+    }
+
+    public void setOrder_flag(Integer order_flag) {
+        this.order_flag = order_flag;
+    }
+
+    public Integer getDistance_flag() {
+        return distance_flag;
+    }
+
+    public void setDistance_flag(Integer distance_flag) {
+        this.distance_flag = distance_flag;
+    }
+
+    public Integer getMain_category_flag() {
+        return main_category_flag;
+    }
+
+    public void setMain_category_flag(Integer main_category_flag) {
+        this.main_category_flag = main_category_flag;
     }
 
     public String getFisrt_key() {
@@ -79,15 +167,6 @@ public class FoodUrlAttribute {
         this.main_category = main_category;
     }
 
-    public void clear(){
-        this.cost = "";
-        this.topic = "";
-        this.sub_category = "";
-        this.order = "";
-        this.distance = "";
-        this.main_category = "4";
-        this.fisrt_key = "";
-    }
 
     @Override
     public String toString() {

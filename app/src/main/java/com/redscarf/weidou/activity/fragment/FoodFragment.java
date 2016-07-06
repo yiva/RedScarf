@@ -54,6 +54,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -140,16 +141,16 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     Bundle foodSeriesObj = msg.getData();
                     response = foodSeriesObj.getString("response");
                     try {
-                        list_food_series = (ArrayList<FoodSeriesBody>)RedScarfBodyAdapter
-                                .fromJSONWithAttr(response,"categories",Class.forName("com" +
+                        list_food_series = (ArrayList<FoodSeriesBody>) RedScarfBodyAdapter
+                                .fromJSONWithAttr(response, "categories", Class.forName("com" +
                                         ".redscarf.weidou.pojo.FoodSeriesBody"));
-                        list_food_more = (ArrayList<FoodTopicBody>)RedScarfBodyAdapter
-                                .fromJSONWithAttr(response,"topic_categories", Class.forName("com" +
+                        list_food_more = (ArrayList<FoodTopicBody>) RedScarfBodyAdapter
+                                .fromJSONWithAttr(response, "topic_categories", Class.forName("com" +
                                         ".redscarf.weidou.pojo.FoodTopicBody"));
                     } catch (JSONException e) {
-                        ExceptionUtil.printAndRecord(TAG,e);
+                        ExceptionUtil.printAndRecord(TAG, e);
                     } catch (ClassNotFoundException e) {
-                        ExceptionUtil.printAndRecord(TAG,e);
+                        ExceptionUtil.printAndRecord(TAG, e);
                     }
                     break;
                 default:
@@ -197,7 +198,15 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
     }
 
-//    @Override
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (popup_selector != null) {
+            popup_selector.dismiss();
+        }
+    }
+
+    //    @Override
 //    public void onHiddenChanged(boolean hidden) {
 //        super.onHiddenChanged(hidden);
 //        if (!hidden) {
@@ -406,42 +415,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         distance.setOnClickListener(new OnFoodSortFilterClick());
     }
 
-    /**
-     * 初始化顶部控件数据
-     *
-     * @return
-     */
-    public List<GridBody> makeFoodHeaderGridArrays() {
-        Integer[] colors = {R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple};
-        Integer[] photo = {R.drawable.all_canting,
-                R.drawable.china_canting,
-                R.drawable.sushi,
-                R.drawable.noodle,
-                R.drawable.hotfood,
-                R.drawable.india,
-                R.drawable.chicken_leg,
-                R.drawable.tea,
-                R.drawable.cake,
-                R.drawable.forma};
-        String[] title = {"全部餐厅", "中餐厅", "日韩餐厅",
-                "东南亚餐厅", "西餐厅", "印度餐厅", "中东餐厅",
-                "下午茶", "咖啡甜品店", "外卖快餐店"};
-        Integer[] postIds = {4, 533, 534, 535, 536, 537, 709, 538, 539, 540};
-        List<GridBody> headerBody = new ArrayList<>();
-        for (int i = 0; i < postIds.length; ++i) {
-            headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));
-        }
-        return headerBody;
-    }
 
     /**
      * 菜系
@@ -464,7 +437,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     /**
      * 更多
      */
-    private class OnFoodMoreItemClick implements OnItemClickListener{
+    private class OnFoodMoreItemClick implements OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -485,22 +458,44 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         public void onClick(View v) {
             popup_selector.dismiss();
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
-                    String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                            String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
                     MSG_INDEX);
         }
     }
 
-    private class OnFoodSortFilterClick implements OnClickListener{
+    private int switchButtonStatus(Button v, int flag) {
+        String content = v.getText().toString().trim();
+        if (0 != (++flag) % 3) {
+            v.setSelected(true);
+            if (1 == flag){
+                v.setText(content+" +");
+            }else if (2 == flag) {
+                v.setText(StringUtils.substringBefore(content," +")+" -");
+            }
+        } else {
+            flag = 0;
+            v.setSelected(false);
+            v.setText(StringUtils.substringBefore(content, " -"));
+        }
+        return flag;
+    }
+
+    private class OnFoodSortFilterClick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.food_select_update_time:
-                    update_time.setSelected(true);
+                    int update_flag = foodUrlAttribute.getUpdate_time_flag();
+                    foodUrlAttribute.setUpdate_time_flag(switchButtonStatus(update_time, update_flag));
                     break;
                 case R.id.food_select_price:
+                    int cost_flag = foodUrlAttribute.getCost_flag();
+                    foodUrlAttribute.setCost_flag(switchButtonStatus(price, cost_flag));
                     break;
                 case R.id.food_select_distance:
+                    int distance_flag = foodUrlAttribute.getDistance_flag();
+                    foodUrlAttribute.setDistance_flag(switchButtonStatus(distance, distance_flag));
                     break;
                 default:
                     break;
