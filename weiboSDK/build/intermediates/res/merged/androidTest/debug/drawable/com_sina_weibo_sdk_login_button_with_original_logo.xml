@@ -23,4 +23,3 @@
           android:drawable="@drawable/ic_com_sina_weibo_sdk_logo" />
     <item android:drawable="@drawable/ic_com_sina_weibo_sdk_logo" />
 </selector>
-<!-- From: file:/E:/Workspaces/androidstudio/RedScarf/weiboSDK/src/main/res/drawable/com_sina_weibo_sdk_login_button_with_original_logo.xml --><!-- From: file:/E:/Workspaces/androidstudio/RedScarf/weiboSDK/build/intermediates/bundles/debug/res/drawable/com_sina_weibo_sdk_login_button_with_original_logo.xml -->

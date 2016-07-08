@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.redscarf.weidou.adapter.FavouriteAdapter;
 import com.redscarf.weidou.adapter.MyFavouriteAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.network.RequestType;
@@ -49,7 +50,7 @@ public class IndividualFavouriteActivity extends BaseActivity{
                         e.printStackTrace();
                     }
                     if (bodys.size() != 0) {
-                        lv_favourite.setAdapter(new MyFavouriteAdapter(IndividualFavouriteActivity.this,
+                        lv_favourite.setAdapter(new FavouriteAdapter(IndividualFavouriteActivity.this,
                                 bodys));
 
                     }
