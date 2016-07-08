@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_focused="true">-->
+        <!--<solid android:color="@color/weidou_purple" />-->
+    <!--</item>-->
+    <item android:state_selected="true" android:drawable="@color/dark_purple"/>
+
+    <item android:state_pressed="true" android:drawable="@color/dark_purple" />
+    <item android:drawable="@color/weidou_purple"/>
+    <!--&lt;!&ndash; 默认的背景图 &ndash;&gt;-->
+    <!--<item>-->
+        <!--<solid android:color="@color/weidou_purple" />-->
+    <!--</item>-->
+</selector>

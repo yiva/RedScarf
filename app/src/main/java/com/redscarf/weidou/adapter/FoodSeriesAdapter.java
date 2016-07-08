@@ -32,6 +32,7 @@ public class FoodSeriesAdapter extends BaseRedScarfAdapter<FoodSeriesBody> {
                     R.layout.listview_food_series, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.food_pic = (CircleImageView) convertView.findViewById(R.id.img_food_series);
+            viewHolder.food_bg = (CircleImageView) convertView.findViewById(R.id.bg_food_series);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -46,12 +47,20 @@ public class FoodSeriesAdapter extends BaseRedScarfAdapter<FoodSeriesBody> {
 //            viewHolder.food_pic.setBackgroundColor(0);
 //            viewHolder.food_pic.setImageUrl(imageUrl, imageLoader);
         }
+
+        if(selectedPosition == position)
+        {
+            viewHolder.food_bg.setImageResource(R.color.dark_purple);
+        } else {
+            viewHolder.food_bg.setImageResource(R.color.weidou_purple);
+        }
         return convertView;
     }
 
     private static class ViewHolder {
         int position;
         CircleImageView food_pic;
+        CircleImageView food_bg;
     }
 
 }

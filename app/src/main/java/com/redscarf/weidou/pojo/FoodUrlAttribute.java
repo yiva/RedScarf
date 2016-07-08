@@ -5,51 +5,81 @@ package com.redscarf.weidou.pojo;
  */
 public class FoodUrlAttribute {
 
-    private String cost;//£ ££ £££ ££££ 消费水平
-    private String topic;//主题
-    private String sub_category;//子类别
-    private String order;//排序
-    private String distance;//位置
     private String main_category;//主类别
+    private String sub_category;//子类别
+    private String topic;//主题
+    private String cost;//£ ££ £££ ££££ 消费水平
+
+    private String update_time;//更新时间
+    private String price;//排序
+    private String distance;//位置
+
     private String fisrt_key; //首字母
+
     private Integer cost_flag;
     private Integer topic_flag;
     private Integer sub_category_flag;
-    private Integer order_flag;
+    private Integer price_flag;
     private Integer distance_flag;
     private Integer main_category_flag;
     private Integer update_time_flag;
+
+    public String getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public Integer getPrice_flag() {
+        return price_flag;
+    }
+
+    public void setPrice_flag(Integer price_flag) {
+        this.price_flag = price_flag;
+    }
 
     public FoodUrlAttribute() {
         this.cost = "";
         this.topic = "";
         this.sub_category = "";
-        this.order = "";
+        this.price = "";
         this.distance = "";
         this.main_category = "4";
         this.fisrt_key = "";
+        this.update_time = "";
         this.cost_flag = 0;
         this.topic_flag = 0;
         this.sub_category_flag = 0;
-        this.order_flag = 0;
+        this.price_flag = 0;
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
 
     }
 
-    public void clear(){
+    public void clear() {
         this.cost = "";
         this.topic = "";
         this.sub_category = "";
-        this.order = "";
+        this.price = "";
         this.distance = "";
         this.main_category = "4";
         this.fisrt_key = "";
+        this.update_time = "";
         this.cost_flag = 0;
         this.topic_flag = 0;
         this.sub_category_flag = 0;
-        this.order_flag = 0;
+        this.price_flag = 0;
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
@@ -87,13 +117,6 @@ public class FoodUrlAttribute {
         this.sub_category_flag = sub_category_flag;
     }
 
-    public Integer getOrder_flag() {
-        return order_flag;
-    }
-
-    public void setOrder_flag(Integer order_flag) {
-        this.order_flag = order_flag;
-    }
 
     public Integer getDistance_flag() {
         return distance_flag;
@@ -143,14 +166,6 @@ public class FoodUrlAttribute {
         this.sub_category = sub_category;
     }
 
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
     public String getDistance() {
         return distance;
     }
@@ -171,8 +186,19 @@ public class FoodUrlAttribute {
     @Override
     public String toString() {
         String url = "";
+        if (!"".equals(this.main_category)) {
+            url = url + "&id=" + main_category;
+        }
         if (!"".equals(this.cost)) {
             url = url + "&cost=" + this.cost;
+        }
+
+        if (!"".equals(this.price)) {
+            url = url + "&orderby=post_cost&order=" + this.price;
+        }
+
+        if (!"".equals(this.distance)) {
+            url = url + "&orderby=distance&order=" + this.distance;
         }
 
         if (!"".equals(this.topic)) {
@@ -183,16 +209,12 @@ public class FoodUrlAttribute {
             url = url + "&sub_category=" + this.sub_category;
         }
 
-        if (!"".equals(this.order)) {
-            url = url + "&orderby=post_cost&order=" + this.order;
-        }
-
-        if (!"".equals(this.main_category)) {
-            url = "CatFood-" + this.order + "-" + url;
-        }
+//        if (!"".equals(this.main_category)) {
+//            url = url + "CatFood-" + this.price + "-";
+//        }
 
         if (!"".equals(this.fisrt_key)) {
-            url = "&meta_key=first_letter&meta_value="+this.fisrt_key;
+            url = url + "&meta_key=first_letter&meta_value=" + this.fisrt_key;
         }
         return url;
     }

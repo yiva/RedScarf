@@ -31,6 +31,7 @@ public abstract class BaseRedScarfAdapter<T> extends BaseAdapter{
 	protected List<T> mRedScarfBodies;
 	protected ImageLoader imageLoader;
 	protected RequestQueue queue;
+	protected int selectedPosition = -1;
 	
 	public BaseRedScarfAdapter(Context context,
 			List<T> listData) {
@@ -57,6 +58,15 @@ public abstract class BaseRedScarfAdapter<T> extends BaseAdapter{
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
+	}
+
+
+	public void setSelectedPosition(int position) {
+		selectedPosition = position;
+	}
+
+	public int getSelectedPosition(){
+		return selectedPosition;
 	}
 
 	protected void formatRedScarfBody(RedScarfBody item) {
