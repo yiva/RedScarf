@@ -18,13 +18,13 @@ android {
         release {
             keyAlias 'weidou'
             keyPassword 'weidou'
-            storeFile file('/Users/Will/Downloads/weidou.keystore')
+            storeFile file('E:/Workspaces/signed key/weidou.keystore')
             storePassword 'weidou'
         }
         debug {
             keyAlias 'weidou'
             keyPassword 'weidou'
-            storeFile file('/Users/Will/Downloads/weidou.keystore')
+            storeFile file('E:/Workspaces/signed key/weidou.keystore')
             storePassword 'weidou'
         }
     }
@@ -77,10 +77,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'com.google.android.gms:play-services-identity:9.0.2'
     compile 'org.greenrobot:eventbus:3.0.0'//通信插件
-    //左滑
-    compile 'com.android.support:recyclerview-v7:21.0.0'
-    compile 'com.android.support:support-v4:20.+'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 
     compile 'de.hdodenhof:circleimageview:2.0.0'//圆形、圆角图片
 //    compile 'com.android.support:multidex:1.0.1'

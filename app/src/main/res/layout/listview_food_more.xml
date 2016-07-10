@@ -24,6 +24,7 @@
             android:layout_centerInParent="true"/>
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bg_food_more"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@color/customappred"

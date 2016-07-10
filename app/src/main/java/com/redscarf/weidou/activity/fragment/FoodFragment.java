@@ -1,5 +1,6 @@
 package com.redscarf.weidou.activity.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.redscarf.weidou.network.RequestURLFactory;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,6 +56,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +79,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private HorizontalListView lv_food_select;
     private HorizontalListView lv_select_food_series;
     private HorizontalListView lv_select_food_more;
+    private Button[] costs = new Button[4];
 
     private String response;
     private float lastY = 0f;
@@ -140,16 +144,16 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     Bundle foodSeriesObj = msg.getData();
                     response = foodSeriesObj.getString("response");
                     try {
-                        list_food_series = (ArrayList<FoodSeriesBody>)RedScarfBodyAdapter
-                                .fromJSONWithAttr(response,"categories",Class.forName("com" +
+                        list_food_series = (ArrayList<FoodSeriesBody>) RedScarfBodyAdapter
+                                .fromJSONWithAttr(response, "categories", Class.forName("com" +
                                         ".redscarf.weidou.pojo.FoodSeriesBody"));
-                        list_food_more = (ArrayList<FoodTopicBody>)RedScarfBodyAdapter
-                                .fromJSONWithAttr(response,"topic_categories", Class.forName("com" +
+                        list_food_more = (ArrayList<FoodTopicBody>) RedScarfBodyAdapter
+                                .fromJSONWithAttr(response, "topic_categories", Class.forName("com" +
                                         ".redscarf.weidou.pojo.FoodTopicBody"));
                     } catch (JSONException e) {
-                        ExceptionUtil.printAndRecord(TAG,e);
+                        ExceptionUtil.printAndRecord(TAG, e);
                     } catch (ClassNotFoundException e) {
-                        ExceptionUtil.printAndRecord(TAG,e);
+                        ExceptionUtil.printAndRecord(TAG, e);
                     }
                     break;
                 default:
@@ -197,7 +201,15 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
     }
 
-//    @Override
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (popup_selector != null) {
+            popup_selector.dismiss();
+        }
+    }
+
+    //    @Override
 //    public void onHiddenChanged(boolean hidden) {
 //        super.onHiddenChanged(hidden);
 //        if (!hidden) {
@@ -299,7 +311,16 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private class OnListFoodSelectItemClick implements OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getActivity(), list_food_select.get(position), Toast.LENGTH_SHORT).show();
+            String key = list_food_select.get(position);
+            if ("*".equals(key)) {
+                foodUrlAttribute.setFisrt_key("");
+            }else {
+                foodUrlAttribute.setFisrt_key(key);
+            }
+            CURRENT_PAGE = 1;
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
+                            String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                    MSG_INDEX);
         }
     }
 
@@ -358,7 +379,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //    }
 
     private void showFoodCategaryPopupWindow() {
-
+        foodUrlAttribute.clear();
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_food_category, null);
         //重置按钮
@@ -368,6 +389,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         update_time = (Button) contentView.findViewById(R.id.food_select_update_time);
         price = (Button) contentView.findViewById(R.id.food_select_price);
         distance = (Button) contentView.findViewById(R.id.food_select_distance);
+
+        costs[0] = (Button) contentView.findViewById(R.id.food_price_1);
+        costs[1] = (Button) contentView.findViewById(R.id.food_price_2);
+        costs[2] = (Button) contentView.findViewById(R.id.food_price_3);
+        costs[3] = (Button) contentView.findViewById(R.id.food_price_4);
+
         //菜系
         lv_select_food_series = (HorizontalListView) contentView.findViewById(R.id.list_select_food_series);
         if (list_food_series.size() != 0) {
@@ -404,74 +431,52 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         update_time.setOnClickListener(new OnFoodSortFilterClick());
         price.setOnClickListener(new OnFoodSortFilterClick());
         distance.setOnClickListener(new OnFoodSortFilterClick());
-    }
-
-    /**
-     * 初始化顶部控件数据
-     *
-     * @return
-     */
-    public List<GridBody> makeFoodHeaderGridArrays() {
-        Integer[] colors = {R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple,
-                R.color.weidou_purple};
-        Integer[] photo = {R.drawable.all_canting,
-                R.drawable.china_canting,
-                R.drawable.sushi,
-                R.drawable.noodle,
-                R.drawable.hotfood,
-                R.drawable.india,
-                R.drawable.chicken_leg,
-                R.drawable.tea,
-                R.drawable.cake,
-                R.drawable.forma};
-        String[] title = {"全部餐厅", "中餐厅", "日韩餐厅",
-                "东南亚餐厅", "西餐厅", "印度餐厅", "中东餐厅",
-                "下午茶", "咖啡甜品店", "外卖快餐店"};
-        Integer[] postIds = {4, 533, 534, 535, 536, 537, 709, 538, 539, 540};
-        List<GridBody> headerBody = new ArrayList<>();
-        for (int i = 0; i < postIds.length; ++i) {
-            headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));
+        lv_select_food_series.setOnItemClickListener(new OnFoodSeriesItemClick());
+        lv_select_food_more.setOnItemClickListener(new OnFoodMoreItemClick());
+        for (Button btn : costs) {
+            btn.setOnClickListener(new OnFoodCostclick());
         }
-        return headerBody;
+
+
     }
 
+
     /**
-     * 菜系
+     * 菜系(主分类)
      */
     private class OnFoodSeriesItemClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FoodSeriesBody body = list_food_series.get(position);
-            CURRENT_PAGE = 1;
-            category_id = Integer.parseInt(body.getId());
-            title = body.getTitle();
-            setActionBarLayout(title, ActionBarType.WITHBACK);
-            showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
-            popup_selector.dismiss();
+            foodUrlAttribute.setMain_category(body.getId());
+            foodUrlAttribute.setMain_category_flag(1);
+
+            foodSeriesAdapter.setSelectedPosition(position);
+
+            foodSeriesAdapter.notifyDataSetChanged();
         }
     }
 
     /**
-     * 更多
+     * 更多（主题topic）
      */
-    private class OnFoodMoreItemClick implements OnItemClickListener{
+    private class OnFoodMoreItemClick implements OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            FoodTopicBody body = list_food_more.get(position);
+            foodUrlAttribute.setTopic(body.getId());
+            foodUrlAttribute.setTopic_flag(1);
 
+            foodMoreAdapter.setSelectedPosition(position);
+            foodMoreAdapter.notifyDataSetChanged();
         }
     }
 
+    /**
+     * 重置
+     */
     private class OnFoodCategoryResetClick implements OnClickListener {
         @Override
         public void onClick(View v) {
@@ -480,33 +485,115 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         }
     }
 
+    /**
+     * 提交
+     */
     private class OnFoodCategorySubmitClick implements OnClickListener {
         @Override
         public void onClick(View v) {
+
             popup_selector.dismiss();
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
-                    String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                            String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
                     MSG_INDEX);
         }
     }
 
-    private class OnFoodSortFilterClick implements OnClickListener{
+    /**
+     * 按钮切换状态
+     *
+     * @param v
+     * @param flag
+     * @param field
+     * @return
+     * @throws IllegalAccessException
+     */
+    private int switchButtonStatus(Button v, int flag, Field field) throws IllegalAccessException {
+        String content = v.getText().toString().trim();
+        field.setAccessible(true);
+        if (0 != (++flag) % 3) {
+            v.setSelected(true);
+            if (1 == flag) {
+                field.set(foodUrlAttribute, "DESC");
+                v.setText(content + " +");
+            } else if (2 == flag) {
+                field.set(foodUrlAttribute, "ASC");
+                v.setText(StringUtils.substringBefore(content, " ") + " -");
+            }
+        } else {
+            flag = 0;
+            field.set(foodUrlAttribute, "");
+            v.setSelected(false);
+            v.setText(StringUtils.substringBefore(content, " "));
+        }
+        return flag;
+    }
+
+    private class OnFoodSortFilterClick implements OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            try {
+                switch (v.getId()) {
+                    case R.id.food_select_update_time:
+                        int update_flag = foodUrlAttribute.getUpdate_time_flag();
+
+                        foodUrlAttribute.setUpdate_time_flag(switchButtonStatus(update_time,
+                                update_flag, FoodUrlAttribute.class.getDeclaredField("update_time")));
+                        break;
+                    case R.id.food_select_price:
+                        int cost_flag = foodUrlAttribute.getCost_flag();
+                        foodUrlAttribute.setCost_flag(switchButtonStatus(price, cost_flag,
+                                FoodUrlAttribute.class.getDeclaredField("price")));
+                        break;
+                    case R.id.food_select_distance:
+                        int distance_flag = foodUrlAttribute.getDistance_flag();
+                        foodUrlAttribute.setDistance_flag(switchButtonStatus(distance,
+                                distance_flag, FoodUrlAttribute.class.getDeclaredField("distance")));
+                        break;
+                    default:
+                        break;
+
+                }
+            } catch (NoSuchFieldException e) {
+                ExceptionUtil.printAndRecord(TAG, e);
+            } catch (IllegalAccessException e) {
+                ExceptionUtil.printAndRecord(TAG, e);
+            }
+        }
+    }
+
+    /**
+     * cost选项
+     */
+    private class OnFoodCostclick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.food_select_update_time:
-                    update_time.setSelected(true);
+                case R.id.food_price_1:
+                    changeCostState(costs[0]);
                     break;
-                case R.id.food_select_price:
+                case R.id.food_price_2:
+                    changeCostState(costs[1]);
                     break;
-                case R.id.food_select_distance:
+                case R.id.food_price_3:
+                    changeCostState(costs[2]);
                     break;
-                default:
+                case R.id.food_price_4:
+                    changeCostState(costs[3]);
                     break;
-
             }
         }
+    }
+
+    private void changeCostState(Button cost) {
+        foodUrlAttribute.setCost_flag(1);
+        foodUrlAttribute.setCost(cost.getText().toString());
+        for (Button btn : costs) {
+            btn.setSelected(false);
+        }
+        cost.setSelected(true);
     }
 
     /**
