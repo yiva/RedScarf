@@ -209,9 +209,9 @@ public class FoodUrlAttribute {
             url = url + "&sub_category=" + this.sub_category;
         }
 
-//        if (!"".equals(this.main_category)) {
-//            url = url + "CatFood-" + this.price + "-";
-//        }
+        if (!"".equals(this.update_time)) {
+            url = url + "&order=" + this.update_time;
+        }
 
         if (!"".equals(this.fisrt_key)) {
             url = url + "&meta_key=first_letter&meta_value=" + this.fisrt_key;

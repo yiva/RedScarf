@@ -47,6 +47,7 @@
     <string name="txt_tab_attention_plus">+关注</string>
     <string name="txt_tab_fans">粉丝</string>
     <string name="txt_tab_share">分享</string>
+    <string name="txt_michelin">米其林</string>
     
     <string name="title_shopping">购物</string>
     <string name="title_food">美食</string>
@@ -221,10 +222,10 @@
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
 
-    <string name="price_1">￡</string>
-    <string name="price_2">￡￡</string>
-    <string name="price_3">￡￡￡</string>
-    <string name="price_4">￡￡￡￡</string>
+    <string name="price_1">£</string>
+    <string name="price_2">££</string>
+    <string name="price_3">£££</string>
+    <string name="price_4">££££</string>
 
     <string name="weibosdk_demo_obtain_token_via_sso_all_in_one">SSO 授权（ALL IN ONE）</string>
     <string name="weibosdk_demo_toast_auth_success">授权成功</string>
