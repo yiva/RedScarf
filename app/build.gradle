@@ -79,5 +79,9 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'//通信插件
 
     compile 'de.hdodenhof:circleimageview:2.0.0'//圆形、圆角图片
-//    compile 'com.android.support:multidex:1.0.1'
+
+    //左滑
+//    compile 'com.android.support:recyclerview-v7:21.0.0'
+//    compile 'com.android.support:support-v4:20.+'
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }
