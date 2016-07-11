@@ -38,7 +38,8 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_category_posts&id=" + attributes[0] + "&count=10&page=" + attributes[1];
                 break;
             case FOODLIST://foodlist FoodFragment
-                res = baseUrl + "?json=get_category_posts&id=" + attributes[0] + "&count=10&page=" + attributes[1];
+                res = baseUrl + "?json=get_category_posts" + attributes[0] +
+                        "&count=10&page=" + attributes[1];
                 break;
             case TAGLIST:
                 res = baseUrl + "?json=get_tag_posts&tag_slug=" + attributes[0];

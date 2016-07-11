@@ -26,14 +26,19 @@ import com.redscarf.weidou.pojo.GridBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
+import com.redscarf.weidou.util.LocationUtil;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -94,6 +99,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private ArrayList<FoodBody> bodys;
     private List<GridBody> datas;
     private ArrayList<String> list_food_select;
+    private Location location;
 
     private ArrayList<FoodSeriesBody> list_food_series;
     private ArrayList<FoodTopicBody> list_food_more;
@@ -191,13 +197,29 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //        }
 //    }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Location tmp_location = null;
+        if (null != (tmp_location = LocationUtil.getLocation(getActivity()))) {
+            location = tmp_location;
+        }
+        if (location != null) {
+            foodUrlAttribute.setLatitude(location.getLatitude()+"");
+            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "resume");
         setActionBarLayout(title, ActionBarType.WITHBACK);
         showProgressDialogNoCancelable("", MyConstants.LOADING);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
+        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
+                String[]{foodUrlAttribute.toString(),
+                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
         doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
     }
 
@@ -209,28 +231,14 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         }
     }
 
-    //    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            try {
-//                setActionBarLayout(title, ActionBarType.WITHBACK);
-//                if (flag.equals(1)) {
-//                    showProgressDialogNoCancelable("", MyConstants.LOADING);
-//                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
-//                }
-//            } catch (Exception ex) {
-//                ExceptionUtil.printAndRecord(TAG, ex);
-//                setActionBarLayout(title, ActionBarType.WITHBACK);
-//                showProgressDialogNoCancelable("", MyConstants.LOADING);
-//                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), "1"}), FoodFragment.class, handler, MSG_INDEX);
-//            }
-//        }
-//    }
-
     @Override
     public void initView() {
+        location = LocationUtil.getLocation(getActivity());
         foodUrlAttribute = new FoodUrlAttribute();
+        if (location != null) {
+            foodUrlAttribute.setLatitude(location.getLatitude()+"");
+            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+        }
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setVisibility(View.GONE);
 
@@ -314,7 +322,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             String key = list_food_select.get(position);
             if ("*".equals(key)) {
                 foodUrlAttribute.setFisrt_key("");
-            }else {
+            } else {
                 foodUrlAttribute.setFisrt_key(key);
             }
             CURRENT_PAGE = 1;
@@ -380,6 +388,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     private void showFoodCategaryPopupWindow() {
         foodUrlAttribute.clear();
+        if (location != null) {
+            foodUrlAttribute.setLatitude(location.getLatitude()+"");
+            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+        }
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_food_category, null);
         //重置按钮

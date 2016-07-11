@@ -23,6 +23,8 @@ public class FoodUrlAttribute {
     private Integer distance_flag;
     private Integer main_category_flag;
     private Integer update_time_flag;
+    private String latitude;
+    private String longitude;
 
     public String getUpdate_time() {
         return update_time;
@@ -64,7 +66,8 @@ public class FoodUrlAttribute {
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
-
+        this.latitude = "";
+        this.longitude = "";
     }
 
     public void clear() {
@@ -83,6 +86,8 @@ public class FoodUrlAttribute {
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
+        this.latitude = "";
+        this.longitude = "";
     }
 
     public Integer getUpdate_time_flag() {
@@ -182,6 +187,21 @@ public class FoodUrlAttribute {
         this.main_category = main_category;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     @Override
     public String toString() {
@@ -215,6 +235,10 @@ public class FoodUrlAttribute {
 
         if (!"".equals(this.fisrt_key)) {
             url = url + "&meta_key=first_letter&meta_value=" + this.fisrt_key;
+        }
+
+        if (!"".equals(this.latitude) && !"".equals(this.longitude)) {
+            url = url + "&lat=" + this.latitude + "&lng=" + this.longitude;
         }
         return url;
     }

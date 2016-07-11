@@ -43,6 +43,7 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody> {
             viewHolder.food_photo = ((NetworkImageView) convertView.findViewById(R.id.img_photo_food));
             viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_food));
             viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_food));
+            viewHolder.distance = (TextView) convertView.findViewById(R.id.txt_distance);
             viewHolder.food_style = ((TextView) convertView.findViewById(R.id.txt_style_food));
             viewHolder.cost = (TextView) convertView.findViewById(R.id.txt_food_cost);
             viewHolder.label_michelin = (LinearLayout) convertView.findViewById(R.id.label_michelin);
@@ -55,6 +56,9 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody> {
         }
         setImageViewMeasure(viewHolder.food_photo);
         viewHolder.title.setText(getItem(position).getTitle());
+        if (StringUtils.isNotEmpty(getItem(position).getDistance())) {
+            viewHolder.distance.setText(getItem(position).getDistance()+" mi");
+        }
         viewHolder.subtitle.setText(getItem(position).getUnderground());
         viewHolder.food_style.setText(getItem(position).getSubtype());
         viewHolder.position = position;
@@ -94,6 +98,7 @@ public class FoodListAdapter extends BaseRedScarfAdapter<FoodBody> {
         int position;
         TextView title;
         TextView subtitle;
+        TextView distance;
         TextView cost;
         LinearLayout label_michelin;
         ImageView star1;

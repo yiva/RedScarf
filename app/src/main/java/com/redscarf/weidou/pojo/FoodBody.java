@@ -19,6 +19,7 @@ public class FoodBody implements Parcelable {
     private String underground;
     private String cost;
     private String post_michelin;
+    private String distance;
 
 
     protected FoodBody(Parcel in) {
@@ -32,6 +33,7 @@ public class FoodBody implements Parcelable {
         underground = in.readString();
         cost = in.readString();
         post_michelin = in.readString();
+        distance = in.readString();
     }
 
     public static final Creator<FoodBody> CREATOR = new Creator<FoodBody>() {
@@ -126,6 +128,14 @@ public class FoodBody implements Parcelable {
         this.post_michelin = post_michelin;
     }
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
     public FoodBody() {
 
     }
@@ -147,5 +157,6 @@ public class FoodBody implements Parcelable {
         dest.writeString(underground);
         dest.writeString(cost);
         dest.writeString(post_michelin);
+        dest.writeString(distance);
     }
 }

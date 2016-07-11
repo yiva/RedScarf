@@ -15,7 +15,7 @@
         <TextView
             android:gravity="center"
             android:id="@+id/delete"
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
             android:text="@string/delete"
             android:textColor="@color/white"
