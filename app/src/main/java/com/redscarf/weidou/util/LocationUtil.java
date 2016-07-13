@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * 获取当前地理位置
  * Created by ErMeng on 2016/7/11.
+ * Edited by Yiva on 2016/7/13  修改在室内无法搜索到GPS信号时使用网络进地位置定位
  */
 public class LocationUtil {
 
@@ -24,13 +25,28 @@ public class LocationUtil {
      */
     public static Location getLocation(Context context) {
         String locationProvider = "";
+        Location location = null;
         LocationManager locationManager = (LocationManager) context.getSystemService(Context
                 .LOCATION_SERVICE);
         //获取所有可用的位置提供器
         List<String> providers = locationManager.getProviders(true);
         if (providers.contains(LocationManager.GPS_PROVIDER)) {
             //如果是GPS
+            //如果在室内无法检测到GPS，需要再次通过网络进行调用
             locationProvider = LocationManager.GPS_PROVIDER;
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context, Manifest.permission
+                    .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                return null;
+            }
+            location = locationManager.getLastKnownLocation(locationProvider);
+            if (null == location) {
+                if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+                    locationProvider = LocationManager.NETWORK_PROVIDER;
+                }
+            }
         } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
             //如果是Network
             locationProvider = LocationManager.NETWORK_PROVIDER;
@@ -51,7 +67,10 @@ public class LocationUtil {
             // for Activity#requestPermissions for more details.
             return null;
         }
-        Location location = locationManager.getLastKnownLocation(locationProvider);
+        location = locationManager.getLastKnownLocation(locationProvider);
+        if (null == location) {
+            Toast.makeText(context, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+        }
         //获取Location
         return location;
     }
