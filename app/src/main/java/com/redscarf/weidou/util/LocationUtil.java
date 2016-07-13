@@ -46,6 +46,8 @@ public class LocationUtil {
                 if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
                     locationProvider = LocationManager.NETWORK_PROVIDER;
                 }
+            } else {
+                return location;
             }
         } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
             //如果是Network
