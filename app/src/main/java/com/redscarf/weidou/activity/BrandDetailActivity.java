@@ -6,23 +6,32 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.redscarf.weidou.adapter.AttachmentAdapter;
+import com.redscarf.weidou.adapter.BaseRedScarfAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.customwidget.ScrollListView;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
+import com.redscarf.weidou.pojo.AttachmentBody;
 import com.redscarf.weidou.pojo.BrandDetailBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
+import com.redscarf.weidou.util.DisplayUtil;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
+import com.redscarf.weidou.util.JSONHelper;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,13 +53,15 @@ public class BrandDetailActivity extends BaseActivity {
     private Button postinfo;
     private ImageButton share;
     private ImageButton favourite;
+    private ListView listview_attachment;
 
     private Bundle datas;
-     //msg.what goods
+    //msg.what goods
 
     private String response;
     private BrandDetailBody brand_body;
     protected ImageLoader imageLoader;
+    private AttachmentAdapter attachmentAdapter;
 
     private Handler handler = new Handler() {
         @Override
@@ -126,6 +137,7 @@ public class BrandDetailActivity extends BaseActivity {
         postinfo = (Button) findViewById(R.id.btn_brand_detail_post_info);
         favourite = (ImageButton) findViewById(R.id.actionbar_with_share_favorite);
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
+        listview_attachment = (ListView) findViewById(R.id.list_attachments_brand_detail);
 
         description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
         description.setVisibility(View.VISIBLE);
@@ -135,7 +147,7 @@ public class BrandDetailActivity extends BaseActivity {
         photo.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             photo.setDefaultImageResId(R.drawable.loading_large);
-            photo.setErrorImageResId(R.drawable.null_large);
+            photo.setErrorImageResId(R.drawable.loading_large);
             photo.setBackgroundColor(0);
             photo.setImageUrl(imageUrl, imageLoader);
         }
@@ -151,6 +163,27 @@ public class BrandDetailActivity extends BaseActivity {
         postinfo.setOnClickListener(new OnJumpToBrowerClick(brand_body.getDeliver_info()));
         share.setOnClickListener(new OnSharePage());
         favourite.setOnClickListener(new OnChangeFavourite());
+        try {
+            ArrayList<AttachmentBody> attachmentBodies = this.formatJsonToAttachments();
+            if (null != attachmentBodies && 0 != attachmentBodies.size()) {
+                attachmentAdapter = new AttachmentAdapter(BrandDetailActivity.this, attachmentBodies);
+                listview_attachment.setAdapter(attachmentAdapter);
+                //暂时这样搞，没法
+                ScrollListView.getTotalHeightofListView(listview_attachment,
+                        DisplayUtil.setHeightByRatio(GlobalApplication.getScreenWidth(), 3, 2));
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        if (null != listview_attachment.getAdapter()) {
+//            ScrollListView.setListViewHeightBasedOnChildren(listview_attachment);
+//        }
+
+        //不让listview作为首项显示在屏幕中
+        ScrollView sv = (ScrollView) findViewById(R.id.scroll_brand_detail);
+        sv.smoothScrollTo(0, 0);
     }
 
     /**
@@ -185,6 +218,17 @@ public class BrandDetailActivity extends BaseActivity {
         public void onClick(View v) {
 
         }
+    }
+
+    /**
+     * 格式化品牌下的折扣信息
+     *
+     * @return
+     */
+    private ArrayList<AttachmentBody> formatJsonToAttachments() throws JSONException {
+        String attachments = brand_body.getAttachments();
+        return (ArrayList<AttachmentBody>) JSONHelper.parseCollection(attachments, ArrayList
+                .class, AttachmentBody.class);
     }
 
 }

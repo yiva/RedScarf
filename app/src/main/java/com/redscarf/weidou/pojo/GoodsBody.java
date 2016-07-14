@@ -37,6 +37,7 @@ public class GoodsBody implements Parcelable{
     private String comment_status;
     private String post_medium;
     private String post_thumbnail;
+    private String expires_key;
 
     public String getId() {
         return id;
@@ -257,6 +258,14 @@ public class GoodsBody implements Parcelable{
         this.post_thumbnail = post_thumbnail;
     }
 
+    public String getExpires_key() {
+        return expires_key;
+    }
+
+    public void setExpires_key(String expires_key) {
+        this.expires_key = expires_key;
+    }
+
     public GoodsBody(){
 
     }
@@ -288,6 +297,7 @@ public class GoodsBody implements Parcelable{
         this.comment_status= in.readString();
         this.post_medium= in.readString();
         this.post_thumbnail= in.readString();
+        this.expires_key = in.readString();
     }
 
     public static final Creator<GoodsBody> CREATOR = new Creator<GoodsBody>() {
@@ -336,5 +346,6 @@ public class GoodsBody implements Parcelable{
         dest.writeString(comment_status);
         dest.writeString(post_medium);
         dest.writeString(post_thumbnail);
+        dest.writeString(expires_key);
     }
 }

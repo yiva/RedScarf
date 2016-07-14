@@ -54,6 +54,15 @@
     <style name="text_style">
         <item name="android:lineSpacingMultiplier">1</item>
     </style>
+    <style name="text_style_5">
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+    <style name="text_style_bolder" parent="@style/text_style">
+        <item name="android:textSize">@dimen/sys_font_size_bolder</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
     <style name="text_style_content_normal" parent="@style/text_style">
         <item name="android:textSize">@dimen/sys_font_size_normal</item>
         <item name="android:layout_width">wrap_content</item>
@@ -65,7 +74,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/detail_content</item>
-        <item name="android:lineSpacingMultiplier">2</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
     <style name="text_style_individual_info">
         <item name="android:textSize">@dimen/sys_font_size_bolder</item>

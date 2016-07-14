@@ -26,6 +26,7 @@
     <string name="food_series">菜系</string>
     <string name="more">更多</string>
     <string name="delete">删除</string>
+    <string name="reservation">接受预定</string>
 
     <string name="btn_text_buy_right_now">立即购买</string>
     
@@ -120,6 +121,7 @@
 	<string name="demotext_goods_detail_business_content">英国有一个每一天都在\“秘密\”打折的网站，产品种类极为丰富，从时尚、美妆、首饰到电子、生活家居和玩具……的打折信息都不一样，每天早上7点推出限时购买，每件产品上都会显示倒计时，而优惠最高能达到便宜70%，英国在线购物达人“上瘾”并且每日查看最新折扣，这个网站叫做Secret Sales，有着很多英国High Street及奢侈品牌的优惠产品，让你每天都能体验“圣诞大甩卖”的购物感觉！喜欢买好东西，但又想省钱，别错过Secret Sales。</string>
 	<string name="demotext_goods_detail_discount_label">折扣信息</string>
 	<string name="demotext_goods_detail_reviews_label">评价……</string>
+    <string name="txt_goods_detail_deliver_china">直邮中国</string>
 	
 	<string name="demotext_btn_discount_recommend">委员推荐</string>
 	<string name="demotext_btn_discount_hot">最热品牌</string>
