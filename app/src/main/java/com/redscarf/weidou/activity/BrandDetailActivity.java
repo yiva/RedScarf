@@ -1,9 +1,11 @@
 package com.redscarf.weidou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.pojo.AttachmentBody;
 import com.redscarf.weidou.pojo.BrandDetailBody;
+import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.DisplayUtil;
@@ -62,6 +65,8 @@ public class BrandDetailActivity extends BaseActivity {
     private BrandDetailBody brand_body;
     protected ImageLoader imageLoader;
     private AttachmentAdapter attachmentAdapter;
+
+    private ArrayList<AttachmentBody> attachmentBodies;
 
     private Handler handler = new Handler() {
         @Override
@@ -138,7 +143,9 @@ public class BrandDetailActivity extends BaseActivity {
         favourite = (ImageButton) findViewById(R.id.actionbar_with_share_favorite);
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
         listview_attachment = (ListView) findViewById(R.id.list_attachments_brand_detail);
+        label = (TextView) findViewById(R.id.txt_label_brand_detail);
 
+        label.setText(brand_body.getTitle());
         description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
         description.setVisibility(View.VISIBLE);
 
@@ -164,13 +171,14 @@ public class BrandDetailActivity extends BaseActivity {
         share.setOnClickListener(new OnSharePage());
         favourite.setOnClickListener(new OnChangeFavourite());
         try {
-            ArrayList<AttachmentBody> attachmentBodies = this.formatJsonToAttachments();
+            attachmentBodies = this.formatJsonToAttachments();
             if (null != attachmentBodies && 0 != attachmentBodies.size()) {
                 attachmentAdapter = new AttachmentAdapter(BrandDetailActivity.this, attachmentBodies);
                 listview_attachment.setAdapter(attachmentAdapter);
                 //暂时这样搞，没法
                 ScrollListView.getTotalHeightofListView(listview_attachment,
                         DisplayUtil.setHeightByRatio(GlobalApplication.getScreenWidth(), 3, 2));
+                listview_attachment.setOnItemClickListener(new OnAttachmentItemClick());
 
             }
 
@@ -231,4 +239,18 @@ public class BrandDetailActivity extends BaseActivity {
                 .class, AttachmentBody.class);
     }
 
+    private class OnAttachmentItemClick implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            AttachmentBody bodyItem = attachmentBodies.get(position);
+
+            Bundle data = new Bundle();
+            data.putString("id", bodyItem.getId());
+
+            Intent in_shop_detail = new Intent(BrandDetailActivity.this, GoodsDetailActivity.class);
+            in_shop_detail.putExtras(data);
+            startActivity(in_shop_detail);
+        }
+    }
 }

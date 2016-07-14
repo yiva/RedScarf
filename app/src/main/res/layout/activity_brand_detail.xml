@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
             android:orientation="vertical">
         <GridLayout
             android:layout_width="match_parent"
@@ -24,6 +25,10 @@
             android:paddingRight="@dimen/layout_padding2"
             android:paddingLeft="@dimen/layout_padding2"
             android:columnCount="1">
+            <TextView
+                android:id="@+id/txt_label_brand_detail"
+                style="@style/text_style_h2"
+                />
             <TextView
                 android:id="@+id/txt_brand_detail_description"
                 android:textSize="@dimen/sys_font_size_bolder"
@@ -60,7 +65,6 @@
             <Button
                 android:id="@+id/btn_brand_detail_post_info"
                 android:layout_marginTop="@dimen/layout_margin3"
-                android:layout_marginBottom="@dimen/layout_margin1"
                 style="@style/button_normal"
                 android:text="@string/txt_brand_detail_post_code"
                 />
@@ -69,6 +73,7 @@
                 android:id="@+id/list_attachments_brand_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:divider="@null">
             </ListView>
         </LinearLayout>

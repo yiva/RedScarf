@@ -141,11 +141,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         lv_food.setAdapter(foodListAdapter);
                     }
                     if (list_food_select.size() != 0) {
-                        if ("*".equals(list_food_select.get(0))) {
-                            list_food_select.set(0, "All");
-                        } else {
-                            list_food_select.add(0, "All");
-                        }
+                        list_food_select.add(0, "All");
                         foodSelectListAdapter = new FoodSelectListAdapter(getActivity(), list_food_select);
                         lv_food_select.setAdapter(foodSelectListAdapter);
                     }

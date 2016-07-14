@@ -127,7 +127,6 @@ public class GoodsDetailActivity extends BaseActivity {
         //get datas
         datas = this.getIntent().getExtras();
 
-        setActionBarLayout(String.valueOf(datas.getString("title")), ActionBarType.WITHSHARE);
         GlobalApplication.getInstance().addActivity(this);
 
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
@@ -151,6 +150,7 @@ public class GoodsDetailActivity extends BaseActivity {
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
         deliver_china = (LinearLayout) findViewById(R.id.deliver_china);
 
+        setActionBarLayout(String.valueOf(body.getTitle()), ActionBarType.WITHSHARE);
         subtitle.setText(body.getSubtitle());
         if ("1".equals(body.getDeliver_china())) {
             deliver_china.setVisibility(View.VISIBLE);

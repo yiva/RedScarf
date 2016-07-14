@@ -26,7 +26,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="center_vertical"
-                            android:padding="@dimen/layout_padding3">
+                            android:paddingTop="@dimen/layout_padding3"
+                            android:paddingBottom="@dimen/layout_padding3"
+                            android:paddingLeft="@dimen/layout_padding2"
+                            android:paddingRight="@dimen/layout_padding2">
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -34,7 +37,6 @@
                                     android:id="@+id/txt_title_food"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="4dp"
                                     android:layout_centerVertical="true"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sys_font_size_bolder"
@@ -45,7 +47,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
-                                    android:layout_marginRight="@dimen/layout_margin3"
+                                    android:layout_alignParentEnd="true"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sys_font_size_normal"/>
                             </RelativeLayout>
@@ -94,6 +96,8 @@
                                 android:layout_marginLeft="@dimen/layout_margin3"
                                 android:orientation="horizontal"
                                 android:layout_toRightOf="@+id/txt_style_food"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="center_vertical"
                                 android:visibility="gone"
                                 >

@@ -23,42 +23,53 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:columnCount="3"
-			android:layout_centerVertical="true">
+			android:orientation="horizontal"
+			android:layout_centerVertical="true"
+			android:paddingLeft="@dimen/layout_padding2"
+			android:paddingRight="@dimen/layout_padding2">
 			<TextView
 				android:id="@+id/txt_subtitle_shop"
 				android:textColor="@color/white"
 				android:textSize="@dimen/sys_font_size_bolder"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="4dp"
 				android:layout_gravity="center_vertical"
 				android:layout_weight="1.5"
 				/>
 			<LinearLayout
 				android:id="@+id/layout_expires_shop"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="@dimen/layout_margin3"
-				android:orientation="horizontal"
-				android:gravity="center_vertical"
-				android:layout_gravity="center_vertical"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
 				android:layout_weight="3"
+				android:gravity="right"
 				>
-				<ImageView
-					android:layout_width="@dimen/ico_small"
-					android:layout_height="@dimen/ico_small"
-					android:src="@drawable/timer_w"
-					/>
-				<TextView
-					android:id="@+id/txt_expires_shop"
-					android:textSize="@dimen/sys_font_size_normal"
-					android:layout_width="match_parent"
+				<RelativeLayout
+					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_alignParentRight="true"
-					android:layout_marginLeft="4dp"
-					android:textColor="@color/white"
-					/>
+					android:layout_marginLeft="@dimen/layout_margin3"
+					android:layout_gravity="center_vertical|right"
+					android:layout_weight="3"
+					>
+					<ImageView
+						android:id="@+id/img_expires_shop"
+						android:layout_width="@dimen/ico_small"
+						android:layout_height="@dimen/ico_small"
+						android:src="@drawable/timer_w"
+						android:layout_centerVertical="true"
+						/>
+					<TextView
+						android:id="@+id/txt_expires_shop"
+						android:textSize="@dimen/sys_font_size_normal"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@+id/img_expires_shop"
+						android:layout_centerVertical="true"
+						android:layout_marginLeft="4dp"
+						android:gravity="right"
+						android:textColor="@color/white"
+						/>
+				</RelativeLayout>
 			</LinearLayout>
 		</LinearLayout>
 	</RelativeLayout>

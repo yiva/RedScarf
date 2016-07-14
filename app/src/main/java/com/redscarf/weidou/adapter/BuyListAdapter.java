@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -67,6 +68,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         setImageViewMeasure(viewHolder.shop_photo);
 //        viewHolder.title.setText(getItem(position).getTitle());
         if ("1".equals(getItem(position).getExpires_key())) {
+            viewHolder.layout_expires_shop.setVisibility(View.VISIBLE);
             viewHolder.expires.setText("限时折扣");
         }else{
             viewHolder.expires.setText(getItem(position).getExpires().substring(0, 10));
