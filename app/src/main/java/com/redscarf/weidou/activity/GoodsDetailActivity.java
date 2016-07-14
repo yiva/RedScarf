@@ -13,6 +13,8 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.customwidget.ScrollListView;
+import com.redscarf.weidou.pojo.AttachmentBody;
 import com.redscarf.weidou.pojo.DiscountBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.BitmapCache;
@@ -51,12 +53,14 @@ public class GoodsDetailActivity extends BaseActivity {
     private TextView exclusive;
     private TextView expires;
     private TextView label_sales_code;
+    private TextView txt_dead_time_good_detail;
     private ImageButton favourite;
     private ImageButton share;
     private Button copy_code;
     private Button buy;
     private Button brand_info;
     private LinearLayout layout_dead_time;
+    private LinearLayout deliver_china;
 
     private DiscountBody body;
     private String response;
@@ -144,10 +148,13 @@ public class GoodsDetailActivity extends BaseActivity {
         brand_info = (Button) findViewById(R.id.btn_good_detail_info_more);
         label_sales_code = (TextView) findViewById(R.id.txt_sales_code_goods_detail);
         layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
-        View divider = findViewById(R.id.view_dead_time_goods_detail);
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
+        deliver_china = (LinearLayout) findViewById(R.id.deliver_china);
 
         subtitle.setText(body.getSubtitle());
+        if ("1".equals(body.getDeliver_china())) {
+            deliver_china.setVisibility(View.VISIBLE);
+        }
         if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
             favourite.setBackgroundResource(R.drawable.ic_favourite_red);
         }
@@ -161,16 +168,20 @@ public class GoodsDetailActivity extends BaseActivity {
             goodsImage.setImageUrl(imageUrl, imageLoader);
         }
         content.setText(Html.fromHtml(body.getContent()));
-        expires.setText(body.getExpires());
         copy_code.setText("折扣码: " + body.getOthers());
 
-        //无过期时间，隐藏expires
-        if (StringUtils.isBlank(body.getExpires()) || StringUtils.contains(body.getExpires(),
-                "0000-00-00")) {
-            layout_dead_time.setVisibility(View.GONE);
-            divider.setVisibility(View.GONE);
+        if ("1".equals(body.getExpires_key())) {
+            expires.setText("限时折扣，随时失效");
+        } else {
+            //无过期时间，隐藏expires
+            if (StringUtils.isBlank(body.getExpires()) || StringUtils.contains(body.getExpires(),
+                    "0000-00-00")) {
+                layout_dead_time.setVisibility(View.GONE);
+//                divider.setVisibility(View.GONE);
+            } else {
+                expires.setText("折扣到期时间: "+body.getExpires().substring(0, 10));
+            }
         }
-
         //无折扣码
         if (StringUtils.isBlank(body.getOthers())) {
             copy_code.setVisibility(View.GONE);

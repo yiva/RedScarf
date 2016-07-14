@@ -58,7 +58,7 @@ public class FoodUrlAttribute {
         this.distance = "";
         this.main_category = "4";
         this.fisrt_key = "";
-        this.update_time = "";
+        this.update_time = "DESC";
         this.cost_flag = 0;
         this.topic_flag = 0;
         this.sub_category_flag = 0;
@@ -78,7 +78,7 @@ public class FoodUrlAttribute {
         this.distance = "";
         this.main_category = "4";
         this.fisrt_key = "";
-        this.update_time = "";
+        this.update_time = "DESC";
         this.cost_flag = 0;
         this.topic_flag = 0;
         this.sub_category_flag = 0;
@@ -230,7 +230,7 @@ public class FoodUrlAttribute {
         }
 
         if (!"".equals(this.update_time)) {
-            url = url + "&order=" + this.update_time;
+            url = url + "&orderby=" + this.update_time;
         }
 
         if (!"".equals(this.fisrt_key)) {

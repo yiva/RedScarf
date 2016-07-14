@@ -22,6 +22,7 @@ public class DiscountBody implements Parcelable {
     private String deliver_china;
     private String is_favorate;
     private String brand;
+    private String expires_key;
 
     public DiscountBody() {
     }
@@ -40,6 +41,7 @@ public class DiscountBody implements Parcelable {
         deliver_china = in.readString();
         is_favorate = in.readString();
         brand = in.readString();
+        expires_key = in.readString();
     }
 
     public static final Creator<DiscountBody> CREATOR = new Creator<DiscountBody>() {
@@ -158,6 +160,14 @@ public class DiscountBody implements Parcelable {
         this.brand = brand;
     }
 
+    public String getExpires_key() {
+        return expires_key;
+    }
+
+    public void setExpires_key(String expires_key) {
+        this.expires_key = expires_key;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -178,5 +188,6 @@ public class DiscountBody implements Parcelable {
         dest.writeString(deliver_china);
         dest.writeString(is_favorate);
         dest.writeString(brand);
+        dest.writeString(expires_key);
     }
 }

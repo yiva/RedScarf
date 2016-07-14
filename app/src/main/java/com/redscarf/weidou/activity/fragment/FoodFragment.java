@@ -141,6 +141,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         lv_food.setAdapter(foodListAdapter);
                     }
                     if (list_food_select.size() != 0) {
+                        if ("*".equals(list_food_select.get(0))) {
+                            list_food_select.set(0, "All");
+                        } else {
+                            list_food_select.add(0, "All");
+                        }
                         foodSelectListAdapter = new FoodSelectListAdapter(getActivity(), list_food_select);
                         lv_food_select.setAdapter(foodSelectListAdapter);
                     }
@@ -184,6 +189,20 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
+        Location tmp_location = null;
+        if (null != (tmp_location = LocationUtil.getLocation(getActivity()))) {
+            location = tmp_location;
+        }
+        if (location != null) {
+            foodUrlAttribute.setLatitude(location.getLatitude()+"");
+            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+        }
+        setActionBarLayout(title, ActionBarType.WITHBACK);
+        showProgressDialogNoCancelable("", MyConstants.LOADING);
+        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
+                String[]{foodUrlAttribute.toString(),
+                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
+        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
     }
 
 //    @Override
@@ -201,26 +220,14 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     @Override
     public void onStart() {
         super.onStart();
-        Location tmp_location = null;
-        if (null != (tmp_location = LocationUtil.getLocation(getActivity()))) {
-            location = tmp_location;
-        }
-        if (location != null) {
-            foodUrlAttribute.setLatitude(location.getLatitude()+"");
-            foodUrlAttribute.setLongitude(location.getLongitude()+"");
-        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "resume");
-        setActionBarLayout(title, ActionBarType.WITHBACK);
-        showProgressDialogNoCancelable("", MyConstants.LOADING);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
-                String[]{foodUrlAttribute.toString(),
-                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
+
     }
 
     @Override
@@ -268,10 +275,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             public void handleMessage(Message msg) {
                 CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
+                        String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                        MSG_INDEX);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
-        }.sendEmptyMessageDelayed(0, 5000);
+        }.sendEmptyMessageDelayed(0, 3000);
     }
 
     @Override
@@ -280,11 +289,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
                 // 千万别忘了告诉控件加载完毕了哦！
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
-        }.sendEmptyMessageDelayed(0, 5000);
+        }.sendEmptyMessageDelayed(0, 3000);
     }
 
 //    private class OnBackClick implements OnClickListener {
@@ -316,11 +325,20 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     }
 
+    private String food_select_key = "";
     private class OnListFoodSelectItemClick implements OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String key = list_food_select.get(position);
-            if ("*".equals(key)) {
+            //判断点击按钮是否相同
+            if (food_select_key.equals(key)) {
+                return;
+            }
+            food_select_key = key;
+            if ("All".equals(key)) {
+                if ("".equals(foodUrlAttribute.getFisrt_key())) {
+                    return;
+                }
                 foodUrlAttribute.setFisrt_key("");
             } else {
                 foodUrlAttribute.setFisrt_key(key);

@@ -1,12 +1,15 @@
 package com.redscarf.weidou.activity;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,14 +37,18 @@ public class FoodDetailActivity extends BaseActivity implements
 
     private int MSG_SUCCESS = 1;
     private int MSG_FAIL = 2;
-    private Handler mainHandler = new Handler(){
+    private Handler mainHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_SUCCESS) {
-                setUpMapIfNeeded();
-            }else if(msg.what == MSG_FAIL){
-                setDefaultLocation();
+            try {
+                if (msg.what == MSG_SUCCESS) {
+                    setUpMapIfNeeded();
+                } else if (msg.what == MSG_FAIL) {
+                    setDefaultLocation();
 //                Toast.makeText(FoodDetailActivity.this, "地理信息获取失败", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception ex) {
+                ExceptionUtil.printAndRecord(TAG, ex);
             }
         }
     };
@@ -79,25 +86,25 @@ public class FoodDetailActivity extends BaseActivity implements
     @Override
     public void sendLcation(FoodDetailBody food) {
         food_body = food;
-        if (food_body != null){
+        if (food_body != null) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     Geocoder geoCoder = new Geocoder(FoodDetailActivity.this, Locale.getDefault());
                     Message message = new Message();
                     try {
-                        String location = food_body.getSubtitle()+"/n";
+                        String location = food_body.getSubtitle() + "/n";
                         location = location.split("/n")[0];
                         addr = geoCoder.getFromLocationName(location, 5);
                         if (addr.size() > 0) {
                             message = Message.obtain(mainHandler, MSG_SUCCESS);
-                        }else{
+                        } else {
                             message = Message.obtain(mainHandler, MSG_FAIL);
                         }
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
                         message = Message.obtain(mainHandler, MSG_FAIL);
-                    }finally {
+                    } finally {
                         mainHandler.sendMessage(message);
                     }
                 }
@@ -126,13 +133,27 @@ public class FoodDetailActivity extends BaseActivity implements
      */
     private void setUpMap() {
         lng = new LatLng(addr.get(0).getLatitude(), addr.get(0).getLongitude());
-            MarkerOptions options = new MarkerOptions().position(lng)
-                    .title(food_body.getTitle())
-                    .snippet(food_body.getTitle() + "\r\n" + food_body.getSubtitle())
-                    .flat(true);
-            mMap.addMarker(options);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
-            mMap.setMyLocationEnabled(true);
+        MarkerOptions options = new MarkerOptions().position(lng)
+                .title(food_body.getTitle())
+                .snippet(food_body.getTitle() + "\r\n" + food_body.getSubtitle())
+                .flat(true);
+        mMap.addMarker(options);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
+        if (ActivityCompat.checkSelfPermission(FoodDetailActivity.this,Manifest.permission
+                .ACCESS_FINE_LOCATION) !=
+                PackageManager
+                .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this,Manifest.permission
+                .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
     }
 
     private void setDefaultLocation() {
@@ -146,6 +167,20 @@ public class FoodDetailActivity extends BaseActivity implements
         MarkerOptions options = new MarkerOptions().position(lng).flat(true);
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
+        if(ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
+                .ACCESS_FINE_LOCATION) !=
+                PackageManager
+                        .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
+                .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
     }
 

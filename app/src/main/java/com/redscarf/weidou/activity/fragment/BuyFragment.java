@@ -165,11 +165,6 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         try {
             setActionBarLayout(title, ActionBarType.WITHBACK);
 
@@ -185,6 +180,12 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
 
 
     @Override
@@ -192,27 +193,27 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         super.onResume();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            try {
-//                flag = getArguments().getInt("flag");
-//                category_id = getArguments().getInt("category_id");
-//                title = getArguments().getString("title");
-                setActionBarLayout(title, ActionBarType.WITHBACK);
-                if (flag.equals(1)) {
-                    showProgressDialogNoCancelable("", MyConstants.LOADING);
-                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
-                }
-            } catch (Exception ex) {
-                ExceptionUtil.printAndRecord(TAG,ex);
-                setActionBarLayout(title, ActionBarType.WITHBACK);
-                showProgressDialogNoCancelable("", MyConstants.LOADING);
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
-            }
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            try {
+////                flag = getArguments().getInt("flag");
+////                category_id = getArguments().getInt("category_id");
+////                title = getArguments().getString("title");
+//                setActionBarLayout(title, ActionBarType.WITHBACK);
+//                if (flag.equals(1)) {
+//                    showProgressDialogNoCancelable("", MyConstants.LOADING);
+//                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+//                }
+//            } catch (Exception ex) {
+//                ExceptionUtil.printAndRecord(TAG,ex);
+//                setActionBarLayout(title, ActionBarType.WITHBACK);
+//                showProgressDialogNoCancelable("", MyConstants.LOADING);
+//                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+//            }
+//        }
+//    }
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -329,7 +330,6 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
      * 品牌标签列表点击事件
      */
     private class onListBrandItemClick implements OnItemClickListener{
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String key = listbrands_title.get(position);

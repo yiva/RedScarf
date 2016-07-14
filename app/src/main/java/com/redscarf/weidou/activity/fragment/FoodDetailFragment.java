@@ -55,6 +55,7 @@ public class FoodDetailFragment extends BaseFragment {
     private RelativeLayout layout_photo_big;
     private NetworkImageView img_photo_big;
     private LinearLayout layout;
+    private LinearLayout layout_reservation_food_detail;
 
     private FoodDetailBody body;
     private ArrayList<String> photoAddr;
@@ -189,6 +190,7 @@ public class FoodDetailFragment extends BaseFragment {
         favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_with_share_favorite);
         layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
+        layout_reservation_food_detail = (LinearLayout) rootView.findViewById(R.id.layout_reservation_food_detail);
 
         title_text.setText(body.getTitle());
         this.denoteFoodPhotos();
@@ -211,6 +213,9 @@ public class FoodDetailFragment extends BaseFragment {
         favourite.setOnClickListener(new OnChangeFavourite());
         detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
         layout_photo_big.setOnClickListener(new OnHidePhotoCanvasClick());
+        if ("1".equals(body.getReservation())) {
+            layout_reservation_food_detail.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

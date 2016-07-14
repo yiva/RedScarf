@@ -42,7 +42,7 @@ public class FoodMoreAdapter extends BaseRedScarfAdapter<FoodTopicBody> {
         String imageUrl = this.mRedScarfBodies.get(position).getImage();
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             ImageLoader.ImageListener listener = ImageLoader.getImageListener(viewHolder.food_topic,
-                    R.drawable.loading_middle, R.drawable.loading_min);
+                    R.drawable.loading_middle, R.drawable.loading_middle);
             imageLoader.get(imageUrl, listener);
         }
         viewHolder.title.setText(this.mRedScarfBodies.get(position).getTitle());

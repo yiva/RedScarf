@@ -18,7 +18,7 @@ public class FoodDetailBody implements Parcelable{
     private String underground;
     private String website;
     private Integer sponsored;
-    private Integer reservation;
+    private String reservation;
     private String cost;
     private String menu;
     private String others;
@@ -30,6 +30,7 @@ public class FoodDetailBody implements Parcelable{
     private String post_medium;
     private String post_thumbnail;
 
+
     protected FoodDetailBody(Parcel in) {
         id = in.readString();
         title = in.readString();
@@ -39,6 +40,7 @@ public class FoodDetailBody implements Parcelable{
         phone = in.readString();
         underground = in.readString();
         website = in.readString();
+        reservation = in.readString();
         cost = in.readString();
         menu = in.readString();
         others = in.readString();
@@ -135,11 +137,11 @@ public class FoodDetailBody implements Parcelable{
         this.sponsored = sponsored;
     }
 
-    public Integer getReservation() {
+    public String getReservation() {
         return reservation;
     }
 
-    public void setReservation(Integer reservation) {
+    public void setReservation(String reservation) {
         this.reservation = reservation;
     }
 
@@ -231,8 +233,6 @@ public class FoodDetailBody implements Parcelable{
         return 0;
     }
 
-
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
@@ -243,6 +243,7 @@ public class FoodDetailBody implements Parcelable{
         dest.writeString(phone);
         dest.writeString(underground);
         dest.writeString(website);
+        dest.writeString(reservation);
         dest.writeString(cost);
         dest.writeString(menu);
         dest.writeString(others);
