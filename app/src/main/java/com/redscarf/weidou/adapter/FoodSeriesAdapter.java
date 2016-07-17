@@ -37,17 +37,20 @@ public class FoodSeriesAdapter extends BaseRedScarfAdapter<FoodSeriesBody> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String imageUrl = this.mRedScarfBodies.get(position).getImage();
+        if (0 == position) {
+            viewHolder.food_pic.setImageResource(R.drawable.all_food);
+        } else {
+            String imageUrl = this.mRedScarfBodies.get(position).getImage();
 
-        if ((imageUrl != null) && (!imageUrl.equals(""))) {
-            ImageLoader.ImageListener listener = ImageLoader.getImageListener(viewHolder.food_pic, R.drawable.loading_middle, R.drawable.loading_min);
-            imageLoader.get(imageUrl, listener);
+            if ((imageUrl != null) && (!imageUrl.equals(""))) {
+                ImageLoader.ImageListener listener = ImageLoader.getImageListener(viewHolder.food_pic, R.drawable.loading_middle, R.drawable.loading_min);
+                imageLoader.get(imageUrl, listener);
 //            viewHolder.food_pic.setDefaultImageResId(R.drawable.loading_middle);
 //            viewHolder.food_pic.setErrorImageResId(R.drawable.null_large);
 //            viewHolder.food_pic.setBackgroundColor(0);
 //            viewHolder.food_pic.setImageUrl(imageUrl, imageLoader);
+            }
         }
-
         if(selectedPosition == position)
         {
             viewHolder.food_bg.setImageResource(R.color.dark_purple);

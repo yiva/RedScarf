@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -9,168 +10,186 @@
         <!--layout="@layout/actionbar_normal" />-->
 
     <View
+        android:id="@+id/view_bg_food_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dimgray"
         android:alpha="0.5"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/layout_margin1"
-        android:background="@color/white">
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/layout_padding1"
-            android:paddingLeft="@dimen/layout_padding3"
-            android:orientation="vertical"
-            android:divider="@drawable/spacer_medium"
-            android:showDividers="middle"
-            >
-            <TextView
-                style="@style/text_style_content_normal"
-                android:text="@string/sort"
-                android:textColor="@color/customappred"
-                />
+            android:layout_marginLeft="@dimen/layout_margin1"
+            android:paddingBottom="40dp"
+            android:background="@color/white">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <LinearLayout
+                android:id="@+id/layout_food_select_content"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:divider="@drawable/spacer_medium"
-                android:showDividers="middle"
-                android:layout_marginRight="@dimen/layout_margin1"
-                >
-                <Button
-                    android:id="@+id/food_select_update_time"
-                    style="@style/text_style_content_normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/update_time"
-                    android:textColor="@color/white"/>
-                <Button
-                    android:id="@+id/food_select_price"
-                    style="@style/text_style_content_normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/price"
-                    android:textColor="@color/white"/>
-                <Button
-                    android:id="@+id/food_select_distance"
-                    style="@style/text_style_content_normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/distance"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-            <TextView
-                style="@style/text_style_content_normal"
-                android:text="@string/food_series"
-                android:textColor="@color/customappred"
-                />
-            <com.redscarf.weidou.customwidget.HorizontalListView
-                android:id="@+id/list_select_food_series"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:focusable="false"
-                android:paddingTop="@dimen/layout_padding3"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/layout_padding1"
+                android:paddingLeft="@dimen/layout_padding3"
                 android:paddingRight="@dimen/layout_padding3"
-                android:divider="@drawable/spacer_medium"
-
-                >
-            </com.redscarf.weidou.customwidget.HorizontalListView>
-            <!--android:listSelector="@color/dark_purple"-->
-            <TextView
-                style="@style/text_style_content_normal"
-                android:text="@string/price"
-                android:textColor="@color/customappred"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:divider="@drawable/spacer_medium"
                 android:showDividers="middle"
-                android:layout_marginRight="@dimen/layout_margin1"
+
                 >
-                <Button
-                    android:id="@+id/food_price_1"
+                <TextView
                     style="@style/text_style_content_normal"
+                    android:text="@string/sort"
+                    android:textColor="@color/customappred"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/price_1"
-                    android:textColor="@color/white"/>
-                <Button
-                    android:id="@+id/food_price_2"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:divider="@drawable/spacer_medium"
+                    android:showDividers="middle"
+                    >
+                    <Button
+                        android:id="@+id/food_select_update_time"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/update_time"
+                        android:textColor="@color/white"/>
+                    <Button
+                        android:id="@+id/food_select_price"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/price"
+                        android:textColor="@color/white"/>
+                    <Button
+                        android:id="@+id/food_select_distance"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/distance"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+                <TextView
                     style="@style/text_style_content_normal"
+                    android:text="@string/food_series"
+                    android:textColor="@color/customappred"
+                    />
+                <com.redscarf.weidou.customwidget.HorizontalListView
+                    android:id="@+id/list_select_food_series"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/price_2"
-                    android:textColor="@color/white"/>
-                <Button
-                    android:id="@+id/food_price_3"
+                    android:layout_height="100dp"
+                    android:focusable="false"
+                    android:paddingTop="@dimen/layout_padding3"
+                    android:divider="@drawable/spacer_medium"
+                    >
+                </com.redscarf.weidou.customwidget.HorizontalListView>
+                <LinearLayout
+                    android:id="@+id/layout_select_food_series_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <TextView
+                        style="@style/text_style_content_normal"
+                        android:text="@string/food_series_detail"
+                        android:textColor="@color/customappred"
+                        />
+                    <com.redscarf.weidou.customwidget.ScrollGridView
+                        android:id="@+id/list_select_food_series_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/layout_margin2"
+                        android:focusable="false"
+                        android:numColumns="3"
+                        android:gravity="center"
+                        android:horizontalSpacing="@dimen/layout_margin3"
+                        android:verticalSpacing="@dimen/layout_margin3"
+                        android:stretchMode="columnWidth"
+                        >
+                    </com.redscarf.weidou.customwidget.ScrollGridView>
+                </LinearLayout>
+
+                <TextView
                     style="@style/text_style_content_normal"
+                    android:text="@string/price"
+                    android:textColor="@color/customappred"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/price_3"
-                    android:textColor="@color/white"/>
-                <Button
-                    android:id="@+id/food_price_4"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:divider="@drawable/spacer_medium"
+                    android:showDividers="middle"
+                    >
+                    <Button
+                        android:id="@+id/food_price_1"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/price_1"
+                        android:textColor="@color/white"/>
+                    <Button
+                        android:id="@+id/food_price_2"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/price_2"
+                        android:textColor="@color/white"/>
+                    <Button
+                        android:id="@+id/food_price_3"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/price_3"
+                        android:textColor="@color/white"/>
+                    <Button
+                        android:id="@+id/food_price_4"
+                        style="@style/text_style_content_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/food_filter_button_selector"
+                        android:text="@string/price_4"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <TextView
                     style="@style/text_style_content_normal"
+                    android:text="@string/more"
+                    android:textColor="@color/customappred"
+                    />
+                <com.redscarf.weidou.customwidget.HorizontalListView
+                    android:id="@+id/list_select_food_more"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/food_filter_button_selector"
-                    android:text="@string/price_4"
-                    android:textColor="@color/white"/>
+                    android:layout_height="100dp"
+                    android:focusable="false"
+                    android:divider="@drawable/spacer_medium"
+                    >
+                </com.redscarf.weidou.customwidget.HorizontalListView>
             </LinearLayout>
-
-            <TextView
-                style="@style/text_style_content_normal"
-                android:text="@string/more"
-                android:textColor="@color/customappred"
-                />
-            <com.redscarf.weidou.customwidget.HorizontalListView
-                android:id="@+id/list_select_food_more"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:focusable="false"
-                android:divider="@drawable/spacer_medium"
-                >
-            </com.redscarf.weidou.customwidget.HorizontalListView>
-        </LinearLayout>
-
-        <!--<GridView-->
-            <!--android:id="@+id/grid_food"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:numColumns="2"-->
-            <!--android:gravity="center"-->
-            <!--android:horizontalSpacing="@dimen/layout_margin3"-->
-            <!--android:verticalSpacing="@dimen/layout_margin3"-->
-            <!--android:stretchMode="columnWidth"-->
-            <!--android:padding="@dimen/sys_padding"-->
-            <!--android:background="@color/white"-->
-            <!--android:layout_above="@+id/btn_food_category_dismiss"-->
-            <!--/>-->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true">
-            <Button
+            </ScrollView>
+        </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+        <Button
             android:id="@+id/btn_food_category_reset"
             android:layout_width="100dp"
             android:layout_height="40dp"
@@ -179,15 +198,14 @@
             android:textSize="@dimen/sys_font_size_bolder"
             android:background="@color/weidou_purple"
             />
-            <Button
-                android:id="@+id/btn_food_category_finish"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:text="@string/finish"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sys_font_size_bolder"
-                android:background="@color/customappred"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/btn_food_category_finish"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="@string/finish"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sys_font_size_bolder"
+            android:background="@color/customappred"
+            />
+    </LinearLayout>
 </RelativeLayout>

@@ -16,6 +16,7 @@ import com.redscarf.weidou.util.DisplayUtil;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
 //            viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_shop));
             viewHolder.expires = ((TextView) convertView.findViewById(R.id.txt_expires_shop));
             viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_shop));
+            viewHolder.exclusive = (TextView) convertView.findViewById(R.id.txt_exclusive);
 //            viewHolder.shop_ad_icon = ((ImageView) convertView.findViewById(R.id.img_ad_shop));
 //            viewHolder.exclusive = ((TextView) convertView.findViewById(R.id.txt_ad_shop));
             viewHolder.layout_expires_shop = (LinearLayout) convertView.findViewById(R.id.layout_expires_shop);
@@ -77,23 +79,21 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
                 viewHolder.layout_expires_shop.setVisibility(View.GONE);
             }
         }
+        if ("1".equals(getItem(position).getExclusive())) {
+            viewHolder.exclusive.setVisibility(View.VISIBLE);
+        }
 
 //        if (5 != mFlag) {
         viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
 //        }
-        viewHolder.shop_photo.setTag(getItem(position).getPost_thumbnail());
+
+        String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
+        viewHolder.shop_photo.setTag(imageUrl);
         viewHolder.position = position;
         viewHolder.shop_photo.setImageResource(R.drawable.loading_large);
-//        if ((Math.random() * 5) % 2 == 0) {
-//            viewHolder.shop_ad_icon.setVisibility(View.VISIBLE);
-//        }
-//        if ((Math.random() * 5) % 3 == 0) {
-//            viewHolder.exclusive.setVisibility(View.VISIBLE);
-//        }
-        String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             viewHolder.shop_photo.setDefaultImageResId(R.drawable.loading_large);
-            viewHolder.shop_photo.setErrorImageResId(R.drawable.null_large);
+            viewHolder.shop_photo.setErrorImageResId(R.drawable.loading_large);
             viewHolder.shop_photo.setBackgroundColor(0);
             viewHolder.shop_photo.setImageUrl(imageUrl, imageLoader);
         }
@@ -109,6 +109,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         TextView expires;//有效期
         TextView title;
         LinearLayout layout_expires_shop;
+        TextView exclusive;
     }
 
     public static ArrayList<String> denoteCategorys(String categorys) {

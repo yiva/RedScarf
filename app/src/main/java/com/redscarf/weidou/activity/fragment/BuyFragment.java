@@ -48,6 +48,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -90,11 +91,11 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
     private String response;
     private final int MSG_INDEX = 1; //msg.what index
     private ArrayList<GoodsBody> bodys;
-    private HashMap<String,ArrayList<String>> map_brands;
+    private HashMap<String, ArrayList<String>> map_brands;
     private ArrayList<String> listbrands_title;
     private static Integer category_id = 5;
     private static Integer flag = 1;
-    private static String title = "全部购物";
+    private static String title = "购物";
 
     private BuyListAdapter buyListAdapter;
     private BrandsListAdapter brandsListAdapter;
@@ -135,7 +136,10 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
                         ArrayList<GoodsBody> items = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
                         if (items.size() != 0) {
                             bodys.addAll(items);
+//                            lv_shop.invalidateViews();
                             buyListAdapter.notifyDataSetChanged();
+
+//                            buyListAdapter.notifyDataSetInvalidated();
 //                            lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys, category_id));
                         }
                     } catch (ClassNotFoundException e) {
@@ -173,7 +177,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
                 doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
             }
         } catch (Exception ex) {
-            ExceptionUtil.printAndRecord(TAG,ex);
+            ExceptionUtil.printAndRecord(TAG, ex);
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
@@ -185,7 +189,6 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         super.onStart();
 
     }
-
 
 
     @Override
@@ -258,7 +261,8 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         lv_shop = (PullableListView) rootView.findViewById(R.id.list_shop);
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
-        ((PullToRefreshLayout)rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
+        lv_shop.setOnScrollListener(new OnBuyListScrollListener());
+        ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
@@ -268,19 +272,18 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
 
     /**
      * 下拉
+     *
      * @param pullToRefreshLayout
      */
     @Override
     public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
         // 下拉刷新操作
-        new Handler()
-        {
+        new Handler() {
             @Override
-            public void handleMessage(Message msg)
-            {
+            public void handleMessage(Message msg) {
                 CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, 5000);
@@ -288,26 +291,25 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
 
     /**
      * 上拉
+     *
      * @param pullToRefreshLayout
      */
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
         // 加载操作
-        new Handler()
-        {
+        new Handler() {
             @Override
-            public void handleMessage(Message msg)
-            {
-                doRequestURL(Request.Method.GET,RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_NEXT_PAGE,PROGRESS_DISVISIBLE);
+            public void handleMessage(Message msg) {
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
                 // 千万别忘了告诉控件加载完毕了哦！
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, 5000);
     }
 
-	/**
+    /**
      * 点击跳转
-	 */
+     */
     private class onListBuyItemClick implements OnItemClickListener {
 
         @Override
@@ -327,14 +329,43 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
     }
 
     /**
+     * 购物list滚动加载
+     */
+
+    private int position = -1;
+    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
+
+    private class OnBuyListScrollListener implements AbsListView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            if (position != firstVisibleItem) {
+                position = firstVisibleItem;
+                if (!records.contains(position)) {
+                    if (1 == position % 10) {
+                        records.add(position);
+                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
      * 品牌标签列表点击事件
      */
-    private class onListBrandItemClick implements OnItemClickListener{
+    private class onListBrandItemClick implements OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String key = listbrands_title.get(position);
             ArrayList<String> list_res = map_brands.get(key);
-            showPopupWindow(view,list_res);
+            showPopupWindow(view, list_res);
         }
     }
 
@@ -390,6 +421,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
 
     /**
      * 解析品牌标签
+     *
      * @param brands
      * @return
      * @throws JSONException
@@ -414,6 +446,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
 
     /**
      * 点击品牌字母弹出框
+     *
      * @param view
      * @param brands
      */
@@ -431,12 +464,12 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
                 layout_popup_brand_detail.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 int shop_height = lv_shop.getHeight();
                 int lv_height = layout_popup_brand_detail.getHeight();
-                if (shop_height >= lv_height){
-                    return ;
+                if (shop_height >= lv_height) {
+                    return;
                 }
                 ViewGroup.LayoutParams layoutParams = lv_brand_detail.getLayoutParams();
                 layoutParams.width = GlobalApplication.getScreenWidth();
-                layoutParams.height = shop_height - DisplayUtil.dip2px(getActivity(),50);
+                layoutParams.height = shop_height - DisplayUtil.dip2px(getActivity(), 50);
                 lv_brand_detail.setLayoutParams(layoutParams);
             }
         });
@@ -454,7 +487,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         btn_hide_brand_detail.setOnClickListener(new OnBrandDetailHideClick());
     }
 
-    private void showShopCategaryPopupWindow(){
+    private void showShopCategaryPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_shop_category, null);
         dismiss = (Button) contentView.findViewById(R.id.btn_shop_category_dismiss);
@@ -479,7 +512,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
 //        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         popup_selector.setAnimationStyle(R.style.AnimationPreview);
-        popup_selector.showAtLocation(actionbar_buy, Gravity.CENTER,ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        popup_selector.showAtLocation(actionbar_buy, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dismiss.setOnClickListener(new OnShopCategoryDismissClick());
     }
 
@@ -513,7 +546,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         Integer[] postIds = {5, 481, 480, 478, 483, 479, 484, 482};
         List<GridBody> headerBody = new ArrayList<>();
         for (int i = 0; i < postIds.length; ++i) {
-            headerBody.add(new GridBody(colors[i], title[i], photo[i],postIds[i]));
+            headerBody.add(new GridBody(colors[i], title[i], photo[i], postIds[i]));
         }
         return headerBody;
     }
@@ -521,10 +554,11 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
     /**
      * 品牌列表Item点击事件
      */
-    private class OnBrandDetailItemClick implements OnItemClickListener{
+    private class OnBrandDetailItemClick implements OnItemClickListener {
 
         private ArrayList<String> brandDetail;
-        public OnBrandDetailItemClick(ArrayList<String> details){
+
+        public OnBrandDetailItemClick(ArrayList<String> details) {
             this.brandDetail = details;
         }
 
@@ -539,7 +573,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         }
     }
 
-    private class OnBrandDetailHideClick implements OnClickListener{
+    private class OnBrandDetailHideClick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -579,9 +613,12 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
             CURRENT_PAGE = 1;
             category_id = body.getPostId();
             title = body.getTitle();
+            if ("全部购物".equals(title)) {
+                title = "购物";
+            }
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
+            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
             popup_selector.dismiss();
         }
     }

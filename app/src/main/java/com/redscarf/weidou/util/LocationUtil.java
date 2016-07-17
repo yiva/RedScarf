@@ -70,9 +70,9 @@ public class LocationUtil {
             return null;
         }
         location = locationManager.getLastKnownLocation(locationProvider);
-        if (null == location) {
-            Toast.makeText(context, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
-        }
+//        if (null == location) {
+//            Toast.makeText(context, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
+//        }
         //获取Location
         return location;
     }

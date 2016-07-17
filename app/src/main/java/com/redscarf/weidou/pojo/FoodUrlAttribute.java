@@ -17,6 +17,10 @@ public class FoodUrlAttribute {
     private String fisrt_key; //首字母
 
     private Integer cost_flag;
+    private Integer cost_flag_1;
+    private Integer cost_flag_2;
+    private Integer cost_flag_3;
+    private Integer cost_flag_4;
     private Integer topic_flag;
     private Integer sub_category_flag;
     private Integer price_flag;
@@ -50,6 +54,38 @@ public class FoodUrlAttribute {
         this.price_flag = price_flag;
     }
 
+    public Integer getCost_flag_1() {
+        return cost_flag_1;
+    }
+
+    public void setCost_flag_1(Integer cost_flag_1) {
+        this.cost_flag_1 = cost_flag_1;
+    }
+
+    public Integer getCost_flag_2() {
+        return cost_flag_2;
+    }
+
+    public void setCost_flag_2(Integer cost_flag_2) {
+        this.cost_flag_2 = cost_flag_2;
+    }
+
+    public Integer getCost_flag_3() {
+        return cost_flag_3;
+    }
+
+    public void setCost_flag_3(Integer cost_flag_3) {
+        this.cost_flag_3 = cost_flag_3;
+    }
+
+    public Integer getCost_flag_4() {
+        return cost_flag_4;
+    }
+
+    public void setCost_flag_4(Integer cost_flag_4) {
+        this.cost_flag_4 = cost_flag_4;
+    }
+
     public FoodUrlAttribute() {
         this.cost = "";
         this.topic = "";
@@ -66,6 +102,10 @@ public class FoodUrlAttribute {
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
+        this.cost_flag_1 = 0;
+        this.cost_flag_2 = 0;
+        this.cost_flag_3 = 0;
+        this.cost_flag_4 = 0;
         this.latitude = "";
         this.longitude = "";
     }
@@ -86,6 +126,10 @@ public class FoodUrlAttribute {
         this.distance_flag = 0;
         this.main_category_flag = 0;
         this.update_time_flag = 0;
+        this.cost_flag_1 = 0;
+        this.cost_flag_2 = 0;
+        this.cost_flag_3 = 0;
+        this.cost_flag_4 = 0;
         this.latitude = "";
         this.longitude = "";
     }

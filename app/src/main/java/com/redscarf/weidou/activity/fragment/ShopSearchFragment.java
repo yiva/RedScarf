@@ -68,7 +68,6 @@ public class ShopSearchFragment extends BaseFragment{
     public void initView() {
         lv_search = (ListView) rootView.findViewById(R.id.list_search_shop);
         lv_search.setOnItemClickListener(new OnDiscountSearchItemClick());
-        showProgressDialogNoCancelable("", MyConstants.LOADING);
         doRequestURL(RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST, new String[]{"discountposts"}), SearchFragment.class, handler, MSG_INDEX);
     }
 

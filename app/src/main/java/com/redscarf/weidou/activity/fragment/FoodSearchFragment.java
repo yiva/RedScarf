@@ -1,6 +1,7 @@
 package com.redscarf.weidou.activity.fragment;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.FoodDetailActivity;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
@@ -22,8 +24,11 @@ import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.pojo.HotFoodBody;
 import com.redscarf.weidou.pojo.SearchBody;
+import com.redscarf.weidou.util.LocationUtil;
 import com.redscarf.weidou.util.MyConstants;
+import com.redscarf.weidou.util.MyPreferences;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -71,8 +76,33 @@ public class FoodSearchFragment extends BaseFragment{
     public void initView() {
         lv_search = (ListView) rootView.findViewById(R.id.list_search_food);
         lv_search.setOnItemClickListener(new OnFoodSearchItemClick());
-        showProgressDialogNoCancelable("", MyConstants.LOADING);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST, new String[]{"foodposts"}), SearchFragment.class, handler, MSG_INDEX);
+        if (StringUtils.isBlank(MyPreferences.getAppPerenceAttribute("latitude")) || StringUtils
+                .isBlank(MyPreferences.getAppPerenceAttribute("longitude"))) {
+            Location location = LocationUtil.getLocation(getActivity());
+            if (null != location) {
+                MyPreferences.setAppPerenceAttribute("latitude", location.getLatitude() + "");
+                MyPreferences.setAppPerenceAttribute("longitude", location.getLongitude() + "");
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST,
+                                new String[]{"foodposts&lat=" + MyPreferences
+                                        .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                        .getAppPerenceAttribute("longitude")}),
+                        SearchFragment.class,
+                        handler,
+                        MSG_INDEX, PROGRESS_CANCLE);
+            } else {
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST,
+                                new String[]{"foodposts"}), SearchFragment.class, handler,
+                        MSG_INDEX, PROGRESS_CANCLE);
+            }
+        } else {
+            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST,
+                            new String[]{"foodposts&lat=" + MyPreferences
+                                    .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                    .getAppPerenceAttribute("longitude")}),
+                    SearchFragment.class,
+                    handler,
+                    MSG_INDEX, PROGRESS_CANCLE);
+        }
     }
 
     private class OnFoodSearchItemClick implements AdapterView.OnItemClickListener{

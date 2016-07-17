@@ -16,7 +16,7 @@ public class MyConstants {
 	public static final long SPLASH_TIME = 2000L;
 
 	//欢迎页迟延
-	public static final long WELCOME_TIME = 4000L;
+	public static final long WELCOME_TIME = 2500L;
 
 
 	//Preference用户Cookie属性

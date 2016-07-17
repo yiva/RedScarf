@@ -11,6 +11,7 @@ public interface BasePageLinstener {
     int MSG_NONCE = 4;
     int MSG_NEXT_PAGE = 5;  //上拉加载更多
     int MSG_FOOD_FILTER = 6;//菜系
+    int MSG_FOOD_INDEX_NOT_CHANG_SELECT = 7; //不改变美食上方字母
 
     int PROGRESS_DISVISIBLE = 0;
     int PROGRESS_NO_CANCLE = 1;

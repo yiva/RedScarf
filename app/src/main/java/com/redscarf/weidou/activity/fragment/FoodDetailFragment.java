@@ -25,10 +25,13 @@ import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.util.LocationUtil;
 import com.redscarf.weidou.util.MyConstants;
+import com.redscarf.weidou.util.MyPreferences;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +42,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,6 +60,11 @@ public class FoodDetailFragment extends BaseFragment {
     private NetworkImageView img_photo_big;
     private LinearLayout layout;
     private LinearLayout layout_reservation_food_detail;
+    private LinearLayout layout_michelin;
+    private ImageView star1;
+    private ImageView star2;
+    private ImageView star3;
+    private TextView distance;
 
     private FoodDetailBody body;
     private ArrayList<String> photoAddr;
@@ -64,11 +73,10 @@ public class FoodDetailFragment extends BaseFragment {
     OnShowMapListener mlistener;
 
 
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case MSG_INDEX:
                     Bundle indexObj = msg.getData();
                     try {
@@ -125,9 +133,34 @@ public class FoodDetailFragment extends BaseFragment {
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
-        doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
-                new String[]{datas.getString("id")}), FoodDetailFragment.class, handler,
-                MSG_INDEX,2);
+        if (StringUtils.isBlank(MyPreferences.getAppPerenceAttribute("latitude")) || StringUtils
+                .isBlank(MyPreferences.getAppPerenceAttribute("longitude"))) {
+            Location location = LocationUtil.getLocation(getActivity());
+            if (null != location) {
+                MyPreferences.setAppPerenceAttribute("latitude", location.getLatitude() + "");
+                MyPreferences.setAppPerenceAttribute("longitude", location.getLongitude() + "");
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                                new String[]{datas.getString("id") + "&lat=" + MyPreferences
+                                        .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                        .getAppPerenceAttribute("longitude")}),
+                        FoodDetailFragment.class,
+                        handler,
+                        MSG_INDEX, 2);
+            } else {
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                                new String[]{datas.getString("id")}), FoodDetailFragment.class, handler,
+                        MSG_INDEX, 2);
+            }
+        } else {
+            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                            new String[]{datas.getString("id") + "&lat=" + MyPreferences
+                                    .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                    .getAppPerenceAttribute("longitude")}),
+                    FoodDetailFragment.class,
+                    handler,
+                    MSG_INDEX, 2);
+        }
+
         return rootView;
     }
 
@@ -146,7 +179,6 @@ public class FoodDetailFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-        //请求url参数
 
     }
 
@@ -191,25 +223,50 @@ public class FoodDetailFragment extends BaseFragment {
         layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
         layout_reservation_food_detail = (LinearLayout) rootView.findViewById(R.id.layout_reservation_food_detail);
+        layout_michelin = (LinearLayout) rootView.findViewById(R.id.layout_michelin_food_detail);
+        star1 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_1);
+        star2 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_2);
+        star3 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_3);
+        distance = (TextView) rootView.findViewById(R.id.txt_distance_food_detail);
 
         title_text.setText(body.getTitle());
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));
         phone.setText(body.getPhone());
-        website.setText("View WebSite");
+        website.setText("访问网站");
         address.setText(body.getSubtitle().replace("/n", " "));
         underground.setText(body.getUnderground());
         cost.setText(body.getCost());
         subtype.setText(body.getSubtype());
         content.setText(body.getContent());
-        view_menu.setText("View menu");
+        view_menu.setText("查看菜单");
+        if (StringUtils.isNotBlank(body.getDistance())) {
+            distance.setText(body.getDistance() + "mi");
+        }
         //Call Phone
         phone.setOnClickListener(new onCallPhone());
+
+        if (StringUtils.isNumeric(body.getPost_michelin())
+                && Integer.parseInt(body.getPost_michelin()) != 0) {
+            layout_michelin.setVisibility(View.VISIBLE);
+            switch (Integer.parseInt(body.getPost_michelin())) {
+                case 3:
+                    star3.setVisibility(View.VISIBLE);
+                case 2:
+                    star2.setVisibility(View.VISIBLE);
+                case 1:
+                    star1.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    layout_michelin.setVisibility(View.GONE);
+                    break;
+            }
+        }
 
 
         //Jump WebActivity
         website.setOnClickListener(new OnJumpToBrowerClick(body.getWebsite()));
-        view_menu.setOnClickListener(new  OnJumpToBrowerClick(body.getMenu()));
+        view_menu.setOnClickListener(new OnJumpToBrowerClick(body.getMenu()));
         favourite.setOnClickListener(new OnChangeFavourite());
         detail_photos.setOnItemClickListener(new OnDisplayBigImagesClick());
         layout_photo_big.setOnClickListener(new OnHidePhotoCanvasClick());
@@ -264,14 +321,14 @@ public class FoodDetailFragment extends BaseFragment {
         }
     }
 
-    private class OnDisplayBigImagesClick implements AdapterView.OnItemClickListener{
+    private class OnDisplayBigImagesClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             layout_photo_big.setVisibility(View.VISIBLE);
             String imageUrl = photoAddr.get(position);
-            if (StringUtils.contains(imageUrl,"-150x150")){
-                imageUrl = imageUrl.replace("-150x150","");
+            if (StringUtils.contains(imageUrl, "-150x150")) {
+                imageUrl = imageUrl.replace("-150x150", "");
             }
             img_photo_big.setBackgroundResource(R.drawable.loading_large);
             if ((imageUrl != null) && (!imageUrl.equals(""))) {
@@ -283,7 +340,7 @@ public class FoodDetailFragment extends BaseFragment {
         }
     }
 
-    private class OnHidePhotoCanvasClick implements OnClickListener{
+    private class OnHidePhotoCanvasClick implements OnClickListener {
 
         @Override
         public void onClick(View v) {

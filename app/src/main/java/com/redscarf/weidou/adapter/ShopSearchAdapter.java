@@ -1,6 +1,7 @@
 package com.redscarf.weidou.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,42 +30,64 @@ public class ShopSearchAdapter extends BaseRedScarfAdapter<HotShopBody> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(
-                    R.layout.listview_search_shop, parent, false);
+            convertView = LayoutInflater.from(this.mContext).inflate(R.layout.listview_buy, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.content = (TextView) convertView.findViewById(R.id.txt_search_shop_content);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.txt_search_shop_title);
-            viewHolder.time = (TextView) convertView.findViewById(R.id.txt_search_shop_time);
-            viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_search_shop);
+            viewHolder.shop_photo = ((NetworkImageView) convertView.findViewById(R.id.img_shop));
+//            viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_shop));
+            viewHolder.expires = ((TextView) convertView.findViewById(R.id.txt_expires_shop));
+            viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_shop));
+            viewHolder.exclusive = (TextView) convertView.findViewById(R.id.txt_exclusive);
+//            viewHolder.shop_ad_icon = ((ImageView) convertView.findViewById(R.id.img_ad_shop));
+//            viewHolder.exclusive = ((TextView) convertView.findViewById(R.id.txt_ad_shop));
+            viewHolder.layout_expires_shop = (LinearLayout) convertView.findViewById(R.id.layout_expires_shop);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        setImageViewMeasure(viewHolder.image);
-        viewHolder.content.setText(getItem(position).getSubtitle());
-        viewHolder.title.setText(getItem(position).getTitle());
-        viewHolder.time.setText(getItem(position).getExpires());
-        if (StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
-            viewHolder.time.setVisibility(View.GONE);
+
+        setImageViewMeasure(viewHolder.shop_photo);
+//        viewHolder.title.setText(getItem(position).getTitle());
+        if ("1".equals(getItem(position).getExpires_key())) {
+            viewHolder.layout_expires_shop.setVisibility(View.VISIBLE);
+            viewHolder.expires.setText("限时折扣");
+        }else{
+            viewHolder.expires.setText(getItem(position).getExpires().substring(0, 10));
+            if (StringUtils.isBlank(getItem(position).getExpires()) ||
+                    StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
+                viewHolder.layout_expires_shop.setVisibility(View.GONE);
+            }
+        }
+        if ("1".equals(getItem(position).getExclusive())) {
+            viewHolder.exclusive.setVisibility(View.VISIBLE);
         }
 
-        String imageUrl = getItem(position).getPost_thumbnail();
-        viewHolder.image.setBackgroundResource(R.drawable.loading_large);
+//        if (5 != mFlag) {
+        viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
+//        }
+
+        String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
+        viewHolder.shop_photo.setTag(imageUrl);
+        viewHolder.position = position;
+        viewHolder.shop_photo.setImageResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
-            viewHolder.image.setDefaultImageResId(R.drawable.loading_large);
-            viewHolder.image.setErrorImageResId(R.drawable.null_large);
-            viewHolder.image.setBackgroundColor(0);
-            viewHolder.image.setImageUrl(imageUrl, imageLoader);
+            viewHolder.shop_photo.setDefaultImageResId(R.drawable.loading_large);
+            viewHolder.shop_photo.setErrorImageResId(R.drawable.loading_large);
+            viewHolder.shop_photo.setBackgroundColor(0);
+            viewHolder.shop_photo.setImageUrl(imageUrl, imageLoader);
         }
         return convertView;
     }
 
     private static class ViewHolder {
         int position;
-        TextView content;
+        //        ImageView shop_ad_icon;
+        NetworkImageView shop_photo;
+        //        TextView exclusive;
+        TextView subtitle;
+        TextView expires;//有效期
         TextView title;
-        TextView time;
-        NetworkImageView image;
-//        LinearLayout expires;
+        LinearLayout layout_expires_shop;
+        TextView exclusive;
     }
 }

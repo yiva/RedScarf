@@ -29,6 +29,11 @@ public class FoodDetailBody implements Parcelable{
     private String is_favorate;
     private String post_medium;
     private String post_thumbnail;
+    private String post_lat;
+    private String post_lng;
+    private String distance;
+    private String post_michelin;
+    private String opentime;
 
 
     protected FoodDetailBody(Parcel in) {
@@ -51,6 +56,11 @@ public class FoodDetailBody implements Parcelable{
         is_favorate = in.readString();
         post_medium = in.readString();
         post_thumbnail = in.readString();
+        post_lat = in.readString();
+        post_lng = in.readString();
+        distance = in.readString();
+        post_michelin = in.readString();
+        opentime = in.readString();
     }
 
     public static final Creator<FoodDetailBody> CREATOR = new Creator<FoodDetailBody>() {
@@ -225,6 +235,46 @@ public class FoodDetailBody implements Parcelable{
         this.post_thumbnail = post_thumbnail;
     }
 
+    public String getPost_lat() {
+        return post_lat;
+    }
+
+    public void setPost_lat(String post_lat) {
+        this.post_lat = post_lat;
+    }
+
+    public String getPost_lng() {
+        return post_lng;
+    }
+
+    public void setPost_lng(String post_lng) {
+        this.post_lng = post_lng;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getPost_michelin() {
+        return post_michelin;
+    }
+
+    public void setPost_michelin(String post_michelin) {
+        this.post_michelin = post_michelin;
+    }
+
+    public String getOpentime() {
+        return opentime;
+    }
+
+    public void setOpentime(String opentime) {
+        this.opentime = opentime;
+    }
+
     public FoodDetailBody() {
     }
 
@@ -254,5 +304,10 @@ public class FoodDetailBody implements Parcelable{
         dest.writeString(is_favorate);
         dest.writeString(post_medium);
         dest.writeString(post_thumbnail);
+        dest.writeString(post_lat);
+        dest.writeString(post_lng);
+        dest.writeString(distance);
+        dest.writeString(post_michelin);
+        dest.writeString(opentime);
     }
 }

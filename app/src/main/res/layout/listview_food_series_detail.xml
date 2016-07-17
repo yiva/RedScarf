@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:descendantFocusability="blocksDescendants">
+    <RelativeLayout
+        android:id="@+id/layout_food_series_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <!--不能用Button，我艹用了就按不了-->
+        <TextView
+            android:id="@+id/btn_food_series_detail"
+            style="@style/text_style_content_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corners_bg_purple"
+            android:gravity="center"
+            android:paddingTop="@dimen/layout_padding3"
+            android:paddingBottom="@dimen/layout_padding3"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+</LinearLayout>

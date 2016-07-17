@@ -4,12 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.pojo.HotFoodBody;
 import com.redscarf.weidou.pojo.SearchBody;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -26,41 +30,71 @@ public class FoodSearchAdapter extends BaseRedScarfAdapter<HotFoodBody> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(
-                    R.layout.listview_search_food, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.listview_food, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.content = (TextView) convertView.findViewById(R.id.txt_search_food_content);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.txt_search_food_title);
-            viewHolder.type = (TextView) convertView.findViewById(R.id.txt_search_food_type);
-            viewHolder.money = (TextView) convertView.findViewById(R.id.txt_search_food_money);
-            viewHolder.image = (NetworkImageView) convertView.findViewById(R.id.img_search_food);
+            viewHolder.food_photo = ((NetworkImageView) convertView.findViewById(R.id.img_photo_food));
+            viewHolder.title = ((TextView) convertView.findViewById(R.id.txt_title_food));
+            viewHolder.subtitle = ((TextView) convertView.findViewById(R.id.txt_subtitle_food));
+            viewHolder.distance = (TextView) convertView.findViewById(R.id.txt_distance);
+            viewHolder.food_style = ((TextView) convertView.findViewById(R.id.txt_style_food));
+            viewHolder.cost = (TextView) convertView.findViewById(R.id.txt_food_cost);
+            viewHolder.label_michelin = (LinearLayout) convertView.findViewById(R.id.label_michelin);
+            viewHolder.star1 = (ImageView) convertView.findViewById(R.id.ico_michelin_1);
+            viewHolder.star2 = (ImageView) convertView.findViewById(R.id.ico_michelin_2);
+            viewHolder.star3 = (ImageView) convertView.findViewById(R.id.ico_michelin_3);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        setImageViewMeasure(viewHolder.image);
-        String content = getItem(position).getSubtitle().replace("/n","\r\n");
-        viewHolder.content.setText(content);
+        setImageViewMeasure(viewHolder.food_photo);
         viewHolder.title.setText(getItem(position).getTitle());
-        viewHolder.type.setText(getItem(position).getSubtype());
-        viewHolder.money.setText(getItem(position).getCost());
-        String imageUrl = getItem(position).getPost_medium();
-        viewHolder.image.setBackgroundResource(R.drawable.loading_large);
+        if (StringUtils.isNotEmpty(getItem(position).getDistance())) {
+            viewHolder.distance.setText(getItem(position).getDistance()+" mi");
+        }
+        viewHolder.subtitle.setText(getItem(position).getUnderground());
+        viewHolder.food_style.setText(getItem(position).getSubtype());
+        viewHolder.position = position;
+        viewHolder.food_photo.setImageResource(R.drawable.loading_large);
+        viewHolder.cost.setText(getItem(position).getCost());
+
+        if (StringUtils.isNumeric(getItem(position).getPost_michelin()) && Integer.parseInt(getItem
+                (position).getPost_michelin()) != 0) {
+            viewHolder.label_michelin.setVisibility(View.VISIBLE);
+            switch (Integer.parseInt(getItem(position).getPost_michelin())) {
+                case 3:
+                    viewHolder.star3.setVisibility(View.VISIBLE);
+                case 2:
+                    viewHolder.star2.setVisibility(View.VISIBLE);
+                case 1:
+                    viewHolder.star1.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    viewHolder.label_michelin.setVisibility(View.GONE);
+                    break;
+            }
+        }
+
+        String imageUrl = this.mRedScarfBodies.get(position).getPost_medium();
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
-            viewHolder.image.setDefaultImageResId(R.drawable.loading_large);
-            viewHolder.image.setErrorImageResId(R.drawable.null_large);
-            viewHolder.image.setBackgroundColor(0);
-            viewHolder.image.setImageUrl(imageUrl, imageLoader);
+            viewHolder.food_photo.setDefaultImageResId(R.drawable.loading_large);
+            viewHolder.food_photo.setErrorImageResId(R.drawable.null_large);
+            viewHolder.food_photo.setBackgroundColor(0);
+            viewHolder.food_photo.setImageUrl(imageUrl, imageLoader);
         }
         return convertView;
     }
 
     private static class ViewHolder {
+        NetworkImageView food_photo;
+        TextView food_style;
         int position;
-        TextView content;
         TextView title;
-        TextView type;
-        TextView money;
-        NetworkImageView image;
+        TextView subtitle;
+        TextView distance;
+        TextView cost;
+        LinearLayout label_michelin;
+        ImageView star1;
+        ImageView star2;
+        ImageView star3;
     }
 }

@@ -16,6 +16,7 @@ public class HotShopBody implements Parcelable{
     private String exclusive;
     private String expires;
     private String post_thumbnail;
+    private String expires_key;
 
     public HotShopBody() {
     }
@@ -27,6 +28,7 @@ public class HotShopBody implements Parcelable{
         exclusive = in.readString();
         expires = in.readString();
         post_thumbnail = in.readString();
+        expires_key = in.readString();
     }
 
     public static final Creator<HotShopBody> CREATOR = new Creator<HotShopBody>() {
@@ -85,6 +87,14 @@ public class HotShopBody implements Parcelable{
         return MyConstants.URL + "wp-content/uploads" +post_thumbnail;
     }
 
+    public String getExpires_key() {
+        return expires_key;
+    }
+
+    public void setExpires_key(String expires_key) {
+        this.expires_key = expires_key;
+    }
+
     public void setPost_thumbnail(String post_thumbnail) {
         this.post_thumbnail = post_thumbnail;
     }
@@ -102,5 +112,6 @@ public class HotShopBody implements Parcelable{
         dest.writeString(exclusive);
         dest.writeString(expires);
         dest.writeString(post_thumbnail);
+        dest.writeString(expires_key);
     }
 }

@@ -2,7 +2,6 @@ package com.redscarf.weidou.activity.fragment;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.android.volley.Request;
@@ -12,12 +11,14 @@ import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.FoodMoreAdapter;
 import com.redscarf.weidou.adapter.FoodSelectListAdapter;
 import com.redscarf.weidou.adapter.FoodSeriesAdapter;
+import com.redscarf.weidou.adapter.FoodSeriesDetailAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
-import com.redscarf.weidou.adapter.ShopGridAdapter;
 import com.redscarf.weidou.customwidget.HorizontalListView;
+import com.redscarf.weidou.customwidget.ScrollGridView;
+import com.redscarf.weidou.customwidget.ScrollListView;
 import com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout;
 import com.redscarf.weidou.customwidget.pullableview.PullableListView;
-import com.redscarf.weidou.listener.PullRefreshListener;
+import com.redscarf.weidou.pojo.AttachmentBody;
 import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.pojo.FoodSeriesBody;
 import com.redscarf.weidou.pojo.FoodTopicBody;
@@ -25,20 +26,16 @@ import com.redscarf.weidou.pojo.FoodUrlAttribute;
 import com.redscarf.weidou.pojo.GridBody;
 import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
-import com.redscarf.weidou.util.GlobalApplication;
+import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.LocationUtil;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.util.MyPreferences;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,22 +47,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.protocol.RequestUserAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class FoodFragment extends BaseFragment implements OnTouchListener, PullToRefreshLayout.OnRefreshListener {
 
@@ -84,7 +81,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private HorizontalListView lv_food_select;
     private HorizontalListView lv_select_food_series;
     private HorizontalListView lv_select_food_more;
+    private ScrollGridView lv_food_series_detail;
     private Button[] costs = new Button[4];
+    private View view_bg_food_category;
+    private LinearLayout layout_select_food_series_detail;
 
     private String response;
     private float lastY = 0f;
@@ -92,22 +92,26 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     private static Integer category_id = 4;
     private static Integer flag = 1;
-    private static String title = "全部餐厅";
+    private static String title = "餐厅";
+    private static String more_title = "";
     private static int CURRENT_PAGE = 1;
+    private String food_select_key = "";
     private FoodUrlAttribute foodUrlAttribute;
+    private String[] str_cost = new String[]{"", "", "", ""};
 
     private ArrayList<FoodBody> bodys;
-    private List<GridBody> datas;
     private ArrayList<String> list_food_select;
     private Location location;
 
     private ArrayList<FoodSeriesBody> list_food_series;
     private ArrayList<FoodTopicBody> list_food_more;
+    private ArrayList<FoodSeriesBody> list_food_series_detail;
 
     private FoodListAdapter foodListAdapter;
     private FoodSelectListAdapter foodSelectListAdapter;
     private FoodSeriesAdapter foodSeriesAdapter;
     private FoodMoreAdapter foodMoreAdapter;
+    private FoodSeriesDetailAdapter foodSeriesDetailAdapter;
 
     private Handler handler = new Handler() {
         @Override
@@ -147,6 +151,23 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     }
                     hideProgressDialog();
                     break;
+                case MSG_FOOD_INDEX_NOT_CHANG_SELECT:
+                    Bundle foodNotChangeSelectObj = msg.getData();
+                    response = foodNotChangeSelectObj.getString("response");
+                    try {
+                        bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
+                        JSONObject jo = new JSONObject(response);
+                        list_food_select = parseFoodSelect(jo.getString("titles"));
+                    } catch (Exception e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    if (bodys.size() != 0) {
+                        foodListAdapter = new FoodListAdapter(getActivity(), bodys);
+                        lv_food.setAdapter(foodListAdapter);
+                        food_select_key = "";
+                    }
+                    hideProgressDialog();
+                    break;
                 case MSG_FOOD_FILTER:
                     Bundle foodSeriesObj = msg.getData();
                     response = foodSeriesObj.getString("response");
@@ -157,6 +178,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         list_food_more = (ArrayList<FoodTopicBody>) RedScarfBodyAdapter
                                 .fromJSONWithAttr(response, "topic_categories", Class.forName("com" +
                                         ".redscarf.weidou.pojo.FoodTopicBody"));
+                        FoodSeriesBody all_food = new FoodSeriesBody();
+                        all_food.setId("4");
+                        all_food.setTitle("餐厅");
+                        all_food.setSubcategory("[]");
+                        list_food_series.set(0, all_food);
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     } catch (ClassNotFoundException e) {
@@ -190,15 +216,18 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             location = tmp_location;
         }
         if (location != null) {
-            foodUrlAttribute.setLatitude(location.getLatitude()+"");
-            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+            foodUrlAttribute.setLatitude(location.getLatitude() + "");
+            foodUrlAttribute.setLongitude(location.getLongitude() + "");
+            MyPreferences.setAppPerenceAttribute("latitude", location.getLatitude() + "");
+            MyPreferences.setAppPerenceAttribute("longitude", location.getLongitude() + "");
         }
         setActionBarLayout(title, ActionBarType.WITHBACK);
         showProgressDialogNoCancelable("", MyConstants.LOADING);
         doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
                 String[]{foodUrlAttribute.toString(),
                 CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""), FoodFragment.class, handler, MSG_FOOD_FILTER);
+        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""),
+                FoodFragment.class, handler, MSG_FOOD_FILTER);
     }
 
 //    @Override
@@ -239,8 +268,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         location = LocationUtil.getLocation(getActivity());
         foodUrlAttribute = new FoodUrlAttribute();
         if (location != null) {
-            foodUrlAttribute.setLatitude(location.getLatitude()+"");
-            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+            foodUrlAttribute.setLatitude(location.getLatitude() + "");
+            foodUrlAttribute.setLongitude(location.getLongitude() + "");
         }
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setVisibility(View.GONE);
@@ -249,9 +278,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         selector = (ImageButton) rootView.findViewById(R.id.actionbar_selector);
         selector.setVisibility(View.VISIBLE);
         selector.setOnClickListener(new OnSelectFoodCategaryClick());
-//        back.setOnClickListener(new OnBackClick());
         lv_food = (PullableListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
+        lv_food.setOnScrollListener(new OnFoodListScrollListener());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
         ((PullToRefreshLayout) rootView.findViewById(R.id.food_refresh_view)).setOnRefreshListener(this);
@@ -260,7 +289,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         lv_food_select.setOnItemClickListener(new OnListFoodSelectItemClick());
 
         actionbar_food = rootView.findViewById(R.id.actionbar_food);
-        popup_selector = new PopupWindow();
     }
 
     @Override
@@ -272,7 +300,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                 CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
                 doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
-                        String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                                String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
                         MSG_INDEX);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -292,13 +320,34 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         }.sendEmptyMessageDelayed(0, 3000);
     }
 
-//    private class OnBackClick implements OnClickListener {
-//
-//        @Override
-//        public void onClick(View v) {
-//            mfoodBackListener.backToFoodCategory();
-//        }
-//    }
+    /**
+     * 美食list滚动加载
+     */
+
+    private int position = -1;
+    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
+
+    private class OnFoodListScrollListener implements AbsListView.OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            if (position != firstVisibleItem) {
+                position = firstVisibleItem;
+                if (!records.contains(position)) {
+                    if (1 == position % 10) {
+                        records.add(position);
+                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                    }
+                }
+
+            }
+        }
+    }
 
 
     /**
@@ -321,7 +370,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     }
 
-    private String food_select_key = "";
+
+    /**
+     * 首字母
+     */
     private class OnListFoodSelectItemClick implements OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -340,9 +392,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                 foodUrlAttribute.setFisrt_key(key);
             }
             CURRENT_PAGE = 1;
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
-                            String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
-                    MSG_INDEX);
+            reloadUrlWithFilter(PROGRESS_CANCLE);
         }
     }
 
@@ -403,11 +453,13 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private void showFoodCategaryPopupWindow() {
         foodUrlAttribute.clear();
         if (location != null) {
-            foodUrlAttribute.setLatitude(location.getLatitude()+"");
-            foodUrlAttribute.setLongitude(location.getLongitude()+"");
+            foodUrlAttribute.setLatitude(location.getLatitude() + "");
+            foodUrlAttribute.setLongitude(location.getLongitude() + "");
         }
         View contentView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_food_category, null);
+        //背景
+        view_bg_food_category = contentView.findViewById(R.id.view_bg_food_category);
         //重置按钮
         reset = (Button) contentView.findViewById(R.id.btn_food_category_reset);
         //确定按钮
@@ -426,6 +478,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         if (list_food_series.size() != 0) {
             foodSeriesAdapter = new FoodSeriesAdapter(getActivity(), list_food_series);
             lv_select_food_series.setAdapter(foodSeriesAdapter);
+            foodSeriesAdapter.setSelectedPosition(0);
         }
 
         //更多
@@ -434,6 +487,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             foodMoreAdapter = new FoodMoreAdapter(getActivity(), list_food_more);
             lv_select_food_more.setAdapter(foodMoreAdapter);
         }
+
+        //细分
+        lv_food_series_detail = (ScrollGridView) contentView.findViewById(R.id.list_select_food_series_detail);
+        layout_select_food_series_detail = (LinearLayout) contentView.findViewById(R.id
+                .layout_select_food_series_detail);
+
 
         // 设置SelectPicPopupWindow的View
         popup_selector.setContentView(contentView);
@@ -451,7 +510,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         popup_selector.setAnimationStyle(R.style.AnimationPreview);
-        popup_selector.showAtLocation(actionbar_food, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         reset.setOnClickListener(new OnFoodCategoryResetClick());
         submit.setOnClickListener(new OnFoodCategorySubmitClick());
         update_time.setOnClickListener(new OnFoodSortFilterClick());
@@ -463,6 +522,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             btn.setOnClickListener(new OnFoodCostclick());
         }
 
+        view_bg_food_category.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup_selector.dismiss();
+            }
+        });
 
     }
 
@@ -470,33 +535,109 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     /**
      * 菜系(主分类)
      */
+    private int food_series_item_postion = 0;
+
     private class OnFoodSeriesItemClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            FoodSeriesBody body = list_food_series.get(position);
-            foodUrlAttribute.setMain_category(body.getId());
-            foodUrlAttribute.setMain_category_flag(1);
+            try {
+                FoodSeriesBody body = list_food_series.get(position);
+                foodUrlAttribute.setMain_category(body.getId());
+                foodUrlAttribute.setMain_category_flag(1);
+                if (food_series_item_postion != position) {
+                    food_series_item_postion = position;
+                    foodSeriesAdapter.setSelectedPosition(position);
+                    if ("".equals(more_title)) {
+                        setActionBarLayout(body.getTitle(), ActionBarType.WITHBACK);
+                    }
+                    if (!"".equals(StringUtils.substringBetween(body.getSubcategory().trim(),
+                            "[", "]")) && "".equals(foodUrlAttribute.getTopic())) {
+                        layout_select_food_series_detail.setVisibility(View.VISIBLE);
 
-            foodSeriesAdapter.setSelectedPosition(position);
+                        list_food_series_detail = (ArrayList<FoodSeriesBody>) JSONHelper.parseCollection(body.getSubcategory(),
+                                ArrayList.class, FoodSeriesBody.class);
 
-            foodSeriesAdapter.notifyDataSetChanged();
+                        foodSeriesDetailAdapter = new FoodSeriesDetailAdapter(getActivity(), list_food_series_detail);
+                        lv_food_series_detail.setAdapter(foodSeriesDetailAdapter);
+                        lv_food_series_detail.setOnItemClickListener(new OnFoodSeriesDetailItemClick());
+                    } else {
+                        layout_select_food_series_detail.setVisibility(View.GONE);
+                    }
+                } else {
+                    food_series_item_postion = 0;
+                    foodSeriesAdapter.setSelectedPosition(0);
+                    layout_select_food_series_detail.setVisibility(View.GONE);
+                }
+                foodSeriesAdapter.notifyDataSetChanged();
+                reloadUrl(PROGRESS_DISVISIBLE);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
      * 更多（主题topic）
      */
+    private int food_more_item_postion = -1;
+
     private class OnFoodMoreItemClick implements OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FoodTopicBody body = list_food_more.get(position);
+            //赋值
             foodUrlAttribute.setTopic(body.getId());
+            foodUrlAttribute.setMain_category("4");
+            foodUrlAttribute.setSub_category("");
             foodUrlAttribute.setTopic_flag(1);
-
-            foodMoreAdapter.setSelectedPosition(position);
+            foodUrlAttribute.setMain_category_flag(0);
+            foodUrlAttribute.setSub_category_flag(0);
+            foodSeriesAdapter.setSelectedPosition(0);
+            foodSeriesAdapter.notifyDataSetChanged();
+            food_series_item_postion = 0;
+            food_series_detail_postion = -1;
+            layout_select_food_series_detail.setVisibility(View.GONE);
+            if (food_more_item_postion != position) {
+                food_more_item_postion = position;
+                more_title = body.getTitle();
+                setActionBarLayout(more_title, ActionBarType.WITHBACK);
+                foodMoreAdapter.setSelectedPosition(position);
+            } else {
+                more_title = "";
+                foodUrlAttribute.setTopic("");
+                foodUrlAttribute.setTopic_flag(0);
+                setActionBarLayout(list_food_series.get(0).getTitle(), ActionBarType.WITHBACK);
+                food_more_item_postion = -1;
+                foodMoreAdapter.setSelectedPosition(-1);
+            }
             foodMoreAdapter.notifyDataSetChanged();
+            reloadUrl(PROGRESS_DISVISIBLE);
+        }
+    }
+
+    /**
+     * 细分
+     */
+    private int food_series_detail_postion = -1;
+
+    private class OnFoodSeriesDetailItemClick implements OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (food_series_detail_postion != position) {
+                FoodSeriesBody body = list_food_series_detail.get(position);
+                foodUrlAttribute.setSub_category(body.getId());
+                foodUrlAttribute.setSub_category_flag(1);
+                food_series_detail_postion = position;
+                foodSeriesDetailAdapter.setSelectedPosition(position);
+            } else {
+                food_series_detail_postion = -1;
+                foodSeriesDetailAdapter.setSelectedPosition(-1);
+            }
+            foodSeriesDetailAdapter.notifyDataSetChanged();
+            reloadUrl(PROGRESS_DISVISIBLE);
         }
     }
 
@@ -507,7 +648,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         @Override
         public void onClick(View v) {
             foodUrlAttribute.clear();
-            popup_selector.dismiss();
+            title = list_food_series.get(0).getTitle();
+            more_title = "";
+            setActionBarLayout(title,ActionBarType.WITHBACK);
+            reloadUrl(PROGRESS_DISVISIBLE);
+
         }
     }
 
@@ -517,12 +662,28 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private class OnFoodCategorySubmitClick implements OnClickListener {
         @Override
         public void onClick(View v) {
-
             popup_selector.dismiss();
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST_WITH_FILTER, new
-                            String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
-                    MSG_INDEX);
         }
+    }
+
+    /**
+     * 加载
+     */
+    private void reloadUrl(int ProgressType) {
+        CURRENT_PAGE = 1;
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                .FOODLIST, new String[]{foodUrlAttribute.toString(),
+                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX, ProgressType);
+    }
+
+    /**
+     * 加载（不加载字母）
+     */
+    private void reloadUrlWithFilter(int ProgressType) {
+        CURRENT_PAGE = 1;
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                .FOODLIST, new String[]{foodUrlAttribute.toString(),
+                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_FOOD_FILTER, ProgressType);
     }
 
     /**
@@ -537,24 +698,59 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private int switchButtonStatus(Button v, int flag, Field field) throws IllegalAccessException {
         String content = v.getText().toString().trim();
         field.setAccessible(true);
-        if (0 != (++flag) % 3) {
+        int num = (++flag) % 3;
+        if (0 != num) {
             v.setSelected(true);
             if (1 == flag) {
                 field.set(foodUrlAttribute, "DESC");
-                v.setText(content + " +");
-            } else if (2 == flag) {
+                v.setText(content + "升序");
+            } else if (2 == flag && StringUtils.contains(content, "升序")) {
                 field.set(foodUrlAttribute, "ASC");
-                v.setText(StringUtils.substringBefore(content, " ") + " -");
+                v.setText(StringUtils.substringBefore(content, "升序") + "降序");
             }
         } else {
             flag = 0;
             field.set(foodUrlAttribute, "");
             v.setSelected(false);
-            v.setText(StringUtils.substringBefore(content, " "));
+            v.setText("价格");
+        }
+        return num;
+    }
+
+    /**
+     * 价格排序
+     *
+     * @param v
+     * @param flag
+     * @param field
+     * @return
+     * @throws IllegalAccessException
+     */
+    private int switchPriceButtonStatus(Button v, int flag, Field field) throws
+            IllegalAccessException {
+        String content = v.getText().toString().trim();
+        field.setAccessible(true);
+        if (0 != (++flag) % 3) {
+            v.setSelected(true);
+            if (1 == flag) {
+                field.set(foodUrlAttribute, "DESC");
+                v.setText(content + "升序");
+            } else if (2 == flag) {
+                field.set(foodUrlAttribute, "ASC");
+                v.setText(StringUtils.substringBefore(content, "升序") + "降序");
+            }
+        } else {
+            flag = 0;
+            field.set(foodUrlAttribute, "");
+            v.setSelected(false);
+            v.setText(StringUtils.substringBefore(content, ""));
         }
         return flag;
     }
 
+    /**
+     * 排序
+     */
     private class OnFoodSortFilterClick implements OnClickListener {
 
         @Override
@@ -562,25 +758,49 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             try {
                 switch (v.getId()) {
                     case R.id.food_select_update_time:
-                        int update_flag = foodUrlAttribute.getUpdate_time_flag();
+                        foodUrlAttribute.setUpdate_time("DESC");
+                        foodUrlAttribute.setDistance("");
+                        foodUrlAttribute.setPrice("");
+                        foodUrlAttribute.setPrice_flag(0);
+                        foodUrlAttribute.setDistance_flag(0);
 
-                        foodUrlAttribute.setUpdate_time_flag(switchButtonStatus(update_time,
-                                update_flag, FoodUrlAttribute.class.getDeclaredField("update_time")));
+                        update_time.setSelected(true);
+                        price.setSelected(false);
+                        distance.setSelected(false);
                         break;
                     case R.id.food_select_price:
-                        int cost_flag = foodUrlAttribute.getCost_flag();
-                        foodUrlAttribute.setCost_flag(switchButtonStatus(price, cost_flag,
+                        int price_flag = foodUrlAttribute.getPrice_flag();
+                        foodUrlAttribute.setPrice_flag(switchButtonStatus(price, price_flag,
                                 FoodUrlAttribute.class.getDeclaredField("price")));
+                        if (0 != foodUrlAttribute.getPrice_flag()) {
+                            update_time.setSelected(false);
+                            distance.setSelected(false);
+                        } else {
+                            update_time.setSelected(true);
+                            distance.setSelected(false);
+                        }
                         break;
                     case R.id.food_select_distance:
                         int distance_flag = foodUrlAttribute.getDistance_flag();
-                        foodUrlAttribute.setDistance_flag(switchButtonStatus(distance,
-                                distance_flag, FoodUrlAttribute.class.getDeclaredField("distance")));
+                        if (0 == distance_flag) {
+                            distance.setSelected(true);
+                            update_time.setSelected(false);
+                            price.setSelected(false);
+                            foodUrlAttribute.setDistance("ASC");
+                            foodUrlAttribute.setDistance_flag(1);
+                        } else {
+                            distance.setSelected(false);
+                            update_time.setSelected(true);
+                            price.setSelected(false);
+                            foodUrlAttribute.setDistance("");
+                            foodUrlAttribute.setDistance_flag(0);
+                        }
                         break;
                     default:
                         break;
 
                 }
+                reloadUrlWithFilter(PROGRESS_DISVISIBLE);
             } catch (NoSuchFieldException e) {
                 ExceptionUtil.printAndRecord(TAG, e);
             } catch (IllegalAccessException e) {
@@ -592,24 +812,70 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     /**
      * cost选项
      */
+
+
     private class OnFoodCostclick implements OnClickListener {
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.food_price_1:
-                    changeCostState(costs[0]);
+                    int cost_flag_1 = foodUrlAttribute.getCost_flag_1();
+                    foodUrlAttribute.setCost_flag_1(++cost_flag_1 % 2);
+                    if (1 == (foodUrlAttribute.getCost_flag_1())) {
+                        costs[0].setSelected(true);
+                        str_cost[0] = "£";
+                    } else {
+                        costs[0].setSelected(false);
+                        str_cost[0] = "";
+                    }
                     break;
                 case R.id.food_price_2:
-                    changeCostState(costs[1]);
+                    int cost_flag_2 = foodUrlAttribute.getCost_flag_2();
+                    foodUrlAttribute.setCost_flag_2(++cost_flag_2 % 2);
+                    if (1 == (foodUrlAttribute.getCost_flag_2())) {
+                        costs[1].setSelected(true);
+                        str_cost[1] = "££";
+                    } else {
+                        costs[1].setSelected(false);
+                        str_cost[1] = "";
+                    }
                     break;
                 case R.id.food_price_3:
-                    changeCostState(costs[2]);
+                    int cost_flag_3 = foodUrlAttribute.getCost_flag_3();
+                    foodUrlAttribute.setCost_flag_3(++cost_flag_3 % 2);
+                    if (1 == (foodUrlAttribute.getCost_flag_3())) {
+                        costs[2].setSelected(true);
+                        str_cost[2] = "£££";
+                    } else {
+                        costs[2].setSelected(false);
+                        str_cost[2] = "";
+                    }
                     break;
                 case R.id.food_price_4:
-                    changeCostState(costs[3]);
+                    int cost_flag_4 = foodUrlAttribute.getCost_flag_4();
+                    foodUrlAttribute.setCost_flag_4(++cost_flag_4 % 2);
+                    if (1 == (foodUrlAttribute.getCost_flag_4())) {
+                        costs[3].setSelected(true);
+                        str_cost[3] = "££££";
+                    } else {
+                        costs[3].setSelected(false);
+                        str_cost[3] = "";
+                    }
                     break;
             }
+            String attr_cost = "";
+            for (String str : str_cost) {
+                if (StringUtils.contains(str, "£"))
+                    attr_cost += str + ",";
+            }
+            if (StringUtils.contains(attr_cost, "£")) {
+                attr_cost = StringUtils.substring(attr_cost, 0, attr_cost.length() - 1);
+                foodUrlAttribute.setCost(attr_cost);
+            } else {
+                foodUrlAttribute.setCost("");
+            }
+            reloadUrl(PROGRESS_DISVISIBLE);
         }
     }
 
@@ -623,14 +889,19 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     }
 
     /**
-     * 品牌类别点击事件
+     * 类别点击事件
      */
     private class OnSelectFoodCategaryClick implements OnClickListener {
         @Override
         public void onClick(View v) {
-            if (!popup_selector.isShowing()) {
-                // 以下拉方式显示popupwindow
+            if (null == popup_selector) {
+                popup_selector = new PopupWindow();
                 showFoodCategaryPopupWindow();
+            }
+
+            if (!popup_selector.isShowing()) {
+                popup_selector.showAtLocation(actionbar_food, Gravity.CENTER, ViewGroup
+                        .LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             } else {
                 popup_selector.dismiss();
             }
