@@ -41,6 +41,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -66,7 +67,8 @@ import android.widget.Toast;
  *
  * @author yeahwa
  */
-public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener
+public class BuyFragment extends BaseFragment
+//        implements PullToRefreshLayout.OnRefreshListener
         //        implements OnTouchListener
 {
     private final String TAG = BuyFragment.class.getSimpleName();
@@ -137,7 +139,9 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
                         if (items.size() != 0) {
                             bodys.addAll(items);
 //                            lv_shop.invalidateViews();
-                            buyListAdapter.notifyDataSetChanged();
+//                            Parcelable state = lv_shop.onSaveInstanceState();
+//                            buyListAdapter.notifyDataSetChanged();
+//                            lv_shop.onRestoreInstanceState(state);
 
 //                            buyListAdapter.notifyDataSetInvalidated();
 //                            lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys, category_id));
@@ -262,7 +266,7 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
         lv_shop.setOnScrollListener(new OnBuyListScrollListener());
-        ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
+//        ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
@@ -270,42 +274,42 @@ public class BuyFragment extends BaseFragment implements PullToRefreshLayout.OnR
         popup_selector = new PopupWindow();
     }
 
-    /**
-     * 下拉
-     *
-     * @param pullToRefreshLayout
-     */
-    @Override
-    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-        // 下拉刷新操作
-        new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                CURRENT_PAGE = 1;
-                // 千万别忘了告诉控件刷新完毕了哦！
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
-                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-            }
-        }.sendEmptyMessageDelayed(0, 5000);
-    }
-
-    /**
-     * 上拉
-     *
-     * @param pullToRefreshLayout
-     */
-    @Override
-    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-        // 加载操作
-        new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
-                // 千万别忘了告诉控件加载完毕了哦！
-                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-            }
-        }.sendEmptyMessageDelayed(0, 5000);
-    }
+//    /**
+//     * 下拉
+//     *
+//     * @param pullToRefreshLayout
+//     */
+//    @Override
+//    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+//        // 下拉刷新操作
+//        new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                CURRENT_PAGE = 1;
+//                // 千万别忘了告诉控件刷新完毕了哦！
+//                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
+//                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+//            }
+//        }.sendEmptyMessageDelayed(0, 5000);
+//    }
+//
+//    /**
+//     * 上拉
+//     *
+//     * @param pullToRefreshLayout
+//     */
+//    @Override
+//    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+//        // 加载操作
+//        new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+//                // 千万别忘了告诉控件加载完毕了哦！
+//                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+//            }
+//        }.sendEmptyMessageDelayed(0, 5000);
+//    }
 
     /**
      * 点击跳转

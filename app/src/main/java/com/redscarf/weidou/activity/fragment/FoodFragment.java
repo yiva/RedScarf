@@ -124,7 +124,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         ArrayList<FoodBody> items = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
                         if (bodys.size() != 0) {
                             bodys.addAll(items);
-                            foodListAdapter.notifyDataSetChanged();
+//                            foodListAdapter.notifyDataSetChanged();
                         }
                     } catch (Exception e) {
                         ExceptionUtil.printAndRecord(TAG, e);
