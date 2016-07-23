@@ -182,7 +182,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         all_food.setId("4");
                         all_food.setTitle("餐厅");
                         all_food.setSubcategory("[]");
-                        list_food_series.set(0, all_food);
+                        list_food_series.add(0, all_food);
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     } catch (ClassNotFoundException e) {
