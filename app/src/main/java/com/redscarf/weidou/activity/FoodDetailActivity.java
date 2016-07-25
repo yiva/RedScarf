@@ -86,30 +86,38 @@ public class FoodDetailActivity extends BaseActivity implements
     @Override
     public void sendLcation(FoodDetailBody food) {
         food_body = food;
-        if (food_body != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Geocoder geoCoder = new Geocoder(FoodDetailActivity.this, Locale.getDefault());
-                    Message message = new Message();
-                    try {
-                        String location = food_body.getSubtitle() + "/n";
-                        location = location.split("/n")[0];
-                        addr = geoCoder.getFromLocationName(location, 5);
-                        if (addr.size() > 0) {
-                            message = Message.obtain(mainHandler, MSG_SUCCESS);
-                        } else {
-                            message = Message.obtain(mainHandler, MSG_FAIL);
-                        }
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        message = Message.obtain(mainHandler, MSG_FAIL);
-                    } finally {
-                        mainHandler.sendMessage(message);
-                    }
-                }
-            }).start();
+        try {
+            if (food_body != null) {
+                setUpMapIfNeeded();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Geocoder geoCoder = new Geocoder(FoodDetailActivity.this, Locale.getDefault());
+//                    Message message = new Message();
+//                    try {
+//                        String location = food_body.getSubtitle() + "/n";
+//                        location = location.split("/n")[0];
+//                        addr = geoCoder.getFromLocationName(location, 5);
+//                        if (addr.size() > 0) {
+//                            message = Message.obtain(mainHandler, MSG_SUCCESS);
+//                        } else {
+//                            message = Message.obtain(mainHandler, MSG_FAIL);
+//                        }
+//                    } catch (Exception e) {
+//                        // TODO Auto-generated catch block
+//                        message = Message.obtain(mainHandler, MSG_FAIL);
+//                    } finally {
+//                        mainHandler.sendMessage(message);
+//                    }
+//                }
+//            }).start();
+            } else {
+                setDefaultLocation();
+            }
+        }catch (Exception ex) {
+            ExceptionUtil.printAndRecord(TAG, ex);
         }
+
     }
 
     private void setUpMapIfNeeded() {
@@ -132,17 +140,19 @@ public class FoodDetailActivity extends BaseActivity implements
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        lng = new LatLng(addr.get(0).getLatitude(), addr.get(0).getLongitude());
+//        lng = new LatLng(addr.get(0).getLatitude(), addr.get(0).getLongitude());
+        lng = new LatLng(Double.parseDouble(food_body.getPost_lat()),
+                Double.parseDouble(food_body.getPost_lng()));
         MarkerOptions options = new MarkerOptions().position(lng)
                 .title(food_body.getTitle())
                 .snippet(food_body.getTitle() + "\r\n" + food_body.getSubtitle())
                 .flat(true);
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
-        if (ActivityCompat.checkSelfPermission(FoodDetailActivity.this,Manifest.permission
+        if (ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
                 .ACCESS_FINE_LOCATION) !=
                 PackageManager
-                .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this,Manifest.permission
+                        .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
                 .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    public void requestPermissions(@NonNull String[] permissions, int requestCode)

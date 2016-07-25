@@ -29,6 +29,7 @@ import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.DisplayUtil;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
+import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
@@ -68,7 +69,7 @@ import android.widget.Toast;
  * @author yeahwa
  */
 public class BuyFragment extends BaseFragment
-//        implements PullToRefreshLayout.OnRefreshListener
+        implements PullToRefreshLayout.OnRefreshListener
         //        implements OnTouchListener
 {
     private final String TAG = BuyFragment.class.getSimpleName();
@@ -98,6 +99,7 @@ public class BuyFragment extends BaseFragment
     private static Integer category_id = 5;
     private static Integer flag = 1;
     private static String title = "购物";
+    private static Integer total_count = 0;
 
     private BuyListAdapter buyListAdapter;
     private BrandsListAdapter brandsListAdapter;
@@ -113,6 +115,8 @@ public class BuyFragment extends BaseFragment
                     response = indexObj.getString("response");
                     try {
                         JSONObject jo = new JSONObject(response);
+                        JSONObject categoryJson = new JSONObject(jo.getString("category"));
+                        total_count = Integer.parseInt(categoryJson.getString("post_count"));
                         listbrands_title = parseBrands(jo.getString("brands"));
                         bodys = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
                     } catch (ClassNotFoundException e) {
@@ -266,7 +270,7 @@ public class BuyFragment extends BaseFragment
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
         lv_shop.setOnScrollListener(new OnBuyListScrollListener());
-//        ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
+        ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
@@ -274,42 +278,47 @@ public class BuyFragment extends BaseFragment
         popup_selector = new PopupWindow();
     }
 
-//    /**
-//     * 下拉
-//     *
-//     * @param pullToRefreshLayout
-//     */
-//    @Override
-//    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-//        // 下拉刷新操作
-//        new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                CURRENT_PAGE = 1;
-//                // 千万别忘了告诉控件刷新完毕了哦！
-//                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
-//                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-//            }
-//        }.sendEmptyMessageDelayed(0, 5000);
-//    }
-//
-//    /**
-//     * 上拉
-//     *
-//     * @param pullToRefreshLayout
-//     */
-//    @Override
-//    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-//        // 加载操作
-//        new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
-//                // 千万别忘了告诉控件加载完毕了哦！
-//                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-//            }
-//        }.sendEmptyMessageDelayed(0, 5000);
-//    }
+    /**
+     * 下拉
+     *
+     * @param pullToRefreshLayout
+     */
+    @Override
+    public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+        // 下拉刷新操作
+        new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                CURRENT_PAGE = 1;
+                // 千万别忘了告诉控件刷新完毕了哦！
+                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
+                pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 3000);
+    }
+
+    /**
+     * 上拉
+     *
+     * @param pullToRefreshLayout
+     */
+    @Override
+    public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+
+        if (total_count == bodys.size()) {
+            return;
+        } else {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                }
+            }.sendEmptyMessageDelayed(0, 3000);
+        }
+    }
 
     /**
      * 点击跳转

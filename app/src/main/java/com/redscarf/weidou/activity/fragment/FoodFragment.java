@@ -95,6 +95,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private static String title = "餐厅";
     private static String more_title = "";
     private static int CURRENT_PAGE = 1;
+    private static int total_count = 0;
     private String food_select_key = "";
     private FoodUrlAttribute foodUrlAttribute;
     private String[] str_cost = new String[]{"", "", "", ""};
@@ -134,8 +135,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     Bundle indexObj = msg.getData();
                     response = indexObj.getString("response");
                     try {
-                        bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
                         JSONObject jo = new JSONObject(response);
+                        JSONObject categoryJson = new JSONObject(jo.getString("category"));
+                        total_count = Integer.parseInt(categoryJson.getString("post_count"));
+                        bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
                         list_food_select = parseFoodSelect(jo.getString("titles"));
                     } catch (Exception e) {
                         ExceptionUtil.printAndRecord(TAG, e);
@@ -309,15 +312,19 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-        // 加载操作
-        new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
-                // 千万别忘了告诉控件加载完毕了哦！
-                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-            }
-        }.sendEmptyMessageDelayed(0, 3000);
+        if (total_count == bodys.size()) {
+            return;
+        } else {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                }
+            }.sendEmptyMessageDelayed(0, 3000);
+        }
     }
 
     /**
