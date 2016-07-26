@@ -76,12 +76,14 @@ public class FoodDetailFragment extends BaseFragment {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Bundle indexObj = msg.getData();
+            response = indexObj.getString("response");
             switch (msg.what) {
                 case MSG_INDEX:
-                    Bundle indexObj = msg.getData();
+
                     try {
                         ArrayList<FoodDetailBody> arrRed = RedScarfBodyAdapter
-                                .fromJSON(indexObj.getString("response"), FoodDetailBody.class);
+                                .fromJSON(response, FoodDetailBody.class);
                         body = arrRed.get(0);
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
@@ -243,6 +245,10 @@ public class FoodDetailFragment extends BaseFragment {
         if (StringUtils.isNotBlank(body.getDistance())) {
             distance.setText(body.getDistance() + "mi");
         }
+        if (body.getIs_favorate().equals("1") || body.getIs_favorate() == "1") {
+            favourite.setBackgroundResource(R.drawable.ic_favourite_red);
+        }
+
         //Call Phone
         phone.setOnClickListener(new onCallPhone());
 
