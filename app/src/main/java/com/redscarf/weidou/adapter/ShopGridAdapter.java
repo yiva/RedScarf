@@ -36,9 +36,16 @@ public class ShopGridAdapter extends BaseRedScarfAdapter<GridBody> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.layout.setBackgroundResource(getItem(position).getBackgroudColor());
+//        viewHolder.layout.setBackgroundResource(getItem(position).getBackgroudColor());
         viewHolder.photo.setBackgroundResource(getItem(position).getDrawableSource());
         viewHolder.title.setText(getItem(position).getTitle());
+
+        if(selectedPosition == position)
+        {
+            viewHolder.layout.setBackgroundResource(R.drawable.corners_bg_dark_purple);
+        } else {
+            viewHolder.layout.setBackgroundResource(R.drawable.corners_bg_purple);
+        }
 
         return convertView;
     }

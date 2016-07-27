@@ -254,12 +254,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "resume");
 
     }
 
     @Override
-    public void onPause() {
+   public void onPause() {
         super.onPause();
         if (popup_selector != null) {
             popup_selector.dismiss();

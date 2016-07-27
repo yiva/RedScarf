@@ -67,20 +67,17 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 	@Override
 	protected void onStart() {
 		super.onStart();
-		Log.d(TAG, "on start");
+
 	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		Log.d(TAG, "on restart");
 	}
-
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d(TAG, "on resume");
 	}
 
 	/**

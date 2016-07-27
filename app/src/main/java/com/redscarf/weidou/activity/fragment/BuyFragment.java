@@ -103,6 +103,7 @@ public class BuyFragment extends BaseFragment
 
     private BuyListAdapter buyListAdapter;
     private BrandsListAdapter brandsListAdapter;
+    private ShopGridAdapter shopGridAdapter;
 
     BackShopCategoryListener mbackClickListener;
 
@@ -275,7 +276,7 @@ public class BuyFragment extends BaseFragment
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
         actionbar_buy = rootView.findViewById(R.id.actionbar_buy);
-        popup_selector = new PopupWindow();
+//        popup_selector = new PopupWindow();
     }
 
     /**
@@ -505,7 +506,9 @@ public class BuyFragment extends BaseFragment
                 R.layout.fragment_shop_category, null);
         dismiss = (Button) contentView.findViewById(R.id.btn_shop_category_dismiss);
         grid_shop = (GridView) contentView.findViewById(R.id.grid_shop);
-        grid_shop.setAdapter(new ShopGridAdapter(getActivity(), datas = this.makeShopHeaderGridArrays()));
+        shopGridAdapter = new ShopGridAdapter(getActivity(), datas = this
+                .makeShopHeaderGridArrays());
+        grid_shop.setAdapter(shopGridAdapter);
         grid_shop.setOnItemClickListener(new OnShopItemClick());
         int h = GlobalApplication.getScreenHeight(getActivity());
         int w = GlobalApplication.getScreenWidth(getActivity());
@@ -525,7 +528,6 @@ public class BuyFragment extends BaseFragment
 //        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         popup_selector.setAnimationStyle(R.style.AnimationPreview);
-        popup_selector.showAtLocation(actionbar_buy, Gravity.CENTER, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dismiss.setOnClickListener(new OnShopCategoryDismissClick());
     }
 
@@ -600,9 +602,15 @@ public class BuyFragment extends BaseFragment
     private class OnSelectDiscountCategaryClick implements OnClickListener {
         @Override
         public void onClick(View v) {
+            if (null == popup_selector) {
+                popup_selector = new PopupWindow();
+                showShopCategaryPopupWindow();
+            }
+
             if (!popup_selector.isShowing()) {
                 // 以下拉方式显示popupwindow
-                showShopCategaryPopupWindow();
+                popup_selector.showAtLocation(actionbar_buy, Gravity.CENTER, ViewGroup
+                        .LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             } else {
                 popup_selector.dismiss();
             }
@@ -618,21 +626,38 @@ public class BuyFragment extends BaseFragment
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * 购物类别点击事件
+     */
+    private int shop_category_postion = -1;
+
     private class OnShopItemClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            GridBody body = datas.get(position);
-            CURRENT_PAGE = 1;
-            category_id = body.getPostId();
-            title = body.getTitle();
-            if ("全部购物".equals(title)) {
+            if (shop_category_postion != position) {
+                shop_category_postion = position;
+                shopGridAdapter.setSelectedPosition(position);
+                GridBody body = datas.get(position);
+                CURRENT_PAGE = 1;
+                category_id = body.getPostId();
+                title = body.getTitle();
+                if ("全部购物".equals(title)) {
+                    title = "购物";
+                }
+            } else {
+                shop_category_postion = -1;
+                shopGridAdapter.setSelectedPosition(position);
+                CURRENT_PAGE = 1;
+                category_id = 5;
                 title = "购物";
             }
             setActionBarLayout(title, ActionBarType.WITHBACK);
-            showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
-            popup_selector.dismiss();
+            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                            .BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}),
+                    BuyFragment.class, handler, MSG_INDEX, PROGRESS_DISVISIBLE);
+            shopGridAdapter.setSelectedPosition(shop_category_postion);
+            shopGridAdapter.notifyDataSetChanged();
         }
     }
 
