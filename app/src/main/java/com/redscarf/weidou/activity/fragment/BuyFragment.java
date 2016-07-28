@@ -141,6 +141,7 @@ public class BuyFragment extends BaseFragment
                     try {
                         JSONObject jo = new JSONObject(response);
                         ArrayList<GoodsBody> items = (ArrayList<GoodsBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.GoodsBody"));
+                        total_count = items.size();//记录本次加载条目数
                         if (items.size() != 0) {
                             bodys.addAll(items);
 //                            lv_shop.invalidateViews();
@@ -306,7 +307,7 @@ public class BuyFragment extends BaseFragment
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
 
-        if (total_count == bodys.size()) {
+        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
             return;
         } else {
             // 加载操作
@@ -629,7 +630,7 @@ public class BuyFragment extends BaseFragment
     /**
      * 购物类别点击事件
      */
-    private int shop_category_postion = -1;
+    private int shop_category_postion = 0;
 
     private class OnShopItemClick implements AdapterView.OnItemClickListener {
 
@@ -646,18 +647,23 @@ public class BuyFragment extends BaseFragment
                     title = "购物";
                 }
             } else {
-                shop_category_postion = -1;
+                shop_category_postion = 0;
                 shopGridAdapter.setSelectedPosition(position);
                 CURRENT_PAGE = 1;
                 category_id = 5;
                 title = "购物";
+                if (0 == position) {
+                    popup_selector.dismiss();
+                    return;
+                }
             }
             setActionBarLayout(title, ActionBarType.WITHBACK);
+            showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                             .BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}),
-                    BuyFragment.class, handler, MSG_INDEX, PROGRESS_DISVISIBLE);
+                    BuyFragment.class, handler, MSG_INDEX, PROGRESS_CANCLE);
             shopGridAdapter.setSelectedPosition(shop_category_postion);
-            shopGridAdapter.notifyDataSetChanged();
+            popup_selector.dismiss();
         }
     }
 

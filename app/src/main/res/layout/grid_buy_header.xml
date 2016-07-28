@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:paddingBottom="24dp"
+    android:paddingTop="@dimen/layout_padding1"
+    android:paddingBottom="@dimen/layout_padding1"
     android:id="@+id/layout_grid_buy_header"
     android:background="@drawable/corners_bg_purple"
     android:descendantFocusability="blocksDescendants"
+    android:gravity="center"
     >
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/img_grid_buy_header"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="@dimen/layout_margin3"
-        />
-
-    <TextView
-        android:id="@+id/txt_grid_buy_header"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_below="@+id/img_grid_buy_header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/img_grid_buy_header"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/txt_grid_buy_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_grid_buy_header"
+            android:layout_marginTop="@dimen/layout_margin3"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 </RelativeLayout>

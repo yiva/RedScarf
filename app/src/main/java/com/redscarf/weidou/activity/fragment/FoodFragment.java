@@ -123,6 +123,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     response = foodObj.getString("response");
                     try {
                         ArrayList<FoodBody> items = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
+                        total_count = items.size();
                         if (bodys.size() != 0) {
                             bodys.addAll(items);
 //                            foodListAdapter.notifyDataSetChanged();
@@ -137,7 +138,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     try {
                         JSONObject jo = new JSONObject(response);
                         JSONObject categoryJson = new JSONObject(jo.getString("category"));
-                        total_count = Integer.parseInt(categoryJson.getString("post_count"));
                         bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
                         list_food_select = parseFoodSelect(jo.getString("titles"));
                     } catch (Exception e) {
@@ -311,7 +311,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-        if (total_count == bodys.size()) {
+        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
             return;
         } else {
             // 加载操作
