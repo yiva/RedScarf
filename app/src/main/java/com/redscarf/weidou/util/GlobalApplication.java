@@ -56,6 +56,7 @@ public class GlobalApplication extends Application{
 		// TODO Auto-generated method stub
 		super.onCreate();
 		GlobalApplication.context = getApplicationContext();
+		FileUtil.makeRootDirectory(MyConstants.SDCARD_PATH);
 		initRequestQueue();
 	}
 	

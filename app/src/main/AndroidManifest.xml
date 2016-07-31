@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- Allows the API to cache map tile data in the device's external storage area -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--在SD卡中创建与删除文件权限-->
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS"/>
+    <!--读取数据的权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--
      The following two permissions are not required to use
      Google Maps Android API v2, but are recommended.

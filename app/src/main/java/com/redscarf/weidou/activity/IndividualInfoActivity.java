@@ -65,7 +65,6 @@ public class IndividualInfoActivity extends BaseActivity {
 
     private int MSG_MINE = 1;
     private int MSG_NONCE = 2;
-    private int MSG_UPLOAD = 3;
     private String response;
     private Member body;
     private NonceBody nonce;
@@ -232,8 +231,6 @@ public class IndividualInfoActivity extends BaseActivity {
                             if ((dot > -1) && (dot < (filename.length()))) {
                                 filename = filename.substring(0, dot);
                             }
-//                            RequestQueue queue = Volley.newRequestQueue(this);
-
                             MultipartRequest multipartRequest = new MultipartRequest(
                                     RequestURLFactory.sysRequestURL(RequestType
                                             .UPLOAD_AVATOR, new String[]{MyPreferences

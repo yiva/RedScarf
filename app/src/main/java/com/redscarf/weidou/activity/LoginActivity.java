@@ -3,6 +3,7 @@ package com.redscarf.weidou.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -22,8 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.redscarf.weidou.adapter.CookieAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
+import com.redscarf.weidou.network.MultipartEntity;
+import com.redscarf.weidou.network.MultipartRequest;
+import com.redscarf.weidou.pojo.AvatarResultBody;
 import com.redscarf.weidou.pojo.CookieBody;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.FileUtil;
 import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.weibo.AccessTokenKeeper;
 import com.redscarf.weidou.util.GlobalApplication;
@@ -46,6 +51,10 @@ import com.sina.weibo.sdk.utils.LogUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -69,6 +78,7 @@ public class LoginActivity extends BaseActivity {
 
     private CookieBody cookie_body;
     private Boolean cookie_valid;
+    private AvatarResultBody avatar_result;
 
     private AuthInfo mAuthInfo;
 
@@ -87,6 +97,8 @@ public class LoginActivity extends BaseActivity {
     private UsersAPI mUsersAPI;
 
     private String response;
+    private String avatar_large;//用户头像
+    private File user_avatar;
 
     private final int MSG_GENERATE = 11; // msg.what generate cookie
     private final int MSG_VALID = 12; //msg.what valid cookie
@@ -98,6 +110,7 @@ public class LoginActivity extends BaseActivity {
             Bundle indexObj = msg.getData();
             switch (msg.what) {
                 case MSG_GENERATE:
+                    hideProgressDialog();
                     cookie_body = indexObj.getParcelable("result");
                     loginForward(cookie_body);
                     break;
@@ -115,8 +128,33 @@ public class LoginActivity extends BaseActivity {
                     }
                     loginForward(cookie_body);
                     break;
+                case MSG_WEIBO_AVATAR:
+                    hideProgressDialog();
+                    response = indexObj.getString("response");
+                    if (response != null) {
+                        try {
+                            avatar_result = (AvatarResultBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com" +
+                                    ".redscarf.weidou.pojo.AvatarResultBody"));
+                            if (avatar_result.getSuccess() == "true") {
+                                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                                Intent i_login = new Intent(LoginActivity.this, BasicViewActivity.class);
+                                startActivity(i_login);
+                                finish();
+                            } else {
+                                clearUser();
+                                Toast.makeText(LoginActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
             }
-            hideProgressDialog();
 
         }
     };
@@ -225,15 +263,17 @@ public class LoginActivity extends BaseActivity {
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, body.getCookie());
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, body.getCookie_name());
             MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_ID, makeID(body.getUser()));
-            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-            Intent i_login = new Intent(LoginActivity.this, BasicViewActivity.class);
-            startActivity(i_login);
-            finish();
+            uploadUserAvatar();
         } else {
             Toast.makeText(LoginActivity.this, body.getError(), Toast.LENGTH_SHORT).show();
-            MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, "");
-            MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, "");
+            clearUser();
         }
+    }
+
+    private void clearUser() {
+        MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE, "");
+        MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME, "");
+        MyPreferences.setAppPerenceAttribute(MyConstants.PREF_USER_ID, "");
     }
 
     private class OnLoginByWeibo implements View.OnClickListener {
@@ -407,23 +447,31 @@ public class LoginActivity extends BaseActivity {
                 LogUtil.i(TAG, response);
                 // 调用 User#parse 将JSON串解析成User对象
                 User user = User.parse(response);
-                if (user != null) {
-                    String email = "wb" + user.idstr + "@weidou.co.uk";
-                    String gender = "";
-                    if ("f".equals(user.gender)) {
-                        gender = "女";
-                    } else if ("m".equals(user.gender)) {
-                        gender = "男";
+                try {
+                    if (user != null) {
+                        String email = "wb" + user.idstr + "@weidou.co.uk";
+                        String gender = "";
+                        if ("f".equals(user.gender)) {
+                            gender = "女";
+                        } else if ("m".equals(user.gender)) {
+                            gender = "男";
+                        }
+
+                        //用户头像URL
+                        avatar_large = user.avatar_large;
+
+                        doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
+                                        .LOGIN_WEIBO, new String[]{user.idstr, email, email, user
+                                        .screen_name, user.screen_name,
+                                        gender, user.location}),
+                                LoginActivity.class,
+                                handler,
+                                MSG_LOGIN_WEIBO, PROGRESS_DISVISIBLE);
+                    } else {
+                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
                     }
-                    doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
-                                    .LOGIN_WEIBO, new String[]{user.idstr, email, email, user
-                                    .screen_name, user.screen_name,
-                                    gender, user.location}),
-                            LoginActivity.class,
-                            handler,
-                            MSG_LOGIN_WEIBO, PROGRESS_DISVISIBLE);
-                } else {
-                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -435,4 +483,79 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(LoginActivity.this, info.toString(), Toast.LENGTH_LONG).show();
         }
     };
+
+    private boolean uploadUserAvatar() {
+        showProgressDialogNoCancelable("", MyConstants.LOADING);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e(TAG, "get weibo user avatar");
+                // TODO Auto-generated method stub
+                try {
+                    InputStream is = new URL(avatar_large).openStream();
+                    user_avatar = FileUtil.makeFilePath(MyConstants.SDCARD_PATH + "Temp/",
+                            "tmp_weibo_avatar.jpg");
+//                    user_avatar = FileUtil.makeFilePath(Environment.getExternalStorageDirectory()
+//                                    .getAbsolutePath().toString(),
+//                            "/tmp_weidou_user_avatar.jpg");
+                    FileUtil.inputstreamtofile(is, user_avatar);
+                    if (user_avatar.exists()) {
+                        try {
+//                            showProgressDialogNoCancelable("", "图片上传中......");
+                            String filename = user_avatar.getName();
+                            int dot = filename.lastIndexOf('.');
+                            if ((dot > -1) && (dot < (filename.length()))) {
+                                filename = filename.substring(0, dot);
+                            }
+//                            RequestQueue queue = Volley.newRequestQueue(this);
+
+                            MultipartRequest multipartRequest = new MultipartRequest(
+                                    RequestURLFactory.sysRequestURL(RequestType
+                                            .UPLOAD_AVATOR, new String[]{MyPreferences
+                                            .getAppPerenceAttribute("user_cookie"), filename}),
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Log.i(MineActivity.class.getSimpleName(), response);
+                                            Bundle data = new Bundle();
+                                            data.putString("response", response);
+                                            Message message = Message.obtain(handler, MSG_WEIBO_AVATAR);
+                                            message.setData(data);
+                                            handler.sendMessage(message);
+                                        }
+
+                                    });
+                            // 添加header
+                            multipartRequest.addHeader("header-name", "value");
+                            // 通过MultipartEntity来设置参数
+                            MultipartEntity multi = multipartRequest.getMultiPartEntity();
+                            // 文本参数
+                            multi.addStringPart("userCookie", MyPreferences
+                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
+                            multi.addStringPart("userCookie_name", MyPreferences
+                                    .getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE_NAME));
+                            // 上传文件
+                            multi.addFilePart("file", user_avatar);
+                            // 将请求添加到队列中
+                            multipartRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+                                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            multipartRequest.setTag(MineActivity.class.getSimpleName());
+                            VolleyUtil.getRequestQueue().add(multipartRequest);
+//                            queue.add(multipartRequest);
+                        } catch (Exception ex) {
+                            Toast.makeText(LoginActivity.this, "上传头像失败", Toast.LENGTH_SHORT).show();
+                            ExceptionUtil.printAndRecord(TAG, ex);
+                        }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception ex) {
+                    ExceptionUtil.printAndRecord(TAG, ex);
+                }
+
+            }
+        }).start();
+        return true;
+    }
 }
