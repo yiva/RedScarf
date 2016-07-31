@@ -11,6 +11,9 @@ import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.pojo.FoodSeriesBody;
 import com.redscarf.weidou.pojo.FoodTopicBody;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,7 +42,12 @@ public class FoodMoreAdapter extends BaseRedScarfAdapter<FoodTopicBody> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String imageUrl = this.mRedScarfBodies.get(position).getImage();
+        String imageUrl = null;
+        try {
+            imageUrl = this.mRedScarfBodies.get(position).getImage();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             ImageLoader.ImageListener listener = ImageLoader.getImageListener(viewHolder.food_topic,
                     R.drawable.loading_middle, R.drawable.loading_middle);

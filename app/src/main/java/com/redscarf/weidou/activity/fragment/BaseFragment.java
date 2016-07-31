@@ -53,7 +53,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
 
     private StringRequest stringRequest;
 
-    protected HashMap<String, String> url_map;
+    protected HashMap<String, String> url_map = new HashMap<>();
 
     protected View rootView;
 

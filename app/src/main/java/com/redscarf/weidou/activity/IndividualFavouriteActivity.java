@@ -50,8 +50,10 @@ public class IndividualFavouriteActivity extends BaseActivity{
                         e.printStackTrace();
                     }
                     if (bodys.size() != 0) {
-                        lv_favourite.setAdapter(new FavouriteAdapter(IndividualFavouriteActivity.this,
+                        lv_favourite.setAdapter(new MyFavouriteAdapter(IndividualFavouriteActivity.this,
                                 bodys));
+//                        lv_favourite.setAdapter(new FavouriteAdapter(IndividualFavouriteActivity.this,
+//                                bodys));
 
                     }
                 }

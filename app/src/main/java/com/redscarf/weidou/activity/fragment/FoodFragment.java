@@ -100,7 +100,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private String food_select_key = "";
     private FoodUrlAttribute foodUrlAttribute;
     private String[] str_cost = new String[]{"", "", "", ""};
+    private int position = -1;
 
+    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
     private ArrayList<FoodBody> bodys;
     private ArrayList<String> list_food_select;
     private Location location;
@@ -147,6 +149,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     if (bodys.size() != 0) {
                         foodListAdapter = new FoodListAdapter(getActivity(), bodys);
                         lv_food.setAdapter(foodListAdapter);
+                        records.clear();
                     }
                     if (list_food_select.size() != 0) {
                         list_food_select.add(0, "All");
@@ -160,8 +163,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     response = foodNotChangeSelectObj.getString("response");
                     try {
                         bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
-                        JSONObject jo = new JSONObject(response);
-                        list_food_select = parseFoodSelect(jo.getString("titles"));
+//                        JSONObject jo = new JSONObject(response);
+//                        list_food_select = parseFoodSelect(jo.getString("titles"));
                     } catch (Exception e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
@@ -169,6 +172,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         foodListAdapter = new FoodListAdapter(getActivity(), bodys);
                         lv_food.setAdapter(foodListAdapter);
                         food_select_key = "";
+                        records.clear();
                     }
                     hideProgressDialog();
                     break;
@@ -279,8 +283,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
         //品牌类别选择
         selector = (ImageButton) rootView.findViewById(R.id.actionbar_selector);
-        selector.setVisibility(View.VISIBLE);
-        selector.setOnClickListener(new OnSelectFoodCategaryClick());
+//        selector.setVisibility(View.VISIBLE);
+//        selector.setOnClickListener(new OnSelectFoodCategaryClick());
         lv_food = (PullableListView) rootView.findViewById(R.id.list_food);
         lv_food.setOnItemClickListener(new onListFoodItemClick());
         lv_food.setOnScrollListener(new OnFoodListScrollListener());
@@ -323,7 +327,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     // 千万别忘了告诉控件加载完毕了哦！
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, MyConstants.REQUEST_LOAD_TIME);
 //        }
     }
 
@@ -331,8 +335,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
      * 美食list滚动加载
      */
 
-    private int position = -1;
-    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
+
 
     private class OnFoodListScrollListener implements AbsListView.OnScrollListener {
 
@@ -690,7 +693,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         CURRENT_PAGE = 1;
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                 .FOODLIST, new String[]{foodUrlAttribute.toString(),
-                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_FOOD_FILTER, ProgressType);
+                CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType);
     }
 
     /**
@@ -710,10 +714,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             v.setSelected(true);
             if (1 == flag) {
                 field.set(foodUrlAttribute, "DESC");
-                v.setText(content + "升序");
+                v.setText("价格升序");
             } else if (2 == flag && StringUtils.contains(content, "升序")) {
                 field.set(foodUrlAttribute, "ASC");
-                v.setText(StringUtils.substringBefore(content, "升序") + "降序");
+                v.setText("价格降序");
             }
         } else {
             flag = 0;
@@ -773,6 +777,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
                         update_time.setSelected(true);
                         price.setSelected(false);
+                        price.setText("价格");
                         distance.setSelected(false);
                         break;
                     case R.id.food_select_price:

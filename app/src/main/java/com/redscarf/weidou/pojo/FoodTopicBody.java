@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.redscarf.weidou.util.MyConstants;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by XZR on 2016/7/1.
  */
@@ -91,8 +94,8 @@ public class FoodTopicBody implements Parcelable{
         this.post_count = post_count;
     }
 
-    public String getImage() {
-        return MyConstants.URL + "wp-content/uploads" + image;
+    public String getImage() throws UnsupportedEncodingException {
+        return MyConstants.URL + "wp-content/uploads" + URLEncoder.encode(image,"UTF-8");
     }
 
     public void setImage(String image) {

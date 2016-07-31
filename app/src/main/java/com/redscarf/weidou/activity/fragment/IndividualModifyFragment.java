@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
@@ -89,7 +90,7 @@ public class IndividualModifyFragment extends BaseFragment {
 
         @Override
         public void onClick(View v) {
-            url_map.put("cookie", MyPreferences.getAppPerenceAttribute("user_cookie"));
+            url_map.put("cookie", MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
             url_map.put("meta_key", datas.getString("meta_key"));
             url_map.put("meta_value", edit_modify.getText().toString());
             doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MODIFY_INDIVIDUAL,

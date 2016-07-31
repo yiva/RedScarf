@@ -25,5 +25,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/app_name"
+        android:visibility="gone"
         />
 </RelativeLayout>

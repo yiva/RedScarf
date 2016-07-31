@@ -100,6 +100,8 @@ public class BuyFragment extends BaseFragment
     private static Integer flag = 1;
     private static String title = "购物";
     private static Integer total_count = 0;
+    private int position = -1;
+    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
 
     private BuyListAdapter buyListAdapter;
     private BrandsListAdapter brandsListAdapter;
@@ -132,6 +134,7 @@ public class BuyFragment extends BaseFragment
                     if (bodys.size() != 0) {
                         buyListAdapter = new BuyListAdapter(getActivity(), bodys, category_id);
                         lv_shop.setAdapter(buyListAdapter);
+                        records.clear();
                     }
                     hideProgressDialog();
                     break;
@@ -296,7 +299,7 @@ public class BuyFragment extends BaseFragment
                 doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
-        }.sendEmptyMessageDelayed(0, 3000);
+        }.sendEmptyMessageDelayed(0, MyConstants.REQUEST_LOAD_TIME);
     }
 
     /**
@@ -347,8 +350,7 @@ public class BuyFragment extends BaseFragment
      * 购物list滚动加载
      */
 
-    private int position = -1;
-    private ArrayList<Integer> records = new ArrayList<>();//记录刷新点
+
 
     private class OnBuyListScrollListener implements AbsListView.OnScrollListener {
 

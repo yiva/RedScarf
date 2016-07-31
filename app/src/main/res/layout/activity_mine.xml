@@ -51,7 +51,8 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/ic_next_grey"
-                    android:layout_marginRight="@dimen/layout_margin3"/>
+                    android:layout_marginRight="@dimen/layout_margin3"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             	

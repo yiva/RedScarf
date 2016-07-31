@@ -37,6 +37,7 @@ import com.redscarf.weidou.util.MyConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -102,7 +103,8 @@ public class SearchDetailActivity extends BaseActivity
                 search_content.setText(datas.getString("content"));
 //                search_content.setInputType(InputType.TYPE_NULL);
                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                                .SEARCHLIST, new String[]{datas.getString("content")}),
+                                .SEARCHLIST, new String[]{URLEncoder.encode(datas.getString
+                                ("content"),"UTF-8")}),
                         SearchDetailActivity.class, handler, MSG_INDEX,
                         PROGRESS_NO_CANCLE);
             }
