@@ -188,7 +188,8 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 				Log.e(clazz.getSimpleName(), "error", volleyError);
 			}
 		});
-		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
+				DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		stringRequest.setTag(clazz.getSimpleName());
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
@@ -212,7 +213,8 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 				Log.e(clazz.getSimpleName(), "error", volleyError);
 			}
 		});
-		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
+				DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		stringRequest.setTag(clazz.getSimpleName());
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
@@ -249,7 +251,8 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 				Log.e(clazz.getSimpleName(), "error", volleyError);
 			}
 		});
-		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
+				DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		stringRequest.setTag(clazz.getSimpleName());
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}
@@ -278,7 +281,8 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
 				Log.e(clazz.getSimpleName(), "error", volleyError);
 			}
 		});
-		stringRequest.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+		stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+				DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 		stringRequest.setTag(clazz.getSimpleName());
 		VolleyUtil.getRequestQueue().add(stringRequest);
 	}

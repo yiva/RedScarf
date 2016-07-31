@@ -85,6 +85,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private Button[] costs = new Button[4];
     private View view_bg_food_category;
     private LinearLayout layout_select_food_series_detail;
+    private PullToRefreshLayout pullToRefreshLayout;
 
     private String response;
     private float lastY = 0f;
@@ -285,7 +286,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         lv_food.setOnScrollListener(new OnFoodListScrollListener());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
-        ((PullToRefreshLayout) rootView.findViewById(R.id.food_refresh_view)).setOnRefreshListener(this);
+        pullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.food_refresh_view);
+        pullToRefreshLayout.setOnRefreshListener(this);
 
         lv_food_select = (HorizontalListView) rootView.findViewById(R.id.list_food_select);
         lv_food_select.setOnItemClickListener(new OnListFoodSelectItemClick());
@@ -311,9 +313,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
-            return;
-        } else {
+//        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
+//        } else {
             // 加载操作
             new Handler() {
                 @Override
@@ -323,7 +324,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
-        }
+//        }
     }
 
     /**

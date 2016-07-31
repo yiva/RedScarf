@@ -18,6 +18,11 @@ public class MyConstants {
 	//欢迎页迟延
 	public static final long WELCOME_TIME = 2500L;
 
+	//重复提交次数
+	public static final Integer MAX_RETRIES = 3;
+
+	//请求时间（ms）
+	public static final Integer REQUEST_LOAD_TIME = 5000;
 
 	//Preference用户Cookie属性
 	public static final String PREF_USER_COOKIE = "user_cookie";

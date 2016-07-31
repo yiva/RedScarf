@@ -307,9 +307,9 @@ public class BuyFragment extends BaseFragment
     @Override
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
 
-        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
-            return;
-        } else {
+//        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
+//            return;
+//        } else {
             // 加载操作
             new Handler() {
                 @Override
@@ -319,7 +319,7 @@ public class BuyFragment extends BaseFragment
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
-        }
+//        }
     }
 
     /**

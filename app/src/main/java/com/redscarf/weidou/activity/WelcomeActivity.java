@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 
 import java.io.IOException;
 
@@ -34,6 +36,11 @@ public class WelcomeActivity extends BaseActivity {
 		GlobalApplication.getInstance().addActivity(this);
 
 		welcome_gif = (GifImageView) findViewById(R.id.img_welcome);
+		//初始化
+		Animation scaleAnimation = new ScaleAnimation(0.1f, 1.0f,0.1f,1.0f);
+//设置动画时间
+		scaleAnimation.setDuration(2000);
+		welcome_gif.startAnimation(scaleAnimation);
 		// 加载本地gif显示
 		try {
 			GifDrawable gifDrawable = new GifDrawable(getResources(),
