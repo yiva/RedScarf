@@ -44,11 +44,11 @@ public class SearchFragment extends BaseViewPagerFragment {
 
     @Override
     protected void onSetupTabAdapter(ViewPageFragmentAdapter adapter) {
-//        String[] title = { "热门购物", "热门餐厅", "热门搜索" };
-        String[] title = { "热门购物", "热门餐厅" };
+        String[] title = { "热门购物", "热门餐厅", "热门搜索" };
+//        String[] title = { "热门购物", "热门餐厅" };
         adapter.addTab(title[0], "shop", ShopSearchFragment.class, null);
         adapter.addTab(title[1], "food", FoodSearchFragment.class, null);
-//        adapter.addTab(title[2], "hot", HotSearchFragment.class, null);
+        adapter.addTab(title[2], "hot", HotSearchFragment.class, null);
     }
 
     @Override

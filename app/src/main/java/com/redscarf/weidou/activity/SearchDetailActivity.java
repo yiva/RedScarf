@@ -37,6 +37,7 @@ import com.redscarf.weidou.util.MyConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -44,8 +45,7 @@ import java.util.ArrayList;
  * 搜索页面
  */
 public class SearchDetailActivity extends BaseActivity
-        implements View.OnTouchListener
-{
+        implements View.OnTouchListener {
 
     private final String TAG = SearchDetailActivity.class.getSimpleName();
 
@@ -66,7 +66,7 @@ public class SearchDetailActivity extends BaseActivity
                 try {
                     arrRed = RedScarfBodyAdapter
                             .fromJSON(response, SearchDetailBody.class);
-                    if (arrRed.size() != 0){
+                    if (arrRed.size() != 0) {
                         lv_index.setAdapter(new SearchDetailAdapter(SearchDetailActivity.this,
                                 arrRed));
                     }
@@ -98,17 +98,16 @@ public class SearchDetailActivity extends BaseActivity
         lv_index.setOnItemClickListener(new OnSearchDetailItemClick());
         lv_index.setOnTouchListener(this);
         lv_index.setLongClickable(true);
-        try{
-            if (datas != null && datas.containsKey("content")){
+        try {
+            if (datas != null && datas.containsKey("content")) {
                 search_content.setText(datas.getString("content"));
 //                search_content.setInputType(InputType.TYPE_NULL);
                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                                .SEARCHLIST, new String[]{URLEncoder.encode(datas.getString
-                                ("content"),"UTF-8")}),
+                                .SEARCHLIST, new String[]{datas.getString("content")}),
                         SearchDetailActivity.class, handler, MSG_INDEX,
                         PROGRESS_NO_CANCLE);
             }
-        }catch(Exception ex) {
+        } catch (Exception ex) {
             ExceptionUtil.printAndRecord(TAG, ex);
         }
 
@@ -136,8 +135,8 @@ public class SearchDetailActivity extends BaseActivity
                     currentDirection = (int) (currentY - lastY);
                     if (lastDirection != currentDirection) {
                         //关闭软键盘
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(search_content.getWindowToken(),0);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(search_content.getWindowToken(), 0);
                     }
                     lastY = currentY;
                 }
@@ -153,14 +152,14 @@ public class SearchDetailActivity extends BaseActivity
     }
 
 
-    private class OnSearchSubmitListener implements TextView.OnEditorActionListener{
+    private class OnSearchSubmitListener implements TextView.OnEditorActionListener {
 
 
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String content = String.valueOf(search_content.getText().toString().trim());
-                if (!content.equals("")){
+                if (!content.equals("")) {
                     submitSearch(content);
                 }
             }
@@ -168,36 +167,36 @@ public class SearchDetailActivity extends BaseActivity
         }
     }
 
-    private boolean submitSearch(String content){
+    private boolean submitSearch(String content) {
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                .SEARCHLIST,new String[]{content}),SearchDetailActivity.class,handler,MSG_INDEX,
+                        .SEARCHLIST, new String[]{content}), SearchDetailActivity.class, handler, MSG_INDEX,
                 PROGRESS_NO_CANCLE);
         return true;
     }
 
-    private class OnSearchDetailItemClick implements AdapterView.OnItemClickListener{
+    private class OnSearchDetailItemClick implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Bundle datas = new Bundle();
-            datas.putString("id",arrRed.get(position).getId());
+            datas.putString("id", arrRed.get(position).getId());
             switch (arrRed.get(position).getCategory()) {
                 //餐厅
                 case "4":
-                    Intent i_food = new Intent(SearchDetailActivity.this,FoodDetailActivity.class);
+                    Intent i_food = new Intent(SearchDetailActivity.this, FoodDetailActivity.class);
                     i_food.putExtras(datas);
                     startActivity(i_food);
                     break;
                 //购物
                 case "5":
-                    Intent i_discount = new Intent(SearchDetailActivity.this,GoodsDetailActivity
+                    Intent i_discount = new Intent(SearchDetailActivity.this, GoodsDetailActivity
                             .class);
-                    datas.putString("title",arrRed.get(position).getTitle());
+                    datas.putString("title", arrRed.get(position).getTitle());
                     i_discount.putExtras(datas);
                     startActivity(i_discount);
                     break;
                 //品牌
                 case "283":
-                    Intent i_brand = new Intent(SearchDetailActivity.this,BrandDetailActivity.class);
+                    Intent i_brand = new Intent(SearchDetailActivity.this, BrandDetailActivity.class);
                     i_brand.putExtras(datas);
                     startActivity(i_brand);
                     break;

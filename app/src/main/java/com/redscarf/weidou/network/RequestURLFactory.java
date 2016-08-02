@@ -1,5 +1,8 @@
 package com.redscarf.weidou.network;
 
+import android.app.ExpandableListActivity;
+
+import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
@@ -48,7 +51,12 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_author_posts&id=" + attributes[0];
                 break;
             case HOTSEARCHLIST:
-                res = baseUrl + "?json=get_hot_" + attributes[0];// + "&count=10"[foodposts；discountposts；searches]
+                try {
+                    res = baseUrl + "?json=get_hot_" + URLEncoder.encode(attributes[0],"UTF-8");// +
+                } catch (UnsupportedEncodingException e) {
+                    ExceptionUtil.printAndRecord("RequestURL", e);
+                }
+                // "&count=10"[foodposts；discountposts；searches]
                 break;
             case SEARCHLIST:
                 res = baseUrl + "?json=get_search_category_results&search=" + attributes[0];
@@ -65,7 +73,7 @@ public class RequestURLFactory {
                 break;
 
         }
-        return res;
+            return res;
     }
 
     /**
@@ -175,13 +183,17 @@ public class RequestURLFactory {
                 res = baseUrl + "user/validate_auth_cookie/?cookie=" + attributes[0];
                 break;
             case LOGIN_WEIBO:
-                res = baseUrl + "user/three_party_login/?weibo=" + attributes[0] +
-                        "&username=" + attributes[1] +
-                        "&email=" + attributes[2] +
-                        "&display_name=" + attributes[3] +
-                        "&nickname=" + attributes[4] +
-                        "&gender=" + attributes[5] +
-                        "&location=" + attributes[6] + "&notify=no";
+                try {
+                    res = baseUrl + "user/three_party_login/?weibo=" + attributes[0] +
+                            "&username=" + attributes[1] +
+                            "&email=" + attributes[2] +
+                            "&display_name=" + URLEncoder.encode(attributes[3],"UTF-8") +
+                            "&nickname=" + URLEncoder.encode(attributes[4]) +
+                            "&gender=" + attributes[5] +
+                            "&location=" + attributes[6] + "&notify=no";
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
             case REGISTER:
                 res = baseUrl + "user/register/?username=" + attributes[0] + "&email=" + attributes

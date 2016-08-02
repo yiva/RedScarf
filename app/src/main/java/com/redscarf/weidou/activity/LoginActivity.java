@@ -54,6 +54,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -461,10 +462,9 @@ public class LoginActivity extends BaseActivity {
                         //用户头像URL
                         avatar_large = user.avatar_large;
 
-                        String utf_username = URLEncoder.encode(user.screen_name, "UTF-8");
                         doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
                                         .LOGIN_WEIBO, new String[]{user.idstr, email, email,
-                                        utf_username, utf_username,
+                                        user.screen_name, user.screen_name,
                                         gender, user.location}),
                                 LoginActivity.class,
                                 handler,

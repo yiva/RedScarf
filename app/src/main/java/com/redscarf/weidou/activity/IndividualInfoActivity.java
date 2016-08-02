@@ -127,19 +127,7 @@ public class IndividualInfoActivity extends BaseActivity {
         txt_addr = (TextView) findViewById(R.id.txt_address_individual_info);
         img_photo = (NetworkImageView) findViewById(R.id.img_photo_individual_info);
 
-        try {
-            txt_nickname.setText(URLDecoder.decode(m.getNickname(),"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-//        txt_gender.setText();
-//        txt_birth = (TextView) findViewById(R.id.txt_birthday_individual_info);
-//        txt_addr = (TextView) findViewById(R.id.txt_address_individual_info);
-
-//        txt_nickname.setOnClickListener(new OnModifyClick());
-//        txt_gender.setOnClickListener(new OnModifyClick());
-//        txt_birth.setOnClickListener(new OnModifyClick());
-//        txt_addr.setOnClickListener(new OnModifyClick());
+        txt_nickname.setText(m.getNickname());
 
         //加载用户头像
         String profile_image = m.getAvatar();
