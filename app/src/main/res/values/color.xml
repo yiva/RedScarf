@@ -155,6 +155,8 @@
 	<color name="detail_content">#737374</color><!--美食，购物详细页面描述文字颜色-->
 	<color name="font_bigger">#3F3D65</color>
 	<color name="dark_purple">#3F3D65</color>
+	<color name="shallow_purple">#bcbcd8</color>
+
 
 	<color name="allcanting">#ff8e54</color>
 	<color name="chinesecanting">#a4d5a4</color>

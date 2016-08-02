@@ -29,6 +29,8 @@
     <dimen name="layout_margin2">16dp</dimen>
     <dimen name="layout_margin3">8dp</dimen>
     <dimen name="layout_margin4">4dp</dimen>
+    <dimen name="layout_margin2_minus">-16dp</dimen>
+    <dimen name="layout_margin3_minus">-8dp</dimen>
     <dimen name="layout_padding1">20dp</dimen>
     <dimen name="layout_padding2">16dp</dimen>
     <dimen name="layout_padding2_minus">-16dp</dimen>

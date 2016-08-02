@@ -188,7 +188,7 @@ public class RequestURLFactory {
                             "&username=" + attributes[1] +
                             "&email=" + attributes[2] +
                             "&display_name=" + URLEncoder.encode(attributes[3],"UTF-8") +
-                            "&nickname=" + URLEncoder.encode(attributes[4]) +
+                            "&nickname=" + URLEncoder.encode(attributes[4],"UTF-8") +
                             "&gender=" + attributes[5] +
                             "&location=" + attributes[6] + "&notify=no";
                 } catch (UnsupportedEncodingException e) {

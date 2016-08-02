@@ -47,7 +47,6 @@
                 android:background="@drawable/bottom_search_selector"
                 android:contentDescription="@string/app_name"
                 android:layout_weight="1"
-                android:layout_height="35dp"
                 />
         </RadioGroup>
         <Button
