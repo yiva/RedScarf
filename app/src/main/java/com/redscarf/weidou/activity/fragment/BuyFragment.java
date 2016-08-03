@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
+import com.redscarf.weidou.activity.SearchDetailActivity;
 import com.redscarf.weidou.activity.popupwindow.ShopCategaryPopup;
 import com.redscarf.weidou.adapter.BrandDetailAdapter;
 import com.redscarf.weidou.adapter.BrandsListAdapter;
@@ -87,6 +88,8 @@ public class BuyFragment extends BaseFragment
     private GridView grid_shop;
     private Button dismiss;
     private View actionbar_buy;
+    private View head_search;
+    private RelativeLayout layout_search;
 
     private List<GridBody> datas;
 
@@ -173,6 +176,7 @@ public class BuyFragment extends BaseFragment
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_buy, container, false);
+        head_search = inflater.inflate(R.layout.head_search, null);
         initView();
         return rootView;
     }
@@ -275,6 +279,11 @@ public class BuyFragment extends BaseFragment
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
         lv_shop.setLongClickable(true);
         lv_shop.setOnScrollListener(new OnBuyListScrollListener());
+
+        layout_search = (RelativeLayout) head_search.findViewById(R.id.layout_search);
+        layout_search.setOnClickListener(new OnListHeadClick());
+        lv_shop.addHeaderView(head_search);
+
         ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view)).setOnRefreshListener(this);
 
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
@@ -313,16 +322,31 @@ public class BuyFragment extends BaseFragment
 //        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
 //            return;
 //        } else {
-            // 加载操作
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
-                    // 千万别忘了告诉控件加载完毕了哦！
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                }
-            }.sendEmptyMessageDelayed(0, 3000);
+        // 加载操作
+        new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                // 千万别忘了告诉控件加载完毕了哦！
+                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, 3000);
 //        }
+    }
+
+    /**
+     * listview headView点击事件
+     */
+    private class OnListHeadClick implements OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent i_search = new Intent(getActivity(), SearchDetailActivity.class);
+            Bundle datas = new Bundle();
+            datas.putString("content", "5");
+            i_search.putExtras(datas);
+            startActivity(i_search);
+        }
     }
 
     /**
@@ -333,7 +357,7 @@ public class BuyFragment extends BaseFragment
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            GoodsBody bodyItem = bodys.get(position);
+            GoodsBody bodyItem = bodys.get(position-1);//使用了headview position需加1
 
             Bundle data = new Bundle();
             data.putString("id", bodyItem.getId());
@@ -349,7 +373,6 @@ public class BuyFragment extends BaseFragment
     /**
      * 购物list滚动加载
      */
-
 
 
     private class OnBuyListScrollListener implements AbsListView.OnScrollListener {

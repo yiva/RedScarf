@@ -17,6 +17,7 @@ import java.util.List;
  * Created by yeahwa on 2016/3/3.
  */
 public class SearchDetailAdapter extends BaseRedScarfAdapter<SearchDetailBody>{
+    private String mCcategory;
     public SearchDetailAdapter(Context context, List<SearchDetailBody> listData) {
         super(context, listData);
     }

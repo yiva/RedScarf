@@ -30,39 +30,6 @@
 				>
 			</com.redscarf.weidou.customwidget.HorizontalListView>
 		</LinearLayout>
-		<RelativeLayout
-			android:id="@+id/layout_search_food"
-			android:layout_width="match_parent"
-			android:layout_height="50dp"
-			android:background="@color/shallow_purple"
-			android:padding="@dimen/layout_padding3"
-			android:gravity="center"
-			>
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@drawable/corners_bg_white"/>
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:padding="@dimen/layout_padding4"
-				android:orientation="horizontal"
-				android:gravity="center"
-				>
-				<ImageView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:src="@drawable/ic_search_black"/>
-				<TextView
-					style="@style/text_style_bolder"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="@string/action_search"
-					android:textColor="@color/shallow_purple"
-					android:layout_marginLeft="@dimen/layout_margin3_minus"
-					/>
-			</LinearLayout>
-		</RelativeLayout>
 		<com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
 			android:id="@+id/food_refresh_view"
 			android:layout_width="match_parent"

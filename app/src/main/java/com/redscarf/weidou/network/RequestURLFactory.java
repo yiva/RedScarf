@@ -7,6 +7,7 @@ import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.util.MyPreferences;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 
 import cn.finalteam.toolsfinal.StringUtils;
@@ -52,14 +53,21 @@ public class RequestURLFactory {
                 break;
             case HOTSEARCHLIST:
                 try {
-                    res = baseUrl + "?json=get_hot_" + URLEncoder.encode(attributes[0],"UTF-8");// +
+                    res = baseUrl + "?json=get_hot_" + URLEncoder.encode(attributes[0], "UTF-8");// +
                 } catch (UnsupportedEncodingException e) {
                     ExceptionUtil.printAndRecord("RequestURL", e);
                 }
                 // "&count=10"[foodposts；discountposts；searches]
                 break;
             case SEARCHLIST:
-                res = baseUrl + "?json=get_search_category_results&search=" + attributes[0];
+                try {
+                    res = baseUrl + "?json=get_search&search=" +
+                            URLEncoder.encode(attributes[0], "UTF-8")
+                            + "&type=" + attributes[1] + "&count=10&page" +
+                            "=" + attributes[2];
+                } catch (UnsupportedEncodingException e) {
+                    ExceptionUtil.printAndRecord("RequestURL", e);
+                }
                 break;
             case FOOD_FILTER_LIST:
                 res = baseUrl + "?json=get_food_category_filter";
@@ -73,7 +81,7 @@ public class RequestURLFactory {
                 break;
 
         }
-            return res;
+        return res;
     }
 
     /**
@@ -187,8 +195,8 @@ public class RequestURLFactory {
                     res = baseUrl + "user/three_party_login/?weibo=" + attributes[0] +
                             "&username=" + attributes[1] +
                             "&email=" + attributes[2] +
-                            "&display_name=" + URLEncoder.encode(attributes[3],"UTF-8") +
-                            "&nickname=" + URLEncoder.encode(attributes[4],"UTF-8") +
+                            "&display_name=" + URLEncoder.encode(attributes[3], "UTF-8") +
+                            "&nickname=" + URLEncoder.encode(attributes[4], "UTF-8") +
                             "&gender=" + attributes[5] +
                             "&location=" + attributes[6] + "&notify=no";
                 } catch (UnsupportedEncodingException e) {

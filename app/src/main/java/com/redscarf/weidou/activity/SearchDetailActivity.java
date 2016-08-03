@@ -25,15 +25,22 @@ import com.redscarf.weidou.adapter.BrandsListAdapter;
 import com.redscarf.weidou.adapter.BuyListAdapter;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
 import com.redscarf.weidou.adapter.SearchDetailAdapter;
+import com.redscarf.weidou.adapter.SearchDiscountAdapter;
+import com.redscarf.weidou.adapter.SearchFoodAdapter;
 import com.redscarf.weidou.customwidget.ClearEditText;
 import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
+import com.redscarf.weidou.pojo.BrandBody;
+import com.redscarf.weidou.pojo.DiscountBody;
+import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.pojo.SearchDetailBody;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
+import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.MyConstants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,11 +58,20 @@ public class SearchDetailActivity extends BaseActivity
 
     private ClearEditText search_content;
     private ArrayList<SearchDetailBody> arrRed;
+    private ArrayList<DiscountBody> arrDiscount;
+    private ArrayList<FoodBody> arrFood;
+    private ArrayList<BrandBody> arrBrand;
     private ListView lv_index;
+
+    private SearchDiscountAdapter searchDiscountAdapter;
+    private SearchFoodAdapter searchFoodAdapter;
 
     private Bundle datas;
     private float lastY = 0f;
     private float currentY = 0f;
+    private String category;
+    private static int CURRENT_PAGE = 1;
+    private String search_category = "";
 
     private Handler handler = new Handler() {
         @Override
@@ -64,11 +80,46 @@ public class SearchDetailActivity extends BaseActivity
             String response = indexObj.getString("response");
             if (msg.what == MSG_INDEX) {
                 try {
-                    arrRed = RedScarfBodyAdapter
-                            .fromJSON(response, SearchDetailBody.class);
-                    if (arrRed.size() != 0) {
-                        lv_index.setAdapter(new SearchDetailAdapter(SearchDetailActivity.this,
-                                arrRed));
+                    JSONObject o = new JSONObject(response);
+                    if (!o.isNull("posts")) {
+                        JSONObject jo = o.getJSONObject("posts");
+                        JSONArray names = jo.names();
+                        for (int i = 0; i < names.length(); ++i) {
+                            String name = names.getString(i);
+                            JSONArray ja = jo.getJSONArray(name);
+                            if (0 != ja.length()) {
+                                search_category = name;
+                                switch (name) {
+                                    case "brand":
+                                        arrBrand = (ArrayList<BrandBody>) JSONHelper
+                                                .parseCollection(ja, ArrayList
+                                                        .class, BrandBody.class);
+                                        break;
+                                    case "discount":
+                                        arrDiscount = (ArrayList<DiscountBody>) JSONHelper
+                                                .parseCollection(ja, ArrayList
+                                                        .class, DiscountBody.class);
+                                        searchDiscountAdapter = new SearchDiscountAdapter
+                                                (SearchDetailActivity.this, arrDiscount);
+                                        lv_index.setAdapter(searchDiscountAdapter);
+                                        break;
+                                    case "food":
+                                        arrFood = (ArrayList<FoodBody>) JSONHelper
+                                                .parseCollection(ja, ArrayList
+                                                        .class, FoodBody.class);
+                                        searchFoodAdapter = new SearchFoodAdapter
+                                                (SearchDetailActivity.this, arrFood);
+                                        lv_index.setAdapter(searchFoodAdapter);
+                                        break;
+                                    case "others":
+                                        break;
+                                    default:
+                                        search_category = "";
+                                        break;
+                                }
+                                break;
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     ExceptionUtil.printAndRecord(TAG, e);
@@ -100,12 +151,23 @@ public class SearchDetailActivity extends BaseActivity
         lv_index.setLongClickable(true);
         try {
             if (datas != null && datas.containsKey("content")) {
-                search_content.setText(datas.getString("content"));
+                category = datas.getString("content");
+                switch (category) {
+                    case "5":
+                        search_content.setHint("购物");
+                        break;
+                    case "4":
+                        search_content.setHint("美食");
+                        break;
+                    default:
+                        break;
+                }
+//                search_content.setText(datas.getString("content"));
 //                search_content.setInputType(InputType.TYPE_NULL);
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                                .SEARCHLIST, new String[]{datas.getString("content")}),
-                        SearchDetailActivity.class, handler, MSG_INDEX,
-                        PROGRESS_NO_CANCLE);
+//                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+//                                .SEARCHLIST, new String[]{datas.getString("content")}),
+//                        SearchDetailActivity.class, handler, MSG_INDEX,
+//                        PROGRESS_NO_CANCLE);
             }
         } catch (Exception ex) {
             ExceptionUtil.printAndRecord(TAG, ex);
@@ -168,8 +230,12 @@ public class SearchDetailActivity extends BaseActivity
     }
 
     private boolean submitSearch(String content) {
+        CURRENT_PAGE = 1;
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                        .SEARCHLIST, new String[]{content}), SearchDetailActivity.class, handler, MSG_INDEX,
+                        .SEARCHLIST, new String[]{content, category, CURRENT_PAGE + ""}),
+                SearchDetailActivity
+                        .class,
+                handler, MSG_INDEX,
                 PROGRESS_NO_CANCLE);
         return true;
     }
@@ -178,24 +244,26 @@ public class SearchDetailActivity extends BaseActivity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Bundle datas = new Bundle();
-            datas.putString("id", arrRed.get(position).getId());
-            switch (arrRed.get(position).getCategory()) {
+
+            switch (search_category) {
                 //餐厅
-                case "4":
+                case "food":
+                    datas.putString("id", arrFood.get(position).getId());
                     Intent i_food = new Intent(SearchDetailActivity.this, FoodDetailActivity.class);
                     i_food.putExtras(datas);
                     startActivity(i_food);
                     break;
                 //购物
-                case "5":
+                case "discount":
+                    datas.putString("id", arrDiscount.get(position).getId());
                     Intent i_discount = new Intent(SearchDetailActivity.this, GoodsDetailActivity
                             .class);
-                    datas.putString("title", arrRed.get(position).getTitle());
                     i_discount.putExtras(datas);
                     startActivity(i_discount);
                     break;
                 //品牌
-                case "283":
+                case "brand":
+                    datas.putString("id", arrBrand.get(position).getId());
                     Intent i_brand = new Intent(SearchDetailActivity.this, BrandDetailActivity.class);
                     i_brand.putExtras(datas);
                     startActivity(i_brand);

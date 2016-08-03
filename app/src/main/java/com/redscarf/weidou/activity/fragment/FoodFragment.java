@@ -7,6 +7,7 @@ import java.util.List;
 import com.android.volley.Request;
 import com.redscarf.weidou.activity.FoodDetailActivity;
 import com.redscarf.weidou.activity.R;
+import com.redscarf.weidou.activity.SearchDetailActivity;
 import com.redscarf.weidou.adapter.FoodListAdapter;
 import com.redscarf.weidou.adapter.FoodMoreAdapter;
 import com.redscarf.weidou.adapter.FoodSelectListAdapter;
@@ -86,6 +87,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private View view_bg_food_category;
     private LinearLayout layout_select_food_series_detail;
     private PullToRefreshLayout pullToRefreshLayout;
+    private View head_search;
+    private RelativeLayout layout_search;
 
     private String response;
     private float lastY = 0f;
@@ -209,6 +212,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 
         rootView = inflater.inflate(R.layout.fragment_food, container,
                 false);
+        head_search = inflater.inflate(R.layout.head_search, null);
 
         initView();
 
@@ -263,7 +267,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     }
 
     @Override
-   public void onPause() {
+    public void onPause() {
         super.onPause();
         if (popup_selector != null) {
             popup_selector.dismiss();
@@ -290,6 +294,11 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         lv_food.setOnScrollListener(new OnFoodListScrollListener());
         lv_food.setOnTouchListener(this);
         lv_food.setLongClickable(true);
+
+        layout_search = (RelativeLayout) head_search.findViewById(R.id.layout_search);
+        layout_search.setOnClickListener(new OnListHeadClick());
+        lv_food.addHeaderView(head_search);
+
         pullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.food_refresh_view);
         pullToRefreshLayout.setOnRefreshListener(this);
 
@@ -319,22 +328,37 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
 //        if ((0 != bodys.size() % 10) || (bodys.size() == (bodys.size() + total_count))) {
 //        } else {
-            // 加载操作
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
-                    // 千万别忘了告诉控件加载完毕了哦！
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                }
-            }.sendEmptyMessageDelayed(0, MyConstants.REQUEST_LOAD_TIME);
+        // 加载操作
+        new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                // 千万别忘了告诉控件加载完毕了哦！
+                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            }
+        }.sendEmptyMessageDelayed(0, MyConstants.REQUEST_LOAD_TIME);
 //        }
+    }
+
+
+    /**
+     * listview headView点击事件
+     */
+    private class OnListHeadClick implements OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent i_search = new Intent(getActivity(), SearchDetailActivity.class);
+            Bundle datas = new Bundle();
+            datas.putString("content", "4");
+            i_search.putExtras(datas);
+            startActivity(i_search);
+        }
     }
 
     /**
      * 美食list滚动加载
      */
-
 
 
     private class OnFoodListScrollListener implements AbsListView.OnScrollListener {
@@ -660,7 +684,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             foodUrlAttribute.clear();
             title = list_food_series.get(0).getTitle();
             more_title = "";
-            setActionBarLayout(title,ActionBarType.WITHBACK);
+            setActionBarLayout(title, ActionBarType.WITHBACK);
             reloadUrl(PROGRESS_DISVISIBLE);
 
         }
@@ -692,8 +716,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private void reloadUrlWithFilter(int ProgressType) {
         CURRENT_PAGE = 1;
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
-                .FOODLIST, new String[]{foodUrlAttribute.toString(),
-                CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                        .FOODLIST, new String[]{foodUrlAttribute.toString(),
+                        CURRENT_PAGE + ""}), FoodFragment.class, handler,
                 MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType);
     }
 

@@ -23,6 +23,7 @@ public class DiscountBody implements Parcelable {
     private String is_favorate;
     private String brand;
     private String expires_key;
+    private String post_thumbnail;
 
     public DiscountBody() {
     }
@@ -42,6 +43,7 @@ public class DiscountBody implements Parcelable {
         is_favorate = in.readString();
         brand = in.readString();
         expires_key = in.readString();
+        post_thumbnail = in.readString();
     }
 
     public static final Creator<DiscountBody> CREATOR = new Creator<DiscountBody>() {
@@ -168,6 +170,14 @@ public class DiscountBody implements Parcelable {
         this.expires_key = expires_key;
     }
 
+    public String getPost_thumbnail() {
+        return MyConstants.URL + "wp-content/uploads" + post_thumbnail;
+    }
+
+    public void setPost_thumbnail(String post_thumbnail) {
+        this.post_thumbnail = post_thumbnail;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -189,5 +199,6 @@ public class DiscountBody implements Parcelable {
         dest.writeString(is_favorate);
         dest.writeString(brand);
         dest.writeString(expires_key);
+        dest.writeString(post_thumbnail);
     }
 }

@@ -42,7 +42,7 @@
         android:layout_marginRight="@dimen/layout_margin3"
         android:singleLine="true"
         android:hint="@string/search_hint"
-        android:textSize="@dimen/sys_font_size_normal"
+        android:textSize="@dimen/sys_font_size_bolder"
         android:textColor="#FFFFFF"
         android:imeOptions="actionSearch"
         android:drawablePadding="10dp"
