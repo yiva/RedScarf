@@ -88,11 +88,11 @@ public class FoodSearchFragment extends BaseFragment{
                                         .getAppPerenceAttribute("longitude")}),
                         SearchFragment.class,
                         handler,
-                        MSG_INDEX, PROGRESS_CANCLE);
+                        MSG_INDEX, PROGRESS_CANCELABLE,"index");
             } else {
                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST,
                                 new String[]{"foodposts"}), SearchFragment.class, handler,
-                        MSG_INDEX, PROGRESS_CANCLE);
+                        MSG_INDEX, PROGRESS_CANCELABLE,"index");
             }
         } else {
             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST,
@@ -101,7 +101,7 @@ public class FoodSearchFragment extends BaseFragment{
                                     .getAppPerenceAttribute("longitude")}),
                     SearchFragment.class,
                     handler,
-                    MSG_INDEX, PROGRESS_CANCLE);
+                    MSG_INDEX, PROGRESS_CANCELABLE,"index");
         }
     }
 

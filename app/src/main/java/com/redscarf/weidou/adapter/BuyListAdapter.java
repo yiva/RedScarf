@@ -81,6 +81,8 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         }
         if ("1".equals(getItem(position).getExclusive())) {
             viewHolder.exclusive.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.exclusive.setVisibility(View.GONE);
         }
 
 //        if (5 != mFlag) {

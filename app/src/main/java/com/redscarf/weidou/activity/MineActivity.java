@@ -2,6 +2,7 @@ package com.redscarf.weidou.activity;
 
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -123,9 +124,9 @@ public class MineActivity extends BaseActivity {
         setActionBarLayout(getResources().getString(R.string.title_mine_activity), ActionBarType.WITHBACK);
         GlobalApplication.getInstance().addActivity(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
-        doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
+        doRequestURL(Request.Method.GET,RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
                         new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
-                MineActivity.class, handler, MSG_MINE);
+                MineActivity.class, handler, MSG_MINE,PROGRESS_NO_CANCELABLE,"index");
     }
 
     @Override

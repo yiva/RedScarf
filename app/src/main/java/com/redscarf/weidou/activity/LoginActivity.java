@@ -154,6 +154,12 @@ public class LoginActivity extends BaseActivity {
 
                     }
                     break;
+                case MSG_ERROR:
+                    response = indexObj.getString("error");
+                    if ("error_login".equals(response)) {
+                        Toast.makeText(LoginActivity.this,"登录错误",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -220,7 +226,11 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "error", error);
+                    Message message = Message.obtain(handler, MSG_GENERATE);
+                    Bundle errorData = new Bundle();
+                    errorData.putString("error", "error_login");
+                    message.setData(errorData);
+                    handler.sendMessage(message);
                 }
             });
         } else {//已经登录过，验证cookie
@@ -468,7 +478,7 @@ public class LoginActivity extends BaseActivity {
                                         gender, user.location}),
                                 LoginActivity.class,
                                 handler,
-                                MSG_LOGIN_WEIBO, PROGRESS_DISVISIBLE);
+                                MSG_LOGIN_WEIBO, PROGRESS_DISVISIBLE,"index");
                     } else {
                         Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
                     }

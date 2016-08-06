@@ -147,11 +147,11 @@ public class FoodDetailFragment extends BaseFragment {
                                         .getAppPerenceAttribute("longitude")}),
                         FoodDetailFragment.class,
                         handler,
-                        MSG_INDEX, 2);
+                        MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
             } else {
                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
                                 new String[]{datas.getString("id")}), FoodDetailFragment.class, handler,
-                        MSG_INDEX, 2);
+                        MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
             }
         } else {
             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
@@ -160,7 +160,7 @@ public class FoodDetailFragment extends BaseFragment {
                                     .getAppPerenceAttribute("longitude")}),
                     FoodDetailFragment.class,
                     handler,
-                    MSG_INDEX, 2);
+                    MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
         }
 
         return rootView;
@@ -314,12 +314,13 @@ public class FoodDetailFragment extends BaseFragment {
                 case "0"://make favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
                                     new String[]{body.getId()}), FoodDetailFragment.class, handler,
-                            MSG_IS_FAVOURITE, 0);
+                            MSG_IS_FAVOURITE, PROGRESS_DISVISIBLE,"favourite");
                     break;
                 case "1"://unmake favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
                                     (RequestType.UNMAKE_FAVOURTIE, new String[]{body.getId()}),
-                            FoodDetailFragment.class, handler, MSG_IS_NOT_FAVOURITE, 0);
+                            FoodDetailFragment.class, handler, MSG_IS_NOT_FAVOURITE,
+                            PROGRESS_DISVISIBLE,"unfavourite");
                     break;
                 default:
                     break;

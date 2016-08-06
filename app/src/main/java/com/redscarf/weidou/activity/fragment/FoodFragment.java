@@ -235,11 +235,12 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         }
         setActionBarLayout(title, ActionBarType.WITHBACK);
         showProgressDialogNoCancelable("", MyConstants.LOADING);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
-                String[]{foodUrlAttribute.toString(),
-                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""),
-                FoodFragment.class, handler, MSG_FOOD_FILTER);
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST,
+                        new String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}),
+                FoodFragment.class, handler, MSG_INDEX, PROGRESS_CANCELABLE, "index");
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""),
+                FoodFragment.class, handler, MSG_FOOD_FILTER, PROGRESS_CANCELABLE,
+                "food_filter_index");
     }
 
 //    @Override
@@ -316,9 +317,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             public void handleMessage(Message msg) {
                 CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                                .FOODLIST, new
                                 String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}), FoodFragment.class, handler,
-                        MSG_INDEX);
+                        MSG_INDEX, PROGRESS_DISVISIBLE, "fresh");
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, 3000);
@@ -332,7 +334,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                                .FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE +
+                                ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE,
+                        "load_more");
                 // 千万别忘了告诉控件加载完毕了哦！
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -375,7 +380,10 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                 if (!records.contains(position)) {
                     if (1 == position % 10) {
                         records.add(position);
-                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(), ++CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL
+                                        (RequestType.FOODLIST, new String[]{foodUrlAttribute.toString(),
+                                                ++CURRENT_PAGE + ""}), FoodFragment.class, handler,
+                                MSG_NEXT_PAGE, PROGRESS_DISVISIBLE, "scroll_next");
                     }
                 }
 
@@ -426,7 +434,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                 foodUrlAttribute.setFisrt_key(key);
             }
             CURRENT_PAGE = 1;
-            reloadUrlWithFilter(PROGRESS_CANCLE);
+            reloadUrlWithFilter(PROGRESS_CANCELABLE);
         }
     }
 
@@ -707,7 +715,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         CURRENT_PAGE = 1;
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                 .FOODLIST, new String[]{foodUrlAttribute.toString(),
-                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX, ProgressType);
+                CURRENT_PAGE + ""}), FoodFragment.class, handler, MSG_INDEX, ProgressType, "reload");
     }
 
     /**
@@ -718,7 +726,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                         .FOODLIST, new String[]{foodUrlAttribute.toString(),
                         CURRENT_PAGE + ""}), FoodFragment.class, handler,
-                MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType);
+                MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType,"reload_with_filter");
     }
 
     /**

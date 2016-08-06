@@ -191,13 +191,18 @@ public class BuyFragment extends BaseFragment
 
             if (flag.equals(1)) {
                 showProgressDialogNoCancelable("", MyConstants.LOADING);
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                                .BUYLIST, new
+                                String[]{category_id.toString(), "1"}), BuyFragment.class, handler,
+                        MSG_INDEX, PROGRESS_CANCELABLE,"index");
             }
         } catch (Exception ex) {
             ExceptionUtil.printAndRecord(TAG, ex);
             setActionBarLayout(title, ActionBarType.WITHBACK);
             showProgressDialogNoCancelable("", MyConstants.LOADING);
-            doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler, MSG_INDEX);
+            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                    .BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class,
+                    handler, MSG_INDEX,PROGRESS_CANCELABLE,"index");
         }
     }
 
@@ -305,7 +310,10 @@ public class BuyFragment extends BaseFragment
             public void handleMessage(Message msg) {
                 CURRENT_PAGE = 1;
                 // 千万别忘了告诉控件刷新完毕了哦！
-                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_INDEX);
+                doRequestURL(Request.Method.GET,RequestURLFactory.getRequestListURL(RequestType
+                        .BUYLIST, new
+                        String[]{category_id.toString(), CURRENT_PAGE + ""}), BuyFragment.class,
+                        handler, MSG_INDEX,PROGRESS_DISVISIBLE,"refresh");
                 pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, MyConstants.REQUEST_LOAD_TIME);
@@ -326,7 +334,9 @@ public class BuyFragment extends BaseFragment
         new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                        .BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}),
+                        BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE,"load_more");
                 // 千万别忘了告诉控件加载完毕了哦！
                 pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
             }
@@ -357,7 +367,7 @@ public class BuyFragment extends BaseFragment
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            GoodsBody bodyItem = bodys.get(position-1);//使用了headview position需加1
+            GoodsBody bodyItem = bodys.get(position - 1);//使用了headview position需加1
 
             Bundle data = new Bundle();
             data.putString("id", bodyItem.getId());
@@ -389,7 +399,10 @@ public class BuyFragment extends BaseFragment
                 if (!records.contains(position)) {
                     if (1 == position % 10) {
                         records.add(position);
-                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), ++CURRENT_PAGE + ""}), BuyFragment.class, handler, MSG_NEXT_PAGE, PROGRESS_DISVISIBLE);
+                        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL
+                                (RequestType.BUYLIST, new String[]{category_id.toString(),
+                                        ++CURRENT_PAGE + ""}), BuyFragment.class, handler,
+                                MSG_NEXT_PAGE, PROGRESS_DISVISIBLE,"scroll_next");
                     }
                 }
 
@@ -686,7 +699,7 @@ public class BuyFragment extends BaseFragment
             showProgressDialogNoCancelable("", MyConstants.LOADING);
             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                             .BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE + ""}),
-                    BuyFragment.class, handler, MSG_INDEX, PROGRESS_CANCLE);
+                    BuyFragment.class, handler, MSG_INDEX, PROGRESS_CANCELABLE,"shop_item");
             shopGridAdapter.setSelectedPosition(shop_category_postion);
             popup_selector.dismiss();
         }

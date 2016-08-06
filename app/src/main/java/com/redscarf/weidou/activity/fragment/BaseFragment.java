@@ -27,6 +27,7 @@ import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.WebActivity;
 import com.redscarf.weidou.listener.BasePageLinstener;
 import com.redscarf.weidou.util.ActionBarType;
+import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.MyConstants;
 import com.redscarf.weidou.network.VolleyUtil;
 import com.redscarf.weidou.util.MyPreferences;
@@ -39,14 +40,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * fragment父类
  */
 public abstract class BaseFragment extends Fragment implements BasePageLinstener {
-
-    protected final int PROGRESS_DISVISIBLE = 0;
-    protected final int PROGRESS_NO_CANCLE = 1;
-    protected final int PROGRESS_CANCLE = 2;
 
     private ProgressDialog progressDialog;
     private TextView actionbar_title;
@@ -175,71 +173,6 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
     }
 
     /**
-     * @param url     http头
-     * @param map     请求参数
-     * @param clazz   调用Class
-     * @param handler 消息对象
-     * @param MSG     消息标识
-     */
-    public void doRequestURL(String url, HashMap<String, String> map, final Class clazz, final Handler handler, final int MSG) {
-        showProgressDialog("", MyConstants.LOADING);
-        Uri.Builder builder = Uri.parse(url).buildUpon();
-        Iterator iter = map.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            builder.appendQueryParameter(entry.getKey().toString(), entry.getValue().toString());
-        }
-        stringRequest = new StringRequest(StringRequest.Method.GET, builder.toString(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Log.i(clazz.getSimpleName(), "success");
-                Bundle data = new Bundle();
-                data.putString("response", s);
-                Message message = Message.obtain(handler, MSG);
-                message.setData(data);
-                handler.sendMessage(message);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e(clazz.getSimpleName(), "error", volleyError);
-                hideProgressDialog();
-            }
-        });
-        //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
-                MyConstants.MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        stringRequest.setTag(clazz.getSimpleName());
-        VolleyUtil.getRequestQueue().add(stringRequest);
-    }
-
-    public void doRequestURL(String url, final Class clazz, final Handler handler, final int MSG) {
-        showProgressDialog("", MyConstants.LOADING);
-        stringRequest = new StringRequest(StringRequest.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                Log.i(clazz.getSimpleName(), "success");
-                Bundle data = new Bundle();
-                data.putString("response", s);
-                Message message = Message.obtain(handler, MSG);
-                message.setData(data);
-                handler.sendMessage(message);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e(clazz.getSimpleName(), "error", volleyError);
-            }
-        });
-        //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        stringRequest.setTag(clazz.getSimpleName());
-        VolleyUtil.getRequestQueue().add(stringRequest);
-    }
-
-    /**
      * @param method
      * @param url
      * @param clazz
@@ -248,10 +181,10 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
      * @param progressType 1:showProgressDialog 2:showProgressDialogNoCancelable
      */
     protected void doRequestURL(int method, String url, final Class clazz, final Handler handler,
-                                final int MSG, final int progressType) {
-        if (progressType == PROGRESS_CANCLE) {
+                                final int MSG, final int progressType, final String errContent) {
+        if (progressType == PROGRESS_CANCELABLE) {
             showProgressDialog("", MyConstants.LOADING);
-        } else if (progressType == PROGRESS_NO_CANCLE) {
+        } else if (progressType == PROGRESS_NO_CANCELABLE) {
             showProgressDialogNoCancelable("", MyConstants.LOADING);
         }
         Uri.Builder builder = Uri.parse(url).buildUpon();
@@ -268,11 +201,16 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e(clazz.getSimpleName(), "error", volleyError);
+                ExceptionUtil.printAndRecord(clazz.getSimpleName(), new Exception("volley: " + volleyError));
+                Bundle data = new Bundle();
+                data.putString("error", errContent);
+                Message message = Message.obtain(handler, MSG_ERROR);
+                message.setData(data);
+                handler.sendMessage(message);
             }
         });
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(MyConstants.REQUEST_LOAD_TIME,
-                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         stringRequest.setTag(clazz.getSimpleName());
         VolleyUtil.getRequestQueue().add(stringRequest);
     }
@@ -334,6 +272,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
         public OnJumpToBrowerClick(String u) {
             this.url = u;
         }
+
         @Override
         public void onClick(View v) {
             Uri uri = Uri.parse(url);

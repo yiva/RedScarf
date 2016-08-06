@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.MyConstants;
@@ -93,9 +94,11 @@ public class IndividualModifyFragment extends BaseFragment {
             url_map.put("cookie", MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
             url_map.put("meta_key", datas.getString("meta_key"));
             url_map.put("meta_value", edit_modify.getText().toString());
-            doRequestURL(RequestURLFactory.sysRequestURL(RequestType.MODIFY_INDIVIDUAL,
+            doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
+                                    .MODIFY_INDIVIDUAL,
                             new String[]{datas.getString("meta_key"), edit_modify.getText().toString()}),
-                    IndividualModifyFragment.class, handler, MSG_INDEX);
+                    IndividualModifyFragment.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE,
+                    "index");
         }
     }
 

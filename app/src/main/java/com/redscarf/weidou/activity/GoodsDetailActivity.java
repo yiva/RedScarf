@@ -131,7 +131,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
                         new String[]{datas.getString("id")}), GoodsDetailActivity.class, handler,
-                MSG_INDEX, 1);
+                MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
 
     }
 
@@ -214,12 +214,13 @@ public class GoodsDetailActivity extends BaseActivity {
                 case "0"://make favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
                                     new String[]{body.getId()}), BrandDetailActivity.class, handler,
-                            MSG_IS_FAVOURITE, 0);
+                            MSG_IS_FAVOURITE, PROGRESS_DISVISIBLE,"favourite");
                     break;
                 case "1"://unmake favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
                                     (RequestType.UNMAKE_FAVOURTIE, new String[]{body.getId()}),
-                            BrandDetailActivity.class, handler, MSG_IS_NOT_FAVOURITE, 0);
+                            BrandDetailActivity.class, handler, MSG_IS_NOT_FAVOURITE,
+                            PROGRESS_DISVISIBLE,"unfavourite");
                     break;
                 default:
                     break;

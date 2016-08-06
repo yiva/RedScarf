@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.adapter.RedScarfBodyAdapter;
@@ -68,7 +69,10 @@ public class ShopSearchFragment extends BaseFragment{
     public void initView() {
         lv_search = (ListView) rootView.findViewById(R.id.list_search_shop);
         lv_search.setOnItemClickListener(new OnDiscountSearchItemClick());
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST, new String[]{"discountposts"}), SearchFragment.class, handler, MSG_INDEX);
+        doRequestURL(Request.Method.GET,RequestURLFactory.getRequestListURL(RequestType
+                .HOTSEARCHLIST, new
+                String[]{"discountposts"}), SearchFragment.class, handler, MSG_INDEX,
+                PROGRESS_CANCELABLE,"index");
     }
 
     private class OnDiscountSearchItemClick implements AdapterView.OnItemClickListener{

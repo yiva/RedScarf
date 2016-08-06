@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SearchDetailActivity;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 /**
  * Created by yeahwang on 2016/2/29.
  */
-public class HotSearchFragment extends BaseFragment{
+public class HotSearchFragment extends BaseFragment {
 
     private ListView lv_search;
     private String response;
@@ -71,17 +72,20 @@ public class HotSearchFragment extends BaseFragment{
         lv_search = (ListView) rootView.findViewById(R.id.list_search_hot);
         lv_search.setOnItemClickListener(new OnHotSearchItemClick());
         showProgressDialogNoCancelable("", MyConstants.LOADING);
-        doRequestURL(RequestURLFactory.getRequestListURL(RequestType.HOTSEARCHLIST, new String[]{"searches"}), SearchFragment.class, handler, MSG_INDEX);
+        doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                .HOTSEARCHLIST, new
+                String[]{"searches"}), SearchFragment.class, handler, MSG_INDEX,
+                PROGRESS_CANCELABLE,"index");
     }
 
-    private class OnHotSearchItemClick implements AdapterView.OnItemClickListener{
+    private class OnHotSearchItemClick implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Bundle datas = new Bundle();
-            datas.putString("key","hotsearch");
-            datas.putString("content",bodys.get(position).getTerms());
-            Intent i_search = new Intent(getActivity(),SearchDetailActivity
+            datas.putString("key", "hotsearch");
+            datas.putString("content", bodys.get(position).getTerms());
+            Intent i_search = new Intent(getActivity(), SearchDetailActivity
                     .class);
             i_search.putExtras(datas);
             startActivity(i_search);

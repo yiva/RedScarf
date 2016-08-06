@@ -76,7 +76,8 @@ public class IndividualFavouriteActivity extends BaseActivity{
         lv_favourite.setOnItemClickListener(new OnMyFavouriteItemClick());
         lv_favourite.setOnItemLongClickListener(new OnMyFavouriteItemLongClick());
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType
-                .MY_FAOURITE, ""), IndividualInfoActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCLE);
+                .MY_FAOURITE, ""), IndividualInfoActivity.class, handler, MSG_INDEX,
+                PROGRESS_NO_CANCELABLE,"index");
     }
 
     //点击事件

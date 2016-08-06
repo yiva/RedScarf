@@ -32,10 +32,10 @@ android {
     buildToolsVersion '21.1.2'
     defaultConfig {
         applicationId "com.redscarf.weidou.activity"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 23
-        versionCode 26
-        versionName "0.9.5"
+        versionCode 27
+        versionName "0.9.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -43,6 +43,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    sourceSets {
+        main.jniLibs.srcDirs = ['src/main/jinLibs']
     }
 }
 
@@ -55,33 +58,31 @@ repositories {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    //compile files('libs/classes.jar')
-    //动态gif
-    //调用相机相册
-    //asymmetricgridview可跨行列gridview
-    //    compile 'com.android.support:support-v4:23.0.1+'
-    compile files('libs/umeng_social_sdk.jar')
-    compile project(':weiboSDK')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    ///compile files('libs/umeng_social_sdk.jar')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v13:23.0.1'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'//gif图片
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.9'
+    //gif图片
     compile 'cn.finalteam:galleryfinal:1.0.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.felipecsl.asymmetricgridview:library:2.0.1'
-    compile 'com.mcxiaoke.volley:library:1.0.19'//网络请求插件
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    //网络请求插件
     compile 'com.hynnet:httpclient:4.5.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     //google play services
     compile 'com.google.android.gms:play-services-location:9.0.2'
     compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'com.google.android.gms:play-services-identity:9.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'//通信插件
-
-    compile 'de.hdodenhof:circleimageview:2.0.0'//圆形、圆角图片
-
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //通信插件
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    //圆形、圆角图片
     //左滑
-//    compile 'com.android.support:recyclerview-v7:21.0.0'
-//    compile 'com.android.support:support-v4:20.+'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+    //    compile 'com.android.support:recyclerview-v7:21.0.0'
+    //    compile 'com.android.support:support-v4:20.+'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    //weibo
+    compile project(':weiboSDK')
 }

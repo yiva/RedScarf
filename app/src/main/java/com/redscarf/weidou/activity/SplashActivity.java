@@ -48,12 +48,15 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             Bundle indexObj = msg.getData();
+            splash_view.setVisibility(View.VISIBLE);
+            animationSet.setDuration(2000);
+            splash_view.startAnimation(animationSet);
             switch (msg.what) {
                 case MSG_VALID:
-                    splash_view.setVisibility(View.VISIBLE);
-                    animationSet.setDuration(2000);
-                    splash_view.startAnimation(animationSet);
                     loginValid(indexObj.getBoolean("valid"));
+                    break;
+                case MSG_ERROR:
+                    loginValid(false);
                     break;
             }
         }
@@ -64,7 +67,7 @@ public class SplashActivity extends BaseActivity {
     private GifImageView splash_view;
     private AnimationSet animationSet = new AnimationSet(true);
 
-    private final int MSG_VALID = 12; //msg.what valid cookie
+
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -127,6 +130,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "error", error);
+                Message message = Message.obtain(mHandler, MSG_ERROR);
+                mHandler.sendMessage(message);
             }
         });
         //Set a retry policy in case of SocketTimeout & ConnectionTimeout Exceptions. Volley does retry for you if you have specified the policy.

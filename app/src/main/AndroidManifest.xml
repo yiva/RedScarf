@@ -173,5 +173,11 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="false" >
         </activity>
+
+        <!--Service-->
+        <!--<service android:name="com.sina.weibo.sdk.net.DownloadService"-->
+                 <!--android:exported="false">-->
+        <!--</service>-->
+        <!--End Service-->
     </application>
 </manifest>

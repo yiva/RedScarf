@@ -127,8 +127,9 @@ public class BrandDetailActivity extends BaseActivity {
         datas = this.getIntent().getExtras();
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         GlobalApplication.getInstance().addActivity(this);
-        doRequestURL(RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
-                new String[]{datas.getString("id")}), BrandDetailActivity.class, handler, MSG_INDEX);
+        doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
+                new String[]{datas.getString("id")}), BrandDetailActivity.class, handler,
+                MSG_INDEX,PROGRESS_NO_CANCELABLE,"index");
     }
 
     @Override
@@ -207,12 +208,13 @@ public class BrandDetailActivity extends BaseActivity {
                 case "0"://make favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor(RequestType.MAKE_FAVOURITE,
                                     new String[]{brand_body.getId()}), BrandDetailActivity.class, handler,
-                            MSG_IS_FAVOURITE, 0);
+                            MSG_IS_FAVOURITE, PROGRESS_DISVISIBLE,"favourite");
                     break;
                 case "1"://unmake favourite
                     doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURLWithAuthor
                                     (RequestType.UNMAKE_FAVOURTIE, new String[]{brand_body.getId()}),
-                            BrandDetailActivity.class, handler, MSG_IS_NOT_FAVOURITE, 0);
+                            BrandDetailActivity.class, handler, MSG_IS_NOT_FAVOURITE,
+                            PROGRESS_DISVISIBLE,"unfavourite");
                     break;
                 default:
                     break;

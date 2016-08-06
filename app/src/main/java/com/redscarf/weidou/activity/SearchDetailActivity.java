@@ -236,7 +236,7 @@ public class SearchDetailActivity extends BaseActivity
                 SearchDetailActivity
                         .class,
                 handler, MSG_INDEX,
-                PROGRESS_NO_CANCLE);
+                PROGRESS_NO_CANCELABLE,"search");
         return true;
     }
 

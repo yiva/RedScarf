@@ -107,7 +107,7 @@ public class RegisterActivity extends BaseActivity {
             if (nickname != null && email != null && password != null) {
                 doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
                                 .NONCE_VALUE, new String[]{"user", "register"}),
-                        RegisterActivity.class, handler, MSG_NONCE, PROGRESS_NO_CANCLE);
+                        RegisterActivity.class, handler, MSG_NONCE, PROGRESS_NO_CANCELABLE,"nonce");
             }
         }
     }
@@ -116,7 +116,7 @@ public class RegisterActivity extends BaseActivity {
     private void register(String nonce) {
         doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType
                         .REGISTER, new String[]{email, email, nickname, nickname, password, nonce}),
-                RegisterActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCLE);
+                RegisterActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE,"register");
     }
 
 }

@@ -17,6 +17,7 @@
     <dimen name="activity_element_margin">8dp</dimen>
     <dimen name="actionbar_height">63dp</dimen>
     <dimen name="bg_listview_label">90dp</dimen>
+    <dimen name="copyright_bottom">50dp</dimen>
 
     <dimen name="actionbar_element_margin">12dp</dimen>
     <dimen name="actionbar_title_height">63dp</dimen>

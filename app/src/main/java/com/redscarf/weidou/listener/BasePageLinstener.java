@@ -14,10 +14,12 @@ public interface BasePageLinstener {
     int MSG_FOOD_INDEX_NOT_CHANG_SELECT = 7; //不改变美食上方字母
     int MSG_UPLOAD = 8;//文件上传
     int MSG_WEIBO_AVATAR = 9;
+    int MSG_VALID = 12; //msg.what valid cookie
+    int MSG_ERROR = -1;//请求异常
 
     int PROGRESS_DISVISIBLE = 0;
-    int PROGRESS_NO_CANCLE = 1;
-    int PROGRESS_CANCLE = 2;
+    int PROGRESS_NO_CANCELABLE = -1;//点击无法取消弹出框
+    int PROGRESS_CANCELABLE = 1;//弹出框可以取消
 
     void initView();
 }
