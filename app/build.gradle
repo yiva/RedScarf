@@ -34,8 +34,8 @@ android {
         applicationId "com.redscarf.weidou.activity"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 27
-        versionName "0.9.6"
+        versionCode 28
+        versionName "0.9.7"
         multiDexEnabled true
     }
     buildTypes {
@@ -44,9 +44,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main.jniLibs.srcDirs = ['src/main/jinLibs']
-    }
+//    sourceSets {
+//        main.jniLibs.srcDirs = ['src/main/jinLibs']
+//    }
 }
 
 repositories {

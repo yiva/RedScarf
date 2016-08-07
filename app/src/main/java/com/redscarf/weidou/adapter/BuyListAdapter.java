@@ -1,6 +1,11 @@
 package com.redscarf.weidou.adapter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,11 +18,14 @@ import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.pojo.RedScarfBody;
 import com.redscarf.weidou.util.BitmapCache;
 import com.redscarf.weidou.util.DisplayUtil;
+import com.redscarf.weidou.util.ExceptionUtil;
+import com.redscarf.weidou.util.GlobalApplication;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
+
+    private final String TAG = BuyListAdapter.class.getSimpleName();
 
     private int mFlag;
 
@@ -72,11 +82,31 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
         if ("1".equals(getItem(position).getExpires_key())) {
             viewHolder.layout_expires_shop.setVisibility(View.VISIBLE);
             viewHolder.expires.setText("限时折扣");
-        }else{
-            viewHolder.expires.setText(getItem(position).getExpires().substring(0, 10));
+        } else {
             if (StringUtils.isBlank(getItem(position).getExpires()) ||
                     StringUtils.contains(getItem(position).getExpires(), "0000-00-00")) {
                 viewHolder.layout_expires_shop.setVisibility(View.GONE);
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    String nowStr = sdf.format(new Date());
+                    Date now = sdf.parse(nowStr);
+                    Date date = sdf.parse(getItem(position).getExpires());
+                    Calendar cNow = Calendar.getInstance();
+                    Calendar cDate = Calendar.getInstance();
+                    cNow.setTime(now);
+                    cDate.setTime(date);
+                    int result = cDate.compareTo(cDate);
+                    if (0 > result) {
+                        viewHolder.expires.setText("已错过");
+                        viewHolder.expires.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                    } else {
+                        viewHolder.expires.setText(getItem(position).getExpires().substring(0, 10));
+                    }
+                } catch (ParseException e) {
+                    ExceptionUtil.printAndRecord(TAG, new Exception("折扣日期格式有误: " + getItem(position) +
+                            "--" + getItem(position).getExpires() + "/r/n" + e.getMessage()));
+                }
             }
         }
         if ("1".equals(getItem(position).getExclusive())) {
