@@ -31,4 +31,5 @@ public enum RequestType {
     ,LOGIN_WEIBO    //微博登录
     ,FOOD_FILTER_LIST   //美食filter
     ,FOODLIST_WITH_FILTER   //带条件的美食查询
+    ,HOTLIST//发现
 }

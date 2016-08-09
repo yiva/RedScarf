@@ -76,6 +76,9 @@ public class RequestURLFactory {
                 res = baseUrl + "?json=get_category_posts" + attributes[0] + "&count=10&page=" +
                         attributes[1];
                 break;
+            case HOTLIST:
+                res = baseUrl + "?json=get_hot_posts";
+                break;
             default:
                 res = "false";
                 break;
