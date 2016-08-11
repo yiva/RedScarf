@@ -47,7 +47,7 @@ public class FoodDetailPhotoAdapter extends BaseRedScarfAdapter<String> {
         viewHolder.img.setBackgroundResource(R.drawable.loading_middle);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             viewHolder.img.setDefaultImageResId(R.drawable.loading_middle);
-            viewHolder.img.setErrorImageResId(R.drawable.null_large);
+            viewHolder.img.setErrorImageResId(R.drawable.loading_large);
             viewHolder.img.setBackgroundColor(0);
             viewHolder.img.setImageUrl(imageUrl, imageLoader);
 //            viewHolder.big_img.setImageUrl(imageUrl,imageLoader);

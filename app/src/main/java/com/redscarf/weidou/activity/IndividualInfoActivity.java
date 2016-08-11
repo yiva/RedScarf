@@ -134,7 +134,7 @@ public class IndividualInfoActivity extends BaseActivity {
         img_photo.setBackgroundResource(R.drawable.loading_large);
         if ((profile_image != null) && (!profile_image.equals(""))) {
             img_photo.setDefaultImageResId(R.drawable.loading_large);
-            img_photo.setErrorImageResId(R.drawable.null_large);
+            img_photo.setErrorImageResId(R.drawable.loading_large);
             img_photo.setBackgroundColor(0);
             img_photo.setImageUrl(profile_image, imageLoader);
         }

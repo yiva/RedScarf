@@ -159,7 +159,7 @@ public class MineActivity extends BaseActivity {
         user_logo.setBackgroundResource(R.drawable.loading_large);
         if ((profile_image != null) && (!profile_image.equals(""))) {
             user_logo.setDefaultImageResId(R.drawable.loading_large);
-            user_logo.setErrorImageResId(R.drawable.null_large);
+            user_logo.setErrorImageResId(R.drawable.loading_large);
             user_logo.setBackgroundColor(0);
             user_logo.setImageUrl(profile_image, imageLoader);
         }

@@ -53,7 +53,7 @@ public class SearchDetailAdapter extends BaseRedScarfAdapter<SearchDetailBody>{
                 viewHolder.photo.setBackgroundResource(R.drawable.loading_large);
                 if ((imageUrl != null) && (!imageUrl.equals(""))) {
                     viewHolder.photo.setDefaultImageResId(R.drawable.loading_large);
-                    viewHolder.photo.setErrorImageResId(R.drawable.null_large);
+                    viewHolder.photo.setErrorImageResId(R.drawable.loading_large);
                     viewHolder.photo.setBackgroundColor(0);
                     viewHolder.photo.setImageUrl(imageUrl, imageLoader);
                 }
@@ -65,7 +65,7 @@ public class SearchDetailAdapter extends BaseRedScarfAdapter<SearchDetailBody>{
                 viewHolder.photo.setBackgroundResource(R.drawable.loading_large);
                 if ((imageUrl != null) && (!imageUrl.equals(""))) {
                     viewHolder.photo.setDefaultImageResId(R.drawable.loading_large);
-                    viewHolder.photo.setErrorImageResId(R.drawable.null_large);
+                    viewHolder.photo.setErrorImageResId(R.drawable.loading_large);
                     viewHolder.photo.setBackgroundColor(0);
                     viewHolder.photo.setImageUrl(imageUrl, imageLoader);
                 }
@@ -75,7 +75,7 @@ public class SearchDetailAdapter extends BaseRedScarfAdapter<SearchDetailBody>{
                 viewHolder.photo.setBackgroundResource(R.drawable.loading_large);
                 if ((imageUrl != null) && (!imageUrl.equals(""))) {
                     viewHolder.photo.setDefaultImageResId(R.drawable.loading_large);
-                    viewHolder.photo.setErrorImageResId(R.drawable.null_large);
+                    viewHolder.photo.setErrorImageResId(R.drawable.loading_large);
                     viewHolder.photo.setBackgroundColor(0);
                     viewHolder.photo.setImageUrl(imageUrl, imageLoader);
                 }

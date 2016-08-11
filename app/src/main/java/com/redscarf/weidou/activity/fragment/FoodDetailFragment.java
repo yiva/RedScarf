@@ -340,7 +340,7 @@ public class FoodDetailFragment extends BaseFragment {
             img_photo_big.setBackgroundResource(R.drawable.loading_large);
             if ((imageUrl != null) && (!imageUrl.equals(""))) {
                 img_photo_big.setDefaultImageResId(R.drawable.loading_large);
-                img_photo_big.setErrorImageResId(R.drawable.null_large);
+                img_photo_big.setErrorImageResId(R.drawable.loading_large);
                 img_photo_big.setBackgroundColor(0);
                 img_photo_big.setImageUrl(imageUrl, imageLoader);
             }

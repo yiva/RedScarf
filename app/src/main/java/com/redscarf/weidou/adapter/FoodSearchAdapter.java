@@ -77,7 +77,7 @@ public class FoodSearchAdapter extends BaseRedScarfAdapter<HotFoodBody> {
         String imageUrl = this.mRedScarfBodies.get(position).getPost_medium();
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             viewHolder.food_photo.setDefaultImageResId(R.drawable.loading_large);
-            viewHolder.food_photo.setErrorImageResId(R.drawable.null_large);
+            viewHolder.food_photo.setErrorImageResId(R.drawable.loading_large);
             viewHolder.food_photo.setBackgroundColor(0);
             viewHolder.food_photo.setImageUrl(imageUrl, imageLoader);
         }

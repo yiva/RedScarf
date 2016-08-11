@@ -118,18 +118,10 @@ public class IndexListAdapter extends BaseRedScarfAdapter<RedScarfBody> {
 		viewHolder.photo.setBackgroundResource(R.drawable.loading_large);
 		if ((imageUrl != null) && (!imageUrl.equals(""))) {
 			viewHolder.photo.setDefaultImageResId(R.drawable.loading_large);
-			viewHolder.photo.setErrorImageResId(R.drawable.null_large);
+			viewHolder.photo.setErrorImageResId(R.drawable.loading_large);
 			viewHolder.photo.setBackgroundColor(0);
 			viewHolder.photo.setImageUrl(imageUrl, imageLoader);
 		}
-		//user image
-//		viewHolder.logo.setBackgroundResource(R.drawable.loading_large);
-//		if ((logoUrl != null) && (!logoUrl.equals(""))) {
-//			viewHolder.logo.setDefaultImageResId(R.drawable.loading_large);
-//			viewHolder.logo.setErrorImageResId(R.drawable.null_large);
-//			viewHolder.logo.setBackgroundColor(0);
-//			viewHolder.logo.setImageUrl(logoUrl, imageLoader);
-//		}
 		//子控件事件
 		viewHolder.tag.setOnItemClickListener(new onTagItemClick(position));//tag_post
 		viewHolder.logo.setOnClickListener(new onProfileClick(position));//author_post

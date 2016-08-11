@@ -45,10 +45,6 @@ public class FoodSeriesAdapter extends BaseRedScarfAdapter<FoodSeriesBody> {
             if ((imageUrl != null) && (!imageUrl.equals(""))) {
                 ImageLoader.ImageListener listener = ImageLoader.getImageListener(viewHolder.food_pic, R.drawable.loading_middle, R.drawable.loading_min);
                 imageLoader.get(imageUrl, listener);
-//            viewHolder.food_pic.setDefaultImageResId(R.drawable.loading_middle);
-//            viewHolder.food_pic.setErrorImageResId(R.drawable.null_large);
-//            viewHolder.food_pic.setBackgroundColor(0);
-//            viewHolder.food_pic.setImageUrl(imageUrl, imageLoader);
             }
         }
         if(selectedPosition == position)

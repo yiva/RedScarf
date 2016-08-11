@@ -53,7 +53,7 @@ public class MyFavouriteAdapter extends BaseRedScarfAdapter<MyFavouriteBody> {
         viewHolder.image.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             viewHolder.image.setDefaultImageResId(R.drawable.loading_large);
-            viewHolder.image.setErrorImageResId(R.drawable.null_large);
+            viewHolder.image.setErrorImageResId(R.drawable.loading_large);
             viewHolder.image.setBackgroundColor(0);
             viewHolder.image.setImageUrl(imageUrl, imageLoader);
         }
