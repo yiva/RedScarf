@@ -163,7 +163,7 @@ public class GoodsDetailActivity extends BaseActivity {
         goodsImage.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             goodsImage.setDefaultImageResId(R.drawable.loading_large);
-            goodsImage.setErrorImageResId(R.drawable.null_large);
+            goodsImage.setErrorImageResId(R.drawable.loading_large);
             goodsImage.setBackgroundColor(0);
             goodsImage.setImageUrl(imageUrl, imageLoader);
         }
