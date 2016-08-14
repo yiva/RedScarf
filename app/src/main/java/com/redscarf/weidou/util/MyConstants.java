@@ -2,6 +2,8 @@ package com.redscarf.weidou.util;
 
 import android.os.Environment;
 
+import org.json.JSONObject;
+
 public class MyConstants {
 
 
@@ -43,7 +45,7 @@ public class MyConstants {
     public static final String REPLACE_STRINGS = "(?:<p>|</p>)";
 
     public static final String SDCARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()
-            .toString() + "/" + GlobalApplication.getAppContext().getPackageName()+"/";
+            .toString() + "/" + GlobalApplication.getAppContext().getPackageName() + "/";
 
     //服务器地址
     public static final String URL = "http://weidou.co.uk/weipress/";
@@ -90,5 +92,15 @@ public class MyConstants {
             "email,direct_messages_read,direct_messages_write,"
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
+
+    public static final String STR_HOT_CATEGORY =
+                    "[{\"key\":\"5\",\"value\":\"热门购物\"}," +
+                    "{\"key\":\"480\",\"value\":\"护肤美妆\"}," +
+                    "{\"key\":\"481\",\"value\":\"时尚配饰\"}," +
+                    "{\"key\":\"478\",\"value\":\"保健塑身\"}," +
+                    "{\"key\":\"483\",\"value\":\"食品酒水\"}," +
+                    "{\"key\":\"479\",\"value\":\"家居电子\"}," +
+                    "{\"key\":\"484\",\"value\":\"餐厅票务\"}," +
+                    "{\"key\":\"482\",\"value\":\"酒店交通\"}]";
 
 }

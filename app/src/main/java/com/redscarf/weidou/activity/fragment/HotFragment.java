@@ -19,6 +19,7 @@ import com.redscarf.weidou.pojo.HotBody;
 import com.redscarf.weidou.pojo.HotListBody;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.JSONHelper;
+import com.redscarf.weidou.util.MyConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,7 @@ import java.util.Map;
  * 发现
  * Created by yeahwang on 2016/8/8.
  */
-public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerViewListener{
+public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerViewListener {
 
     private final String TAG = HotFragment.class.getSimpleName();
 
@@ -58,7 +59,7 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
                     HotBody b = new HotBody();
                     b.setTitle("Hello");
                     list.add(b);
-                    hotAdapter = new HotAdapter(getActivity(),list_hot);
+                    hotAdapter = new HotAdapter(getActivity(), list_hot);
                     recyclerViewHot.setAdapter(hotAdapter);
                     hotAdapter.setOnRecyclerViewListener(HotFragment.this);
                     hideProgressDialog();
@@ -68,7 +69,6 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
             }
         }
     };
-
 
 
     @Override
@@ -113,15 +113,18 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
     private boolean parseHotItems() {
         try {
             JSONObject jo = new JSONObject(response);
+            String posts = jo.getString("posts");
             JSONObject o = jo.getJSONObject("posts");
-            Iterator it = o.keys();
-            while (it.hasNext()) {
-                String key = it.next().toString();
+            JSONArray ja_hot_category = new JSONArray(MyConstants.STR_HOT_CATEGORY);
+            for (int i = 0; i < ja_hot_category.length(); ++i) {
+                JSONObject jo_hot_category = ja_hot_category.getJSONObject(i);
+                String key = jo_hot_category.getString("key");
                 JSONArray array = o.getJSONArray(key);
                 ArrayList<HotBody> bodys = (ArrayList<HotBody>) JSONHelper.parseCollection
                         (array, ArrayList.class, HotBody.class);
                 HotListBody body = new HotListBody();
-                body.setKey(key);
+                body.setId(key);
+                body.setKey(jo_hot_category.getString("value"));
                 body.setHotItems(bodys);
                 list_hot.add(body);
             }

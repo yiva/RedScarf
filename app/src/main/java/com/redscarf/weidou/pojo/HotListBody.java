@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * Created by yeahwang on 2016/8/14.
  */
 public class HotListBody implements Parcelable{
+
+    private String id;
     private String key;
     private ArrayList<HotBody> hotItems;
 
@@ -17,7 +19,9 @@ public class HotListBody implements Parcelable{
 
     }
 
+
     protected HotListBody(Parcel in) {
+        id = in.readString();
         key = in.readString();
         hotItems = in.createTypedArrayList(HotBody.CREATOR);
     }
@@ -33,6 +37,14 @@ public class HotListBody implements Parcelable{
             return new HotListBody[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getKey() {
         return key;
@@ -57,6 +69,7 @@ public class HotListBody implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(key);
         dest.writeTypedList(hotItems);
     }
