@@ -6,6 +6,7 @@ import java.util.List;
 import com.redscarf.weidou.activity.fragment.BuyFragment;
 import com.redscarf.weidou.activity.fragment.FoodCategoryFragment;
 import com.redscarf.weidou.activity.fragment.FoodFragment;
+import com.redscarf.weidou.activity.fragment.HotFragment;
 import com.redscarf.weidou.activity.fragment.SearchFragment;
 import com.redscarf.weidou.activity.fragment.ShopCategoryFragment;
 import com.redscarf.weidou.util.GlobalApplication;
@@ -70,7 +71,8 @@ public class BasicViewActivity extends BaseActivity implements OnTouchListener
 
         transaction = basicFragment.beginTransaction();
 
-        mapFragment.put(SEARCH_COMTAINER, new SearchFragment());
+//        mapFragment.put(SEARCH_COMTAINER, new SearchFragment());
+        mapFragment.put(SEARCH_COMTAINER, new HotFragment());
         mapFragment.put(FOOD_CONTAINER, new FoodCategoryFragment());
         mapFragment.put(SHOP_CONTAINER, new ShopCategoryFragment());
         mapFragment.put(SHOP_LIST_CONTAINER, new BuyFragment());

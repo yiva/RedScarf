@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.redscarf.weidou.util.MyConstants;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by yeahwang on 2016/2/17.
  */
@@ -137,8 +140,8 @@ public class BrandDetailBody implements Parcelable{
         this.subtype = subtype;
     }
 
-    public String getPost_medium() {
-        return MyConstants.URL+"wp-content/uploads"+post_medium;
+    public String getPost_medium()  throws UnsupportedEncodingException {
+            return MyConstants.URL+"wp-content/uploads"+ URLEncoder.encode(post_medium, "UTF-8");
     }
 
     public void setPost_medium(String post_medium) {

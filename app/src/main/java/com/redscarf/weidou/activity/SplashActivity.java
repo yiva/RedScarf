@@ -68,7 +68,6 @@ public class SplashActivity extends BaseActivity {
     private AnimationSet animationSet = new AnimationSet(true);
 
 
-
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -88,7 +87,7 @@ public class SplashActivity extends BaseActivity {
                 0.0f, 1.0f);
 //设置动画时间
 
-        Animation translateAnimation = new TranslateAnimation(1.0f, 1.0f,1.0f,1.0f);
+        Animation translateAnimation = new TranslateAnimation(1.0f, 1.0f, 1.0f, 1.0f);
         animationSet.addAnimation(scaleAnimation);
         animationSet.addAnimation(translateAnimation);
         // 加载本地gif显示
@@ -109,7 +108,7 @@ public class SplashActivity extends BaseActivity {
         builder.appendQueryParameter("cookie", MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE));
         Log.i(TAG, builder.toString());
         jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
-                builder.toString(), new Response.Listener<JSONObject>() {
+                builder.toString(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i(TAG, "success");

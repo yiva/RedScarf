@@ -38,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -151,7 +152,12 @@ public class BrandDetailActivity extends BaseActivity {
         description.setVisibility(View.VISIBLE);
 
         //load image
-        String imageUrl = brand_body.getPost_medium();
+        String imageUrl = null;
+        try {
+            imageUrl = brand_body.getPost_medium();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         photo.setBackgroundResource(R.drawable.loading_large);
         if ((imageUrl != null) && (!imageUrl.equals(""))) {
             photo.setDefaultImageResId(R.drawable.loading_large);

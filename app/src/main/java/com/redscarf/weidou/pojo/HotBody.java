@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * 发现实体类
  * Created by yeahwang on 2016/8/7.
  */
 public class HotBody implements Parcelable{

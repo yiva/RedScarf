@@ -211,7 +211,7 @@ public class LoginActivity extends BaseActivity {
 
             jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
                     RequestURLFactory.sysRequestURL(RequestType.LOGIN_FIRST,
-                            new String[]{username, pwd}), new Response.Listener<JSONObject>() {
+                            new String[]{username, pwd}),null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.i(TAG, "success");
@@ -236,7 +236,8 @@ public class LoginActivity extends BaseActivity {
         } else {//已经登录过，验证cookie
             jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
                     RequestURLFactory.sysRequestURL(RequestType.LOGIN_AGAIN,
-                            new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_COOKIE)}),
+                            new String[]{MyPreferences.getAppPerenceAttribute(MyConstants
+                                    .PREF_USER_COOKIE)}),null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
