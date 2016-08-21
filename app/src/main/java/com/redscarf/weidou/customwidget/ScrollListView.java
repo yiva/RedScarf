@@ -77,7 +77,6 @@ public class ScrollListView extends ListView {
             mView.measure(
                     MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                     MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            //mView.measure(0, 0);
             totalHeight += height;
             Log.w("HEIGHT" + i, String.valueOf(totalHeight));
         }

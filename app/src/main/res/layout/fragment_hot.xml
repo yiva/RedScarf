@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:background="@color/white">
+    <include
+        android:id="@+id/actionbar_hot"
+        layout="@layout/actionbar_normal"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_hot"
         android:layout_width="match_parent"

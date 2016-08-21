@@ -3,6 +3,8 @@ package com.redscarf.weidou.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.redscarf.weidou.util.MyConstants;
+
 /**
  * 发现实体类
  * Created by yeahwang on 2016/8/7.
@@ -101,7 +103,7 @@ public class HotBody implements Parcelable{
     }
 
     public String getPost_thumbnail() {
-        return post_thumbnail;
+        return MyConstants.URL + "wp-content/uploads" + post_thumbnail;
     }
 
     public void setPost_thumbnail(String post_thumbnail) {

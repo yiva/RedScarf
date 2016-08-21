@@ -29,12 +29,34 @@
             android:layout_alignParentRight="true"
             android:text="@string/more"/>
     </RelativeLayout>
+    <!--<com.redscarf.weidou.customwidget.ScrollGridView-->
+        <!--android:id="@+id/grid_hot_item"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!-->-->
+
+    <!--</com.redscarf.weidou.customwidget.ScrollGridView>-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grid_hot_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin2"
+        android:focusable="false"
+        android:gravity="center"
         >
-
     </android.support.v7.widget.RecyclerView>
+    <!--<GridView-->
+        <!--android:id="@+id/grid_hot_item"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/layout_margin2"-->
+        <!--android:focusable="false"-->
+        <!--android:numColumns="2"-->
+        <!--android:gravity="center"-->
+        <!--android:horizontalSpacing="@dimen/layout_margin3"-->
+        <!--android:verticalSpacing="@dimen/layout_margin3"-->
+        <!--android:stretchMode="columnWidth"-->
+        <!-->-->
+    <!--</GridView>-->
 
 </LinearLayout>

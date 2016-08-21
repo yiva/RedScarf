@@ -364,8 +364,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     /**
      * 美食list滚动加载
      */
-
-
     private class OnFoodListScrollListener implements AbsListView.OnScrollListener {
 
         @Override
@@ -492,6 +490,9 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
 //        void backToFoodCategory();
 //    }
 
+    /**
+     * 美食右上角提出框
+     */
     private void showFoodCategaryPopupWindow() {
         foodUrlAttribute.clear();
         if (location != null) {
@@ -726,7 +727,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
                         .FOODLIST, new String[]{foodUrlAttribute.toString(),
                         CURRENT_PAGE + ""}), FoodFragment.class, handler,
-                MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType,"reload_with_filter");
+                MSG_FOOD_INDEX_NOT_CHANG_SELECT, ProgressType, "reload_with_filter");
     }
 
     /**

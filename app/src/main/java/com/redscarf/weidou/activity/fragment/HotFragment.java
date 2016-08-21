@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,6 +18,7 @@ import com.redscarf.weidou.network.RequestType;
 import com.redscarf.weidou.network.RequestURLFactory;
 import com.redscarf.weidou.pojo.HotBody;
 import com.redscarf.weidou.pojo.HotListBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.JSONHelper;
 import com.redscarf.weidou.util.MyConstants;
@@ -40,6 +42,7 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
     private final String TAG = HotFragment.class.getSimpleName();
 
     private RecyclerView recyclerViewHot;
+    private View actionbar_hot;
 
     private HotAdapter hotAdapter;
 
@@ -93,6 +96,7 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
 
     @Override
     public void initView() {
+        setActionBarLayout("发现", ActionBarType.NORMAL);
         recyclerViewHot = (RecyclerView) rootView.findViewById(R.id.list_hot);
         recyclerViewHot.setHasFixedSize(true);
 

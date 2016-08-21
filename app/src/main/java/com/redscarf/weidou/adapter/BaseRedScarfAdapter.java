@@ -146,4 +146,26 @@ public abstract class BaseRedScarfAdapter<T> extends BaseAdapter{
 		});
 	}
 
+	/**
+	 * 设置图片大小比为3：2
+	 * @param v 需设置图片
+	 */
+	protected void setImageViewMeasure(final View v,final Integer width){
+		//按比例设置图片大小
+		ViewTreeObserver vto = v.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+			@Override
+			public void onGlobalLayout() {
+				v.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				v.getHeight();
+				int height = width * 2 / 3;
+				ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
+				layoutParams.width = width;
+				layoutParams.height = height;
+				v.setLayoutParams(layoutParams);
+			}
+		});
+	}
+
 }

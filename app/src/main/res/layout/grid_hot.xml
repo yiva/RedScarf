@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:descendantFocusability="blocksDescendants">
-    <com.android.volley.toolbox.NetworkImageView
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_grid_hot_item"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/img_hot_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:id="@+id/txt_hot_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="2"/>
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="10dp"
+        app:riv_oval="false"
+        />
+    <TextView
+        style="@style/text_style_content_normal"
+        android:id="@+id/txt_hot_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/layout_margin3"
+        android:maxLines="2"
+        android:ellipsize="end"
+        />
 </LinearLayout>
