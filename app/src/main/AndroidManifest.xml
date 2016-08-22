@@ -158,7 +158,12 @@
             android:name=".AboutActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HotMoreActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
 
+        <!--微博-->
         <activity android:name=".WBAuthActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"/>

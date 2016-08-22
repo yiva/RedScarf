@@ -32,4 +32,5 @@ public enum RequestType {
     ,FOOD_FILTER_LIST   //美食filter
     ,FOODLIST_WITH_FILTER   //带条件的美食查询
     ,HOTLIST//发现
+    ,HOT_MORE_LIST//发现更多
 }

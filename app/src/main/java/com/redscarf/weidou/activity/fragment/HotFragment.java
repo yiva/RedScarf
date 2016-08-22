@@ -37,7 +37,7 @@ import java.util.Map;
  * 发现
  * Created by yeahwang on 2016/8/8.
  */
-public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerViewListener {
+public class HotFragment extends BaseFragment {
 
     private final String TAG = HotFragment.class.getSimpleName();
 
@@ -64,7 +64,7 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
                     list.add(b);
                     hotAdapter = new HotAdapter(getActivity(), list_hot);
                     recyclerViewHot.setAdapter(hotAdapter);
-                    hotAdapter.setOnRecyclerViewListener(HotFragment.this);
+                    hotAdapter.setOnRecyclerViewListener(new OnHotItemClick());
                     hideProgressDialog();
                     break;
                 default:
@@ -104,16 +104,6 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
         recyclerViewHot.setLayoutManager(layoutManager);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Toast.makeText(getActivity(), list_hot.get(position).getKey(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onItemLongClick(int position) {
-        return false;
-    }
-
     private boolean parseHotItems() {
         try {
             JSONObject jo = new JSONObject(response);
@@ -137,5 +127,18 @@ public class HotFragment extends BaseFragment implements HotAdapter.OnRecyclerVi
             return false;
         }
         return true;
+    }
+
+    private class OnHotItemClick implements HotAdapter.OnRecyclerViewListener {
+
+        @Override
+        public void onItemClick(int position) {
+            Toast.makeText(getActivity(), list_hot.get(position).getKey(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public boolean onItemLongClick(int position) {
+            return false;
+        }
     }
 }

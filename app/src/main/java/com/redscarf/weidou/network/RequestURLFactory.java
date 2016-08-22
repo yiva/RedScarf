@@ -79,6 +79,9 @@ public class RequestURLFactory {
             case HOTLIST:
                 res = baseUrl + "?json=get_hot_posts";
                 break;
+            case HOT_MORE_LIST:
+                res = baseUrl + "?json=get_hot_by_cat&subcate_id=" + attributes[0];
+                break;
             default:
                 res = "false";
                 break;

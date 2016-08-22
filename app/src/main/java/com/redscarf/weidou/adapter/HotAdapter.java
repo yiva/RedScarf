@@ -1,27 +1,27 @@
 package com.redscarf.weidou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.redscarf.weidou.activity.GoodsDetailActivity;
+import com.redscarf.weidou.activity.HotMoreActivity;
 import com.redscarf.weidou.activity.R;
-import com.redscarf.weidou.customwidget.ScrollGridView;
 import com.redscarf.weidou.pojo.HotBody;
 import com.redscarf.weidou.pojo.HotListBody;
 import com.redscarf.weidou.util.DisplayUtil;
 import com.redscarf.weidou.util.GlobalApplication;
-import com.sina.weibo.sdk.openapi.models.Comment;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -64,7 +64,6 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
         //因为每行显示3个条目，为了保持正方形，那么高度应该是也是宽度/3
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
 
-
         layoutParams.height = getItemHeight(lineNumber);
         holder.hot_detail.setLayoutParams(layoutParams);
         holder.hot_detail.setBackgroundResource(R.color.white);
@@ -73,20 +72,25 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
 //        int spacingInPixels = mContext.getResources().getDimensionPixelOffset(R.dimen.layout_margin3);
 //        holder.hot_detail.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
-        holder.hot_detail.setAdapter(new HotDetailAdapter(mContext, items));
+        HotDetailAdapter adapter = new HotDetailAdapter(mContext, items);
+        holder.hot_detail.setAdapter(adapter);
+        adapter.setOnRecyclerViewListener(new OnHotDetailClick(items));
 
         holder.title.setText(body.getKey());
+        holder.more.setOnClickListener(new OnEnterHotMoreClick(body.getId(), body.getKey()));
     }
 
     class HotViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private View rootView;
         private TextView title;
         private RecyclerView hot_detail;
+        private TextView more;
 
         public HotViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.txt_category_hot);
             hot_detail = (RecyclerView) itemView.findViewById(R.id.grid_hot_item);
+            more = (TextView) itemView.findViewById(R.id.txt_category_more);
             rootView = itemView.findViewById(R.id.listview_layout_hot);
             rootView.setOnClickListener(this);
         }
@@ -124,6 +128,59 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
                 (lineNumber - 1) * DisplayUtil.dip2px(mContext, 8)
                 + lineNumber * DisplayUtil.dip2px(mContext, 48);//textView高度
         return height;
+    }
+
+    /**
+     * 发现item点击事件
+     */
+    private class OnHotDetailClick implements HotDetailAdapter.OnRecyclerViewListener {
+        private ArrayList<HotBody> items = new ArrayList<>();
+
+        public OnHotDetailClick(ArrayList<HotBody> arr) {
+            this.items = arr;
+        }
+
+        @Override
+        public void onItemClick(int position) {
+            Bundle data = new Bundle();
+            HotBody item = items.get(position);
+            data.putString("id", item.getId());
+            data.putString("title", item.getTitle());
+
+            Intent in_shop_detail = new Intent(mContext, GoodsDetailActivity.class);
+            in_shop_detail.putExtras(data);
+            mContext.startActivity(in_shop_detail);
+        }
+
+        @Override
+        public boolean onItemLongClick(int position) {
+            return false;
+        }
+    }
+
+    /**
+     * 更多
+     */
+    private class OnEnterHotMoreClick implements View.OnClickListener {
+
+        private String id;
+        private String title;
+
+        public OnEnterHotMoreClick(String id, String title) {
+            this.id = id;
+            this.title = title;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Bundle data = new Bundle();
+            data.putString("id", this.id);
+            data.putString("title", this.title);
+
+            Intent in_hot_more = new Intent(mContext, HotMoreActivity.class);
+            in_hot_more.putExtras(data);
+            mContext.startActivity(in_hot_more);
+        }
     }
 
 }

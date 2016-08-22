@@ -93,7 +93,6 @@ public class BuyFragment extends BaseFragment
 
     private List<GridBody> datas;
 
-    List<TextView> headtabs = new ArrayList<TextView>();
     private String response;
     private final int MSG_INDEX = 1; //msg.what index
     private ArrayList<GoodsBody> bodys;
@@ -135,7 +134,7 @@ public class BuyFragment extends BaseFragment
                         lv_brands.setAdapter(brandsListAdapter);
                     }
                     if (bodys.size() != 0) {
-                        buyListAdapter = new BuyListAdapter(getActivity(), bodys, category_id);
+                        buyListAdapter = new BuyListAdapter(getActivity(), bodys);
                         lv_shop.setAdapter(buyListAdapter);
                         records.clear();
                     }
@@ -282,7 +281,7 @@ public class BuyFragment extends BaseFragment
         // 定义列表
         lv_shop = (PullableListView) rootView.findViewById(R.id.list_shop);
         lv_shop.setOnItemClickListener(new onListBuyItemClick());
-        lv_shop.setLongClickable(true);
+        lv_shop.setLongClickable(false);
         lv_shop.setOnScrollListener(new OnBuyListScrollListener());
 
         layout_search = (RelativeLayout) head_search.findViewById(R.id.layout_search);

@@ -52,9 +52,8 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
     private int height;
     private int width;
 
-    public BuyListAdapter(Context context, List<GoodsBody> listData, int flag) {
+    public BuyListAdapter(Context context, List<GoodsBody> listData) {
         super(context, listData);
-        this.mFlag = flag;
     }
 
     @Override
@@ -115,9 +114,7 @@ public class BuyListAdapter extends BaseRedScarfAdapter<GoodsBody> {
             viewHolder.exclusive.setVisibility(View.GONE);
         }
 
-//        if (5 != mFlag) {
         viewHolder.subtitle.setText(Html.fromHtml(getItem(position).getSubtitle()));
-//        }
 
         String imageUrl = this.mRedScarfBodies.get(position).getPost_thumbnail();
         viewHolder.shop_photo.setTag(imageUrl);

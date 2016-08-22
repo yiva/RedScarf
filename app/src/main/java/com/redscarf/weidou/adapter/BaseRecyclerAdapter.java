@@ -19,7 +19,7 @@ import java.util.List;
  * RecyclerView Base Adapter
  * Created by yeahwang on 2016/8/14.
  */
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter{
 
     protected Context mContext;
     protected List<T> list;
