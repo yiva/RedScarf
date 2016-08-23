@@ -54,6 +54,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
     protected HashMap<String, String> url_map = new HashMap<>();
 
     protected View rootView;
+    protected View view_404;
 
     public static final int STATE_NONE = 0;
     public static final int STATE_REFRESH = 1;
@@ -218,6 +219,7 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view_404 = inflater.inflate(R.layout.view_404, null);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

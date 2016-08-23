@@ -164,6 +164,16 @@ public class BuyFragment extends BaseFragment
                     }
 
                     break;
+                case MSG_ERROR:
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    switch (error) {
+                        case "index":
+                            TextView errText = (TextView) view_404.findViewById(R.id.txt_404);
+                            errText.setText("网络故障");
+                            break;
+                    }
+                    break;
                 default:
                     break;
             }

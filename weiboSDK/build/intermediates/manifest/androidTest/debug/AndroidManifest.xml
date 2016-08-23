@@ -3,7 +3,7 @@
     package="com.sina.weibo.sdk.test" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="18"
         android:targetSdkVersion="18" />
 
     <instrumentation

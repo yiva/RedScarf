@@ -52,6 +52,7 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
     private ProgressDialog progressDialog;
     private StringRequest stringRequest;
     private TextView actionbar_title;
+    protected View view_404;
 
     protected HashMap<String, String> url_map;
     protected FragmentManager basicFragment = getSupportFragmentManager();
@@ -61,6 +62,7 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //		url_map = new HashMap<String,String>();
+        view_404 = getLayoutInflater().inflate(R.layout.view_404, null);
     }
 
     /**
