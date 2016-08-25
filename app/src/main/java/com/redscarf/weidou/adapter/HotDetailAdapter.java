@@ -65,7 +65,7 @@ public class HotDetailAdapter extends BaseRecyclerAdapter<HotBody>{
             title = (TextView) itemView.findViewById(R.id.txt_hot_item_title);
             image = (ImageView) itemView.findViewById(R.id.img_hot_item);
             setImageViewMeasure(image, (GlobalApplication.getScreenWidth() - DisplayUtil.dip2px
-                    (mContext, 40)) / 2);
+                    (mContext, 48)) / 2);
             rootView = itemView.findViewById(R.id.layout_grid_hot_item);
             rootView.setOnClickListener(this);
         }

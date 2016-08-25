@@ -53,6 +53,7 @@
     </style>
     <style name="text_style">
         <item name="android:lineSpacingMultiplier">1</item>
+        <item name="android:textColor">@color/detail_content</item>
     </style>
     <style name="text_style_5">
         <item name="android:lineSpacingMultiplier">1.5</item>

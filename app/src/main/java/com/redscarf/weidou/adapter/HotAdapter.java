@@ -68,15 +68,13 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
         holder.hot_detail.setLayoutParams(layoutParams);
         holder.hot_detail.setBackgroundResource(R.color.white);
 
-        //设置间距
-//        int spacingInPixels = mContext.getResources().getDimensionPixelOffset(R.dimen.layout_margin3);
-//        holder.hot_detail.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
         HotDetailAdapter adapter = new HotDetailAdapter(mContext, items);
         holder.hot_detail.setAdapter(adapter);
         adapter.setOnRecyclerViewListener(new OnHotDetailClick(items));
 
         holder.title.setText(body.getKey());
+        holder.title.setOnClickListener(new OnEnterHotMoreClick(body.getId(), body.getKey()));
         holder.more.setOnClickListener(new OnEnterHotMoreClick(body.getId(), body.getKey()));
     }
 
@@ -93,6 +91,9 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
             more = (TextView) itemView.findViewById(R.id.txt_category_more);
             rootView = itemView.findViewById(R.id.listview_layout_hot);
             rootView.setOnClickListener(this);
+            //设置间距
+            int spacingInPixels = mContext.getResources().getDimensionPixelOffset(R.dimen.layout_margin3);
+            hot_detail.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         }
 
         @Override
@@ -116,8 +117,19 @@ public class HotAdapter extends BaseRecyclerAdapter<HotListBody> {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view);
+            //根据position确定item需要留出的位置
+            switch (position % 2) {
+                case 0:
+                    outRect.right = this.space;
+                    break;
+                case 1:
+                    outRect.left = this.space;
+                    break;
+                default:
+                    break;
+            }
             outRect.bottom = this.space;
-            outRect.right = this.space;
         }
     }
 
