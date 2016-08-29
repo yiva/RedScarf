@@ -96,7 +96,7 @@ public class HotFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        setActionBarLayout("发现", ActionBarType.NORMAL);
+        setActionBarLayout("热门", ActionBarType.NORMAL);
         recyclerViewHot = (RecyclerView) rootView.findViewById(R.id.list_hot);
         recyclerViewHot.setHasFixedSize(true);
 
