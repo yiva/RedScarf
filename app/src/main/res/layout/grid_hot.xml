@@ -11,7 +11,7 @@
         android:id="@+id/img_hot_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:riv_corner_radius="10dp"
         app:riv_oval="false"
         />
