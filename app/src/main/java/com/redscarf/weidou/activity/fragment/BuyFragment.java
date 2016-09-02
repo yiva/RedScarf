@@ -165,6 +165,7 @@ public class BuyFragment extends BaseFragment
 
                     break;
                 case MSG_ERROR:
+                    hideProgressDialog();
                     Bundle errObj = msg.getData();
                     String error = errObj.getString("error");
                     switch (error) {
@@ -392,8 +393,6 @@ public class BuyFragment extends BaseFragment
     /**
      * 购物list滚动加载
      */
-
-
     private class OnBuyListScrollListener implements AbsListView.OnScrollListener {
 
         @Override

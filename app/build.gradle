@@ -18,13 +18,13 @@ android {
         release {
             keyAlias 'weidou'
             keyPassword 'weidou'
-            storeFile file('E:/Workspaces/signed key/weidou.keystore')
+            storeFile file('C:/services/signed key/weidou.keystore')
             storePassword 'weidou'
         }
         debug {
             keyAlias 'weidou'
             keyPassword 'weidou'
-            storeFile file('E:/Workspaces/signed key/weidou.keystore')
+            storeFile file('C:/services/signed key/weidou.keystore')
             storePassword 'weidou'
         }
     }
