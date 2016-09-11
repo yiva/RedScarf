@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,6 +45,8 @@ public class HotFragment extends BaseFragment {
 
     private RecyclerView recyclerViewHot;
     private View actionbar_hot;
+    private View view_404;
+    private LinearLayout layout_info;
 
     private HotAdapter hotAdapter;
 
@@ -66,6 +70,31 @@ public class HotFragment extends BaseFragment {
                     recyclerViewHot.setAdapter(hotAdapter);
                     hotAdapter.setOnRecyclerViewListener(new OnHotItemClick());
                     hideProgressDialog();
+                    layout_info.setVisibility(View.GONE);
+                    break;
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(getActivity()).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTLIST,
+                                    new String[]{""}), HotFragment.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE,
+                                    "index");
+                            }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
+                    }
                     break;
                 default:
                     break;

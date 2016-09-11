@@ -121,6 +121,7 @@ public class FoodDetailFragment extends BaseFragment {
                         Toast.makeText(getActivity(), "取消收藏失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
+
             }
 
         }

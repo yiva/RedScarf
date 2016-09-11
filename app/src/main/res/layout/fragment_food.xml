@@ -2,23 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    >
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical"
-		>
 		<include
 			android:id="@+id/actionbar_food"
 			layout="@layout/actionbar_normal"
 			/>
 		<LinearLayout
+			android:id="@+id/layout_food_select"
 			android:layout_width="match_parent"
 			android:layout_height="50dp"
 			android:background="@color/weidou_purple"
 			android:orientation="horizontal"
 			android:gravity="center_vertical"
+			android:layout_below="@+id/actionbar_food"
 			android:descendantFocusability="blocksDescendants"
 			>
 			<com.redscarf.weidou.customwidget.HorizontalListView
@@ -32,6 +29,7 @@
 		</LinearLayout>
 		<com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
 			android:id="@+id/food_refresh_view"
+			android:layout_below="@+id/layout_food_select"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			>
@@ -47,5 +45,12 @@
 
 			<include layout="@layout/load_more"/>
 		</com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
+	<LinearLayout
+		android:id="@+id/layout_food_info"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/actionbar_food"
+		android:visibility="gone"
+		android:orientation="vertical">
 	</LinearLayout>
 </RelativeLayout>

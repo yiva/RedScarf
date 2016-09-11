@@ -22,4 +22,5 @@ public interface BasePageLinstener {
     int PROGRESS_CANCELABLE = 1;//弹出框可以取消
 
     void initView();
+
 }

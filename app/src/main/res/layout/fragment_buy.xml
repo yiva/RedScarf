@@ -3,23 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-
     >
+    <include
+        android:id="@+id/actionbar_buy"
+        layout="@layout/actionbar_normal"
+        />
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <include
-            android:id="@+id/actionbar_buy"
-            layout="@layout/actionbar_normal"
-            />
-    <LinearLayout
+        android:id="@+id/layout_buy_head"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/weidou_purple"
         android:orientation="horizontal"
-        android:layout_above="@+id/refresh_view"
         android:layout_below="@+id/actionbar_buy"
         android:gravity="center_vertical"
         android:descendantFocusability="blocksDescendants"
@@ -41,26 +35,43 @@
         </com.redscarf.weidou.customwidget.HorizontalListView>
     </LinearLayout>
 
+    <com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_buy_head"
+        >
 
-        <com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout
-            android:id="@+id/refresh_view"
+        <include layout="@layout/refresh_head" />
+        <!-- 支持所有实现Pullable接口的View -->
+
+        <com.redscarf.weidou.customwidget.pullableview.PullableListView
+            android:id="@+id/list_shop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:divider="@null"
+            ></com.redscarf.weidou.customwidget.pullableview.PullableListView>
 
-            <include layout="@layout/refresh_head" />
-            <!-- 支持所有实现Pullable接口的View -->
-
-            <com.redscarf.weidou.customwidget.pullableview.PullableListView
-                android:id="@+id/list_shop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                ></com.redscarf.weidou.customwidget.pullableview.PullableListView>
-
-            <include layout="@layout/load_more" />
-        </com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
-
-
+        <include layout="@layout/load_more" />
+    </com.redscarf.weidou.customwidget.pullableview.PullToRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/layout_buy_head"
+        android:visibility="gone"
+        >
+        <include
+            android:id="@+id/head_search_buy"
+            layout="@layout/head_search"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_buy_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionbar_buy"
+        android:visibility="gone"
+        android:orientation="vertical">
     </LinearLayout>
 </RelativeLayout>

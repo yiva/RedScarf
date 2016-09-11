@@ -282,4 +282,5 @@ public abstract class BaseFragment extends Fragment implements BasePageLinstener
             startActivity(intent);
         }
     }
+
 }
