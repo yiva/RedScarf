@@ -131,6 +131,8 @@ public class HotFragment extends BaseFragment {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewHot.setLayoutManager(layoutManager);
+
+        layout_info = (LinearLayout) rootView.findViewById(R.id.layout_hot_info);
     }
 
     private boolean parseHotItems() {

@@ -15,7 +15,7 @@
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
-        android:id="@+id/layout_buy_info"
+        android:id="@+id/layout_hot_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/actionbar_hot"
