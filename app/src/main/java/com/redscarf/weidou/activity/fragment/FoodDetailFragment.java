@@ -65,6 +65,18 @@ public class FoodDetailFragment extends BaseFragment {
     private ImageView star2;
     private ImageView star3;
     private TextView distance;
+    private LinearLayout layout_info;
+    private TextView title_text;
+    private TextView phone;
+    private TextView website;
+    private HorizontalListView detail_photos;
+    private TextView address;
+    private TextView underground;
+    private TextView cost;
+    private TextView subtype;
+    private TextView content;
+    private TextView view_menu;
+    private View view_404;
 
     private FoodDetailBody body;
     private ArrayList<String> photoAddr;
@@ -89,7 +101,7 @@ public class FoodDetailFragment extends BaseFragment {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
                     mlistener.sendLcation(body);
-                    initView();
+                    setCurrentContentView();
                     hideProgressDialog();
                     break;
                 case MSG_IS_FAVOURITE:
@@ -121,7 +133,58 @@ public class FoodDetailFragment extends BaseFragment {
                         Toast.makeText(getActivity(), "取消收藏失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
-
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(getActivity()).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            if (StringUtils.isBlank(MyPreferences.getAppPerenceAttribute("latitude")) || StringUtils
+                                    .isBlank(MyPreferences.getAppPerenceAttribute("longitude"))) {
+                                Location location = LocationUtil.getLocation(getActivity());
+                                if (null != location) {
+                                    MyPreferences.setAppPerenceAttribute("latitude", location.getLatitude() + "");
+                                    MyPreferences.setAppPerenceAttribute("longitude", location.getLongitude() + "");
+                                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                                            new String[]{datas.getString("id") + "&lat=" + MyPreferences
+                                                    .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                                    .getAppPerenceAttribute("longitude")}),
+                                            FoodDetailFragment.class,
+                                            handler,
+                                            MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
+                                } else {
+                                    doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                                            new String[]{datas.getString("id")}), FoodDetailFragment.class, handler,
+                                            MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
+                                }
+                            } else {
+                                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.FOOD_POST,
+                                        new String[]{datas.getString("id") + "&lat=" + MyPreferences
+                                                .getAppPerenceAttribute("latitude") + "&lng=" + MyPreferences
+                                                .getAppPerenceAttribute("longitude")}),
+                                        FoodDetailFragment.class,
+                                        handler,
+                                        MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
+                            }
+                        }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
 
         }
@@ -136,6 +199,7 @@ public class FoodDetailFragment extends BaseFragment {
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
+        initView();
         if (StringUtils.isBlank(MyPreferences.getAppPerenceAttribute("latitude")) || StringUtils
                 .isBlank(MyPreferences.getAppPerenceAttribute("longitude"))) {
             Location location = LocationUtil.getLocation(getActivity());
@@ -163,7 +227,6 @@ public class FoodDetailFragment extends BaseFragment {
                     handler,
                     MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
         }
-
         return rootView;
     }
 
@@ -210,28 +273,37 @@ public class FoodDetailFragment extends BaseFragment {
     /*
      * 界面初始化
      */
+
     @Override
     public void initView() {
-        TextView title_text = (TextView) getActivity().findViewById(R.id.actionbar_with_share_title);
-        TextView phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
-        TextView website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
-        HorizontalListView detail_photos = (HorizontalListView) rootView.findViewById(R.id.hlist_food_detail_img);
-        TextView address = (TextView) rootView.findViewById(R.id.txt_food_detail_address);
-        TextView underground = (TextView) rootView.findViewById(R.id.txt_food_detail_underground);
-        TextView cost = (TextView) rootView.findViewById(R.id.txt_food_detail_cost);
-        TextView subtype = (TextView) rootView.findViewById(R.id.txt_food_detail_subtype);
-        TextView content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
-        TextView view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
+        title_text = (TextView) getActivity().findViewById(R.id.actionbar_with_share_title);
+        phone = (TextView) rootView.findViewById(R.id.txt_food_detail_phone);
+        website = (TextView) rootView.findViewById(R.id.txt_food_detail_website);
+        detail_photos = (HorizontalListView) rootView.findViewById(R.id.hlist_food_detail_img);
+        address = (TextView) rootView.findViewById(R.id.txt_food_detail_address);
+        underground = (TextView) rootView.findViewById(R.id.txt_food_detail_underground);
+        cost = (TextView) rootView.findViewById(R.id.txt_food_detail_cost);
+        subtype = (TextView) rootView.findViewById(R.id.txt_food_detail_subtype);
+        content = (TextView) rootView.findViewById(R.id.txt_food_detail_content);
+        view_menu = (TextView) rootView.findViewById(R.id.txt_food_detail_view_menu);
         favourite = (ImageButton) getActivity().findViewById(R.id.actionbar_with_share_favorite);
         layout_photo_big = (RelativeLayout) getActivity().findViewById(R.id.layout_photo_big_food);
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
         layout_reservation_food_detail = (LinearLayout) rootView.findViewById(R.id.layout_reservation_food_detail);
         layout_michelin = (LinearLayout) rootView.findViewById(R.id.layout_michelin_food_detail);
+        layout_info = (LinearLayout) rootView.findViewById(R.id.layout_food_detail_info);
         star1 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_1);
         star2 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_2);
         star3 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_3);
         distance = (TextView) rootView.findViewById(R.id.txt_distance_food_detail);
 
+
+    }
+
+    /**
+     * 输入布局数据
+     */
+    private void setCurrentContentView() {
         title_text.setText(body.getTitle());
         this.denoteFoodPhotos();
         detail_photos.setAdapter(new FoodDetailPhotoAdapter(getActivity(), photoAddr));

@@ -70,7 +70,6 @@ public class HotFragment extends BaseFragment {
                     recyclerViewHot.setAdapter(hotAdapter);
                     hotAdapter.setOnRecyclerViewListener(new OnHotItemClick());
                     hideProgressDialog();
-                    layout_info.setVisibility(View.GONE);
                     break;
                 case MSG_ERROR:
                     hideProgressDialog();
@@ -82,6 +81,8 @@ public class HotFragment extends BaseFragment {
                     view_404.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
                             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOTLIST,
                                     new String[]{""}), HotFragment.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE,
                                     "index");

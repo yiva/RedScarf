@@ -168,4 +168,12 @@
 
     </LinearLayout>
     <!-- End 主体 -->
+	<LinearLayout
+		android:id="@+id/layout_good_detail_info"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/actionbar_goods_detail"
+		android:visibility="gone"
+		android:orientation="vertical">
+	</LinearLayout>
 </RelativeLayout>

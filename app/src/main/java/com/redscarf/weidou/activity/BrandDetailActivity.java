@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -58,6 +60,8 @@ public class BrandDetailActivity extends BaseActivity {
     private ImageButton share;
     private ImageButton favourite;
     private ListView listview_attachment;
+    private LinearLayout layout_info;
+    private View view_404;
 
     private Bundle datas;
     //msg.what goods
@@ -83,7 +87,7 @@ public class BrandDetailActivity extends BaseActivity {
                     } catch (JSONException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
-                    initView();
+                    setCurrentContentView();
                     hideProgressDialog();
                     break;
                 case MSG_IS_FAVOURITE:
@@ -115,6 +119,32 @@ public class BrandDetailActivity extends BaseActivity {
                         Toast.makeText(BrandDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(BrandDetailActivity.this).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
+                                    new String[]{datas.getString("id")}), BrandDetailActivity.class, handler,
+                                    MSG_INDEX,PROGRESS_NO_CANCELABLE,"index");
+                        }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -128,6 +158,7 @@ public class BrandDetailActivity extends BaseActivity {
         datas = this.getIntent().getExtras();
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         GlobalApplication.getInstance().addActivity(this);
+        initView();
         doRequestURL(Request.Method.GET,RequestURLFactory.getRequestURL(RequestType.BRAND_POST,
                 new String[]{datas.getString("id")}), BrandDetailActivity.class, handler,
                 MSG_INDEX,PROGRESS_NO_CANCELABLE,"index");
@@ -135,7 +166,6 @@ public class BrandDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setActionBarLayout(brand_body.getTitle(), ActionBarType.WITHSHARE);
         //register
         description = (TextView) findViewById(R.id.txt_brand_detail_description);
         photo = (NetworkImageView) findViewById(R.id.img_brand_detail_photo);
@@ -146,7 +176,12 @@ public class BrandDetailActivity extends BaseActivity {
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
         listview_attachment = (ListView) findViewById(R.id.list_attachments_brand_detail);
         label = (TextView) findViewById(R.id.txt_label_brand_detail);
+        layout_info = (LinearLayout) findViewById(R.id.layout_brand_detail);
 
+    }
+
+    private void setCurrentContentView() {
+        setActionBarLayout(brand_body.getTitle(), ActionBarType.WITHSHARE);
         label.setText(brand_body.getTitle());
         description.setText(String.valueOf(StringUtils.substringBetween(brand_body.getSubtype(), "\"")));
         description.setVisibility(View.VISIBLE);

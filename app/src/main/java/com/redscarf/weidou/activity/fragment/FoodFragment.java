@@ -162,7 +162,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         lv_food_select.setAdapter(foodSelectListAdapter);
                     }
                     hideProgressDialog();
-                    layout_info.setVisibility(View.GONE);
                     break;
                 case MSG_FOOD_INDEX_NOT_CHANG_SELECT:
                     Bundle foodNotChangeSelectObj = msg.getData();
@@ -213,6 +212,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     view_404.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
                             setActionBarLayout(title, ActionBarType.WITHBACK);
                             showProgressDialogNoCancelable("", MyConstants.LOADING);
                             doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST,

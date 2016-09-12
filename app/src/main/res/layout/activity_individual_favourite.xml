@@ -19,5 +19,13 @@
             android:layout_height="match_parent">
         </ListView>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_favourite_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionbar_favourite"
+        android:visibility="gone"
+        android:orientation="vertical">
 
+    </LinearLayout>
 </RelativeLayout>

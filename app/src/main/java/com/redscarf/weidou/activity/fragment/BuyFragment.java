@@ -141,7 +141,7 @@ public class BuyFragment extends BaseFragment
                         records.clear();
                     }
                     hideProgressDialog();
-                    layout_info.setVisibility(View.GONE);
+
                     break;
                 case MSG_NEXT_PAGE:
                     Bundle nextObj = msg.getData();
@@ -170,6 +170,8 @@ public class BuyFragment extends BaseFragment
                     view_404.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
                             setActionBarLayout(title, ActionBarType.WITHBACK);
                             if (flag.equals(1)) {
                                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
