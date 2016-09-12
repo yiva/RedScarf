@@ -58,7 +58,6 @@ public class FoodDetailFragment extends BaseFragment {
     private ImageButton favourite;
     private RelativeLayout layout_photo_big;
     private NetworkImageView img_photo_big;
-    private LinearLayout layout;
     private LinearLayout layout_reservation_food_detail;
     private LinearLayout layout_michelin;
     private ImageView star1;
@@ -92,7 +91,6 @@ public class FoodDetailFragment extends BaseFragment {
             response = indexObj.getString("response");
             switch (msg.what) {
                 case MSG_INDEX:
-
                     try {
                         ArrayList<FoodDetailBody> arrRed = RedScarfBodyAdapter
                                 .fromJSON(response, FoodDetailBody.class);
@@ -199,7 +197,6 @@ public class FoodDetailFragment extends BaseFragment {
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
         //get datas {key:post_id,title:category}
         datas = getActivity().getIntent().getExtras();
-        initView();
         if (StringUtils.isBlank(MyPreferences.getAppPerenceAttribute("latitude")) || StringUtils
                 .isBlank(MyPreferences.getAppPerenceAttribute("longitude"))) {
             Location location = LocationUtil.getLocation(getActivity());
@@ -245,7 +242,7 @@ public class FoodDetailFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-
+        initView();
     }
 
     public interface OnShowMapListener {
@@ -291,7 +288,7 @@ public class FoodDetailFragment extends BaseFragment {
         img_photo_big = (NetworkImageView) getActivity().findViewById(R.id.img_photo_big_food);
         layout_reservation_food_detail = (LinearLayout) rootView.findViewById(R.id.layout_reservation_food_detail);
         layout_michelin = (LinearLayout) rootView.findViewById(R.id.layout_michelin_food_detail);
-        layout_info = (LinearLayout) rootView.findViewById(R.id.layout_food_detail_info);
+        layout_info = (LinearLayout) getActivity().findViewById(R.id.layout_food_detail_activity_info);
         star1 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_1);
         star2 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_2);
         star3 = (ImageView) rootView.findViewById(R.id.ico_michelin_food_detail_3);

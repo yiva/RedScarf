@@ -165,7 +165,6 @@ public class HotFragment extends BaseFragment {
 
         @Override
         public void onItemClick(int position) {
-            Toast.makeText(getActivity(), list_hot.get(position).getKey(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
