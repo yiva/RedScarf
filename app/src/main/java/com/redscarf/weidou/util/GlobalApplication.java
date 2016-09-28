@@ -9,6 +9,9 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.network.VolleyUtil;
 
 import java.util.LinkedList;
@@ -21,6 +24,8 @@ public class GlobalApplication extends Application{
 	private List<Activity> mList = new LinkedList<Activity>();
 	//为了实现每次使用该类时不创建新的对象而创建的静态对象
 	private static GlobalApplication instance;
+
+	private Tracker mTracker;
 	//实例化一次
 	public synchronized static GlobalApplication getInstance(){
 		if (null == instance) {
@@ -120,4 +125,19 @@ public class GlobalApplication extends Application{
 			 }
 	 }
 
+
+
+
+	/**
+	 * Gets the default {@link Tracker} for this {@link Application}.
+	 * @return tracker
+	 */
+	synchronized public Tracker getDefaultTracker() {
+		if (mTracker == null) {
+			GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+			// To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+			mTracker = analytics.newTracker(R.xml.analytics);
+		}
+		return mTracker;
+	}
 }

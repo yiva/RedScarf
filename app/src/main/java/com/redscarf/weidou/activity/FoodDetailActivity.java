@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class FoodDetailActivity extends BaseActivity implements
-        FoodDetailFragment.OnShowMapListener {
+        FoodDetailFragment.OnShowMapListener,OnMapReadyCallback {
 
     private int MSG_SUCCESS = 1;
     private int MSG_FAIL = 2;
@@ -80,7 +80,8 @@ public class FoodDetailActivity extends BaseActivity implements
 
     @Override
     public void initView() {
-
+        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.food_map);
+        fragment.getMapAsync(this);
     }
 
     @Override
@@ -89,28 +90,6 @@ public class FoodDetailActivity extends BaseActivity implements
         try {
             if (food_body != null) {
                 setUpMapIfNeeded();
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Geocoder geoCoder = new Geocoder(FoodDetailActivity.this, Locale.getDefault());
-//                    Message message = new Message();
-//                    try {
-//                        String location = food_body.getSubtitle() + "/n";
-//                        location = location.split("/n")[0];
-//                        addr = geoCoder.getFromLocationName(location, 5);
-//                        if (addr.size() > 0) {
-//                            message = Message.obtain(mainHandler, MSG_SUCCESS);
-//                        } else {
-//                            message = Message.obtain(mainHandler, MSG_FAIL);
-//                        }
-//                    } catch (Exception e) {
-//                        // TODO Auto-generated catch block
-//                        message = Message.obtain(mainHandler, MSG_FAIL);
-//                    } finally {
-//                        mainHandler.sendMessage(message);
-//                    }
-//                }
-//            }).start();
             } else {
                 setDefaultLocation();
             }
@@ -120,18 +99,18 @@ public class FoodDetailActivity extends BaseActivity implements
 
     }
 
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.food_map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
-        }
-    }
+//    private void setUpMapIfNeeded() {
+//        // Do a null check to confirm that we have not already instantiated the map.
+//        if (mMap == null) {
+//            // Try to obtain the map from the SupportMapFragment.
+//            MapFragment fragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.food_map);
+//                    .getMapAsync(this);
+//            // Check if we were successful in obtaining the map.
+//            if (mMap != null) {
+//                setUpMap();
+//            }
+//        }
+//    }
 
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
@@ -140,7 +119,17 @@ public class FoodDetailActivity extends BaseActivity implements
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-//        lng = new LatLng(addr.get(0).getLatitude(), addr.get(0).getLongitude());
+        if (ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
+                .ACCESS_FINE_LOCATION) !=
+                PackageManager
+                        .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
+                .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+    }
+
+    private void setUpMapIfNeeded() {
         lng = new LatLng(Double.parseDouble(food_body.getPost_lat()),
                 Double.parseDouble(food_body.getPost_lng()));
         MarkerOptions options = new MarkerOptions().position(lng)
@@ -149,49 +138,23 @@ public class FoodDetailActivity extends BaseActivity implements
                 .flat(true);
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
-        if (ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
-                .ACCESS_FINE_LOCATION) !=
-                PackageManager
-                        .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
-                .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
     }
-
     private void setDefaultLocation() {
         // TODO Auto-generated catch block
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.food_map))
-                    .getMap();
+            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.food_map))
+                    .getMapAsync(this);
         }
         LatLng lng = new LatLng(51.528308, -0.3817765);
         MarkerOptions options = new MarkerOptions().position(lng).flat(true);
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 16));
-        if(ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
-                .ACCESS_FINE_LOCATION) !=
-                PackageManager
-                        .PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FoodDetailActivity.this, Manifest.permission
-                .ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        setUpMap();
+    }
 }
