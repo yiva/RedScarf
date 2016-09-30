@@ -11,6 +11,6 @@
    - network网络请求，所有url的访问都在这里
    - pojo实体类
    - util工具类（第三方，图片，JSON解析等）
- - **网络访问**
+ - **网络访问**  
  网络访问框架使用的是volley，url请求分别写在`BaseActivity`和`BaseFragment`，需要指明handle以及错误代码（自己定义）
 
