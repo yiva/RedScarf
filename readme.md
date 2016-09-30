@@ -1,6 +1,6 @@
 简要说明
 ---
- ### 总体框架  
+ 总体框架  
  - **包**
    - activity 项目界面文件，所有的activity和fragment都在这里面。
    `BaseActivity`和`BaseFragment`为其基类
