@@ -48,18 +48,16 @@ import com.sina.weibo.sdk.openapi.models.ErrorInfo;
 import com.sina.weibo.sdk.openapi.models.User;
 import com.sina.weibo.sdk.utils.LogUtil;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 登录注册Activity
@@ -497,7 +495,14 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    /**
+     * 上传用户头像
+     * @return
+     */
     private boolean uploadUserAvatar() {
+        if (StringUtils.contains(avatar_large, "www.gravatar.com")) {
+            return false;
+        }
         showProgressDialogNoCancelable("", MyConstants.LOADING);
         new Thread(new Runnable() {
             @Override

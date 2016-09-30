@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.redscarf.weidou.adapter.BuyListAdapter;
@@ -33,6 +36,8 @@ public class HotMoreActivity extends BaseActivity implements AdapterView.OnItemC
     private final String TAG = HotMoreActivity.class.getSimpleName();
 
     private ListView lv_hot_more;
+    private LinearLayout layout_info;
+    private View view_404;
 
     private Bundle datas = new Bundle();
     private static int CURRENT_PAGE = 1;
@@ -63,12 +68,29 @@ public class HotMoreActivity extends BaseActivity implements AdapterView.OnItemC
                     hideProgressDialog();
                     break;
                 case MSG_ERROR:
-                    String error = indexObj.getString("error");
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(HotMoreActivity.this).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            setActionBarLayout(datas.getString("title"), ActionBarType.WITHBACK);
+                            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOT_MORE_LIST,
+                                    new String[]{datas.getString("id")}), HotMoreActivity.class, handler,
+                                    MSG_INDEX, PROGRESS_CANCELABLE, "index");
+                        }
+                    });
                     switch (error) {
                         case "index":
-                            hideProgressDialog();
+                            text_404.setText("网络出点小故障，再摁下试试!");
                             break;
                         default:
+                            text_404.setText("@_@");
                             break;
                     }
                     break;
@@ -91,6 +113,7 @@ public class HotMoreActivity extends BaseActivity implements AdapterView.OnItemC
 
         lv_hot_more = (ListView) findViewById(R.id.list_hot_more);
         lv_hot_more.setOnItemClickListener(HotMoreActivity.this);
+        layout_info = (LinearLayout) findViewById(R.id.layout_hot_more_info);
 
         setActionBarLayout(datas.getString("title"), ActionBarType.WITHBACK);
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.HOT_MORE_LIST,

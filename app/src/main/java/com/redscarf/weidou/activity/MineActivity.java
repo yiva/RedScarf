@@ -34,10 +34,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,17 +69,14 @@ public class MineActivity extends BaseActivity {
     private TableRow btn_mine_my_favourite;
     private TableRow btn_mine_about_weidou;
     private ImageButton img_jump_individual;
+    private LinearLayout layout_info;
+    private View view_404;
 
     protected ImageLoader imageLoader;
-    private int MSG_MINE = 1;
-    private int MSG_NONCE = 2;
-    private int MSG_UPLOAD = 3;
     private String response;
     private Member body;
     private NonceBody nonce;
     private AvatarResultBody avatar_result;
-
-
 
 
     private Handler handler = new Handler() {
@@ -86,28 +85,60 @@ public class MineActivity extends BaseActivity {
             Bundle indexObj = msg.getData();
             response = indexObj.getString("response");
             try {
-                if (msg.what == MSG_NONCE) {
-                    nonce = (NonceBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.NonceBody"));
-                }else if (msg.what == MSG_MINE) {
-                    body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
-                    initView();
-                }else if (msg.what == MSG_UPLOAD) {
-                    if (response != null) {
-                        avatar_result = (AvatarResultBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com" +
-                                ".redscarf.weidou.pojo.AvatarResultBody"));
-                        if(avatar_result.getSuccess() == "true"){
-                            Toast.makeText(MineActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(MineActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                switch (msg.what) {
+                    case MSG_NONCE:
+                        nonce = (NonceBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.NonceBody"));
+                        break;
+                    case MSG_INDEX:
+                        body = (Member) RedScarfBodyAdapter.parseObj(response, Class.forName("com.redscarf.weidou.pojo.Member"));
+                        setCurrentContentView();
+                        break;
+                    case MSG_UPLOAD:
+                        if (response != null) {
+                            avatar_result = (AvatarResultBody) RedScarfBodyAdapter.parseObj(response, Class.forName("com" +
+                                    ".redscarf.weidou.pojo.AvatarResultBody"));
+                            if (avatar_result.getSuccess() == "true") {
+                                Toast.makeText(MineActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MineActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                    hideProgressDialog();
+                        hideProgressDialog();
+                        break;
+                    case MSG_ERROR:
+                        hideProgressDialog();
+                        Bundle errObj = msg.getData();
+                        String error = errObj.getString("error");
+                        layout_info.setVisibility(View.VISIBLE);
+                        view_404 = LayoutInflater.from(MineActivity.this).inflate(R.layout.view_404, layout_info, true);
+                        TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                        view_404.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                layout_info.removeAllViews();
+                                layout_info.setVisibility(View.GONE);
+                                doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
+                                        new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
+                                        MineActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE, "index");
+                            }
+                        });
+                        switch (error) {
+                            case "index":
+                                text_404.setText("网络出点小故障，再摁下试试!");
+                                break;
+                            default:
+                                text_404.setText("@_@");
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             } catch (Exception e) {
                 Toast.makeText(MineActivity.this, "信息读取失败", Toast.LENGTH_SHORT).show();
                 ExceptionUtil.printAndRecord(TAG, e);
 
-            }finally {
+            } finally {
                 hideProgressDialog();
             }
         }
@@ -124,9 +155,10 @@ public class MineActivity extends BaseActivity {
         setActionBarLayout(getResources().getString(R.string.title_mine_activity), ActionBarType.WITHBACK);
         GlobalApplication.getInstance().addActivity(this);
         this.imageLoader = new ImageLoader(VolleyUtil.getRequestQueue(), new BitmapCache());
-        doRequestURL(Request.Method.GET,RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
-                        new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
-                MineActivity.class, handler, MSG_MINE,PROGRESS_NO_CANCELABLE,"index");
+        initView();
+        doRequestURL(Request.Method.GET, RequestURLFactory.sysRequestURL(RequestType.MINE_PROFILE,
+                new String[]{MyPreferences.getAppPerenceAttribute(MyConstants.PREF_USER_ID)}),
+                MineActivity.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE, "index");
     }
 
     @Override
@@ -152,7 +184,10 @@ public class MineActivity extends BaseActivity {
         img_jump_individual = (ImageButton) findViewById(R.id.btn_jump_individual_mine);
         btn_mine_my_favourite = (TableRow) findViewById(R.id.btn_mine_my_favourite);
         btn_mine_about_weidou = (TableRow) findViewById(R.id.btn_mine_about_weidou);
+        layout_info = (LinearLayout) findViewById(R.id.layout_mine_info);
+    }
 
+    private void setCurrentContentView() {
         txt_nick_name.setText(body.getNickname());
 //		加载用户头像
         String profile_image = body.getAvatar();
@@ -172,7 +207,7 @@ public class MineActivity extends BaseActivity {
                 AboutActivity.class, null));
     }
 
-    private class OnLogOffClick implements View.OnClickListener{
+    private class OnLogOffClick implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -183,12 +218,12 @@ public class MineActivity extends BaseActivity {
         }
     }
 
-    private class OnJumpIndividualInfoClick implements View.OnClickListener{
+    private class OnJumpIndividualInfoClick implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
             Bundle data = new Bundle();
-            data.putParcelable("profile_body",body);
+            data.putParcelable("profile_body", body);
             JumpToActivity(MineActivity.this,
                     IndividualInfoActivity.class, data);
         }

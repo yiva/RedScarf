@@ -15,7 +15,6 @@ import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SearchDetailActivity;
-import com.redscarf.weidou.activity.popupwindow.ShopCategaryPopup;
 import com.redscarf.weidou.adapter.BrandDetailAdapter;
 import com.redscarf.weidou.adapter.BrandsListAdapter;
 import com.redscarf.weidou.adapter.BuyListAdapter;
@@ -89,7 +88,9 @@ public class BuyFragment extends BaseFragment
     private Button dismiss;
     private View actionbar_buy;
     private View head_search;
+    private View view_404;
     private RelativeLayout layout_search;
+    private LinearLayout layout_info;
 
     private List<GridBody> datas;
 
@@ -139,6 +140,7 @@ public class BuyFragment extends BaseFragment
                         records.clear();
                     }
                     hideProgressDialog();
+
                     break;
                 case MSG_NEXT_PAGE:
                     Bundle nextObj = msg.getData();
@@ -149,13 +151,6 @@ public class BuyFragment extends BaseFragment
                         total_count = items.size();//记录本次加载条目数
                         if (items.size() != 0) {
                             bodys.addAll(items);
-//                            lv_shop.invalidateViews();
-//                            Parcelable state = lv_shop.onSaveInstanceState();
-//                            buyListAdapter.notifyDataSetChanged();
-//                            lv_shop.onRestoreInstanceState(state);
-
-//                            buyListAdapter.notifyDataSetInvalidated();
-//                            lv_shop.setAdapter(new BuyListAdapter(getActivity(), bodys, category_id));
                         }
                     } catch (ClassNotFoundException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
@@ -165,12 +160,31 @@ public class BuyFragment extends BaseFragment
 
                     break;
                 case MSG_ERROR:
+                    hideProgressDialog();
                     Bundle errObj = msg.getData();
                     String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(getActivity()).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            setActionBarLayout(title, ActionBarType.WITHBACK);
+                            if (flag.equals(1)) {
+                                doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
+                                                .BUYLIST, new String[]{category_id.toString(), "1"}), BuyFragment.class, handler,
+                                        MSG_INDEX, PROGRESS_NO_CANCELABLE, "index");
+                            }
+                        }
+                    });
                     switch (error) {
                         case "index":
-                            TextView errText = (TextView) view_404.findViewById(R.id.txt_404);
-                            errText.setText("网络故障");
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
                             break;
                     }
                     break;
@@ -186,6 +200,7 @@ public class BuyFragment extends BaseFragment
 
         rootView = inflater.inflate(R.layout.fragment_buy, container, false);
         head_search = inflater.inflate(R.layout.head_search, null);
+
         initView();
         return rootView;
     }
@@ -197,7 +212,6 @@ public class BuyFragment extends BaseFragment
         EventBus.getDefault().register(this);
         try {
             setActionBarLayout(title, ActionBarType.WITHBACK);
-
             if (flag.equals(1)) {
                 showProgressDialogNoCancelable("", MyConstants.LOADING);
                 doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType
@@ -227,38 +241,6 @@ public class BuyFragment extends BaseFragment
         super.onResume();
     }
 
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            try {
-////                flag = getArguments().getInt("flag");
-////                category_id = getArguments().getInt("category_id");
-////                title = getArguments().getString("title");
-//                setActionBarLayout(title, ActionBarType.WITHBACK);
-//                if (flag.equals(1)) {
-//                    showProgressDialogNoCancelable("", MyConstants.LOADING);
-//                    doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
-//                }
-//            } catch (Exception ex) {
-//                ExceptionUtil.printAndRecord(TAG,ex);
-//                setActionBarLayout(title, ActionBarType.WITHBACK);
-//                showProgressDialogNoCancelable("", MyConstants.LOADING);
-//                doRequestURL(RequestURLFactory.getRequestListURL(RequestType.BUYLIST, new String[]{category_id.toString(), CURRENT_PAGE+""}), BuyFragment.class, handler, MSG_INDEX);
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try {
-//            mbackClickListener = (BackShopCategoryListener) context;
-//        } catch (ClassCastException ex) {
-//            throw new ClassCastException(context.toString()
-//                    + "must implement BackShopCategoryFragment");
-//        }
-//    }
 
     @Override
     public void onPause() {
@@ -281,8 +263,6 @@ public class BuyFragment extends BaseFragment
     public void initView() {
         ImageButton back = (ImageButton) rootView.findViewById(R.id.actionbar_back);
         back.setVisibility(View.GONE);
-//        back.setOnClickListener(new OnbackClick());
-
         //品牌类别选择
         selector = (ImageButton) rootView.findViewById(R.id.actionbar_selector);
         selector.setVisibility(View.VISIBLE);
@@ -303,7 +283,8 @@ public class BuyFragment extends BaseFragment
         lv_brands = (HorizontalListView) rootView.findViewById(R.id.hlist_brand);
         lv_brands.setOnItemClickListener(new onListBrandItemClick());
         actionbar_buy = rootView.findViewById(R.id.actionbar_buy);
-//        popup_selector = new PopupWindow();
+
+        layout_info = (LinearLayout) rootView.findViewById(R.id.layout_buy_info);
     }
 
     /**
@@ -392,8 +373,6 @@ public class BuyFragment extends BaseFragment
     /**
      * 购物list滚动加载
      */
-
-
     private class OnBuyListScrollListener implements AbsListView.OnScrollListener {
 
         @Override
@@ -637,7 +616,6 @@ public class BuyFragment extends BaseFragment
     }
 
     private class OnBrandDetailHideClick implements OnClickListener {
-
         @Override
         public void onClick(View v) {
             popup_brand_detail.dismiss();
@@ -720,5 +698,6 @@ public class BuyFragment extends BaseFragment
             popup_selector.dismiss();
         }
     }
+
 
 }

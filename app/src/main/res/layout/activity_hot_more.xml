@@ -20,5 +20,11 @@
             android:divider="@null">
         </ListView>
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/layout_hot_more_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/actionbar_hot_more"
+        android:orientation="vertical"></LinearLayout>
 </RelativeLayout>

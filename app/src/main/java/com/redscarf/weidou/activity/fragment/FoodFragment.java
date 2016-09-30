@@ -89,6 +89,8 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
     private PullToRefreshLayout pullToRefreshLayout;
     private View head_search;
     private RelativeLayout layout_search;
+    private LinearLayout layout_info;
+    private View view_404;
 
     private String response;
     private float lastY = 0f;
@@ -166,8 +168,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     response = foodNotChangeSelectObj.getString("response");
                     try {
                         bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
-//                        JSONObject jo = new JSONObject(response);
-//                        list_food_select = parseFoodSelect(jo.getString("titles"));
                     } catch (Exception e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
@@ -198,6 +198,34 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                         ExceptionUtil.printAndRecord(TAG, e);
                     } catch (ClassNotFoundException e) {
                         ExceptionUtil.printAndRecord(TAG, e);
+                    }
+                    break;
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(getActivity()).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            setActionBarLayout(title, ActionBarType.WITHBACK);
+                            showProgressDialogNoCancelable("", MyConstants.LOADING);
+                            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST,
+                                    new String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}),
+                                    FoodFragment.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE, "index");
+                        }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
                     }
                     break;
                 default:
@@ -234,25 +262,14 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
             MyPreferences.setAppPerenceAttribute("longitude", location.getLongitude() + "");
         }
         setActionBarLayout(title, ActionBarType.WITHBACK);
-        showProgressDialogNoCancelable("", MyConstants.LOADING);
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOODLIST,
                         new String[]{foodUrlAttribute.toString(), CURRENT_PAGE + ""}),
-                FoodFragment.class, handler, MSG_INDEX, PROGRESS_CANCELABLE, "index");
+                FoodFragment.class, handler, MSG_INDEX, PROGRESS_NO_CANCELABLE, "index");
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestListURL(RequestType.FOOD_FILTER_LIST, ""),
-                FoodFragment.class, handler, MSG_FOOD_FILTER, PROGRESS_CANCELABLE,
+                FoodFragment.class, handler, MSG_FOOD_FILTER, PROGRESS_DISVISIBLE,
                 "food_filter_index");
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try {
-//            mfoodBackListener = (BackFoodCategoryListener) context;
-//        } catch (ClassCastException ex) {
-//            throw new ClassCastException(context.toString()
-//                    + "must implement BackShopCategoryFragment");
-//        }
-//    }
 
 
     @Override
@@ -307,6 +324,7 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
         lv_food_select.setOnItemClickListener(new OnListFoodSelectItemClick());
 
         actionbar_food = rootView.findViewById(R.id.actionbar_food);
+        layout_info = (LinearLayout) rootView.findViewById(R.id.layout_food_info);
     }
 
     @Override

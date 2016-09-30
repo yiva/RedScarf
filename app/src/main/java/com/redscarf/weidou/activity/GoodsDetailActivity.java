@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -61,6 +62,8 @@ public class GoodsDetailActivity extends BaseActivity {
     private Button brand_info;
     private LinearLayout layout_dead_time;
     private LinearLayout deliver_china;
+    private LinearLayout layout_info;
+    private View view_404;
 
     private DiscountBody body;
     private String response;
@@ -79,7 +82,7 @@ public class GoodsDetailActivity extends BaseActivity {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
                     body = arrRed.get(0);
-                    initView();
+                    setCurrentContentView();
                     hideProgressDialog();
                     break;
                 case MSG_IS_FAVOURITE:
@@ -111,6 +114,32 @@ public class GoodsDetailActivity extends BaseActivity {
                         Toast.makeText(GoodsDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(GoodsDetailActivity.this).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
+                                    new String[]{datas.getString("id")}), GoodsDetailActivity.class, handler,
+                                    MSG_INDEX, PROGRESS_NO_CANCELABLE,"index");
+                        }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -128,6 +157,8 @@ public class GoodsDetailActivity extends BaseActivity {
         datas = this.getIntent().getExtras();
 
         GlobalApplication.getInstance().addActivity(this);
+
+        initView();
 
         doRequestURL(Request.Method.GET, RequestURLFactory.getRequestURL(RequestType.DISCOUNT_POST,
                         new String[]{datas.getString("id")}), GoodsDetailActivity.class, handler,
@@ -149,7 +180,10 @@ public class GoodsDetailActivity extends BaseActivity {
         layout_dead_time = (LinearLayout) findViewById(R.id.layout_dead_time_goods_detail);
         share = (ImageButton) findViewById(R.id.actionbar_with_share_share);
         deliver_china = (LinearLayout) findViewById(R.id.deliver_china);
+        layout_info = (LinearLayout) findViewById(R.id.layout_good_detail_info);
+    }
 
+    private void setCurrentContentView() {
         setActionBarLayout(String.valueOf(body.getTitle()), ActionBarType.WITHSHARE);
         subtitle.setText(body.getSubtitle());
         if ("1".equals(body.getDeliver_china())) {

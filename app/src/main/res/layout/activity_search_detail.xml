@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,4 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_search_detail_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionbar_search_detail"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</RelativeLayout>

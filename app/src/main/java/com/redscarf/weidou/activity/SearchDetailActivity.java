@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,7 +17,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ import com.redscarf.weidou.pojo.DiscountBody;
 import com.redscarf.weidou.pojo.FoodBody;
 import com.redscarf.weidou.pojo.GoodsBody;
 import com.redscarf.weidou.pojo.SearchDetailBody;
+import com.redscarf.weidou.util.ActionBarType;
 import com.redscarf.weidou.util.ExceptionUtil;
 import com.redscarf.weidou.util.GlobalApplication;
 import com.redscarf.weidou.util.JSONHelper;
@@ -62,6 +66,8 @@ public class SearchDetailActivity extends BaseActivity
     private ArrayList<FoodBody> arrFood;
     private ArrayList<BrandBody> arrBrand;
     private ListView lv_index;
+    private View view_404;
+    private LinearLayout layout_info;
 
     private SearchDiscountAdapter searchDiscountAdapter;
     private SearchFoodAdapter searchFoodAdapter;
@@ -78,54 +84,85 @@ public class SearchDetailActivity extends BaseActivity
         public void handleMessage(Message msg) {
             Bundle indexObj = msg.getData();
             String response = indexObj.getString("response");
-            if (msg.what == MSG_INDEX) {
-                try {
-                    JSONObject o = new JSONObject(response);
-                    if (!o.isNull("posts")) {
-                        JSONObject jo = o.getJSONObject("posts");
-                        JSONArray names = jo.names();
-                        for (int i = 0; i < names.length(); ++i) {
-                            String name = names.getString(i);
-                            JSONArray ja = jo.getJSONArray(name);
-                            if (0 != ja.length()) {
-                                search_category = name;
-                                switch (name) {
-                                    case "brand":
-                                        arrBrand = (ArrayList<BrandBody>) JSONHelper
-                                                .parseCollection(ja, ArrayList
-                                                        .class, BrandBody.class);
-                                        break;
-                                    case "discount":
-                                        arrDiscount = (ArrayList<DiscountBody>) JSONHelper
-                                                .parseCollection(ja, ArrayList
-                                                        .class, DiscountBody.class);
-                                        searchDiscountAdapter = new SearchDiscountAdapter
-                                                (SearchDetailActivity.this, arrDiscount);
-                                        lv_index.setAdapter(searchDiscountAdapter);
-                                        break;
-                                    case "food":
-                                        arrFood = (ArrayList<FoodBody>) JSONHelper
-                                                .parseCollection(ja, ArrayList
-                                                        .class, FoodBody.class);
-                                        searchFoodAdapter = new SearchFoodAdapter
-                                                (SearchDetailActivity.this, arrFood);
-                                        lv_index.setAdapter(searchFoodAdapter);
-                                        break;
-                                    case "others":
-                                        break;
-                                    default:
-                                        search_category = "";
-                                        break;
+            switch (msg.what) {
+                case MSG_INDEX:
+                    try {
+                        JSONObject o = new JSONObject(response);
+                        if (!o.isNull("posts")) {
+                            JSONObject jo = o.getJSONObject("posts");
+                            JSONArray names = jo.names();
+                            for (int i = 0; i < names.length(); ++i) {
+                                String name = names.getString(i);
+                                JSONArray ja = jo.getJSONArray(name);
+                                if (0 != ja.length()) {
+                                    search_category = name;
+                                    switch (name) {
+                                        case "brand":
+                                            arrBrand = (ArrayList<BrandBody>) JSONHelper
+                                                    .parseCollection(ja, ArrayList
+                                                            .class, BrandBody.class);
+                                            break;
+                                        case "discount":
+                                            arrDiscount = (ArrayList<DiscountBody>) JSONHelper
+                                                    .parseCollection(ja, ArrayList
+                                                            .class, DiscountBody.class);
+                                            searchDiscountAdapter = new SearchDiscountAdapter
+                                                    (SearchDetailActivity.this, arrDiscount);
+                                            lv_index.setAdapter(searchDiscountAdapter);
+                                            break;
+                                        case "food":
+                                            arrFood = (ArrayList<FoodBody>) JSONHelper
+                                                    .parseCollection(ja, ArrayList
+                                                            .class, FoodBody.class);
+                                            searchFoodAdapter = new SearchFoodAdapter
+                                                    (SearchDetailActivity.this, arrFood);
+                                            lv_index.setAdapter(searchFoodAdapter);
+                                            break;
+                                        case "others":
+                                            break;
+                                        default:
+                                            search_category = "";
+                                            break;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
+                    } catch (JSONException e) {
+                        ExceptionUtil.printAndRecord(TAG, e);
                     }
-                } catch (JSONException e) {
-                    ExceptionUtil.printAndRecord(TAG, e);
-                }
 
-                hideProgressDialog();
+                    hideProgressDialog();
+                    break;
+                case MSG_ERROR:
+                    hideProgressDialog();
+                    Bundle errObj = msg.getData();
+                    String error = errObj.getString("error");
+                    layout_info.setVisibility(View.VISIBLE);
+                    view_404 = LayoutInflater.from(SearchDetailActivity.this).inflate(R.layout.view_404, layout_info, true);
+                    TextView text_404 = (TextView) view_404.findViewById(R.id.txt_404);
+                    view_404.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            layout_info.removeAllViews();
+                            layout_info.setVisibility(View.GONE);
+                            String content = String.valueOf(search_content.getText().toString().trim());
+                            if (!content.equals("")) {
+                                submitSearch(content);
+                            }
+                        }
+                    });
+                    switch (error) {
+                        case "index":
+                            text_404.setText("网络出点小故障，再摁下试试!");
+                            break;
+                        default:
+                            text_404.setText("@_@");
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -143,6 +180,7 @@ public class SearchDetailActivity extends BaseActivity
     @Override
     public void initView() {
         search_content = (ClearEditText) findViewById(R.id.edit_search_detail);
+        layout_info = (LinearLayout) findViewById(R.id.layout_search_detail_info);
 
         search_content.setOnEditorActionListener(new OnSearchSubmitListener());
         lv_index = (ListView) findViewById(R.id.list_search_detail);
@@ -236,7 +274,7 @@ public class SearchDetailActivity extends BaseActivity
                 SearchDetailActivity
                         .class,
                 handler, MSG_INDEX,
-                PROGRESS_NO_CANCELABLE,"search");
+                PROGRESS_NO_CANCELABLE, "index");
         return true;
     }
 

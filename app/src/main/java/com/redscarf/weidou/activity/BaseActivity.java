@@ -198,7 +198,7 @@ public abstract class BaseActivity extends FragmentActivity implements BasePageL
             public void onErrorResponse(VolleyError volleyError) {
                 ExceptionUtil.printAndRecord(clazz.getSimpleName(), new Exception("volley: " + volleyError));
                 Bundle data = new Bundle();
-                data.putString("response", errContent);
+                data.putString("error", errContent);
                 Message message = Message.obtain(handler, MSG_ERROR);
                 message.setData(data);
                 handler.sendMessage(message);

@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "688786295908",
+    "project_id": "weidou-1250"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688786295908:android:7aa8725d05b0278c",
+        "android_client_info": {
+          "package_name": "com.redscarf.weidou.activity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJmhdFfCTs_zFbTHLFxJi7kEqIBvg5Nms"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78194535-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

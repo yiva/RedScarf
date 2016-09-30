@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
     android:background="@color/white">
@@ -10,8 +9,17 @@
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_hot"
+        android:layout_below="@+id/actionbar_hot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_hot_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionbar_hot"
+        android:visibility="gone"
+        android:orientation="vertical">
+    </LinearLayout>
+</RelativeLayout>
