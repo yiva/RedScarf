@@ -36,23 +36,9 @@ public class FoodCategoryFragment extends BaseFragment {
         return rootView;
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try {
-//            mchangelistener = (OnChangeFoodListFragmentListener) context;
-//        } catch (ClassCastException ex) {
-//            throw new ClassCastException("must implement "
-//                    + OnChangeFoodListFragmentListener.class.getSimpleName());
-//        }
-//    }
 
     @Override
     public void initView() {
-//        setActionBarLayout(getResources().getString(R.string.title_food), ActionBarType.NORMAL);
-//        grid_food = (GridView) rootView.findViewById(R.id.grid_food);
-//        grid_food.setAdapter(new FoodHeaderGridAdapter(getActivity(), datas = this.makeFoodHeaderGridArrays()));
-//        grid_food.setOnItemClickListener(new OnFoodGridItemClick());
     }
 
     public interface OnChangeFoodListFragmentListener {

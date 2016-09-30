@@ -168,8 +168,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                     response = foodNotChangeSelectObj.getString("response");
                     try {
                         bodys = (ArrayList<FoodBody>) RedScarfBodyAdapter.fromJSON(response, Class.forName("com.redscarf.weidou.pojo.FoodBody"));
-//                        JSONObject jo = new JSONObject(response);
-//                        list_food_select = parseFoodSelect(jo.getString("titles"));
                     } catch (Exception e) {
                         ExceptionUtil.printAndRecord(TAG, e);
                     }
@@ -272,16 +270,6 @@ public class FoodFragment extends BaseFragment implements OnTouchListener, PullT
                 "food_filter_index");
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        try {
-//            mfoodBackListener = (BackFoodCategoryListener) context;
-//        } catch (ClassCastException ex) {
-//            throw new ClassCastException(context.toString()
-//                    + "must implement BackShopCategoryFragment");
-//        }
-//    }
 
 
     @Override

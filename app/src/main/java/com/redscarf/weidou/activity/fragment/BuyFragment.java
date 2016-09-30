@@ -15,7 +15,6 @@ import com.redscarf.weidou.activity.BrandDetailActivity;
 import com.redscarf.weidou.activity.GoodsDetailActivity;
 import com.redscarf.weidou.activity.R;
 import com.redscarf.weidou.activity.SearchDetailActivity;
-import com.redscarf.weidou.activity.popupwindow.ShopCategaryPopup;
 import com.redscarf.weidou.adapter.BrandDetailAdapter;
 import com.redscarf.weidou.adapter.BrandsListAdapter;
 import com.redscarf.weidou.adapter.BuyListAdapter;

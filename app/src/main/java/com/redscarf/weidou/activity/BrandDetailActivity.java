@@ -227,9 +227,6 @@ public class BrandDetailActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        if (null != listview_attachment.getAdapter()) {
-//            ScrollListView.setListViewHeightBasedOnChildren(listview_attachment);
-//        }
 
         //不让listview作为首项显示在屏幕中
         ScrollView sv = (ScrollView) findViewById(R.id.scroll_brand_detail);
